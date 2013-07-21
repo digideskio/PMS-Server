@@ -1,0 +1,34 @@
+10
+
+dir
+33
+https://subversion.assembla.com/svn/euphoria-pms/euphoria-pms/core/src
+https://subversion.assembla.com/svn/euphoria-pms
+
+
+
+2013-04-28T18:46:50.634861Z
+27
+jospraveen
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+fd8ac877-0f68-4779-bbeb-5a121a88a3dd
+
+java
+dir
+
+test
+dir
+

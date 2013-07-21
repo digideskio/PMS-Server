@@ -1,0 +1,110 @@
+<project name="euphoria" default="compile" basedir="..">
+  <!-- Define the properties used by the build -->
+  <property name="app.name"      value="euphoria"/>
+  <property name="app.version"   value="0.1-dev"/>
+  <property name="work.home"    value="${basedir}/work"/>
+  <property name="dist.home"     value="${basedir}/dist"/>
+  
+  <property name="web.home"      value="${basedir}/war"/>
+ 
+  <property name="build.lib.dir"      value="${basedir}/build_lib"/>
+  <property name="core.home"      value="${basedir}/core"/>
+  <property name="services.home"	value="${basedir}/services"/>
+  <property name="services.src.dir"	value="${services.home}/src/java"/>
+  <property name="view.home"	value="${basedir}/view"/>
+  <property name="view.src.dir"	value="${view.home}/src/java"/>
+  <property name="web.lib.dir"      value="${web.home}/WEB-INF/lib"/>
+  <property name="web.classes.dir"      value="${web.home}/WEB-INF/classes"/>
+  <property name="web.js.dir"      value="${web.home}/static/js"/>
+
+  <target name="help">
+    <echo>You can use the following targets:</echo>
+    <echo> </echo>
+    <echo>  help    : (default) Prints this message </echo>
+    <echo>  all     : Cleans, compiles, and packages application</echo>
+    <echo>  clean   : Deletes work directories</echo>
+    <echo>  compile : Compiles servlets into class files</echo>
+    <echo>  dist    : Packages artifacts into a deployable WAR</echo>
+    <echo></echo>
+    <echo>For example, to clean, compile, and package all at once, run:</echo>
+    <echo>prompt> ant all </echo>
+  </target>
+
+  <!-- Define the CLASSPATH -->
+  <path id="compile.classpath">
+    <fileset dir="${web.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${build.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>  	
+  </path>
+	
+  <path id="gwt.compile.classpath">
+    <fileset dir="${web.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${build.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>  
+  	<pathelement location="${view.src.dir}"/>
+  	<pathelement location="${services.src.dir}"/>
+  </path>
+
+  <target name="all" depends="clean,compile,dist"
+          description="Clean work dirs, then compile and create a WAR"/>
+
+  <target name="clean"
+          description="Delete old work and dist directories">
+    <delete dir="${dist.home}"/>
+  </target>
+
+  <target name="prepare" depends="clean"
+          description="Create working dirs and copy static files to work dir">
+    <mkdir  dir="${dist.home}"/>
+  </target>
+
+  <target name="compile" depends="prepare"
+          description="Compile Java sources and copy to WEB-INF/classes dir">
+    <javac srcdir="${core.home}/src/java"
+          destdir="${web.home}/WEB-INF/classes" includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+    </javac>
+  	<copy todir="${web.home}/WEB-INF/classes">
+  		<fileset dir="${view.home}/resources" includes="*"/>
+  	</copy>
+    <javac srcdir="${services.home}/src/java"
+          destdir="${web.home}/WEB-INF/classes" includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+    </javac>        
+    <javac srcdir="${view.home}/src/java"
+          destdir="${web.home}/WEB-INF/classes" includeantruntime="false">
+        <classpath refid="compile.classpath"/>
+    </javac>
+  	<!--
+    <taskdef resource="dk/contix/ant/gwt/ant-gwt.xml" classpathref="gwt.compile.classpath" />
+    <gwtcompile destdir="${web.home}/static/js" optimize="true" version="1.6">
+      <fileset dir="src">
+        <include name="**/*.gwt.xml"/>
+      </fileset>
+    </gwtcompile> -->
+  	<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler"
+  	    classpathref="gwt.compile.classpath">
+  	  <jvmarg value="-Xmx256M"/>
+  	  <arg line="-war"/>
+  	  <arg value="${web.home}"/>
+   	  <arg line="-strict"/>
+      <arg line="-style PRETTY"/>
+  	  <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+  	  <arg value="com.media2359.euphoria.view.Euphoria"/>
+  	</java>  	
+  </target>
+
+
+  <target name="dist" depends="compile"
+          description="Create WAR file for binary distribution">
+    <jar jarfile="${dist.home}/${app.name}-${app.version}.war"
+         basedir="${work.home}"/>
+  </target>
+
+</project> 
