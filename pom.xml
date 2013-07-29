@@ -22,7 +22,7 @@
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
     <gwt.version>2.4.0</gwt.version>
     <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-    <gwt.localWorkers>1</gwt.localWorkers>
+    <gwt.localWorkers>5</gwt.localWorkers>
   </properties>
   
   <dependencies>
