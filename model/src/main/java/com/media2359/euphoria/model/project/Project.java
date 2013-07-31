@@ -47,11 +47,11 @@ public class Project {
 	}
 	
 	public String getProjectManager() {
-		return id;
+		return projectManager;
 	}
 
 	public void setProjectManager(String projectManager) {
-		this.projectManager = id;
+		this.projectManager = projectManager;
 	}
 
 }
