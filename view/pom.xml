@@ -74,7 +74,7 @@
 	              <module>com.media2359.euphoria.view.Euphoria</module>
 	              <inplace>true</inplace> 
 	              <localWorkers>${gwt.localWorkers}</localWorkers>
-	              <extraJvmArgs>-XX:MaxPermSize=512m -Xmx1024m</extraJvmArgs>
+	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m</extraJvmArgs>
 	            </configuration>
 	            <goals>
 	              <goal>compile</goal>
