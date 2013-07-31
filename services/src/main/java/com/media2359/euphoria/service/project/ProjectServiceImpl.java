@@ -34,6 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
 				respProject.setId(project.getId());
 				respProject.setName(project.getName());
 				respProject.setDescription(project.getDescription());
+				respProject.setProjectManager(project.getProjectManager());
 				respProjects.add(respProject);
 			}
 			response.setProjects(respProjects);
