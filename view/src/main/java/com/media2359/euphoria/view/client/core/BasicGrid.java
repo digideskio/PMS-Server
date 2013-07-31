@@ -32,6 +32,8 @@ public class BasicGrid extends Composite {
 		ValueProvider<Project, String> name();
 
 		ValueProvider<Project, String> description();
+		
+		ValueProvider<Project, String> projectManager();
 	}
 
 	// Setup the property access definitions for the values for the grid columns
@@ -49,11 +51,14 @@ public class BasicGrid extends Composite {
 				gridProperties.name(), 150, "Project Name");
 		ColumnConfig<Project, String> descCol = new ColumnConfig<Project, String>(
 				gridProperties.description(), 150, "Project Description");
+		ColumnConfig<Project, String> projMng = new ColumnConfig<Project, String>(
+				gridProperties.projectManager(), 150, "Project Manager");
 
 		List<ColumnConfig<Project, ?>> columns = new ArrayList<ColumnConfig<Project, ?>>();
 		columns.add(idCol);
 		columns.add(nameCol);
 		columns.add(descCol);
+		columns.add(projMng);
 		ColumnModel<Project> columnModel = new ColumnModel<Project>(columns);
 
 		// Setup the grid view for styling
