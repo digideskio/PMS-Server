@@ -19,10 +19,14 @@
   
   <!-- GXT Stylesheet -->
   <stylesheet src="reset.css" />
+  
+  <!-- Define all configurations here -->
+  <extend-property name='locale' values='en'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.media2359.euphoria.view.client.Euphoria' />
   
+  <!--  Where are our sources -->
   <source path="client"/>
   <source path="server"/>
   <source path="message"/>

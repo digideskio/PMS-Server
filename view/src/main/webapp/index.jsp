@@ -29,7 +29,9 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-
-    <div id="rootpane"></div>
+	<table>
+		<tr><td colspan=2><%@include file="/jsp/includes/header.jsp" %></td></tr>
+		<tr><td width="20%"><%@include file="/jsp/includes/menu.jsp" %></td><td><div id="rootpane"></div></td></tr>
+	</table>
   </body>
 </html>
