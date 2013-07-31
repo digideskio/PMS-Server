@@ -4,6 +4,7 @@ public class Project {
 	private String id;
 	private String name;
 	private String description;
+	private String projectManager;
 
 	public Project() {
 		// TODO Auto-generated constructor stub
@@ -43,6 +44,14 @@ public class Project {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getProjectManager() {
+		return id;
+	}
+
+	public void setProjectManager(String projectManager) {
+		this.projectManager = id;
 	}
 
 }
