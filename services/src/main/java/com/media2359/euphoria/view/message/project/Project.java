@@ -6,6 +6,7 @@ public class Project implements Serializable {
 	String id;
 	String name;
 	String description;
+	String projectManager;
 
 	public Project() {
 
@@ -33,6 +34,15 @@ public class Project implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public String getProjectManager() {
+		return projectManager;
+	}
+
+	public void setProjectManager(String projectManager) {
+		this.projectManager = projectManager;
 	}
 
 }
