@@ -10,5 +10,6 @@
         </id>
         <property name="name" column="name"/>
         <property name="description" column="description"/>
+        <property name="projectManager" column="project_manager"/>
     </class>
 </hibernate-mapping>
