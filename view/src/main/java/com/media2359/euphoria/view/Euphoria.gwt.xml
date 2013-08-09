@@ -24,7 +24,7 @@
   <set-property name="gxt.user.agent" value="safari3,safari4,safari5,chrome,air,gecko1_8,gecko1_9"/>
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.media2359.euphoria.view.client.Euphoria' />
+  <entry-point class='com.media2359.euphoria.view.client.EuphoriaProjects' />
   
   <!--  Where are our sources -->
   <source path="client"/>
