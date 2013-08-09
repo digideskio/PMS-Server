@@ -3,10 +3,13 @@ package com.media2359.euphoria.view.message.project;
 import java.io.Serializable;
 
 public class Project implements Serializable {
-	String id;
-	String name;
-	String description;
-	String projectManager;
+	private String id;
+	private String name;
+	private String description;
+	private String projectManager;
+	private Integer manDaysLeft;
+	private Integer milestoneCount;
+	private Integer completedMilestoneCount;
 
 	public Project() {
 
@@ -45,4 +48,29 @@ public class Project implements Serializable {
 		this.projectManager = projectManager;
 	}
 
+
+	public Integer getManDaysLeft() {
+		return manDaysLeft;
+	}
+
+	public void setManDaysLeft(Integer manDaysLeft) {
+		this.manDaysLeft = manDaysLeft;
+	}
+
+	public Integer getMilestoneCount() {
+		return milestoneCount;
+	}
+
+	public void setMilestoneCount(Integer milestoneCount) {
+		this.milestoneCount = milestoneCount;
+	}
+
+	public Integer getCompletedMilestoneCount() {
+		return completedMilestoneCount;
+	}
+
+	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
+		this.completedMilestoneCount = completedMilestoneCount;
+	}
+	
 }

@@ -2,6 +2,7 @@ package com.media2359.euphoria.service.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 		List<Project> projects = projectDao.getAllProjects();
 		
 		ProjectListResponse response = new ProjectListResponse();
+		Random random = new Random();									//Temporary, change later-Praveen
 		if(projects != null) {
 			log.info("Received number of projects:"+projects.size());
 			List<com.media2359.euphoria.view.message.project.Project> respProjects
@@ -35,7 +37,11 @@ public class ProjectServiceImpl implements ProjectService {
 				respProject.setName(project.getName());
 				respProject.setDescription(project.getDescription());
 				respProject.setProjectManager(project.getProjectManager());
+				respProject.setManDaysLeft(random.nextInt(1000));			//Temporary, change later-Praveen
+				respProject.setMilestoneCount(random.nextInt(100));			//Temporary, change later-Praveen
+				respProject.setCompletedMilestoneCount(random.nextInt(10));	//Temporary, change later-Praveen
 				respProjects.add(respProject);
+				
 			}
 			response.setProjects(respProjects);
 		}
