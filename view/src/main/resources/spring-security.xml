@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:beans="http://www.springframework.org/schema/beans" 
-	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-              http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -18,39 +16,24 @@
 		<openid-login
 			    login-page="/jsp/login/login.jsp"
 			    authentication-failure-url="/jsp/common/access_denied.jsp"
-			    default-target-url="/index.jsp"/>
+			    default-target-url="/index.jsp">
+			<attribute-exchange>
+                <openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true"/>
+            </attribute-exchange>	
+		</openid-login>
+					
+		<logout 
+				invalidate-session="true" 
+				logout-success-url="/jsp/login/logout_success.jsp" 
+				logout-url="/jsp/login/logout.jsp" /> 
 	</http>
 
  	<!-- Declare an authentication-manager to use a custom userDetailsService -->
 	<authentication-manager>
          <authentication-provider user-service-ref="userDetailsService">
-           <password-encoder ref="passwordEncoder"/>
          </authentication-provider>
  	</authentication-manager>
- 	
- 	<!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
-	<beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
-	 
-	<!-- An in-memory list of users. No need to access an external database layer.
-	      See Spring Security 3.1 Reference 5.2.1 In-Memory Authentication -->
-	<user-service id="userDetailsService">
-	  <!-- user name is based on the returned OpenID identifier from Google -->
-	  <!-- below is for alfred.jayaprakash@gmail.com -->
-	  <user name="https://www.google.com/accounts/o8/id?id=AItOawmISxlkrKCOaBM8CwVWFCjjurT55P_U6OM" password="" authorities="ROLE_USER" />
-	</user-service>
-
-	<!--apply the oauth client context-->
-	<oauth:client id="oauth2ClientFilter" />
-	
-	<oauth:resource id="google" 
-	    type="authorization_code" 
-	    client-id="521251712562.apps.googleusercontent.com" 
-	    client-secret="RwPqNfHaWI5mdmBOTVr3hbox"
-	    access-token-uri="https://accounts.google.com/o/oauth2/token" 
-	    user-authorization-uri="https://accounts.google.com/o/oauth2/auth"
-	    scope="https://www.googleapis.com/auth/userinfo.email"
-	    client-authentication-scheme="form"
-	    pre-established-redirect-uri="https://ohad.sealdoc.com/oauth2-client/hello" />
 	    
-	    
+	<!--  use a custom userdetailsservice that fetches the user information from Google OpenID Token -->
+	<beans:bean id="userDetailsService" class="com.media2359.euphoria.service.security.GoogleUserDetailsService" />    
 </beans:beans>

@@ -15,10 +15,6 @@
 	<div style="font-family: Arial;font-size: 10pt">
 	To resolve this issue please follow the below steps <br>
 	<ol>
-	<li>Check the access log and look for the statement
-		ConsumerManager  - Verification succeeded for: https://www.google.com/accounts/o8/id?id=xxxxxxxx
-	<li>Open spring-security.xml and look for the bean userDetailsService
-	<li>Add a new 'user' entry similar to the existing 'user' entry using the value got in step-1
 	<li>If you are still unsure, please check with AJ
 	</ol>
 	</div>

@@ -4,7 +4,6 @@
 <!-- "Standards Mode". Replacing this declaration  -->
 <!-- with a "Quirks Mode" doctype may lead to some -->
 <!-- differences in layout.                        -->
-
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">

@@ -61,7 +61,7 @@
     	<groupId>org.springframework.security.oauth</groupId>
 		<artifactId>spring-security-oauth2</artifactId>
 		<version>1.0.5.RELEASE</version>
-	</dependency> 	
+	</dependency> 		
   </dependencies>
   <build>
     <!-- Generate compiled stuff in the folder used for developing mode  -->
