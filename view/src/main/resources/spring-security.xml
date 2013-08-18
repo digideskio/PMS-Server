@@ -29,10 +29,7 @@
 	</http>
 
  	<!-- Declare an authentication-manager to use a custom userDetailsService -->
-	<authentication-manager>
-         <authentication-provider user-service-ref="userDetailsService">
-         </authentication-provider>
- 	</authentication-manager>
+	<authentication-manager alias="openIDAuthenticationManager" />
 	    
 	<!--  use a custom userdetailsservice that fetches the user information from Google OpenID Token -->
 	<beans:bean id="userDetailsService" class="com.media2359.euphoria.service.security.GoogleUserDetailsService" />    

@@ -7,10 +7,9 @@ import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
@@ -21,12 +20,12 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
  * @author alfreds
  *
  */
-public class GoogleUserDetailsService implements UserDetailsService {
+public class GoogleUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
 	private Logger log = Logger.getLogger(GoogleUserDetailsService.class);
 
-	public UserDetails loadUserByUsername(String user)
+	public UserDetails loadUserDetails(OpenIDAuthenticationToken token)
 			throws UsernameNotFoundException, DataAccessException {
-		OpenIDAuthenticationToken token = (OpenIDAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		log.info("Fetching user details ...");
 		UserDetails userDetail = null;
 		if(token != null) {
 			List<OpenIDAttribute> attributes = token.getAttributes();

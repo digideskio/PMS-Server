@@ -5,10 +5,10 @@
  
 <hibernate-mapping>
     <class name="com.media2359.euphoria.model.project.Project" table="Project">
-        <id column="id" name="id" >
+        <id column="project_id" name="id" >
            <generator class="increment"/>
         </id>
-        <property name="name" column="name"/>
+        <property name="name" column="project_name"/>
         <property name="description" column="description"/>
         <property name="projectManager" column="project_manager"/>
     </class>
