@@ -7,16 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Euphoria - Login</title>
+<title>Access Denied</title>
 </head>
 <body>
 	<div id="login-error">${error}</div>
-	<font face="Arial" Color="Red">Sorry. You are denied access to this application</font>
-	<div style="font-family: Arial;font-size: 10pt">
-	To resolve this issue please follow the below steps <br>
-	<ol>
-	<li>If you are still unsure, please check with AJ
-	</ol>
-	</div>
+	<font face="Arial" Color="Red">Sorry. You are denied access to this application. Please contact your technical support.</font>
 </body>
 </html>

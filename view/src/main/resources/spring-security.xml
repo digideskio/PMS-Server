@@ -8,11 +8,11 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<http auto-config="true" use-expressions="true" access-denied-page="/jsp/common/access_denied.jsp" >
-		<intercept-url pattern="/jsp/login/login.jsp" access="permitAll"/>
-		<intercept-url pattern="/jsp/common/access_denied.jsp" access="permitAll"/>
+		<intercept-url pattern="/favicon.ico" access="permitAll"/>
+		<intercept-url pattern="/jsp/login/*" access="permitAll"/>
+		<intercept-url pattern="/jsp/common/*" access="permitAll"/>
 		<intercept-url pattern="/static/**" access="permitAll"/>
-		<intercept-url pattern="favicon.ico" access="permitAll"/>
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		<openid-login
 			    login-page="/jsp/login/login.jsp"
 			    authentication-failure-url="/jsp/common/access_denied.jsp"

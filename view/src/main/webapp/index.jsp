@@ -28,9 +28,7 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-	<table >
-		<tr><td><%@include file="/jsp/includes/header.jsp" %></td></tr>
-		<tr><td><div id="rootpane"></div></td></tr>
-	</table>
+	<div id="rootpanel">
+	</div>
   </body>
 </html>
