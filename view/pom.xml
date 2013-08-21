@@ -19,12 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
-  <dependencies> <!-- 
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-      <version>${gwt.version}</version>
-    </dependency> -->
+  <dependencies> 
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
@@ -34,12 +29,7 @@
       <groupId>com.media2359</groupId>
       <artifactId>euphoria-services</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-    </dependency> 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.1.2</version>
-    </dependency> 
+    </dependency>
 	<dependency>
 	    <groupId>com.gwt4spring</groupId>
 	    <artifactId>gwt4spring</artifactId>
@@ -85,6 +75,8 @@
 	              <inplace>true</inplace> 
 	              <localWorkers>${gwt.localWorkers}</localWorkers>
 	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m</extraJvmArgs>
+	              <runTarget>tester.html</runTarget>
+                  <hostedWebapp>${webappDirectory}</hostedWebapp>
 	            </configuration>
 	            <goals>
 	              <goal>compile</goal>
