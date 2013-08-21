@@ -8,6 +8,7 @@ import com.media2359.euphoria.view.client.main.MainPanel;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Euphoria implements EntryPoint {
+
 	/**
 	 * This is the entry point method.
 	 */

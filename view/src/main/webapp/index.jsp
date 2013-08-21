@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <!-- The DOCTYPE declaration above will set the    -->
 <!-- browser's rendering engine into               -->
@@ -15,9 +16,24 @@
     <!-- be added before this line.                -->
     <!--                                           -->
     <script type="text/javascript" src="euphoria/euphoria.nocache.js"></script>
+	<script type="text/javascript">
+    	function getLoginUsername() {
+    		return document.forms[0].userid.value;
+    	}
+    </script>    
   </head>
 
   <body>
+  	<form id="loginform" name="loginform">
+		 <security:authorize access="isAuthenticated()">
+		    <input type="hidden" name="userid" value='<security:authentication property="principal.username" />' />
+		</security:authorize>
+		
+		<security:authorize access="! isAuthenticated()">
+		    <input type="hidden" name="userid" value='Not logged in' />
+		</security:authorize> 	
+  	</form>
+  	
     <!-- OPTIONAL: include this if you want history support -->
     <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
 
@@ -28,7 +44,7 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-	<div id="rootpanel">
+	<div id="bodypanel">
 	</div>
   </body>
 </html>
