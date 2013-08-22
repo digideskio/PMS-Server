@@ -1,8 +1,7 @@
 package com.media2359.euphoria.view.client.project;
 
 import java.util.List;
-
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

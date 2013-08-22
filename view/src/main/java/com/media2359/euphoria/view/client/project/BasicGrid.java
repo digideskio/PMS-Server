@@ -67,8 +67,6 @@ public class BasicGrid extends Composite {
 
 		// Setup the grid
 		grid = new Grid<Project>(listStore, columnModel, gridView);
-		grid.setSize("100%", "100%");
-
 		initWidget(grid);
 	}
 

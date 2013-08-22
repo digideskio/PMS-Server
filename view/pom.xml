@@ -80,7 +80,7 @@
 	              <inplace>true</inplace> 
 	              <style>DETAILED</style>
 	              <localWorkers>${gwt.localWorkers}</localWorkers>
-	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m</extraJvmArgs>
+	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m -Xss512m</extraJvmArgs>
 	              <runTarget>tester.html</runTarget>
                   <hostedWebapp>${webappDirectory}</hostedWebapp>
 	            </configuration>

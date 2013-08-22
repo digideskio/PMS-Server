@@ -9,51 +9,20 @@
 	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
-		<ui:attributes top="4" right="4" bottom="4" left="4" />
-	</ui:with>
-	
-	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="dateMargins">
-		<ui:attributes top="5" right="4" bottom="5" left="4" />
+		<ui:attributes top="5" right="5" bottom="5" left="5" />
 	</ui:with>
 	
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
-		field="topPane">
-		<ui:attributes width="1.0" height="0.10" margins="{centerMargins}" />
+		field="outerPane">
+		<ui:attributes width="1.0" height="0.7" margins="{centerMargins}" />
 	</ui:with>
 	
-	<ui:with
-		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
-		field="bottomPane">
-		<ui:attributes width="1.0" height="0.75" margins="{centerMargins}" />
-	</ui:with>
-
-	<ui:with
-		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
-		field="leftPane">
-		<ui:attributes width="0.20" height="1.0" margins="{centerMargins}" />
-	</ui:with>
-
-	<ui:with
-		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
-		field="rightPane">
-		<ui:attributes width="0.80" height="1.0" margins="{centerMargins}" />
-	</ui:with>
-
-	<ui:with
-		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
-		field="datePane">
-		<ui:attributes width="0.3" height="1.0" margins="{dateMargins}" />
-	</ui:with>
 	<row:VerticalLayoutContainer>
-		<row:child layoutData="{bottomPane}">
-			<row:HorizontalLayoutContainer>
-				<row:child layoutData="{leftPane}">
-					<gxt:ContentPanel borders="true" headingText="My Projects">
-						<project:BasicGrid ui:field="basicGrid"></project:BasicGrid>
-					</gxt:ContentPanel>
-				</row:child>
-			</row:HorizontalLayoutContainer>
+		<row:child layoutData="{outerPane}">
+			<gxt:ContentPanel borders="true" headingText="My Projects">
+				<project:BasicGrid ui:field="basicGrid"></project:BasicGrid>
+			</gxt:ContentPanel>
 		</row:child>
 	</row:VerticalLayoutContainer>
 </ui:UiBinder>
