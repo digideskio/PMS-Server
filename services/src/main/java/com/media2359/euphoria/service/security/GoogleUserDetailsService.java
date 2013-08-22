@@ -1,3 +1,12 @@
+/**************************************************************************
+ * Copyright (c) 2013 2359 Media Pvt Ltd
+ *
+ * NOTICE:  All information contained herein is, and remains the 
+ * property of 2359 Media Pvt Ltd and its suppliers, if any. 
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from 2359 Media Pvt Ltd
+ ***************************************************************************/
 package com.media2359.euphoria.service.security;
 
 import java.util.ArrayList;
@@ -15,9 +24,13 @@ import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 /**
- * User Details Service to fetch the details of the logged in Google User
+ * 
+ * GoogleUserDetailsService
+ *
+ * TODO Write something about this class
  * 
  * @author alfreds
+ * @version 1.0 2013
  *
  */
 public class GoogleUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
