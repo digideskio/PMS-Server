@@ -10,7 +10,6 @@
 <title>Euphoria - Login</title>
 </head>
 <body>
-	<div id="login-error">${error}</div>
 	<font face="Arial">Please wait while we sign you in with your <img src="/static/images/google-logo.png"></img> account...</font>
 	<form name="loginForm" id="loginForm" action="/j_spring_openid_security_check" method="post">
 		<input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>

@@ -7,24 +7,30 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
-	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower">
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.project"
+	xmlns:manpower="urn:import:com.media2359.euphoria.view.client.manpower">
 	
 	<ui:style>
 		.little-padding{padding:10px;font-size:14px;}
-		.header{font-family:verdana,"Trebuchet MS",lucida,arial,helvetica,sans-serif;background-color:black;background-image:url("/images/header_bg.gif");background-repeat:repeat-x;}
-		.header-left{background: url(../images/header_branding.jpg) no-repeat;display:block; padding-left: 100px; width: 70%}
-		.header-right{font-size:13px;color:white;padding:10%;}	
+		.header{font-family:Arial, Verdana,Trebuchet MS, Lucida, Helvetica, Sans-Serif;background-color:black;background-image:url("/static/images/header_bg.gif");background-repeat:repeat-x;}
+		.header-left{background: url(/static/images/header_branding.jpg) no-repeat;display:block; padding-left: 100px; width: 70%}
+		.header-right{font-size:13px;color:white;padding:10%;}
+		.footerText{font-size:13px;text-align: center;font-family:Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;}	
 	</ui:style>
    
    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="dashboardConfig">
    		<ui:attributes text="Dashboard    " />
    </ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="manpowerConfig">
-   		<ui:attributes text="Manpower     " />
+   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="requestConfig">
+   		<ui:attributes text="Manpower Requests    " />
    </ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="staffConfig">
+   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="approvalConfig">
+   		<ui:attributes text="Manpower Approvals    " />
+   </ui:with>
+
+   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="projectConfig">
    		<ui:attributes text="Projects     " />
    </ui:with>
 
@@ -61,11 +67,11 @@
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="westData">
     <ui:attributes size="0.2" margins="{westMargins}" collapsible="true" split="true" />
   </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="centerData">
-    <ui:attributes margins="{centerMargins}" />
+  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="centerData">
+    <ui:attributes size="0.7" margins="{centerMargins}" />
   </ui:with>
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="eastData">
-    <ui:attributes size="0" margins="{eastMargins}" hidden="true"/>
+    <ui:attributes size="0.1" margins="{eastMargins}" hidden="true"/>
   </ui:with>
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="southData">
     <ui:attributes size="0.05" margins="{southMargins}" />
@@ -90,33 +96,32 @@
           </container:HorizontalLayoutContainer>
         </container:north>
         <container:west layoutData="{westData}">
-          <gxt:ContentPanel width="15%"/>
+          <gxt:ContentPanel width="15%" headingText="Quick Menu"/>
         </container:west>
         <container:center layoutData="{centerData}" >
-          <container:SimpleContainer width="85%">
+          <container:SimpleContainer width="85%"> 
           <gxt:TabPanel width="100%">
-                 <gxt:child config="{dashboardConfig}">
-            	   	<g:Label text="Test message"></g:Label>
+                 <gxt:child config="{requestConfig}">
+        	        <manpower:ManpowerRequestPanel></manpower:ManpowerRequestPanel>
                  </gxt:child>
-                 <gxt:child config="{manpowerConfig}">
-        	         <project:ManpowerRequestPanel></project:ManpowerRequestPanel>
-        	         <!--  <project:ManpowerRequestAllocationPanel></project:ManpowerRequestAllocationPanel> -->
-                 </gxt:child>
-                 <gxt:child config="{staffConfig}">
-    	             <g:Label text="Test message"></g:Label>
+                 <gxt:child config="{approvalConfig}">
+        	        <manpower:ManpowerRequestPanel></manpower:ManpowerRequestPanel>
+                 </gxt:child>                
+                 <gxt:child config="{projectConfig}">
+    	             <project:ProjectSummaryPanel></project:ProjectSummaryPanel>
                  </gxt:child>
                  <gxt:child config="{staffrollConfig}">
-	                 <g:Label text="Test message"></g:Label>
-                 </gxt:child>
-          </gxt:TabPanel>                              
+	                 <g:Label text="Coming soon" styleName="{style.footerText}"></g:Label>
+                 </gxt:child> 
+          </gxt:TabPanel>        
           </container:SimpleContainer>
         </container:center>
         <container:east layoutData="{eastData}">
-          <gxt:ContentPanel width="0%"/>
+          <gxt:ContentPanel width="1%"/>
         </container:east>        
         <container:south layoutData="{southData}">
           <container:SimpleContainer>
-          	 <g:Label text="Footer"></g:Label>
+          	 <g:Label text="Copyright - 2359 Media Pvt Ltd 2013" horizontalAlignment="center" styleName="{style.footerText}"></g:Label>
           </container:SimpleContainer>
         </container:south>
       </container:BorderLayoutContainer>

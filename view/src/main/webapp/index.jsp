@@ -8,6 +8,7 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="euphoria/reset.css" />
     <title>Euphoria</title>
 
     <!--                                           -->
@@ -44,6 +45,7 @@
         in order for this application to display correctly.
       </div>
     </noscript>
+    <div id="loading" style="font-family: Arial;font-size: 11pt">Loading. Please wait...</div> 
 	<div id="bodypanel">
 	</div>
   </body>

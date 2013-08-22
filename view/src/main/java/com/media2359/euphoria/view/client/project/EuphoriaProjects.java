@@ -1,4 +1,4 @@
-package com.media2359.euphoria.view.client;
+package com.media2359.euphoria.view.client.project;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

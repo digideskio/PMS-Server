@@ -3,28 +3,23 @@ package com.media2359.euphoria.view.client.project;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sencha.gxt.widget.core.client.info.Info;
 import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.cell.client.ImageLoadingCell;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.editor.client.Editor.Path;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.media2359.euphoria.view.message.project.Project;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.resources.CommonStyles;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.GridView;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 public class ProjectGrid extends Composite {
 	private GridView<Project> gridView;
@@ -94,7 +89,6 @@ public class ProjectGrid extends Composite {
 		gridView.setAutoFill(true);
 
 		grid = new Grid<Project>(listStore, columnModel, gridView);
-		
 		initWidget(grid);
 	}
 

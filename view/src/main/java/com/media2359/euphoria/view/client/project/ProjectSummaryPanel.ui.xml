@@ -6,7 +6,7 @@
 	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
-	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower">
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
 		<ui:attributes top="4" right="4" bottom="4" left="4" />
@@ -46,36 +46,11 @@
 		<ui:attributes width="0.3" height="1.0" margins="{dateMargins}" />
 	</ui:with>
 	<row:VerticalLayoutContainer>
-		<row:child layoutData="{topPane}">
-			<row:HorizontalLayoutContainer>
-				<row:child layoutData="{leftPane}">
-					<row:SimpleContainer>
-					</row:SimpleContainer>
-				</row:child>
-
-				<row:child layoutData="{datePane}">
-					<row:SimpleContainer >
-						<form:FieldLabel text="Week Starting" width="150px">
-							<form:widget>
-								<form:DateField ui:field="datepicker" editable="false"/>
-							</form:widget>
-						</form:FieldLabel>						
-					</row:SimpleContainer>					
-				</row:child>
-			</row:HorizontalLayoutContainer>
-		</row:child>
 		<row:child layoutData="{bottomPane}">
 			<row:HorizontalLayoutContainer>
 				<row:child layoutData="{leftPane}">
-					<row:SimpleContainer borders="true">
-						<project:MyProjectsPanel ui:field="selector"></project:MyProjectsPanel>
-					</row:SimpleContainer>
-				</row:child>
-
-				<row:child layoutData="{rightPane}">
-					<gxt:ContentPanel headingText="Project" ui:field="header">
-						<project:ManpowerRequestAllocationPanel
-							ui:field="allocator"></project:ManpowerRequestAllocationPanel>
+					<gxt:ContentPanel borders="true" headingText="My Projects">
+						<project:BasicGrid ui:field="basicGrid"></project:BasicGrid>
 					</gxt:ContentPanel>
 				</row:child>
 			</row:HorizontalLayoutContainer>

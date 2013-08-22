@@ -1,4 +1,4 @@
-package com.media2359.euphoria.view.client.core;
+package com.media2359.euphoria.view.client.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -68,14 +67,9 @@ public class BasicGrid extends Composite {
 
 		// Setup the grid
 		grid = new Grid<Project>(listStore, columnModel, gridView);
-		
-		// Enclose in a framed panel
-	    FramedPanel framedPanel = new FramedPanel();
-	    framedPanel.setHeadingText("My Projects");
-	    framedPanel.setPixelSize(500, 400);
-	    framedPanel.add(grid);
+		grid.setSize("100%", "100%");
 
-		initWidget(framedPanel);
+		initWidget(grid);
 	}
 
 	public void populateData(List<Project> projects) {

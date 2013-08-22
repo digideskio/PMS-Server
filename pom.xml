@@ -20,7 +20,7 @@
   <!-- Convenience properties to control framework versions -->
   <properties>
     <spring.framework.version>3.2.3.RELEASE</spring.framework.version>
-    <gwt.version>2.4.0</gwt.version>
+    <gwt.version>2.5.1</gwt.version>
     <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
     <gwt.localWorkers>1</gwt.localWorkers>
   </properties>
