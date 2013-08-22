@@ -13,13 +13,18 @@
 	<ui:style>
 		.little-padding{padding:10px;font-size:14px;}
 		.header{font-family:Arial, Verdana,Trebuchet MS, Lucida, Helvetica, Sans-Serif;background-color:black;background-image:url("/static/images/header_bg.gif");background-repeat:repeat-x;}
-		.header-left{background: url(/static/images/header_branding.jpg) no-repeat;display:block; padding-left: 100px; width: 70%}
+		.header-left{background: url(/static/images/banner_image.jpg) no-repeat;display:inline-block; padding-left: 10px; width: 70%}
 		.header-right{font-size:13px;color:white;padding:10%;}
 		.footerText{font-size:13px;text-align: center;font-family:Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;}	
+		.logout{font-size:12px;color:blue;padding:10%;cursor:pointer}
 	</ui:style>
    
    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="dashboardConfig">
    		<ui:attributes text="Dashboard    " />
+   </ui:with>
+   
+   <ui:with type="com.sencha.gxt.widget.core.client.button.IconButton.IconConfig" field="logoutButtonConfig">
+   		<ui:attributes style="{style.logout}" overStyle="{style.logout}" disableStyle="{style.logout}"/>
    </ui:with>
 
    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="requestConfig">
@@ -76,22 +81,36 @@
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="southData">
     <ui:attributes size="0.05" margins="{southMargins}" />
   </ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+		field="bannerLeft">
+		<ui:attributes width="0.70" height="1.0" margins="{centerMargins}" />
+	</ui:with>
+
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+		field="bannerRight">
+		<ui:attributes width="0.30" height="1.0" margins="{centerMargins}" />
+	</ui:with>  
  
   <container:Viewport>
     <container:child layoutData="{outerData}">
       <container:BorderLayoutContainer ui:field="con" borders="false">
         <container:north layoutData="{northData}">
-          <container:HorizontalLayoutContainer styleName="{style.header}" width="100%">
-          	<container:child>
+          <container:HorizontalLayoutContainer styleName="{style.header}">
+          	<container:child layoutData="{bannerLeft}">
           	  <container:SimpleContainer styleName="{style.header-left}">
           	  </container:SimpleContainer>		
           	</container:child>
-          	<container:child>  	
-          	  <container:VerticalLayoutContainer>
+          	<container:child layoutData="{bannerRight}">  	
+          	  <container:HorizontalLayoutContainer>
           	  	<container:child>
-          	  		<g:Label text="Welcome Alfred" ui:field="welcomelabel" styleName="{style.header-right}"></g:Label>
+          	  		<g:Label text="" ui:field="welcomelabel" styleName="{style.header-right}"></g:Label>
           	  	</container:child>
-          	  </container:VerticalLayoutContainer>
+          	  	<container:child>
+          	  		<g:Hyperlink text="Logout" ui:field="logoutButton" styleName="{style.logout}"></g:Hyperlink>
+          	  	</container:child>
+          	  </container:HorizontalLayoutContainer>
           	</container:child> 
           </container:HorizontalLayoutContainer>
         </container:north>
