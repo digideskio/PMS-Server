@@ -12,8 +12,11 @@ package com.media2359.euphoria.view.client.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.mapping.Column;
+
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
 import com.media2359.euphoria.view.message.project.Project;
@@ -28,6 +31,8 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.GridView;
+import com.sencha.gxt.widget.core.client.grid.filters.GridFilters;
+import com.sencha.gxt.widget.core.client.grid.filters.StringFilter;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 public class ProjectGrid extends Composite {
@@ -37,7 +42,7 @@ public class ProjectGrid extends Composite {
 
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<Project> {
-
+		@Path("id")
 		ModelKeyProvider<Project> key();
 		
 		ValueProvider<Project, String> name();
@@ -49,6 +54,7 @@ public class ProjectGrid extends Composite {
 		ValueProvider<Project, Integer> completedMilestoneCount();
 		
 		ValueProvider<Project, String> detailsImage();
+		
 	}
 
 	// Setup the property access definitions for the values for the grid columns
@@ -66,9 +72,9 @@ public class ProjectGrid extends Composite {
 				gridProperties.milestoneCount(), 150, "Total No Of Milestones");
 		ColumnConfig<Project, Integer> mileStoneCompCol = new ColumnConfig<Project, Integer>(
 				gridProperties.completedMilestoneCount(), 150, "Completed Milestones");
-		ColumnConfig<Project, String> arrowImageCol = new ColumnConfig<Project, String>(
-				gridProperties.detailsImage(), 40, "View Project");
-		
+		ColumnConfig arrowImageCol = new ColumnConfig<Project, String>(
+				gridProperties.name(), 90, "View Project");
+
 		arrowImageCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
 		arrowImageCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
 		ViewProjectCell image = new ViewProjectCell();
@@ -85,7 +91,7 @@ public class ProjectGrid extends Composite {
 		});
 		arrowImageCol.setCell(image);
 		
-		
+		  
 		List<ColumnConfig<Project, ?>> columns = new ArrayList<ColumnConfig<Project, ?>>();
 		columns.add(nameCol);
 		columns.add(manDaysCol);
@@ -100,9 +106,21 @@ public class ProjectGrid extends Composite {
 		grid = new Grid<Project>(listStore, columnModel, gridView);
 		initWidget(grid);
 	}
+	
+	private void addFilters(){
+
+		StringFilter<Project> nameFilter = new StringFilter<Project>(gridProperties.name());
+		GridFilters<Project> filters = new GridFilters<Project>();
+		filters.initPlugin(grid);
+		filters.setLocal(true);
+		filters.addFilter(nameFilter);
+	}
 
 	public void populateData(List<Project> projects) {
-		listStore.replaceAll(projects);
+		
+			listStore.replaceAll(projects);
+			addFilters();
+
 	}
 	
 	public void clear() {

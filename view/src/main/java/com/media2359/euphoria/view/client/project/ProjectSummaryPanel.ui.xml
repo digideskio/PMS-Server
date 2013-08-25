@@ -20,8 +20,8 @@
 	
 	<row:VerticalLayoutContainer>
 		<row:child layoutData="{outerPane}">
-			<gxt:ContentPanel borders="true" headingText="My Projects">
-				<project:BasicGrid ui:field="basicGrid"></project:BasicGrid>
+			<gxt:ContentPanel borders="true" headingText="Projects">
+				<project:ProjectGrid ui:field="projectGrid"></project:ProjectGrid>
 			</gxt:ContentPanel>
 		</row:child>
 	</row:VerticalLayoutContainer>

@@ -37,7 +37,7 @@ public class ProjectSummaryPanel extends Composite {
 			.create(ProjectService.class);
 
 	@UiField
-	BasicGrid basicGrid;
+	ProjectGrid projectGrid;
 	private Logger log = Logger.getLogger("EuphoriaLogger");
 
 	/**
@@ -71,10 +71,10 @@ public class ProjectSummaryPanel extends Composite {
 
 				if ((projects != null) && (!projects.isEmpty())) {
 					// Now populate GXT Grid
-					basicGrid.populateData(projects);
+					projectGrid.populateData(projects);
 				} else {
 					// Remove all items
-					basicGrid.clear();
+					projectGrid.clear();
 				}
 			}
 		};
