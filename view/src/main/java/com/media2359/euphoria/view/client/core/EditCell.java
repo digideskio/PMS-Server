@@ -7,7 +7,17 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.project;
+package com.media2359.euphoria.view.client.core;
+
+/**
+ * EditCell
+ *
+ * TODO Write something about this class
+ * 
+ * @author Praveen
+ * @version 1.0 2013
+ **
+ **/
 
 import com.sencha.gxt.cell.core.client.TextButtonCell;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -16,12 +26,13 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.Image;
 
 
-public class ViewProjectCell extends TextButtonCell{
+
+public class EditCell extends TextButtonCell{
 
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context context, 
             String value, SafeHtmlBuilder sb) {
-        SafeHtml html = SafeHtmlUtils.fromTrustedString(new Image("/static/images/arrow.png").toString());
+        SafeHtml html = SafeHtmlUtils.fromTrustedString(new Image("/static/images/edit.png").toString());
         sb.append(html);
     }
 }

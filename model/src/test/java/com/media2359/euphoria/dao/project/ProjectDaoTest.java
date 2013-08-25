@@ -7,7 +7,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.service.project;
+package com.media2359.euphoria.dao.project;
 
 import java.util.List;
 

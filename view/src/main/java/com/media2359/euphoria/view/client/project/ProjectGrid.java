@@ -19,6 +19,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
+import com.media2359.euphoria.view.client.core.ViewCell;
 import com.media2359.euphoria.view.message.project.Project;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.resources.CommonStyles;
@@ -43,17 +44,11 @@ public class ProjectGrid extends Composite {
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<Project> {
 		@Path("id")
-		ModelKeyProvider<Project> key();
-		
+		ModelKeyProvider<Project> key();		
 		ValueProvider<Project, String> name();
-
-		ValueProvider<Project, Integer> manDaysLeft();
-		
-		ValueProvider<Project, Integer> milestoneCount();
-		
+		ValueProvider<Project, Integer> manDaysLeft();		
+		ValueProvider<Project, Integer> milestoneCount();		
 		ValueProvider<Project, Integer> completedMilestoneCount();
-		
-		ValueProvider<Project, String> detailsImage();
 		
 	}
 
@@ -72,32 +67,18 @@ public class ProjectGrid extends Composite {
 				gridProperties.milestoneCount(), 150, "Total No Of Milestones");
 		ColumnConfig<Project, Integer> mileStoneCompCol = new ColumnConfig<Project, Integer>(
 				gridProperties.completedMilestoneCount(), 150, "Completed Milestones");
-		ColumnConfig arrowImageCol = new ColumnConfig<Project, String>(
+		ColumnConfig viewDetailsCol = new ColumnConfig<Project, String>(
 				gridProperties.name(), 90, "View Project");
 
-		arrowImageCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
-		arrowImageCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
-		ViewProjectCell image = new ViewProjectCell();
-
-		image.addSelectHandler(new SelectHandler() {
-			
-			public void onSelect(SelectEvent event) {
-		        Context c = event.getContext();
-		        int row = c.getIndex();
-		        Project p = listStore.get(row);
-		        Info.display("Event", "The " + p.getName() + " was clicked.");
-				
-			}
-		});
-		arrowImageCol.setCell(image);
 		
-		  
+		populateViewButton(viewDetailsCol);
+		
 		List<ColumnConfig<Project, ?>> columns = new ArrayList<ColumnConfig<Project, ?>>();
 		columns.add(nameCol);
 		columns.add(manDaysCol);
 		columns.add(mileStoneCol);
 		columns.add(mileStoneCompCol);
-		columns.add(arrowImageCol);
+		columns.add(viewDetailsCol);
 		ColumnModel<Project> columnModel = new ColumnModel<Project>(columns);
 		
 		gridView = new GridView<Project>();
@@ -107,6 +88,26 @@ public class ProjectGrid extends Composite {
 		initWidget(grid);
 	}
 	
+	private void populateViewButton(ColumnConfig viewDetailsCol){
+		
+
+		viewDetailsCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
+		viewDetailsCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
+		ViewCell image = new ViewCell();
+
+		image.addSelectHandler(new SelectHandler() {
+			
+			public void onSelect(SelectEvent event) {
+		        Context c = event.getContext();
+		        int row = c.getIndex();
+		        Project p = listStore.get(row);
+		        Info.display("Event", "The project " + p.getName() + " was clicked.");
+				
+			}
+		});
+		viewDetailsCol.setCell(image);
+		
+	}
 	private void addFilters(){
 
 		StringFilter<Project> nameFilter = new StringFilter<Project>(gridProperties.name());

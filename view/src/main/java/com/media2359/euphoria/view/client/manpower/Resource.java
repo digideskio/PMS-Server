@@ -12,7 +12,7 @@ package com.media2359.euphoria.view.client.manpower;
 // just to show the converter feature
 enum Resource {
 	DEVELOPER1("Shiv"), DEVELOPER2("Lung Sen"), DEVELOPER3("Tian Yang"), DEVELOPER4(
-			"Pravin"), DEVELOPER5("May");
+			"Praveen"), DEVELOPER5("May");
 	static Resource parseString(String object) {
 		if (Resource.DEVELOPER1.toString().equals(object)) {
 			return Resource.DEVELOPER1;

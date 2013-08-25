@@ -8,7 +8,9 @@
 	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
 	xmlns:project="urn:import:com.media2359.euphoria.view.client.project"
-	xmlns:manpower="urn:import:com.media2359.euphoria.view.client.manpower">
+	xmlns:manpower="urn:import:com.media2359.euphoria.view.client.manpower"
+	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee">
+	
 	
 	<ui:style>
 		.little-padding{padding:10px;font-size:14px;}
@@ -130,7 +132,7 @@
     	             <project:ProjectSummaryPanel></project:ProjectSummaryPanel>
                  </gxt:child>
                  <gxt:child config="{staffrollConfig}">
-	                 <g:Label text="Coming soon" styleName="{style.footerText}"></g:Label>
+	                 <employee:EmployeePanel></employee:EmployeePanel>
                  </gxt:child> 
           </gxt:TabPanel>        
           </container:SimpleContainer>
@@ -140,7 +142,7 @@
         </container:east>        
         <container:south layoutData="{southData}">
           <container:SimpleContainer>
-          	 <g:Label text="Copyright - 2359 Media Pvt Ltd 2013" horizontalAlignment="center" styleName="{style.footerText}"></g:Label>
+          	 <g:Label text="Copyright - 2359 Media Pte Ltd 2013" horizontalAlignment="center" styleName="{style.footerText}"></g:Label>
           </container:SimpleContainer>
         </container:south>
       </container:BorderLayoutContainer>
