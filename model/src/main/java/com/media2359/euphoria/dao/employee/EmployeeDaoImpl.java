@@ -98,7 +98,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp6.setName("Shiv");
 		 emp6.setCompanyEmail("shiv@companyemail.com");
 		 emp6.setEmploymentType("Permenant");
-		 emp6.setDesignation("PM/Post Man");
+		 emp6.setDesignation("PM");
 		 emp6.setPlatForms("Rails,iOS,HTML,Android");
 		 emp6.setMobile("98888988");
 		 emp6.setPersonalEmail("shiv@personalemail.com");
