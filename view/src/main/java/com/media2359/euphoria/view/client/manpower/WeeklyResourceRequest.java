@@ -14,7 +14,7 @@ public class WeeklyResourceRequest {
 	String id;
 	String platform;
 	String resource;
-	Float duration;
+	String duration;
 	String startDate;
 	String comment;
 	
@@ -36,10 +36,10 @@ public class WeeklyResourceRequest {
 	public void setResource(String resource) {
 		this.resource = resource;
 	}
-	public Float getDuration() {
+	public String getDuration() {
 		return duration;
 	}
-	public void setDuration(Float duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 	public String getStartDate() {

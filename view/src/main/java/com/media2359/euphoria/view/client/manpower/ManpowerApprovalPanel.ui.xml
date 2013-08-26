@@ -12,8 +12,8 @@
 		<ui:attributes top="4" right="4" bottom="4" left="4" />
 	</ui:with>
 	
-	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="buttonMargins">
-		<ui:attributes top="10" right="4" bottom="1" left="4" />
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="dateMargins">
+		<ui:attributes top="5" right="4" bottom="5" left="4" />
 	</ui:with>
 	
 	<ui:with
@@ -42,10 +42,10 @@
 
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
-		field="addResourcePane">
-		<ui:attributes width="0.1" height="0.5" margins="{buttonMargins}" />
+		field="datePane">
+		<ui:attributes width="0.3" height="1.0" margins="{dateMargins}" />
 	</ui:with>
-	<row:VerticalLayoutContainer> 
+	<row:VerticalLayoutContainer>
 		<row:child layoutData="{topPane}">
 			<row:HorizontalLayoutContainer>
 				<row:child layoutData="{leftPane}">
@@ -53,9 +53,13 @@
 					</row:SimpleContainer>
 				</row:child>
 
-				<row:child layoutData="{addResourcePane}">
+				<row:child layoutData="{datePane}">
 					<row:SimpleContainer >
-						<button:TextButton text="Add Resource" ui:field="addResource"></button:TextButton>					
+						<form:FieldLabel text="Week Starting" width="150px">
+							<form:widget>
+								<form:DateField ui:field="datepicker" editable="false"/>
+							</form:widget>
+						</form:FieldLabel>						
 					</row:SimpleContainer>					
 				</row:child>
 			</row:HorizontalLayoutContainer>
@@ -70,8 +74,8 @@
 
 				<row:child layoutData="{rightPane}">
 					<gxt:ContentPanel headingText="Project" ui:field="header">
-						<project:ManpowerRequestAllocationPanel
-							ui:field="allocator"></project:ManpowerRequestAllocationPanel>
+						<project:ManpowerApprovalAllocationPanel
+							ui:field="allocator"></project:ManpowerApprovalAllocationPanel>
 					</gxt:ContentPanel>
 				</row:child>
 			</row:HorizontalLayoutContainer>

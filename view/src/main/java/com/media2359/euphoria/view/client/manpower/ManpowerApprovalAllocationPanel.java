@@ -20,8 +20,6 @@ import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.Converter;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.StringLabelProvider;
-import com.sencha.gxt.widget.core.client.event.CompleteEditEvent;
-import com.sencha.gxt.widget.core.client.event.CompleteEditEvent.CompleteEditHandler;
 import com.sencha.gxt.widget.core.client.form.PropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -38,7 +36,7 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridInlineEditing;
  * @version 1.0
  * 
  */
-public class ManpowerRequestAllocationPanel implements IsWidget {
+public class ManpowerApprovalAllocationPanel implements IsWidget {
 
 	private WeeklyResourceRequestProperties props = null;
 
@@ -76,7 +74,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		cm = new ColumnModel<WeeklyResourceRequest>(l);
 
 		store = new ListStore<WeeklyResourceRequest>(props.key());
-		addNewRow();
+		store.addAll(getWeeklyResourceRequests());
 
 		grid = new Grid<WeeklyResourceRequest>(store, cm);
 		grid.setWidth("100%");
@@ -85,19 +83,6 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		grid.getView().setStripeRows(true);
 
 		GridEditing<WeeklyResourceRequest> editableGrid = createEditableGrid(grid);
-		editableGrid.addCompleteEditHandler(new CompleteEditHandler<WeeklyResourceRequest>() {
-
-			@Override
-			public void onCompleteEdit(
-					CompleteEditEvent<WeeklyResourceRequest> event) {
-				int rowEdited = event.getEditCell().getRow();
-				WeeklyResourceRequest request = store.get(rowEdited);
-				if((request.getResource() != null) && (request.getStartDate() != null) 
-							&& (request.getDuration() != null) && (request.getPlatform() != null)) {
-					addNewRow();
-				}
-			}
-		});
 
 		/**
 		 * Make Resource Col editable
@@ -223,7 +208,6 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 
 				}, combo2);
 
-		editableGrid.addEditor(durationCol, new TextField());
 		editableGrid.addEditor(commentCol, new TextField());
 		return grid;
 	}
@@ -233,7 +217,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 	 * 
 	 */
 	public void addNewRow() {
-		store.add(new WeeklyResourceRequest());
+		
 	}
 	
 	/**
@@ -267,7 +251,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		request = new WeeklyResourceRequest();
 		request.setId("2");
 		request.setResource(Resource.DEVELOPER2.toString());
-		request.setDuration("1.5");
+		request.setDuration("2.0");
 		request.setPlatform(Platform.ANDROID.toString());
 		request.setStartDate(DayOfWeek.MONDAY.toString());
 		request.setComment("This is comment");

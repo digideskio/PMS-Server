@@ -126,7 +126,7 @@
         	        <manpower:ManpowerRequestPanel></manpower:ManpowerRequestPanel>
                  </gxt:child>
                  <gxt:child config="{approvalConfig}">
-        	        <manpower:ManpowerRequestPanel></manpower:ManpowerRequestPanel>
+        	        <manpower:ManpowerApprovalPanel></manpower:ManpowerApprovalPanel>
                  </gxt:child>                
                  <gxt:child config="{projectConfig}">
     	             <project:ProjectSummaryPanel></project:ProjectSummaryPanel>

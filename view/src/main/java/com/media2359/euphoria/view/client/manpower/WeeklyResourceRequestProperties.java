@@ -21,6 +21,6 @@ public interface WeeklyResourceRequestProperties extends PropertyAccess<WeeklyRe
   ValueProvider<WeeklyResourceRequest, String> resource();
   ValueProvider<WeeklyResourceRequest, String> platform();
   ValueProvider<WeeklyResourceRequest, String> startDate();
-  ValueProvider<WeeklyResourceRequest, Float> duration();
+  ValueProvider<WeeklyResourceRequest, String> duration();
   ValueProvider<WeeklyResourceRequest, String> comment();  
 }
