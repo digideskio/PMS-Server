@@ -9,16 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import com.google.gwt.junit.GWTMockUtilities;
-import com.google.gwtmockito.GwtMock;
-import com.google.gwtmockito.GwtMockitoTestRunner;
+import com.google.gwt.junit.client.GWTTestCase;
 
 /**
  * 
@@ -30,29 +21,33 @@ import com.google.gwtmockito.GwtMockitoTestRunner;
  * @version 1.0 2013
  *
  */
-@RunWith(GwtMockitoTestRunner.class)
-public class ManpowerRequestAllocationPanelTest {
+public class ManpowerRequestAllocationPanelTest2 extends GWTTestCase {
 	ManpowerRequestAllocationPanel allocationPanel;
-	//@GwtMock WeeklyResourceRequestProperties props;
 
-	public ManpowerRequestAllocationPanelTest() {
+	public ManpowerRequestAllocationPanelTest2() {
 		allocationPanel = new ManpowerRequestAllocationPanel();
 	}
 	
-	@BeforeClass
-	public static void setUp() {
-		GWTMockUtilities.disarm();
-	}
-	
-	@Test
 	public void testInitialRows() {
-		//allocationPanel.asWidget();
-		//assertNotNull(allocationPanel.grid);
+		allocationPanel.asWidget();
+		System.out.println(allocationPanel);
+		assertNotNull(allocationPanel.grid);
+		assertNotNull(allocationPanel.grid.getStore());
 	}
 	
-	@AfterClass
-	public static void teardown() {
-		GWTMockUtilities.restore();
+	public void testNullData() {
+		try {
+			allocationPanel.update(null);
+			//fail("Exception not thrown.");
+		} catch(Exception e) {};
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.gwt.junit.client.GWTTestCase#getModuleName()
+	 */
+	@Override
+	public String getModuleName() {
+		return "com.media2359.euphoria.view.Euphoria";
 	}
 
 }
