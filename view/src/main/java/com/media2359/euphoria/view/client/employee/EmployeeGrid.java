@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.hibernate.mapping.Column;
-
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor.Path;
@@ -32,8 +30,7 @@ import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
 import com.media2359.euphoria.view.client.core.EditCell;
 import com.media2359.euphoria.view.client.core.ViewCell;
-import com.media2359.euphoria.view.message.employee.Employee;
-import com.media2359.euphoria.view.message.project.Project;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.resources.CommonStyles;
 import com.sencha.gxt.data.shared.ListStore;
@@ -50,22 +47,22 @@ import com.sencha.gxt.widget.core.client.grid.filters.StringFilter;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 public class EmployeeGrid extends Composite {
-	private GridView<Employee> gridView;
-	private Grid<Employee> grid;
-	private ListStore<Employee> listStore;
+	private GridView<EmployeeDTO> gridView;
+	private Grid<EmployeeDTO> grid;
+	private ListStore<EmployeeDTO> listStore;
 	Logger log = Logger.getLogger("EuphoriaLogger");
 	// Property access definitions for the values in the Project object
-	public interface GridProperties extends PropertyAccess<Project> {
+	public interface GridProperties extends PropertyAccess<EmployeeDTO> {
 		@Path("name")
-		ModelKeyProvider<Employee> key();
+		ModelKeyProvider<EmployeeDTO> key();
 		
-		ValueProvider<Employee, String> name();
-		ValueProvider<Employee, String> mobile();		
-		ValueProvider<Employee, String> personalEmail();		
-		ValueProvider<Employee, String> companyEmail();		
-		ValueProvider<Employee, String> designation();		
-		ValueProvider<Employee, String> platForms();		
-		ValueProvider<Employee, String> employmentType();
+		ValueProvider<EmployeeDTO, String> name();
+		ValueProvider<EmployeeDTO, String> mobile();		
+		ValueProvider<EmployeeDTO, String> personalEmail();		
+		ValueProvider<EmployeeDTO, String> companyEmail();		
+		ValueProvider<EmployeeDTO, String> designation();		
+		ValueProvider<EmployeeDTO, String> platForms();		
+		ValueProvider<EmployeeDTO, String> employmentType();
 	}
 
 	// Setup the property access definitions for the values for the grid columns
@@ -73,27 +70,27 @@ public class EmployeeGrid extends Composite {
 			.create(GridProperties.class);
 
 	public EmployeeGrid() {
-		listStore = new ListStore<Employee>(gridProperties.key());
+		listStore = new ListStore<EmployeeDTO>(gridProperties.key());
 
-		ColumnConfig<Employee, String> nameCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> nameCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.name(), 150, "Name");
-		ColumnConfig<Employee, String> mobileCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> mobileCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.mobile(), 150, "Mobile");
-		ColumnConfig<Employee, String> emailCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> emailCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.companyEmail(), 300, "Email Address");
-		ColumnConfig<Employee, String> platformsCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> platformsCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.platForms(), 300, "Platforrm");
-		ColumnConfig designationCol = new ColumnConfig<Employee, String>(
+		ColumnConfig designationCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.designation(), 150, "Designation");
-		ColumnConfig<Employee, String> viewDetailsCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> viewDetailsCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.name(), 90, "View");
-		ColumnConfig<Employee, String> editCol = new ColumnConfig<Employee, String>(
+		ColumnConfig<EmployeeDTO, String> editCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.name(), 150, "Edit");
 		
 		populateViewButton(viewDetailsCol);
 		populateEditButton(editCol);
 		  
-		List<ColumnConfig<Employee, ?>> columns = new ArrayList<ColumnConfig<Employee, ?>>();
+		List<ColumnConfig<EmployeeDTO, ?>> columns = new ArrayList<ColumnConfig<EmployeeDTO, ?>>();
 		columns.add(nameCol);
 		columns.add(mobileCol);
 		columns.add(emailCol);
@@ -101,12 +98,12 @@ public class EmployeeGrid extends Composite {
 		columns.add(designationCol);
 		columns.add(viewDetailsCol);
 		columns.add(editCol);
-		ColumnModel<Employee> columnModel = new ColumnModel<Employee>(columns);
+		ColumnModel<EmployeeDTO> columnModel = new ColumnModel<EmployeeDTO>(columns);
 		
-		gridView = new GridView<Employee>();
+		gridView = new GridView<EmployeeDTO>();
 		gridView.setAutoFill(true);
 
-		grid = new Grid<Employee>(listStore, columnModel, gridView);
+		grid = new Grid<EmployeeDTO>(listStore, columnModel, gridView);
 		initWidget(grid);
 	}
 	
@@ -122,7 +119,7 @@ public class EmployeeGrid extends Composite {
 			public void onSelect(SelectEvent event) {
 		        Context c = event.getContext();
 		        int row = c.getIndex();
-		        Employee p = listStore.get(row);
+		        EmployeeDTO p = listStore.get(row);
 		        log.info("The employee " + p.getName() + " was clicked to Edit.");
 		        Info.display("Event", "The employee " + p.getName() + " was clicked to Edit.");
 				
@@ -143,7 +140,7 @@ public class EmployeeGrid extends Composite {
 			public void onSelect(SelectEvent event) {
 		        Context c = event.getContext();
 		        int row = c.getIndex();
-		        Employee p = listStore.get(row);
+		        EmployeeDTO p = listStore.get(row);
 		        Info.display("Event", "The employee " + p.getName() + " was clicked to View.");
 				
 			}
@@ -154,10 +151,10 @@ public class EmployeeGrid extends Composite {
 
 	private void addFilters(){
 
-		StringFilter<Employee> nameFilter = new StringFilter<Employee>(gridProperties.name());
-		StringFilter<Employee> platformFilter = new StringFilter<Employee>(gridProperties.platForms());
-		StringFilter<Employee> designationFilter = new StringFilter<Employee>(gridProperties.designation());
-		GridFilters<Employee> filters = new GridFilters<Employee>();
+		StringFilter<EmployeeDTO> nameFilter = new StringFilter<EmployeeDTO>(gridProperties.name());
+		StringFilter<EmployeeDTO> platformFilter = new StringFilter<EmployeeDTO>(gridProperties.platForms());
+		StringFilter<EmployeeDTO> designationFilter = new StringFilter<EmployeeDTO>(gridProperties.designation());
+		GridFilters<EmployeeDTO> filters = new GridFilters<EmployeeDTO>();
 		filters.initPlugin(grid);
 		filters.setLocal(true);
 		filters.addFilter(nameFilter);
@@ -165,7 +162,7 @@ public class EmployeeGrid extends Composite {
 		filters.addFilter(designationFilter);
 	}
 
-	public void populateData(List<Employee> employees) {
+	public void populateData(List<EmployeeDTO> employees) {
 		
 			listStore.replaceAll(employees);
 			addFilters();

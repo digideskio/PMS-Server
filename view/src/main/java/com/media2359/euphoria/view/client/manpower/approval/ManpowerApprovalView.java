@@ -7,35 +7,17 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.message.employee;
+package com.media2359.euphoria.view.client.manpower.approval;
 
 /**
- * EmployeeListResponse
+ * ManpowerApprovalView
  *
  * TODO Write something about this class
  * 
- * @author Praveen
+ * @author alfreds
  * @version 1.0 2013
  **/
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
-
-public class EmployeeListResponse implements Serializable {
-	List<EmployeeDTO> employees;
+public interface ManpowerApprovalView {
 	
-	public EmployeeListResponse() {
-
-	}
-
-	public List<EmployeeDTO> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(List<EmployeeDTO> employees) {
-		this.employees = employees;
-	}
-
 }

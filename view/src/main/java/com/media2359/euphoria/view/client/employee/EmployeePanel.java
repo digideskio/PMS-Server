@@ -28,7 +28,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.media2359.euphoria.view.message.employee.Employee;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
@@ -88,7 +88,7 @@ public class EmployeePanel extends Composite {
 
 			public void onSuccess(EmployeeListResponse result) {
 				messageBox.hide();
-				List<Employee> employees = result.getEmployees();
+				List<EmployeeDTO> employees = result.getEmployees();
 
 				if ((employees != null) && (!employees.isEmpty())) {
 					// Now populate GXT Grid

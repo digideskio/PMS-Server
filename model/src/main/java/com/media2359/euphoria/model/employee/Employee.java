@@ -9,7 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.employee;
 
-import java.util.List;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 
 /**
  * Employee
@@ -28,6 +28,20 @@ public class Employee {
 	private String designation;
 	private String platForms;
 	private String employmentType;
+	
+	public Employee() {
+		
+	}
+	
+	public Employee(EmployeeDTO employeeDTO) {
+		this.name = employeeDTO.getName();
+		this.personalEmail = employeeDTO.getPersonalEmail();
+		this.companyEmail = employeeDTO.getCompanyEmail();
+		this.mobile = employeeDTO.getMobile();
+		this.designation = employeeDTO.getDesignation();
+		this.employmentType = employeeDTO.getEmploymentType();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -70,7 +84,19 @@ public class Employee {
 	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;
 	}
-	
-	
-	
+	/**
+	 * TODO Write something about this method
+	 *
+	 * @returns EmployeeDTO
+	 */
+	public EmployeeDTO createEmployeeDTO() {
+		EmployeeDTO employeeDTO = new EmployeeDTO();
+		employeeDTO.setName(getName());
+		employeeDTO.setPersonalEmail(getPersonalEmail());
+		employeeDTO.setCompanyEmail(getCompanyEmail());
+		employeeDTO.setEmploymentType(getEmploymentType());
+		employeeDTO.setMobile(getMobile());
+		employeeDTO.setDesignation(getDesignation());
+		return employeeDTO;
+	}
 }

@@ -6,8 +6,7 @@
    xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
    xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form" 
    xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
-   xmlns:tabs="urn:import:com.sencha.gxt.widget.core.client"
-   xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee" xmlns:="urn:import:java.lang">
+   xmlns:tabs="urn:import:com.sencha.gxt.widget.core.client">
  
 
   <ui:with type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData" field="verticalLayoutData">
@@ -30,7 +29,7 @@
           <container:child layoutData="{verticalLayoutData}">
           <form:FieldLabel text="Mobile Number">
             <form:widget>
-              <form:NumberField ui:field="mobile" allowBlank="false" "/>
+              <form:NumberField ui:field="mobile" allowBlank="false"></form:NumberField>
             </form:widget>
           </form:FieldLabel>
         </container:child>

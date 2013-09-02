@@ -39,4 +39,5 @@
 	<source path="client" />
 	<source path="server" />
 	<source path="message" />
+	<source path="dto" />
 </module>

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import com.media2359.euphoria.dao.employee.EmployeeDao;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
@@ -45,13 +46,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		if(employees != null) {
 			
-			List<com.media2359.euphoria.view.message.employee.Employee> respEmployees
-			= new ArrayList<com.media2359.euphoria.view.message.employee.Employee> ();
+			List<EmployeeDTO> respEmployees
+			= new ArrayList<EmployeeDTO> ();
 			
 			for(Employee employee:employees){
 				
-				com.media2359.euphoria.view.message.employee.Employee respEmployee = 
-						new com.media2359.euphoria.view.message.employee.Employee();
+				EmployeeDTO respEmployee =  employee.createEmployeeDTO();
 				
 				respEmployee.setName(employee.getName());
 				respEmployee.setCompanyEmail(employee.getCompanyEmail());

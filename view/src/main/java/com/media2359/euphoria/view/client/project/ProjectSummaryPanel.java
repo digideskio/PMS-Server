@@ -17,7 +17,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.media2359.euphoria.view.message.project.Project;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
 import com.media2359.euphoria.view.server.project.ProjectService;
@@ -67,7 +67,7 @@ public class ProjectSummaryPanel extends Composite {
 
 			public void onSuccess(ProjectListResponse result) {
 				messageBox.hide();
-				List<Project> projects = result.getProjects();
+				List<ProjectDTO> projects = result.getProjects();
 
 				if ((projects != null) && (!projects.isEmpty())) {
 					// Now populate GXT Grid

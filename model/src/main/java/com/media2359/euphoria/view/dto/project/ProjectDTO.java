@@ -7,11 +7,11 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.message.project;
+package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
 
-public class Project implements Serializable {
+public class ProjectDTO implements Serializable {
 	private String id;
 	private String name;
 	private String description;
@@ -20,7 +20,7 @@ public class Project implements Serializable {
 	private Integer milestoneCount;
 	private Integer completedMilestoneCount;
 
-	public Project() {
+	public ProjectDTO() {
 
 	}
 

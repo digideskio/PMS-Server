@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.media2359.euphoria.dao.project.ProjectDao;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
 import com.media2359.euphoria.view.server.project.ProjectService;
@@ -29,6 +30,9 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDao projectDao;
 	private final Logger log = Logger.getLogger(ProjectServiceImpl.class);
 	
+	/**
+	 * 
+	 */
 	public ProjectListResponse getAllProjects(ProjectListRequest request) {
 		log.info("Received request :"+request);
 		List<Project> projects = projectDao.getAllProjects();
@@ -37,15 +41,10 @@ public class ProjectServiceImpl implements ProjectService {
 		Random random = new Random();									//Temporary, change later-Praveen
 		if(projects != null) {
 			log.info("Received number of projects:"+projects.size());
-			List<com.media2359.euphoria.view.message.project.Project> respProjects
-				= new ArrayList<com.media2359.euphoria.view.message.project.Project> ();
+			List<ProjectDTO> respProjects
+				= new ArrayList<ProjectDTO> ();
 			for(Project project:projects) {
-				com.media2359.euphoria.view.message.project.Project respProject =
-						new com.media2359.euphoria.view.message.project.Project();
-				respProject.setId(project.getId());
-				respProject.setName(project.getName());
-				respProject.setDescription(project.getDescription());
-				respProject.setProjectManager(project.getProjectManager());
+				ProjectDTO respProject = project.createProjectDTO();
 				respProject.setManDaysLeft(random.nextInt(1000));			//Temporary, change later-Praveen
 				respProject.setMilestoneCount(random.nextInt(100));			//Temporary, change later-Praveen
 				respProject.setCompletedMilestoneCount(random.nextInt(10));	//Temporary, change later-Praveen

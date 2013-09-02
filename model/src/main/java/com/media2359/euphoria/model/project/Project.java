@@ -9,6 +9,8 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
+
 public class Project {
 	private String id;
 	private String name;
@@ -17,6 +19,13 @@ public class Project {
 
 	public Project() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Project(ProjectDTO dto) {
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.description = dto.getDescription();
+		this.projectManager = dto.getProjectManager();
 	}
 
 	/**
@@ -62,5 +71,13 @@ public class Project {
 	public void setProjectManager(String projectManager) {
 		this.projectManager = projectManager;
 	}
-
+	
+	public ProjectDTO createProjectDTO() {
+		ProjectDTO projectDTO = new ProjectDTO();
+		projectDTO.setId(getId());
+		projectDTO.setName(getName());
+		projectDTO.setDescription(getDescription());
+		projectDTO.setProjectManager(getProjectManager());
+		return projectDTO;
+	}
 }

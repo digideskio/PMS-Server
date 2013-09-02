@@ -7,7 +7,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.message.employee;
+package com.media2359.euphoria.view.dto.employee;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @version 1.0 2013
  **/
 
-public class Employee implements Serializable {
+public class EmployeeDTO implements Serializable {
 	private String name;
 	private String mobile;
 	private String personalEmail;

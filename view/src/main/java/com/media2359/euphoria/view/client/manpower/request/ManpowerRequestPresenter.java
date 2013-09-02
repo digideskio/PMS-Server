@@ -7,35 +7,31 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.message.employee;
+package com.media2359.euphoria.view.client.manpower.request;
+
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 /**
- * EmployeeListResponse
+ * ManpowerRequestPresenter
  *
- * TODO Write something about this class
+ * Presentation logic for Manpower Request view
  * 
- * @author Praveen
+ * @author AJ
  * @version 1.0 2013
  **/
 
-import java.io.Serializable;
-import java.util.List;
+public class ManpowerRequestPresenter {
+	ManpowerRequestView view;
 
-import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
-
-public class EmployeeListResponse implements Serializable {
-	List<EmployeeDTO> employees;
+	/**
+	 * 
+	 */
+	public ManpowerRequestPresenter() {
+		// TODO Auto-generated constructor stub
+	}
 	
-	public EmployeeListResponse() {
-
-	}
-
-	public List<EmployeeDTO> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(List<EmployeeDTO> employees) {
-		this.employees = employees;
+	public void onProjectSelected(ProjectDTO project) {
+		
 	}
 
 }

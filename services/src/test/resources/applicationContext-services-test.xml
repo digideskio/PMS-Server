@@ -12,5 +12,11 @@
 
     <context:annotation-config />
     <context:component-scan base-package="com.media2359.euphoria" />
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.hibernate.dialect.PostgreSQLDialect" />
+	    <property name="url" value="jdbc:postgresql://ec2-107-20-165-44.compute-1.amazonaws.com:5432/d8v2g0k1hmslu5?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
+	    <property name="username" value="zedrhyqjlrywyi"/>
+	    <property name="password" value="nc5BPLEAH-tOoEM-RZ5eaE-8tk"/>
+	</bean>
     <import resource="classpath:applicationContext-model.xml"/>
 </beans>

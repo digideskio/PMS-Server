@@ -12,18 +12,20 @@ package com.media2359.euphoria.view.message.project;
 import java.io.Serializable;
 import java.util.List;
 
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
+
 public class ProjectListResponse implements Serializable {
-	List<Project> projects;
+	List<ProjectDTO> projects;
 	
 	public ProjectListResponse() {
 
 	}
 
-	public List<Project> getProjects() {
+	public List<ProjectDTO> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(List<Project> projects) {
+	public void setProjects(List<ProjectDTO> projects) {
 		this.projects = projects;
 	}
 
