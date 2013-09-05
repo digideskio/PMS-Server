@@ -9,11 +9,14 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.employee;
 
+import java.util.Set;
+
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 
 /**
  * Employee
- *
+ * 
  * TODO Write something about this class
  * 
  * @author Praveen
@@ -26,13 +29,16 @@ public class Employee {
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private String platForms;
 	private String employmentType;
-	
+	Set<Platform> skills;
+	Set<Role> roles;
+	EmployeeLeavePlan leavePlan;
+	int status;
+
 	public Employee() {
-		
+
 	}
-	
+
 	public Employee(EmployeeDTO employeeDTO) {
 		this.name = employeeDTO.getName();
 		this.personalEmail = employeeDTO.getPersonalEmail();
@@ -41,52 +47,58 @@ public class Employee {
 		this.designation = employeeDTO.getDesignation();
 		this.employmentType = employeeDTO.getEmploymentType();
 	}
-	
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getMobile() {
 		return mobile;
 	}
+
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
 	public String getPersonalEmail() {
 		return personalEmail;
 	}
+
 	public void setPersonalEmail(String personalEmail) {
 		this.personalEmail = personalEmail;
 	}
+
 	public String getCompanyEmail() {
 		return companyEmail;
 	}
+
 	public void setCompanyEmail(String companyEmail) {
 		this.companyEmail = companyEmail;
 	}
+
 	public String getDesignation() {
 		return designation;
 	}
+
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
-	public String getPlatForms() {
-		return platForms;
-	}
-	public void setPlatForms(String platForms) {
-		this.platForms = platForms;
-	}
+
 	public String getEmploymentType() {
 		return employmentType;
 	}
+
 	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;
 	}
+
 	/**
 	 * TODO Write something about this method
-	 *
+	 * 
 	 * @returns EmployeeDTO
 	 */
 	public EmployeeDTO createEmployeeDTO() {

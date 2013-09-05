@@ -7,12 +7,26 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.dao.project;
+package com.media2359.euphoria.model.employee;
 
-import java.util.List;
+/**
+ * Role
+ *
+ * TODO Write something about this class
+ * 
+ * @author alfreds
+ * @version 1.0 2013
+ **/
 
-import com.media2359.euphoria.model.project.Project;
+public class Role {
+	String name;
+	String description;
 
-public interface ProjectDao {
-	List<Project> getAllProjects();
+	/**
+	 * 
+	 */
+	public Role() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

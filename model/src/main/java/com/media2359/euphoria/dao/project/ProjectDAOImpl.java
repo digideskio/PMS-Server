@@ -22,11 +22,11 @@ import com.media2359.euphoria.model.project.Project;
 
 @Repository
 @Transactional(readOnly = true)
-public class ProjectDaoImpl extends HibernateDaoSupport implements ProjectDao {
-	private final Logger log = Logger.getLogger(ProjectDaoImpl.class);
+public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
+	private final Logger log = Logger.getLogger(ProjectDAOImpl.class);
 	
 	@Autowired
-	public ProjectDaoImpl(SessionFactory sessionFactory) {
+	public ProjectDAOImpl(SessionFactory sessionFactory) {
 		setSessionFactory(sessionFactory);
 	}
 	

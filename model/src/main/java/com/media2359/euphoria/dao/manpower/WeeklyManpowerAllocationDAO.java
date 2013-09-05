@@ -7,22 +7,17 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.dao.employee;
+package com.media2359.euphoria.dao.manpower;
 
 /**
- * EmployeeDao
+ * WeeklyManpowerAllocationDAO
  *
  * TODO Write something about this class
  * 
- * @author Praveen
+ * @author alfreds
  * @version 1.0 2013
  **/
 
-
-import java.util.List;
-
-import com.media2359.euphoria.model.employee.Employee;
-
-public interface EmployeeDao {
-	List<Employee> getAllEmployees();
+public interface WeeklyManpowerAllocationDAO {
+	
 }

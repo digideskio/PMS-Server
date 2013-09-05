@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.media2359.euphoria.dao.project.ProjectDao;
+import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
@@ -27,7 +27,7 @@ import com.media2359.euphoria.view.server.project.ProjectService;
 @Service("ProjectService")
 public class ProjectServiceImpl implements ProjectService {
 	@Autowired
-	private ProjectDao projectDao;
+	private ProjectDAO projectDao;
 	private final Logger log = Logger.getLogger(ProjectServiceImpl.class);
 	
 	/**

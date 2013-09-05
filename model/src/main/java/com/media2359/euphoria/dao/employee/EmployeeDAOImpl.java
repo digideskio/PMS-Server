@@ -32,11 +32,11 @@ import com.media2359.euphoria.model.employee.Employee;
 
 @Repository
 @Transactional(readOnly = true)
-public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao {
-	private final Logger log = Logger.getLogger(EmployeeDaoImpl.class);
+public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO {
+	private final Logger log = Logger.getLogger(EmployeeDAOImpl.class);
 	
 	@Autowired
-	public EmployeeDaoImpl(SessionFactory sessionFactory) {
+	public EmployeeDAOImpl(SessionFactory sessionFactory) {
 		setSessionFactory(sessionFactory);
 	}
 	
@@ -49,7 +49,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp1.setCompanyEmail("alfred@companyemail.com");
 		 emp1.setEmploymentType("Permenant");
 		 emp1.setDesignation("System Architect");
-		 emp1.setPlatForms("Rails,iOS,HTML,Android");
+		 //emp1.setPlatForms("Rails,iOS,HTML,Android");
 		 emp1.setMobile("99999988");
 		 emp1.setPersonalEmail("alfred@personalemail.com");
 		 employeeList.add(emp1);
@@ -59,7 +59,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp2.setCompanyEmail("lungsen@companyemail.com");
 		 emp2.setEmploymentType("Hourly");
 		 emp2.setDesignation("Developer");
-		 emp2.setPlatForms("HTML,Android");
+		 //emp2.setPlatForms("HTML,Android");
 		 emp2.setMobile("99998988");
 		 emp2.setPersonalEmail("lungsen@personalemail.com");
 		 employeeList.add(emp2);
@@ -69,7 +69,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp3.setCompanyEmail("may@companyemail.com");
 		 emp3.setEmploymentType("Conntract");
 		 emp3.setDesignation("Developer");
-		 emp3.setPlatForms("Rails,iOS");
+		 //emp3.setPlatForms("Rails,iOS");
 		 emp3.setMobile("99898988");
 		 emp3.setPersonalEmail("may@personalemail.com");
 		 employeeList.add(emp3);
@@ -79,7 +79,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp4.setCompanyEmail("may@companyemail.com");
 		 emp4.setEmploymentType("Permenant");
 		 emp4.setDesignation("Developer");
-		 emp4.setPlatForms("HTML,iOS");
+		 //emp4.setPlatForms("HTML,iOS");
 		 emp4.setMobile("99898988");
 		 emp4.setPersonalEmail("may@personalemail.com");
 		 employeeList.add(emp4);
@@ -89,7 +89,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp5.setCompanyEmail("praveen@companyemail.com");
 		 emp5.setEmploymentType("Hourly");
 		 emp5.setDesignation("Developer");
-		 emp5.setPlatForms("HTML,iOS");
+		 //emp5.setPlatForms("HTML,iOS");
 		 emp5.setMobile("98898988");
 		 emp5.setPersonalEmail("praveen@personalemail.com");
 		 employeeList.add(emp5);
@@ -99,7 +99,7 @@ public class EmployeeDaoImpl extends HibernateDaoSupport implements EmployeeDao 
 		 emp6.setCompanyEmail("shiv@companyemail.com");
 		 emp6.setEmploymentType("Permenant");
 		 emp6.setDesignation("PM");
-		 emp6.setPlatForms("Rails,iOS,HTML,Android");
+		 //emp6.setPlatForms("Rails,iOS,HTML,Android");
 		 emp6.setMobile("98888988");
 		 emp6.setPersonalEmail("shiv@personalemail.com");
 		 employeeList.add(emp6);

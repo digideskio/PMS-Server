@@ -19,14 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.media2359.euphoria.dao.project.ProjectDao;
+import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.model.project.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
 public class ProjectDaoTest {
 	@Autowired
-	private ProjectDao projectDao;
+	private ProjectDAO projectDao;
 	private Logger log = Logger.getLogger(ProjectDaoTest.class);
 	
 	@Test

@@ -30,7 +30,7 @@
             <ref bean="sessionFactory" />
         </property>
     </bean>
-    <bean id="projectDao" class="com.media2359.euphoria.dao.project.ProjectDaoImpl">
+    <bean id="projectDao" class="com.media2359.euphoria.dao.project.ProjectDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>

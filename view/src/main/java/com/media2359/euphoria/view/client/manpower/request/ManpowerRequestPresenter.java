@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower.request;
 
+import com.media2359.euphoria.view.dto.manpower.ManpowerRequestDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 /**
@@ -26,12 +27,21 @@ public class ManpowerRequestPresenter {
 	/**
 	 * 
 	 */
-	public ManpowerRequestPresenter() {
-		// TODO Auto-generated constructor stub
+	public ManpowerRequestPresenter(ManpowerRequestView view) {
+		this.view = view;
 	}
 	
+	/**
+	 * 
+	 * When a project is selected in the Left Pane
+	 *
+	 * @returns void
+	 */
 	public void onProjectSelected(ProjectDTO project) {
+		view.setProjectTitle(project.getName());
+	}
+	
+	public void saveAllocation(ManpowerRequestDTO manpowerRequest) {
 		
 	}
-
 }

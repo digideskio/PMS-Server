@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.media2359.euphoria.dao.employee.EmployeeDao;
-import com.media2359.euphoria.dao.project.ProjectDao;
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 
@@ -38,7 +38,7 @@ import com.media2359.euphoria.model.project.Project;
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
 public class EmployeeDaoTest {
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeDAO employeeDao;
 	private Logger log = Logger.getLogger(EmployeeDaoTest.class);
 	
 	@Test

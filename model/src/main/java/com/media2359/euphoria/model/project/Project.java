@@ -9,6 +9,10 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
+import java.util.Set;
+
+import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
+import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 public class Project {
@@ -16,6 +20,13 @@ public class Project {
 	private String name;
 	private String description;
 	private String projectManager;
+	private ProjectPlan projectPlan;
+	private Set<WeeklyManpowerRequest> weeklyManpowerRequests;
+	private Set<WeeklyManpowerAllocation> weeklyManpowerAllocations;
+	private Set<ProjectTask> projectTasks;
+	private ProjectTeam projectTeam;
+	private Set<PlatformProjection> platformProjections;
+	private Set<ProjectDocument> projectDocuments;
 
 	public Project() {
 		// TODO Auto-generated constructor stub

@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.media2359.euphoria.dao.employee.EmployeeDao;
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
@@ -35,7 +35,7 @@ import com.media2359.euphoria.view.server.employee.EmployeeService;
 @Service("EmployeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeDAO employeeDao;
 	private final Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	
 	public EmployeeListResponse getAllEmployees(EmployeeListRequest request) {
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				respEmployee.setEmploymentType(employee.getEmploymentType());
 				respEmployee.setMobile(employee.getMobile());
 				respEmployee.setPersonalEmail(employee.getPersonalEmail());
-				respEmployee.setPlatForms(employee.getPlatForms());
+				//respEmployee.setPlatForms(employee.getPlatForms());
 				
 				respEmployees.add(respEmployee);
 			}
