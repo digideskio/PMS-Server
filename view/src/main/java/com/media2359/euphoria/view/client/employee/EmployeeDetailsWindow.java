@@ -92,20 +92,12 @@ public class EmployeeDetailsWindow {
 		  htmlCheck = platforms[2];
 		  androidCheck = platforms[3];
 
-		  VerticalPanel platformPanel = new VerticalPanel();
-		  HorizontalPanel horizondalPanel1 = new HorizontalPanel();
-		  horizondalPanel1.setSpacing(50);
-		  HorizontalPanel horizondalPanel2 = new HorizontalPanel();
-		  horizondalPanel2.setSpacing(50);
+		  HorizontalPanel platformPanel = new HorizontalPanel();		  
+		  platformPanel.add(railsCheck);
+		  platformPanel.add(htmlCheck);
+		  platformPanel.add(iOSCheck);
+		  platformPanel.add(androidCheck);
 		  
-		  horizondalPanel1.add(railsCheck);
-		  horizondalPanel1.add(htmlCheck);
-
-		  horizondalPanel2.add(iOSCheck);
-		  horizondalPanel2.add(androidCheck);
-		  
-		  platformPanel.add(horizondalPanel1);
-		  platformPanel.add(horizondalPanel2);
 		  
 		  VerticalLayoutContainer p = new VerticalLayoutContainer();
 		  p.add(new FieldLabel(nameField, "Full Name"), new VerticalLayoutData(1, 50));
