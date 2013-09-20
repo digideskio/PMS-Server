@@ -50,7 +50,10 @@ public class EmployeeGrid extends Composite {
 	private GridView<EmployeeDTO> gridView;
 	private Grid<EmployeeDTO> grid;
 	private ListStore<EmployeeDTO> listStore;
+	private EmployeePresenter employeePresenter;
+	
 	Logger log = Logger.getLogger("EuphoriaLogger");
+	
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<EmployeeDTO> {
 		@Path("name")
@@ -70,6 +73,9 @@ public class EmployeeGrid extends Composite {
 			.create(GridProperties.class);
 
 	public EmployeeGrid() {
+		
+		employeePresenter = new EmployeePresenter();
+		
 		listStore = new ListStore<EmployeeDTO>(gridProperties.key());
 
 		ColumnConfig<EmployeeDTO, String> nameCol = new ColumnConfig<EmployeeDTO, String>(
@@ -117,11 +123,8 @@ public class EmployeeGrid extends Composite {
 		image.addSelectHandler(new SelectHandler() {
 			
 			public void onSelect(SelectEvent event) {
-		        Context c = event.getContext();
-		        int row = c.getIndex();
-		        EmployeeDTO p = listStore.get(row);
-		        log.info("The employee " + p.getName() + " was clicked to Edit.");
-		        Info.display("Event", "The employee " + p.getName() + " was clicked to Edit.");
+				
+				employeePresenter.editEmployeeDetailsButtonClicked(event,listStore);
 				
 			}
 		});
@@ -138,10 +141,7 @@ public class EmployeeGrid extends Composite {
 		image.addSelectHandler(new SelectHandler() {
 			
 			public void onSelect(SelectEvent event) {
-		        Context c = event.getContext();
-		        int row = c.getIndex();
-		        EmployeeDTO p = listStore.get(row);
-		        Info.display("Event", "The employee " + p.getName() + " was clicked to View.");
+				employeePresenter.viewEmployeeDetailsButtonClicked(event, listStore);
 				
 			}
 		});

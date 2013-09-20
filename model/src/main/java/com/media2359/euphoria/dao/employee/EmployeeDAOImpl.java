@@ -47,7 +47,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		 Employee emp1  = new Employee();
 		 emp1.setName("Alfred");
 		 emp1.setCompanyEmail("alfred@companyemail.com");
-		 emp1.setEmploymentType("Permenant");
+		 emp1.setEmploymentType("Permanant");
 		 emp1.setDesignation("System Architect");
 		 //emp1.setPlatForms("Rails,iOS,HTML,Android");
 		 emp1.setMobile("99999988");
@@ -77,7 +77,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		 Employee emp4  = new Employee();
 		 emp4.setName("TY");
 		 emp4.setCompanyEmail("may@companyemail.com");
-		 emp4.setEmploymentType("Permenant");
+		 emp4.setEmploymentType("Permanant");
 		 emp4.setDesignation("Developer");
 		 //emp4.setPlatForms("HTML,iOS");
 		 emp4.setMobile("99898988");

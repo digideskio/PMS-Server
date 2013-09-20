@@ -19,22 +19,15 @@ package com.media2359.euphoria.view.client.employee;
  **
  **/
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
-import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
-import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
 import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
-import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
-import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -44,6 +37,9 @@ public class EmployeePanel extends Composite {
 	interface EmployeePanelUiBinder extends
 			UiBinder<VerticalLayoutContainer, EmployeePanel> {
 	}
+	
+	
+	private EmployeePresenter employeePresenter;
 	
 	EmployeePanelUiBinder uiBinder = GWT.create(EmployeePanelUiBinder.class);
 
@@ -59,52 +55,18 @@ public class EmployeePanel extends Composite {
 	 */
 	public EmployeePanel() {
 		initWidget(uiBinder.createAndBindUi(this));
-
+		employeePresenter = new EmployeePresenter(employeeGrid,employeeService);
 		/**
 		 * Fetch the data when this panel is shown
 		 */
-		loadData();
+		employeePresenter.loadData();
 	}
 	
 	@UiHandler({"addButton"})
 	  public void onButtonClick(SelectEvent event) {
-	    Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
-	    new NewEmployeeWindow().show();
-	 
+
+		employeePresenter.addButtonClicked(event);
 	  }
 
-	private void loadData() {
-		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
-				"Progress", "Loading data. Please wait...");
-
-		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>() {
-
-			public void onFailure(Throwable caught) {
-				messageBox.hide();
-				AlertMessageBox alert = new AlertMessageBox("Error",
-						caught.getMessage());
-				alert.show();
-			}
-
-			public void onSuccess(EmployeeListResponse result) {
-				messageBox.hide();
-				List<EmployeeDTO> employees = result.getEmployees();
-
-				if ((employees != null) && (!employees.isEmpty())) {
-					// Now populate GXT Grid
-					employeeGrid.populateData(employees);
-				} else {
-					// Remove all items
-					employeeGrid.clear();
-				}
-			}
-
-		};
-		log.info("Getting all Employees to EmployeeSummaryPanel");
-		employeeService.getAllEmployees(new EmployeeListRequest(), callback);
-		messageBox.auto();
-		messageBox.show();
-		
-
-	}
+	
 }
