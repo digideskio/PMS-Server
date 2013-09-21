@@ -7,13 +7,13 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.employee;
+package com.media2359.euphoria.view.client.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * AssignedOffice
+ * JobStatus
  *
  * TODO Write something about this class
  * 
@@ -21,20 +21,23 @@ import java.util.List;
  * @version 1.0 2013
  **/
 
-enum AssignedOffice{
-	  OFFICE1("Singapore"), OFFICE2("Vietnam");
-		static AssignedOffice parseString(String object) {
-			if (AssignedOffice.OFFICE1.toString().equals(object)) {
-				return AssignedOffice.OFFICE1;
-			} else if (AssignedOffice.OFFICE2.toString().equals(object)) {
-				return AssignedOffice.OFFICE2;
+public enum JobStatus{
+	  STATUS1("Active"), STATUS2("Terminated");
+	  
+	  private static List<JobStatus> statusList;
+	  private String text;
+	  
+	  public static JobStatus parseString(String object) {
+			if (JobStatus.STATUS1.toString().equals(object)) {
+				return JobStatus.STATUS1;
+			} else if (JobStatus.STATUS2.toString().equals(object)) {
+				return JobStatus.STATUS2;
 			} else{
-				return AssignedOffice.OFFICE1;
+				return JobStatus.STATUS1;
 			} 
 		}
-		private String text;
-
-		AssignedOffice(String text) {
+		
+		JobStatus(String text) {
 			this.text = text;
 		}
 
@@ -43,10 +46,14 @@ enum AssignedOffice{
 			return text;
 		}
 		
-		protected static List<AssignedOffice> getOffices(){
-			List<AssignedOffice> officeList = new ArrayList<AssignedOffice>();
-			officeList.add(OFFICE1);
-			officeList.add(OFFICE2);
-			return officeList;
+		public static List<JobStatus> getAllStatus(){
+			if(statusList  != null)
+				return statusList;
+			
+			statusList = new ArrayList<JobStatus>();
+			statusList.add(STATUS1);
+			statusList.add(STATUS2);
+			return statusList;
 		}
 };
+

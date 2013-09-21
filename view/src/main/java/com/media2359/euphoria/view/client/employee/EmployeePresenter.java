@@ -22,6 +22,7 @@ import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.CellClickEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.info.Info;
 
@@ -96,23 +97,11 @@ import com.sencha.gxt.widget.core.client.info.Info;
   }
   
   
-  protected void viewEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
-	  
-      Context c = event.getContext();
-      int row = c.getIndex();
-      EmployeeDTO p = listStore.get(row);
-
-	  new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p).show();
-	  
-  }
-  
-  
   protected void editEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
 	  
       Context c = event.getContext();
       int row = c.getIndex();
       EmployeeDTO p = listStore.get(row);
-      log.info("The employee " + p.getName() + " was clicked to Edit.");
 	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p).show();
   }
   
@@ -125,4 +114,14 @@ import com.sencha.gxt.widget.core.client.info.Info;
 		}
 		
   }
+  
+  
+  protected void gridCellClicked(CellClickEvent event, ListStore<EmployeeDTO> listStore){
+	  
+     if(event.getCellIndex()>4)
+    	 return;
+     EmployeeDTO p = listStore.get(event.getRowIndex());
+	 new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p).show();
+  }
+  
 }

@@ -31,8 +31,8 @@ public class Alert {
 	      @Override
 	      public void onHide(HideEvent event) {
 	        Dialog btn = (Dialog) event.getSource();
-	        String msg = Format.substitute("The '{0}' button was pressed", btn.getHideButton().getText());
-	        Info.display("MessageBox", msg);
+//	        String msg = Format.substitute("The '{0}' button was pressed", btn.getHideButton().getText());
+//	        Info.display("MessageBox", msg);
 	      }
 	    };
 	    

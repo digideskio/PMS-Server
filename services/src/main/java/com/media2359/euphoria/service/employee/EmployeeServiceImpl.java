@@ -59,7 +59,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 				respEmployee.setEmploymentType(employee.getEmploymentType());
 				respEmployee.setMobile(employee.getMobile());
 				respEmployee.setPersonalEmail(employee.getPersonalEmail());
-				//respEmployee.setPlatForms(employee.getPlatForms());
+				respEmployee.setPlatForms(employee.getPlatForms());
+				respEmployee.setEmploymentType(employee.getEmploymentType());
+				respEmployee.setMandayRate(employee.getMandayRate());
+				respEmployee.setAssignedOffice(employee.getAssignedOffice());
+				respEmployee.setStartDate(employee.getStartDate());
+				respEmployee.setEndDate(employee.getEndDate());
+				respEmployee.setStatus(employee.getStatus());
 				
 				respEmployees.add(respEmployee);
 			}

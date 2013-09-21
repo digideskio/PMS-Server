@@ -10,21 +10,26 @@
 package com.media2359.euphoria.view.client.employee;
 
 import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 
-import com.media2359.euphoria.view.client.core.EmailValidator;
+import com.media2359.euphoria.view.client.core.*;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.StringLabelProvider;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.PropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.LongPropertyEditor;
+import com.sencha.gxt.widget.core.client.form.validator.AbstractValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MaxLengthValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MaxNumberValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MinLengthValidator;
+
 
 /**
  * NewEmployeeDetailsCreator
@@ -41,41 +46,17 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createNameField()
 	 */
 	@Override
-	public Component createNameField() {
-		  TextField nameField = new TextField();
-		  nameField.setAllowBlank(false);
-		  nameField.setEmptyText("Enter full name...");
-		  nameField.addValidator(new MaxLengthValidator(30));
-		  nameField.addValidator(new MinLengthValidator(1));
-		  return nameField;
-		
+	public Component createName() {
+		  return createTextField("Enter Full Name", 30, 1,null);		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createMobileField(com.sencha.gxt.widget.core.client.form.NumberField)
-	 */
-	@Override
-	public Component createMobileField() {
-		  NumberField mobileField= new NumberField<Long>(new LongPropertyEditor());
-		  mobileField.setAllowBlank(false);
-		  mobileField.setEmptyText("Enter mobile number...");
-		  mobileField.addValidator(new MaxNumberValidator<Long>((long)99999999));
-		  return mobileField;
-		
-	}
 
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createPersonalEmail(com.sencha.gxt.widget.core.client.form.TextField)
 	 */
 	@Override
 	public Component createPersonalEmail() {
-		  TextField personalEmail = new TextField();
-		  personalEmail.setAllowBlank(false);
-		  personalEmail.setEmptyText("Enter personal email...");
-		  personalEmail.addValidator(new MaxLengthValidator(30));
-		  personalEmail.addValidator(new EmailValidator());
-		  return personalEmail;
-		
+		  return createTextField("Enter Personal Email", 30, 1,new EmailValidator());	
 	}
 
 	/* (non-Javadoc)
@@ -83,40 +64,80 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public Component createCompanyEmail() {
-		  TextField companyEmail = new TextField();
-		  companyEmail.setAllowBlank(false);
-		  companyEmail.setEmptyText("Enter company email...");
-		  companyEmail.addValidator(new MaxLengthValidator(30));
-		  companyEmail.addValidator(new EmailValidator());
-		  return companyEmail;
+		  return createTextField("Enter Company Email", 30, 1,new EmailValidator());
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createManDayRate()
+	 */
+	@Override
+	public Component createManDayRate() {
+		return createTextField("Enter Manday Rate", 30, 1,null);	
 	}
 
+
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createStartDate()
+	 */
+	@Override
+	public Component createStartDate() {
+		  DateField field = new DateField();
+		  field.setEmptyText("Select Start Date");
+		  field.setAllowBlank(false);
+		  return field;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createEndDate()
+	 */
+	@Override
+	public Component createEndDate() {
+		  DateField field = new DateField();
+		  field.setEmptyText("Select End Date");
+		  return field;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createMobileField(com.sencha.gxt.widget.core.client.form.NumberField)
+	 */
+	@Override
+	public Component createMobile() {
+		  NumberField field= new NumberField<Long>(new LongPropertyEditor());
+		  field.setAllowBlank(false);
+		  field.setEmptyText("Enter Mobile Number");
+		  field.addValidator(new MaxNumberValidator<Long>((long)99999999));
+		  return field;
+		
+	}
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createDesignationCombo(com.sencha.gxt.widget.core.client.form.SimpleComboBox)
 	 */
 	@Override
-	public Component createDesignationCombo() {
-		SimpleComboBox designationCombo = new SimpleComboBox<Designation>(
-				new StringLabelProvider<Designation>());
-	  designationCombo.setPropertyEditor(new PropertyEditor<Designation>() {
+	public Component createDesignation() {
+		SimpleComboBox combo = new SimpleComboBox<Designations>(
+				new StringLabelProvider<Designations>());
+	  combo.setPropertyEditor(new PropertyEditor<Designations>() {
 
 			@Override
-			public Designation parse(CharSequence text) throws ParseException {
-				return Designation.parseString(text.toString());
+			public Designations parse(CharSequence text) throws ParseException {
+				return Designations.parseString(text.toString());
 			}
 
 			@Override
-			public String render(Designation object) {
-				return object == null ? Designation.DESIGNATION1.toString() : object
+			public String render(Designations object) {
+				return object == null ? Designations.DESIGNATION1.toString() : object
 						.toString();
 			}
 		});
-	  designationCombo.setAllowBlank(false);
-	  designationCombo.setEmptyText("Select Designation");
-	  designationCombo.setForceSelection(true);
-	  designationCombo.setTriggerAction(TriggerAction.ALL);
-      designationCombo.add(Designation.getDesignations());
-      return designationCombo;
+	  combo.setAllowBlank(false);
+	  combo.setEmptyText("Select Designation");
+	  combo.setForceSelection(true);
+	  combo.setTriggerAction(TriggerAction.ALL);
+      combo.add(Designations.getDesignations());
+      return combo;
 		
 	}
 
@@ -124,10 +145,10 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createEmploymentCombo(com.sencha.gxt.widget.core.client.form.SimpleComboBox)
 	 */
 	@Override
-	public Component createEmploymentCombo() {
-		SimpleComboBox employmentCombo = new SimpleComboBox<EmploymentType>(
+	public Component createEmployment() {
+		SimpleComboBox combo = new SimpleComboBox<EmploymentType>(
 					new StringLabelProvider<EmploymentType>());
-		  employmentCombo.setPropertyEditor(new PropertyEditor<EmploymentType>() {
+		  combo.setPropertyEditor(new PropertyEditor<EmploymentType>() {
 
 				@Override
 				public EmploymentType parse(CharSequence text) throws ParseException {
@@ -140,32 +161,91 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 							.toString();
 				}
 			});
-		  employmentCombo.setAllowBlank(false);
-		  employmentCombo.setEmptyText("Select Employment Type");
-		  employmentCombo.setForceSelection(true);
-		  employmentCombo.setTriggerAction(TriggerAction.ALL);
-		  employmentCombo.add(EmploymentType.getEmploymentTypes());
-		  return employmentCombo;
+		  combo.setAllowBlank(false);
+		  combo.setEmptyText("Select Employment Type");
+		  combo.setForceSelection(true);
+		  combo.setTriggerAction(TriggerAction.ALL);
+		  combo.add(EmploymentType.getEmploymentTypes());
+		  return combo;
 		
 	}
+	
+	
 
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createAssignedOffice()
+	 */
+	@Override
+	public Component createAssignedOffice() {
+		SimpleComboBox combo = new SimpleComboBox<AssignedOffices>(
+				new StringLabelProvider<AssignedOffices>());
+	  combo.setPropertyEditor(new PropertyEditor<AssignedOffices>() {
+
+			@Override
+			public AssignedOffices parse(CharSequence text) throws ParseException {
+				return AssignedOffices.parseString(text.toString());
+			}
+
+			@Override
+			public String render(AssignedOffices object) {
+				return object == null ? AssignedOffices.OFFICE1.toString() : object
+						.toString();
+			}
+		});
+	  combo.setAllowBlank(false);
+	  combo.setEmptyText("Select Assigned Office");
+	  combo.setForceSelection(true);
+	  combo.setTriggerAction(TriggerAction.ALL);
+	  combo.add(AssignedOffices.getOffices());
+	  return combo;
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createStatus()
+	 */
+	@Override
+	public Component createStatus() {
+		SimpleComboBox combo = new SimpleComboBox<JobStatus>(
+				new StringLabelProvider<JobStatus>());
+	  combo.setPropertyEditor(new PropertyEditor<JobStatus>() {
+
+			@Override
+			public JobStatus parse(CharSequence text) throws ParseException {
+				return JobStatus.parseString(text.toString());
+			}
+
+			@Override
+			public String render(JobStatus object) {
+				return object == null ? JobStatus.STATUS1.toString() : object
+						.toString();
+			}
+		});
+	  combo.setAllowBlank(false);
+	  combo.setEmptyText("Select Status");
+	  combo.setForceSelection(true);
+	  combo.setTriggerAction(TriggerAction.ALL);
+	  combo.add(JobStatus.getAllStatus());
+	  return combo;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createPlatforms(com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox)
 	 */
 	@Override
 	public CheckBox[] createPlatforms() {
 		
-		String[] allPlatforms =new Platforms().getPlatforms();
+		List<Platforms> allPlatforms =Platforms.getAllPlatforms();
 		   
 		   if(allPlatforms == null)
 			   return null;
 		   
-		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.length];
+		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.size()];
 		   
 		  for(int i=0; i<returnCheckBoxes.length; i++){
 			  
 			  returnCheckBoxes[i] = new CheckBox();
-			  returnCheckBoxes[i].setBoxLabel(allPlatforms[i]);			  
+			  returnCheckBoxes[i].setBoxLabel(allPlatforms.get(i).toString());			  
 		  }
 		  
 		  return returnCheckBoxes;
@@ -191,8 +271,17 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public String getWindowHeader() {
-		// TODO Auto-generated method stub
 		return " Add New Employee";
 	}
 
+	private TextField createTextField(String emptyText,int maxLength,int minLength, AbstractValidator additionalValidator){
+		  TextField field = new TextField();
+		  field.setAllowBlank(false);
+		  field.setEmptyText(emptyText);
+		  field.addValidator(new MaxLengthValidator(maxLength));
+		  field.addValidator(new MinLengthValidator(minLength));
+		  if(additionalValidator != null)
+			  field.addValidator(additionalValidator);
+		  return field;
+	}
 }

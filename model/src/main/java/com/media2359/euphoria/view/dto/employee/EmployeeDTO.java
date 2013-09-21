@@ -10,6 +10,7 @@
 package com.media2359.euphoria.view.dto.employee;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Employee
@@ -21,6 +22,7 @@ import java.io.Serializable;
  **/
 
 public class EmployeeDTO implements Serializable {
+
 	private String name;
 	private String mobile;
 	private String personalEmail;
@@ -28,6 +30,11 @@ public class EmployeeDTO implements Serializable {
 	private String designation;
 	private String platForms;
 	private String employmentType;
+	private String mandayRate;
+	private String assignedOffice;
+	private Date startDate;
+	private Date endDate;
+	private String status;
 	public String getName() {
 		return name;
 	}
@@ -70,7 +77,81 @@ public class EmployeeDTO implements Serializable {
 	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;
 	}
+	/**
+	 * @return the mandayRate
+	 */
+	public String getMandayRate() {
+		return mandayRate;
+	}
+	/**
+	 * @param mandayRate the mandayRate to set
+	 */
+	public void setMandayRate(String mandayRate) {
+		this.mandayRate = mandayRate;
+	}
+	/**
+	 * @return the assignedOffice
+	 */
+	public String getAssignedOffice() {
+		return assignedOffice;
+	}
+	/**
+	 * @param assignedOffice the assignedOffice to set
+	 */
+	public void setAssignedOffice(String assignedOffice) {
+		this.assignedOffice = assignedOffice;
+	}
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "EmployeeDTO [name=" + name + ", mobile=" + mobile
+				+ ", personalEmail=" + personalEmail + ", companyEmail="
+				+ companyEmail + ", designation=" + designation
+				+ ", platForms=" + platForms + ", employmentType="
+				+ employmentType + ", mandayRate=" + mandayRate
+				+ ", assignedOffice=" + assignedOffice + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", status=" + status
+				+ "]";
+	}
 	
 }

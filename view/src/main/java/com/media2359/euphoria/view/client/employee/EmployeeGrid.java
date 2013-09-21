@@ -36,6 +36,8 @@ import com.sencha.gxt.core.client.resources.CommonStyles;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
+import com.sencha.gxt.widget.core.client.event.CellClickEvent;
+import com.sencha.gxt.widget.core.client.event.CellClickEvent.CellClickHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
@@ -88,12 +90,9 @@ public class EmployeeGrid extends Composite {
 				gridProperties.platForms(), 300, "Platforrm");
 		ColumnConfig designationCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.designation(), 150, "Designation");
-		ColumnConfig<EmployeeDTO, String> viewDetailsCol = new ColumnConfig<EmployeeDTO, String>(
-				gridProperties.name(), 90, "View");
 		ColumnConfig<EmployeeDTO, String> editCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.name(), 150, "Edit");
 		
-		populateViewButton(viewDetailsCol);
 		populateEditButton(editCol);
 		  
 		List<ColumnConfig<EmployeeDTO, ?>> columns = new ArrayList<ColumnConfig<EmployeeDTO, ?>>();
@@ -102,7 +101,6 @@ public class EmployeeGrid extends Composite {
 		columns.add(emailCol);
 		columns.add(platformsCol);
 		columns.add(designationCol);
-		columns.add(viewDetailsCol);
 		columns.add(editCol);
 		ColumnModel<EmployeeDTO> columnModel = new ColumnModel<EmployeeDTO>(columns);
 		
@@ -110,7 +108,10 @@ public class EmployeeGrid extends Composite {
 		gridView.setAutoFill(true);
 
 		grid = new Grid<EmployeeDTO>(listStore, columnModel, gridView);
+		
+		grid.addCellClickHandler(new GridCellClickHandler());
 		initWidget(grid);
+		
 	}
 	
 	
@@ -132,23 +133,6 @@ public class EmployeeGrid extends Composite {
 		
 	}
 	
- private void populateViewButton(ColumnConfig viewDetailsCol){		
-
-		viewDetailsCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
-		viewDetailsCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
-		ViewCell image = new ViewCell();
-
-		image.addSelectHandler(new SelectHandler() {
-			
-			public void onSelect(SelectEvent event) {
-				employeePresenter.viewEmployeeDetailsButtonClicked(event, listStore);
-				
-			}
-		});
-		viewDetailsCol.setCell(image);
-		
-	}
-
 	private void addFilters(){
 
 		StringFilter<EmployeeDTO> nameFilter = new StringFilter<EmployeeDTO>(gridProperties.name());
@@ -171,5 +155,19 @@ public class EmployeeGrid extends Composite {
 	
 	public void clear() {
 		listStore.clear();
+	}
+	
+	class GridCellClickHandler implements CellClickHandler{
+		
+
+		/* (non-Javadoc)
+		 * @see com.sencha.gxt.widget.core.client.event.CellClickEvent.CellClickHandler#onCellClick(com.sencha.gxt.widget.core.client.event.CellClickEvent)
+		 */
+		@Override
+		public void onCellClick(CellClickEvent event) {
+
+			employeePresenter.gridCellClicked(event, listStore);
+		}
+		
 	}
 }

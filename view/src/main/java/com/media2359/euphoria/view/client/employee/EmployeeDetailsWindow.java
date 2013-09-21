@@ -55,7 +55,7 @@ public class EmployeeDetailsWindow {
 	 
 	  private Window window;
 
-	  private Component nameField,mobileField,personalEmail,companyEmail,designationCombo,employmentCombo; 
+	  private Component name,mobile,personalEmail,companyEmail,designation,employment,mandayRate,assignedOffice,startDate,endDate,status; 
 	  private CheckBox [] platformChecks;
 	  
 	  private TextButton firstButton,secondButton,thirdButton;
@@ -82,12 +82,18 @@ public class EmployeeDetailsWindow {
 	private void createNewWindow(){  
 		  
 		  
-		  nameField = employeeDetailsCreator.createNameField();
-		  mobileField = employeeDetailsCreator.createMobileField();
+		  name = employeeDetailsCreator.createName();
+		  mobile = employeeDetailsCreator.createMobile();
 		  personalEmail = employeeDetailsCreator.createPersonalEmail();
 		  companyEmail = employeeDetailsCreator.createCompanyEmail();
-		  designationCombo = employeeDetailsCreator.createDesignationCombo();
-		  employmentCombo = employeeDetailsCreator.createEmploymentCombo();
+		  designation = employeeDetailsCreator.createDesignation();
+		  employment = employeeDetailsCreator.createEmployment();
+		  mandayRate = employeeDetailsCreator.createManDayRate();
+		  assignedOffice = employeeDetailsCreator.createAssignedOffice();
+		  startDate = employeeDetailsCreator.createStartDate();
+		  endDate = employeeDetailsCreator.createEndDate();
+		  status = employeeDetailsCreator.createStatus();
+		  
 		  platformChecks = employeeDetailsCreator.createPlatforms();
 		  log.info("Number of check boxes returned are "+platformChecks.length);
 
@@ -107,22 +113,28 @@ public class EmployeeDetailsWindow {
 		  
 		  
 		  VerticalLayoutContainer p = new VerticalLayoutContainer();
-		  p.add(new FieldLabel(nameField, "Full Name"), new VerticalLayoutData(1, 50));
-		  p.add(new FieldLabel(mobileField, "Mobile Number"), new VerticalLayoutData(1, 50));
-		  p.add(new FieldLabel(personalEmail, "Personal Email"), new VerticalLayoutData(1, 50));
-		  p.add(new FieldLabel(companyEmail, "Company Email"), new VerticalLayoutData(1, 50));
-		  p.add(new FieldLabel(designationCombo, "Designation"), new VerticalLayoutData(1, 50));
+		  p.add(new FieldLabel(name, "Full Name"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(mobile, "Mobile Number"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(personalEmail, "Personal Email"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(companyEmail, "Company Email"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(designation, "Designation"), new VerticalLayoutData(1, 35));
 
 		  if(platformPanels.size()>0){
 			  for(int i=0; i<platformPanels.size(); i++)
 			  {
 				  if(i != 0 )
-					  p.add(new FieldLabel(platformPanels.get(i)), new VerticalLayoutData(1, 50));	
+					  p.add(new FieldLabel(platformPanels.get(i)), new VerticalLayoutData(1, 35));	
 				  else
-					  p.add(new FieldLabel(platformPanels.get(i), "Platform"), new VerticalLayoutData(1, 50));	
+					  p.add(new FieldLabel(platformPanels.get(i), "Platform"), new VerticalLayoutData(1, 35));	
 			  }
 		  }
-		  p.add(new FieldLabel(employmentCombo, "Employment Type"), new VerticalLayoutData(1, 50));
+		  p.add(new FieldLabel(employment, "Employment Type"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(mandayRate, "Manday Rate"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(assignedOffice, "Assigned Office"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(startDate, "Start Date"), new VerticalLayoutData(1, 35));
+		  p.add(new FieldLabel(endDate, "End Date"), new VerticalLayoutData(1, 35));		  
+		  p.add(new FieldLabel(status, "Status"), new VerticalLayoutData(1, 35));
+		  
 		  
 		  formPanel = new FormPanel();
 		  formPanel.add(p);
@@ -159,8 +171,9 @@ public class EmployeeDetailsWindow {
 		   fPanel.setButtonAlign(BoxLayoutPack.CENTER);
 		  
 		  
-		  window = new Window();		  
-		  window.setPixelSize(500, 540);
+		  window = new Window();
+		  log.info("Widget Count = "+p.getWidgetCount());
+		  window.setPixelSize(500, p.getWidgetCount()*50);
 		  window.setModal(true);
 		  window.setBlinkModal(true);
 		  window.setHeadingText(employeeDetailsCreator.getWindowHeader());
@@ -180,20 +193,7 @@ public class EmployeeDetailsWindow {
 			return window;
 		}
 
-		/**
-		 * @return the nameField
-		 */
-		protected Component getNameField() {
-			return nameField;
-		}
-
-		/**
-		 * @return the mobileField
-		 */
-		protected Component getMobileField() {
-			return mobileField;
-		}
-
+		
 		/**
 		 * @return the personalEmail
 		 */
@@ -208,20 +208,7 @@ public class EmployeeDetailsWindow {
 			return companyEmail;
 		}
 
-		/**
-		 * @return the designationCombo
-		 */
-		protected Component getDesignationCombo() {
-			return designationCombo;
-		}
-
-		/**
-		 * @return the employmentCombo
-		 */
-		protected Component getEmploymentCombo() {
-			return employmentCombo;
-		}
-
+	
 		/**
 		 * @return the formPanel
 		 */
@@ -249,7 +236,73 @@ public class EmployeeDetailsWindow {
 		public CheckBox[] getPlatformChecks() {
 			return platformChecks;
 		}
-	  
+
+		/**
+		 * @return the mandayRate
+		 */
+		public Component getMandayRate() {
+			return mandayRate;
+		}
+
+		/**
+		 * @return the assignedOffice
+		 */
+		public Component getAssignedOffice() {
+			return assignedOffice;
+		}
+
+
+		/**
+		 * @return the name
+		 */
+		public Component getName() {
+			return name;
+		}
+
+		/**
+		 * @return the mobile
+		 */
+		public Component getMobile() {
+			return mobile;
+		}
+
+
+		/**
+		 * @return the designation
+		 */
+		public Component getDesignation() {
+			return designation;
+		}
+
+
+		/**
+		 * @return the employment
+		 */
+		public Component getEmployment() {
+			return employment;
+		}
+		/**
+		 * @return the startDate
+		 */
+		public Component getStartDate() {
+			return startDate;
+		}
+
+
+		/**
+		 * @return the endDate
+		 */
+		public Component getEndDate() {
+			return endDate;
+		}
+
+		/**
+		 * @return the status
+		 */
+		public Component getStatus() {
+			return status;
+		}
+
 		
     
 

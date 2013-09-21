@@ -25,13 +25,18 @@ import com.sencha.gxt.widget.core.client.form.CheckBox;
 
 public interface EmployeeDetailsCreator {
 	
-	public Component createNameField();
-	public Component createMobileField();
+	public Component createName();
+	public Component createMobile();
 	public Component createPersonalEmail();
 	public Component createCompanyEmail();
-	public Component createDesignationCombo();
-	public Component createEmploymentCombo();
+	public Component createDesignation();
+	public Component createEmployment();
 	public CheckBox[] createPlatforms();
+	public Component createManDayRate();
+	public Component createAssignedOffice();
+	public Component createStartDate();
+	public Component createEndDate();
+	public Component createStatus();
 	public TextButton[] createAndAddButtons();
 	public String getWindowHeader();
 }
