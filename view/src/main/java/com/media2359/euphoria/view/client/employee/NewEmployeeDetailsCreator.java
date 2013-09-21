@@ -115,9 +115,7 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	  designationCombo.setEmptyText("Select Designation");
 	  designationCombo.setForceSelection(true);
 	  designationCombo.setTriggerAction(TriggerAction.ALL);
-      designationCombo.add(Designation.DESIGNATION1);
-      designationCombo.add(Designation.DESIGNATION2);
-      designationCombo.add(Designation.DESIGNATION3);
+      designationCombo.add(Designation.getDesignations());
       return designationCombo;
 		
 	}
@@ -143,12 +141,10 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 				}
 			});
 		  employmentCombo.setAllowBlank(false);
-		  employmentCombo.setEmptyText("Select Designation");
+		  employmentCombo.setEmptyText("Select Employment Type");
 		  employmentCombo.setForceSelection(true);
 		  employmentCombo.setTriggerAction(TriggerAction.ALL);
-		  employmentCombo.add(EmploymentType.EMPL1);
-		  employmentCombo.add(EmploymentType.EMPL2);
-		  employmentCombo.add(EmploymentType.EMPL3);
+		  employmentCombo.add(EmploymentType.getEmploymentTypes());
 		  return employmentCombo;
 		
 	}
@@ -158,19 +154,21 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public CheckBox[] createPlatforms() {
-		  CheckBox railsCheck = new CheckBox();
-		  railsCheck.setBoxLabel("Rails");
+		
+		String[] allPlatforms =new Platforms().getPlatforms();
+		   
+		   if(allPlatforms == null)
+			   return null;
+		   
+		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.length];
+		   
+		  for(int i=0; i<returnCheckBoxes.length; i++){
+			  
+			  returnCheckBoxes[i] = new CheckBox();
+			  returnCheckBoxes[i].setBoxLabel(allPlatforms[i]);			  
+		  }
 		  
-		  CheckBox htmlCheck = new CheckBox();
-		  htmlCheck.setBoxLabel("HTML");
-		  
-		  CheckBox iOSCheck = new CheckBox();
-		  iOSCheck.setBoxLabel("iOS");
-		  
-		  CheckBox androidCheck = new CheckBox();
-		  androidCheck.setBoxLabel("Android");
-		  
-		  return new CheckBox[]{railsCheck,htmlCheck,iOSCheck,androidCheck};
+		  return returnCheckBoxes;
 		
 	}
 

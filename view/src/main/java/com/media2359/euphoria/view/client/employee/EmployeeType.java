@@ -9,6 +9,9 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * EmployeeType
@@ -48,5 +51,15 @@ enum EmploymentType{
 		@Override
 		public String toString() {
 			return text;
+		}
+		
+		
+		protected static List<EmploymentType> getEmploymentTypes(){
+			List<EmploymentType> emplList = new ArrayList<EmploymentType>();
+			emplList.add(EMPL1);
+			emplList.add(EMPL2);
+			emplList.add(EMPL3);
+			emplList.add(EMPL4);
+			return emplList;
 		}
 };

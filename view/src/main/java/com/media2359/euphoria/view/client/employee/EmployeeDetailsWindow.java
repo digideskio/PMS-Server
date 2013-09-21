@@ -9,6 +9,8 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -54,7 +56,7 @@ public class EmployeeDetailsWindow {
 	  private Window window;
 
 	  private Component nameField,mobileField,personalEmail,companyEmail,designationCombo,employmentCombo; 
-	  private CheckBox railsCheck,iOSCheck,htmlCheck,androidCheck;
+	  private CheckBox [] platformChecks;
 	  
 	  private TextButton firstButton,secondButton,thirdButton;
 	  private FormPanel formPanel;
@@ -86,17 +88,22 @@ public class EmployeeDetailsWindow {
 		  companyEmail = employeeDetailsCreator.createCompanyEmail();
 		  designationCombo = employeeDetailsCreator.createDesignationCombo();
 		  employmentCombo = employeeDetailsCreator.createEmploymentCombo();
-		  CheckBox[] platforms = employeeDetailsCreator.createPlatforms();
-		  railsCheck = platforms[0];
-		  iOSCheck = platforms[1];
-		  htmlCheck = platforms[2];
-		  androidCheck = platforms[3];
+		  platformChecks = employeeDetailsCreator.createPlatforms();
+		  log.info("Number of check boxes returned are "+platformChecks.length);
 
-		  HorizontalPanel platformPanel = new HorizontalPanel();		  
-		  platformPanel.add(railsCheck);
-		  platformPanel.add(htmlCheck);
-		  platformPanel.add(iOSCheck);
-		  platformPanel.add(androidCheck);
+		  List<HorizontalPanel> platformPanels=new ArrayList<HorizontalPanel>();
+		  if(platformChecks !=null && platformChecks.length > 1){
+				  
+			  for(int i=0;i<(int) Math.ceil((double)platformChecks.length/4.0); i++){
+				  HorizontalPanel hPanel = new HorizontalPanel();
+				  for(int j=(i*4); j<=(i*4)+3; j++){
+					  if(j>=platformChecks.length)
+						  break;
+					   hPanel.add(platformChecks[j]); 	
+				  }
+				  platformPanels.add(hPanel) ;
+			  }
+		  }
 		  
 		  
 		  VerticalLayoutContainer p = new VerticalLayoutContainer();
@@ -105,7 +112,16 @@ public class EmployeeDetailsWindow {
 		  p.add(new FieldLabel(personalEmail, "Personal Email"), new VerticalLayoutData(1, 50));
 		  p.add(new FieldLabel(companyEmail, "Company Email"), new VerticalLayoutData(1, 50));
 		  p.add(new FieldLabel(designationCombo, "Designation"), new VerticalLayoutData(1, 50));
-		  p.add(new FieldLabel(platformPanel, "Platform"), new VerticalLayoutData(1, 100));		  
+
+		  if(platformPanels.size()>0){
+			  for(int i=0; i<platformPanels.size(); i++)
+			  {
+				  if(i != 0 )
+					  p.add(new FieldLabel(platformPanels.get(i)), new VerticalLayoutData(1, 50));	
+				  else
+					  p.add(new FieldLabel(platformPanels.get(i), "Platform"), new VerticalLayoutData(1, 50));	
+			  }
+		  }
 		  p.add(new FieldLabel(employmentCombo, "Employment Type"), new VerticalLayoutData(1, 50));
 		  
 		  formPanel = new FormPanel();
@@ -207,34 +223,6 @@ public class EmployeeDetailsWindow {
 		}
 
 		/**
-		 * @return the railsCheck
-		 */
-		protected CheckBox getRailsCheck() {
-			return railsCheck;
-		}
-
-		/**
-		 * @return the iOSCheck
-		 */
-		protected CheckBox getiOSCheck() {
-			return iOSCheck;
-		}
-
-		/**
-		 * @return the htmlCheck
-		 */
-		protected CheckBox getHtmlCheck() {
-			return htmlCheck;
-		}
-
-		/**
-		 * @return the androidCheck
-		 */
-		protected CheckBox getAndroidCheck() {
-			return androidCheck;
-		}
-
-		/**
 		 * @return the formPanel
 		 */
 		protected FormPanel getFormPanel() {
@@ -253,6 +241,13 @@ public class EmployeeDetailsWindow {
 		 */
 		protected EmployeeDTO getEmployeeDTO() {
 			return employeeDTO;
+		}
+
+		/**
+		 * @return the platformChecks
+		 */
+		public CheckBox[] getPlatformChecks() {
+			return platformChecks;
 		}
 	  
 		

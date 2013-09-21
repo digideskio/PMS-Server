@@ -13,8 +13,11 @@ import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.Field;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.HtmlEditor;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import com.sencha.gxt.widget.core.client.form.FormPanel.LabelAlign;
 
 
 /**
@@ -32,34 +35,21 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	public ViewEmployeeDetailsCreator(EmployeeDTO employeeDTO){
 		this.employeeDTO = employeeDTO;
 	}
+	
+	
+	
 	@Override
 	public Component createNameField() {
-		TextField nameField = new TextField();
-		  if(employeeDTO !=null)
-			  nameField.setValue(employeeDTO.getName());
-		  nameField.setAllowTextSelection(false);
-		  nameField.setBorders(false);
-		  nameField.setReadOnly(true);
-		  
-		  return nameField;
-		  
-
-		
+		  return createLabel(employeeDTO.getName());
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createMobileField(com.sencha.gxt.widget.core.client.form.NumberField)
 	 */
 	@Override
 	public Component createMobileField() {
-		TextField mobileField= new TextField();
-		  if(employeeDTO !=null)
-			  mobileField.setValue(employeeDTO.getMobile());
-		  mobileField.setAllowTextSelection(false);
-		  mobileField.setBorders(false);
-		  mobileField.setReadOnly(true);
-		  return mobileField;
-		
+			  return createLabel(employeeDTO.getMobile());		
 	}
 
 	/* (non-Javadoc)
@@ -67,14 +57,7 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public Component createPersonalEmail() {
-		TextField personalEmail = new TextField();
-		  if(employeeDTO !=null)
-			  personalEmail.setValue(employeeDTO.getPersonalEmail());
-		  personalEmail.setAllowTextSelection(false);
-		  personalEmail.setBorders(false);
-		  personalEmail.setReadOnly(true);
-		  return personalEmail;
-		
+		  return createLabel(employeeDTO.getPersonalEmail());		
 	}
 
 	/* (non-Javadoc)
@@ -82,29 +65,15 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public Component createCompanyEmail() {
-		TextField companyEmail = new TextField();
-		  if(employeeDTO !=null)
-			  companyEmail.setValue(employeeDTO.getCompanyEmail());
-		  companyEmail.setAllowTextSelection(false);
-		  companyEmail.setBorders(false);
-		  companyEmail.setReadOnly(true);
-		  return companyEmail;
+		  return createLabel(employeeDTO.getCompanyEmail());
 	}
 
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createDesignationCombo(com.sencha.gxt.widget.core.client.form.SimpleComboBox)
 	 */
 	@Override
-	public Component createDesignationCombo() {
-		
-		TextField designationLabel = new TextField();
-		  if(employeeDTO !=null)
-			  designationLabel.setValue(employeeDTO.getDesignation());
-		  designationLabel.setAllowTextSelection(false);
-		  designationLabel.setBorders(false);
-		  designationLabel.setReadOnly(true);
-		  return designationLabel;
-		
+	public Component createDesignationCombo() {		
+		  return createLabel(employeeDTO.getDesignation());		
 	}
 
 	/* (non-Javadoc)
@@ -112,15 +81,7 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	 */
 	@Override
 	public Component createEmploymentCombo() {
-		
-		TextField employmentLabel = new TextField();
-		  if(employeeDTO !=null)
-			  employmentLabel.setValue(employeeDTO.getDesignation());
-		  employmentLabel.setAllowTextSelection(false);
-		  employmentLabel.setBorders(false);
-		  employmentLabel.setReadOnly(true);
-		  return employmentLabel;
-	
+		  return createLabel(employeeDTO.getEmploymentType());	
 	}
 
 	/* (non-Javadoc)
@@ -132,28 +93,25 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		String platforms=null;
 		  if(employeeDTO !=null)
 			  platforms = employeeDTO.getPlatForms();
-
-		  CheckBox railsCheck = new CheckBox();
-		  railsCheck.setBoxLabel("Rails");
-		  railsCheck.setValue(platforms!=null&&platforms.contains("Rails"));
-		  railsCheck.setReadOnly(true);
 		  
-		  CheckBox htmlCheck = new CheckBox();
-		  htmlCheck.setBoxLabel("HTML");
-		  htmlCheck.setValue(platforms!=null&&platforms.contains("HTML"));
-		  htmlCheck.setReadOnly(true);
 		  
-		  CheckBox iOSCheck = new CheckBox();
-		  iOSCheck.setBoxLabel("iOS");
-		  iOSCheck.setValue(platforms!=null&&platforms.contains("iOS"));
-		  iOSCheck.setReadOnly(true);
+		   String[] allPlatforms =new Platforms().getPlatforms();
+		   
+		   if(allPlatforms == null)
+			   return null;
+		   
+		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.length];
+		   
+		  for(int i=0; i<returnCheckBoxes.length; i++){
+			  
+			  returnCheckBoxes[i] = new CheckBox();
+			  returnCheckBoxes[i].setBoxLabel(allPlatforms[i]);
+			  returnCheckBoxes[i].setValue(platforms!=null&&platforms.contains(allPlatforms[i]));
+			  returnCheckBoxes[i].setReadOnly(true);
+			  
+		  }
 		  
-		  CheckBox androidCheck = new CheckBox();
-		  androidCheck.setBoxLabel("Android");
-		  androidCheck.setValue(platforms!=null&&platforms.contains("Android"));
-		  androidCheck.setReadOnly(true);
-		  
-		  return new CheckBox[]{railsCheck,htmlCheck,iOSCheck,androidCheck};
+		  return returnCheckBoxes;
 	}
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createAndAddButtons(com.sencha.gxt.widget.core.client.button.TextButton, com.sencha.gxt.widget.core.client.button.TextButton, com.sencha.gxt.widget.core.client.FramedPanel)
@@ -176,5 +134,16 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		// TODO Auto-generated method stub
 		return  "Employee Details";
 	}
+	
+	private FieldLabel createLabel(String value){
+		FieldLabel label = new FieldLabel();
+		  if(employeeDTO !=null)
+			  label.setText(value);
 
+		  label.setBorders(false);
+		  label.setLabelSeparator("");		
+		  label.setLabelAlign(LabelAlign.TOP);
+		  return label;
+	}
+	 
 }

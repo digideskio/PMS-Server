@@ -38,6 +38,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
   private EmployeeGrid employeeGrid;
   private EmployeeServiceAsync employeeService;
   private Logger log = Logger.getLogger("EuphoriaLogger");
+  private List<EmployeeDTO> employees;
   
   
   public EmployeePresenter(){
@@ -52,9 +53,19 @@ import com.sencha.gxt.widget.core.client.info.Info;
   
   
   public void loadData() {
+	  
+
+	  	employees = null;
+	  	
+		loadDataFromDB(false);
+
+
+	}
+  
+  private void loadDataFromDB(final boolean test){
+	  
 		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 				"Progress", "Loading data. Please wait...");
-
 		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>() {
 
 			public void onFailure(Throwable caught) {
@@ -66,15 +77,10 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
 			public void onSuccess(EmployeeListResponse result) {
 				messageBox.hide();
-				List<EmployeeDTO> employees = result.getEmployees();
+				employees = result.getEmployees();
 
-				if ((employees != null) && (!employees.isEmpty())) {
-					// Now populate GXT Grid
-					employeeGrid.populateData(employees);
-				} else {
-					// Remove all items
-					employeeGrid.clear();
-				}
+				if(!test)
+					populateEmployeeGrid();
 			}
 
 		};
@@ -82,19 +88,15 @@ import com.sencha.gxt.widget.core.client.info.Info;
 		employeeService.getAllEmployees(new EmployeeListRequest(), callback);
 		messageBox.auto();
 		messageBox.show();
-		
-
-	}
-  
-  
-  public void addButtonClicked(SelectEvent event){
+  }
+  protected void addButtonClicked(SelectEvent event){
 	    Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
 	    
 	    new EmployeeDetailsWindow(EmployeeDetailsWindow.ADD,null).show();
   }
   
   
-  public void viewEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
+  protected void viewEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
 	  
       Context c = event.getContext();
       int row = c.getIndex();
@@ -105,15 +107,22 @@ import com.sencha.gxt.widget.core.client.info.Info;
   }
   
   
-  public void editEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
+  protected void editEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
 	  
       Context c = event.getContext();
       int row = c.getIndex();
       EmployeeDTO p = listStore.get(row);
       log.info("The employee " + p.getName() + " was clicked to Edit.");
-      Info.display("Event", "The employee " + p.getName() + " was clicked to Edit.");
 	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p).show();
   }
   
-  
+  private void populateEmployeeGrid(){
+
+		if ((employees != null) && (!employees.isEmpty())) {
+			employeeGrid.populateData(employees);
+		} else {
+			employeeGrid.clear();
+		}
+		
+  }
 }

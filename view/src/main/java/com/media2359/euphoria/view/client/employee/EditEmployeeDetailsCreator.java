@@ -126,9 +126,7 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		  designationCombo.setText(employeeDTO.getDesignation());
 	  designationCombo.setForceSelection(true);
 	  designationCombo.setTriggerAction(TriggerAction.ALL);
-      designationCombo.add(Designation.DESIGNATION1);
-      designationCombo.add(Designation.DESIGNATION2);
-      designationCombo.add(Designation.DESIGNATION3);
+	  designationCombo.add(Designation.getDesignations());
       return designationCombo;
 		
 	}
@@ -158,9 +156,7 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 			  employmentCombo.setText(employeeDTO.getEmploymentType());
 		  employmentCombo.setForceSelection(true);
 		  employmentCombo.setTriggerAction(TriggerAction.ALL);
-		  employmentCombo.add(EmploymentType.EMPL1);
-		  employmentCombo.add(EmploymentType.EMPL2);
-		  employmentCombo.add(EmploymentType.EMPL3);
+		  employmentCombo.add(EmploymentType.getEmploymentTypes());
 		  return employmentCombo;
 		
 	}
@@ -171,27 +167,27 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	@Override
 	public CheckBox[] createPlatforms() {
 		
-		String platforms = "";
+		String platforms=null;
 		  if(employeeDTO !=null)
 			  platforms = employeeDTO.getPlatForms();
 		  
-		  CheckBox railsCheck = new CheckBox();
-		  railsCheck.setBoxLabel("Rails");
-		  railsCheck.setValue(platforms!=null&&platforms.contains("Rails"));
 		  
-		  CheckBox htmlCheck = new CheckBox();
-		  htmlCheck.setBoxLabel("HTML");
-		  railsCheck.setValue(platforms!=null&&platforms.contains("HTML"));
+		   String[] allPlatforms =new Platforms().getPlatforms();
+		   
+		   if(allPlatforms == null)
+			   return null;
+		   
+		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.length];
+		   
+		  for(int i=0; i<returnCheckBoxes.length; i++){
+			  
+			  returnCheckBoxes[i] = new CheckBox();
+			  returnCheckBoxes[i].setBoxLabel(allPlatforms[i]);
+			  returnCheckBoxes[i].setValue(platforms!=null&&platforms.contains(allPlatforms[i]));
+			  
+		  }
 		  
-		  CheckBox iOSCheck = new CheckBox();
-		  iOSCheck.setBoxLabel("iOS");
-		  railsCheck.setValue(platforms!=null&&platforms.contains("iOS"));
-		  
-		  CheckBox androidCheck = new CheckBox();
-		  androidCheck.setBoxLabel("Android");
-		  railsCheck.setValue(platforms!=null&&platforms.contains("Android"));
-		  
-		  return new CheckBox[]{railsCheck,htmlCheck,iOSCheck,androidCheck};
+		  return returnCheckBoxes;
 		
 	}
 

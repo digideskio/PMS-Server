@@ -9,6 +9,9 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * JobStatus
  *
@@ -38,6 +41,13 @@ enum JobStatus{
 		@Override
 		public String toString() {
 			return text;
+		}
+		
+		protected static List<JobStatus> getAllStatus(){
+			List<JobStatus> statusList = new ArrayList<JobStatus>();
+			statusList.add(STATUS1);
+			statusList.add(STATUS1);
+			return statusList;
 		}
 };
 

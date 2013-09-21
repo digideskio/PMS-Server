@@ -9,6 +9,9 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Designation
@@ -49,5 +52,16 @@ enum Designation{
 		@Override
 		public String toString() {
 			return text;
+		}
+		
+		protected static List<Designation> getDesignations(){
+			List<Designation> designationList = new ArrayList<Designation>();
+			designationList.add(DESIGNATION1);
+			designationList.add(DESIGNATION2);
+			designationList.add(DESIGNATION3);
+			designationList.add(DESIGNATION4);
+			designationList.add(DESIGNATION5);
+			designationList.add(DESIGNATION6);
+			return designationList;
 		}
 };

@@ -9,6 +9,9 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * AssignedOffice
  *
@@ -38,5 +41,12 @@ enum AssignedOffice{
 		@Override
 		public String toString() {
 			return text;
+		}
+		
+		protected static List<AssignedOffice> getOffices(){
+			List<AssignedOffice> officeList = new ArrayList<AssignedOffice>();
+			officeList.add(OFFICE1);
+			officeList.add(OFFICE2);
+			return officeList;
 		}
 };

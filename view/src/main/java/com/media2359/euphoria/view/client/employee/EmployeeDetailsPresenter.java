@@ -35,7 +35,14 @@ public class EmployeeDetailsPresenter {
 		
 	protected void submitButtonClicked(EmployeeDetailsWindow sourceWindow){
 	    if(sourceWindow.getFormPanel().isValid(false)){
-	    	if(sourceWindow.getRailsCheck().getValue() || sourceWindow.getHtmlCheck().getValue() || sourceWindow.getiOSCheck().getValue() || sourceWindow.getAndroidCheck().getValue()){
+	    	boolean atleastOnePlatformSelected = false;
+	    	for(int i=0; i<=sourceWindow.getPlatformChecks().length; i++){
+	    		if(!sourceWindow.getPlatformChecks()[i].getValue())
+	    			continue;
+	    		atleastOnePlatformSelected = true;
+	    		break;
+	    	}
+	    	if(atleastOnePlatformSelected){
 	    		sourceWindow.getWindow().hide();
 		    	EmployeeDTO employeeDTO = new EmployeeDTO();
 		    	saveEmployee(employeeDTO);
@@ -46,7 +53,7 @@ public class EmployeeDetailsPresenter {
 	    	new Alert("Save", "Please correct highlighted errors before you can save!");
 	    }
 	}
-	
+
 	protected void cancelButtonClicked(EmployeeDetailsWindow sourceWindow){
 		sourceWindow.getWindow().hide();
 	}
