@@ -1,6 +1,11 @@
-*.class
-
-# Package Files #
+bin
+target
+.settings
 *.jar
 *.war
 *.ear
+**/.gwt-*t
+**/gwt-unitCache
+.classpath
+deploy
+view/src/main/webapp/euphoria

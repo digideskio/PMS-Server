@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" xmlns:row="urn:import:com.sencha.gxt.widget.core.client.container"
+	xmlns:toolbar="urn:import:com.sencha.gxt.widget.core.client.toolbar"
+	xmlns:menu="urn:import:com.sencha.gxt.widget.core.client.menu"
+	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
+	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
+
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+		<ui:attributes top="5" right="5" bottom="5" left="5" />
+	</ui:with>
+	
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
+		field="outerPane">
+		<ui:attributes width="1.0" height="0.7" margins="{centerMargins}" />
+	</ui:with>
+	
+	<row:VerticalLayoutContainer>
+		<row:child layoutData="{outerPane}">
+			<gxt:ContentPanel borders="true" headingText="Projects">
+				<project:ProjectGrid ui:field="projectGrid"></project:ProjectGrid>
+			</gxt:ContentPanel>
+		</row:child>
+	</row:VerticalLayoutContainer>
+</ui:UiBinder>
