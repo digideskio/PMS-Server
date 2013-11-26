@@ -9,3 +9,4 @@ target
 .classpath
 deploy
 view/src/main/webapp/euphoria
+.DS_Store
