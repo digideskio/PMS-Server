@@ -91,22 +91,23 @@
 	        <version>2.5.1</version>
 	        <executions>
  			 <execution>
-	            <configuration>
-	              <module>com.media2359.euphoria.view.Euphoria</module>
-	              <inplace>true</inplace> 
-	              <logLevel>INFO</logLevel>
-	              <localWorkers>${gwt.localWorkers}</localWorkers>
-	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m -Xss512m</extraJvmArgs>
-	              <runTarget>tester.html</runTarget>
-                  <hostedWebapp>${webappDirectory}</hostedWebapp>
-	            </configuration>
 	            <goals>
 	              <goal>compile</goal>
 	              <goal>test</goal>
 	              <goal>generateAsync</goal>
 	            </goals>
          	 </execution>
+      	 
 	        </executions>
+	     	            <configuration>
+	              <module>com.media2359.euphoria.view.Euphoria</module>
+	              <inplace>true</inplace> 
+	              <logLevel>INFO</logLevel>
+	              <localWorkers>${gwt.localWorkers}</localWorkers>
+	              <extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m -Xss512m</extraJvmArgs>
+	              <runTarget>euphoria/hosted.html</runTarget>
+                  <hostedWebapp>${webappDirectory}</hostedWebapp>
+	            </configuration>      
 	       </plugin>
            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

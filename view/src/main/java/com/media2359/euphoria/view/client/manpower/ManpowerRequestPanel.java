@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.manpower.request.ManpowerRequestAllocationPanel;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -49,6 +50,6 @@ public class ManpowerRequestPanel  implements IsWidget {
 	
 	@UiHandler("addResource")
 	public void addResource(SelectEvent ce) {
-		allocator.addNewRow();
+		//allocator.addNewRow();
 	}
 }

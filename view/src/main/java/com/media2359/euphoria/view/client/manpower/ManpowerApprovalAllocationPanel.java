@@ -16,6 +16,8 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.manpower.request.WeeklyResourceRequest;
+import com.media2359.euphoria.view.client.manpower.request.WeeklyResourceRequestProperties;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.Converter;
 import com.sencha.gxt.data.shared.ListStore;
