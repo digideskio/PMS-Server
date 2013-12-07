@@ -9,90 +9,76 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower.request;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
 public class WeeklyResourceLeaveRequest {
 	String id;
-	Date weekStartDate;
-	Integer[] dayType;
+	ArrayList<Date> weekDays;
+	ArrayList<ResourceDayPlan> weeklyPlanList;
+	
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Date getWeekStartDate() {
-		return weekStartDate;
-	}
-	public void setWeekStartDate(Date weekStartDate) {
-		this.weekStartDate = weekStartDate;
-	}
-	public Integer[] getDayType() {
-		return dayType;
-	}
-	public void setDayType(Integer[] dayType) {
-		this.dayType = dayType;
-	}
 	
 	public Boolean getMondayMorning() {
-		return true;
+		return weeklyPlanList.get(0).isAvailableInMorning();
 	}
 	
 	public Boolean getTuesdayMorning() {
-		return true;
+		return weeklyPlanList.get(1).isAvailableInMorning();
 	}
 	
 	public Boolean getWednesdayMorning() {
-		return true;
+		return weeklyPlanList.get(2).isAvailableInMorning();
 	}
 	
 	public Boolean getThursdayMorning() {
-		return true;
+		return weeklyPlanList.get(3).isAvailableInMorning();
 	}
 	
 	public Boolean getFridayMorning() {
-		return true;
+		return weeklyPlanList.get(4).isAvailableInMorning();
 	}
 	
 	public Boolean getMondayAfternoon() {
-		return true;
+		return weeklyPlanList.get(0).isAvailableInEvening();
 	}
 	
 	public Boolean getTuesdayAfternoon() {
-		return true;
+		return weeklyPlanList.get(1).isAvailableInEvening();
 	}
 	
 	public Boolean getWednesdayAfternoon() {
-		return true;
+		return weeklyPlanList.get(2).isAvailableInEvening();
 	}
 	
 	public Boolean getThursdayAfternoon() {
-		return true;
+		return weeklyPlanList.get(3).isAvailableInEvening();
 	}
 	
 	public Boolean getFridayAfternoon() {
-		return true;
+		return weeklyPlanList.get(4).isAvailableInEvening();
 	}
-	
-	
-	public void setMondayMorning(Boolean value) {
-		
+
+	public ArrayList<Date> getWeekDays() {
+		return weekDays;
 	}
-	
-	public void setTuesdayMorning(Boolean value) {
-		
+
+	public void setWeekDays(ArrayList<Date> weekDays) {
+		this.weekDays = weekDays;
 	}
-	
-	public void setWednesdayMorning(Boolean value) {
-		
+
+	public ArrayList<ResourceDayPlan> getWeeklyPlanList() {
+		return weeklyPlanList;
 	}
-	
-	public void setThursdayMorning(Boolean value) {
-		
-	}
-	
-	public void setFridayMorning(Boolean value) {
-		
+
+	public void setWeeklyPlanList(ArrayList<ResourceDayPlan> weeklyPlanList) {
+		this.weeklyPlanList = weeklyPlanList;
 	}
 }

@@ -10,27 +10,19 @@
 package com.media2359.euphoria.view.client.manpower.request;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.widget.core.client.FramedPanel;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.form.FieldLabel;
-import com.sencha.gxt.widget.core.client.form.TextField;
-import com.sencha.gxt.widget.core.client.grid.AggregationRowConfig;
-import com.sencha.gxt.widget.core.client.grid.AggregationSafeHtmlRenderer;
+import com.sencha.gxt.widget.core.client.grid.CellSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.HeaderGroupConfig;
-import com.sencha.gxt.widget.core.client.info.Info;
+import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent;
+import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent.CellSelectionChangedHandler;
 
 /**
  * View class for allocating Weekly Manpower requests
@@ -43,56 +35,81 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
-	@Override
 	public Widget asWidget() {
-	    WeeklyResourceLeaveRequestProperties props = GWT.create(WeeklyResourceLeaveRequestProperties.class);
-	    List<ColumnConfig<WeeklyResourceLeaveRequest, ?>> configs = new ArrayList<ColumnConfig<WeeklyResourceLeaveRequest, ?>>();
-	 
-	    ColumnModel<WeeklyResourceLeaveRequest> cm = new ColumnModel<WeeklyResourceLeaveRequest>(configs);
+	    ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
 	    
-	    for(int i=0; i < 10; i = i + 2) {
+	    WeeklyResourcePlanResponse response = getWeeklyResourcePlan();
+	 
+	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
+	    
+	    WeeklyResourcePlanProperties props = GWT.create(WeeklyResourcePlanProperties.class);
+	    ColumnConfig<WeeklyResourcePlan, Boolean> amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Am(), 100, "AM");
+		ColumnConfig<WeeklyResourcePlan, Boolean> pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Pm(), 100, "PM");
+		configs.add(amColumn);
+		configs.add(pmColumn);
+		cm.addHeaderGroup(0, 0, new HeaderGroupConfig("16/09/2013", 1, 2));
+		
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Pm(), 100, "PM");
+		configs.add(amColumn);
+		configs.add(pmColumn);
+		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("17/09/2013", 1, 2));
 
-		    ColumnConfig<WeeklyResourceLeaveRequest, Boolean> amColumn = new ColumnConfig<WeeklyResourceLeaveRequest, Boolean>(props.mondayMorning(), 100, "AM");
-		    configs.add(amColumn);
-		 
-		    ColumnConfig<WeeklyResourceLeaveRequest, Boolean> pmColumn = new ColumnConfig<WeeklyResourceLeaveRequest, Boolean>(props.mondayAfternoon(), 100, "PM");
-		    configs.add(pmColumn);
-		    
-		    cm.addHeaderGroup(0, i, new HeaderGroupConfig("16/09/2013", 1, 2));
-		    
-		    AggregationRowConfig<WeeklyResourceLeaveRequest> dayConfig = new AggregationRowConfig<WeeklyResourceLeaveRequest>();
-		    dayConfig.setRenderer(amColumn, new AggregationSafeHtmlRenderer<WeeklyResourceLeaveRequest>("Average"));
-		    dayConfig.setRenderer(pmColumn, new AggregationSafeHtmlRenderer<WeeklyResourceLeaveRequest>("Average"));
-		    
-		    cm.addAggregationRow(dayConfig);
-	    
-	    }
-	    
-
-	    final ListStore<WeeklyResourceLeaveRequest> store = new ListStore<WeeklyResourceLeaveRequest>(props.key());
-	    store.addAll(getWeeklyResourceLeaveRequests());
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Pm(), 100, "PM");
+		configs.add(amColumn);
+		configs.add(pmColumn);
+		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("18/09/2013", 1, 2));
+		
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Pm(), 100, "PM");
+		configs.add(amColumn);
+		configs.add(pmColumn);
+		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("19/09/2013", 1, 2));
+		
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Pm(), 100, "PM");
+		configs.add(amColumn);
+		configs.add(pmColumn);
+		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("20/09/2013", 1, 2));
+		
+		
+	    final ListStore<WeeklyResourcePlan> store = new ListStore<WeeklyResourcePlan>(props.key());
+	    store.addAll(response.getWeeklyResourcePlanList());
+	    //store.addAll(new ArrayList<WeeklyResourcePlan>());
 	 
-	    FramedPanel cp = new FramedPanel();
-	    cp.setCollapsible(true);
-	    cp.setAnimCollapse(false);
-	    cp.setHeadingText("Project Allocation");
-	    cp.setPixelSize(600, 350);
-	    cp.addStyleName("margin-10");
-	 
-	    Grid<WeeklyResourceLeaveRequest> grid = new Grid<WeeklyResourceLeaveRequest>(store, cm);
+	    Grid<WeeklyResourcePlan> grid = new Grid<WeeklyResourcePlan>(store, cm);
 	    grid.setBorders(true);
-	    cp.add(grid);
 	    
-	    return cp;
+        CellSelectionModel<WeeklyResourcePlan> c = new CellSelectionModel<WeeklyResourcePlan>();
+        c.addCellSelectionChangedHandler(new CellSelectionChangedHandler<WeeklyResourcePlan>() {
+
+          @Override
+          public void onCellSelectionChanged(CellSelectionChangedEvent<WeeklyResourcePlan> event) {
+
+          }
+        });
+
+        grid.setSelectionModel(c);
+	    
+	    return grid;
 	}
 
-	private ArrayList<WeeklyResourceLeaveRequest> getWeeklyResourceLeaveRequests() {
-		ArrayList<WeeklyResourceLeaveRequest> leaveList = new ArrayList<WeeklyResourceLeaveRequest>();
+	private WeeklyResourcePlanResponse getWeeklyResourcePlan() {
+		WeeklyResourcePlanResponse response = new WeeklyResourcePlanResponse();
+		response.setWeekStartDate(new Date());
 		
-		WeeklyResourceLeaveRequest leave = new WeeklyResourceLeaveRequest();
-		leave.setId("1");
-		leaveList.add(leave);
+		ArrayList<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 		
-		return leaveList;
+		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
+		resourcePlan.setId("1");
+		resourcePlan.setDay1Am(true);
+		resourcePlan.setDay3Am(true);
+		resourcePlan.setDay5Pm(true);
+		weeklyResourcePlanList.add(resourcePlan);
+		
+		response.setWeeklyResourcePlanList(weeklyResourcePlanList);
+		
+		return response;
 	}
 }
