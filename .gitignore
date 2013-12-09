@@ -9,3 +9,6 @@ target
 deploy
 view/src/main/webapp/euphoria
 .DS_Store
+.metadata/
+.project
+view/src/main/gwt-unitCache/
