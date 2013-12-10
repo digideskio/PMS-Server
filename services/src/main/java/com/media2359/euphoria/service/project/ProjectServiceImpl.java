@@ -45,9 +45,12 @@ public class ProjectServiceImpl implements ProjectService {
 				= new ArrayList<ProjectDTO> ();
 			for(Project project:projects) {
 				ProjectDTO respProject = project.createProjectDTO();
+				/*
 				respProject.setManDaysLeft(random.nextInt(1000));			//Temporary, change later-Praveen
 				respProject.setMilestoneCount(random.nextInt(100));			//Temporary, change later-Praveen
 				respProject.setCompletedMilestoneCount(random.nextInt(10));	//Temporary, change later-Praveen
+				*/
+				
 				respProjects.add(respProject);
 				
 			}

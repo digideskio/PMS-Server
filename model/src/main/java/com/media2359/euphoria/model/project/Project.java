@@ -20,6 +20,9 @@ public class Project {
 	private String name;
 	private String description;
 	private String projectManager;
+	private Integer manDaysLeft;
+	private Integer milestoneCount;
+	private Integer completedMilestoneCount;
 	private ProjectPlan projectPlan;
 	private Set<WeeklyManpowerRequest> weeklyManpowerRequests;
 	private Set<WeeklyManpowerAllocation> weeklyManpowerAllocations;
@@ -37,6 +40,9 @@ public class Project {
 		this.name = dto.getName();
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();
+		this.manDaysLeft=dto.getManDaysLeft();
+		this.milestoneCount=dto.getMilestoneCount();
+		this.completedMilestoneCount=dto.getMilestoneCount();
 	}
 
 	/**
@@ -83,12 +89,40 @@ public class Project {
 		this.projectManager = projectManager;
 	}
 	
+	public Integer getManDaysLeft() {
+		return manDaysLeft;
+	}
+
+	public void setManDaysLeft(Integer manDaysLeft) {
+		this.manDaysLeft = manDaysLeft;
+	}
+	
+	public Integer getMilestoneCount() {
+		return milestoneCount;
+	}
+
+	public void setMilestoneCount(Integer milestoneCount) {
+		this.milestoneCount = milestoneCount;
+	}
+	
+	public Integer getCompletedMilestoneCount() {
+		return completedMilestoneCount;
+	}
+
+	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
+		this.completedMilestoneCount = completedMilestoneCount;
+	}
+	
+	
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
 		projectDTO.setId(getId());
 		projectDTO.setName(getName());
 		projectDTO.setDescription(getDescription());
 		projectDTO.setProjectManager(getProjectManager());
+		projectDTO.setManDaysLeft(getManDaysLeft());
+		projectDTO.setMilestoneCount(getMilestoneCount());
+		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
 		return projectDTO;
 	}
 }
