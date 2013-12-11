@@ -43,7 +43,8 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public List<Employee> getAllEmployees() {
-		 List<Employee> employeeList = new ArrayList<Employee>();
+		return this.getHibernateTemplate().find("from Employee");
+		 /*List<Employee> employeeList = new ArrayList<Employee>();
 		 
 		 Employee emp1  = new Employee();
 		 emp1.setName("Alfred");
@@ -134,6 +135,6 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		 emp6.setStatus("Active");
 		 employeeList.add(emp6);
 		 
-		 return employeeList;
+		 return employeeList;*/
 	}
 }
