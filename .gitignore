@@ -12,5 +12,5 @@ view/src/main/webapp/euphoria
 .metadata/
 .project
 view/src/main/gwt-unitCache/
-
+**/.gwt*
 #Added a comment here
