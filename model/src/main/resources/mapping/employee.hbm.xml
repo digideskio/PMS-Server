@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd ">
+<!-- 
+	employee.hbm.xml
+	
+	Hibernate mapping file that maps the Project entity to employee table
+	
+	@author TY
+	@version 1.0 2013
+ --> 
+<hibernate-mapping>
+    <class name="com.media2359.euphoria.model.employee.Employee" table="employee">
+        <id name="employeeKey" column="employee_key" >
+           <generator class="increment"/>
+        </id>
+        <property name="name" column="full_name"/>
+        <property name="mobile" column="mobile_nbr"/>
+        <property name="personalEmail" column="personal_email_addr"/>
+        <property name="companyEmail" column="company_eamil_addr"/>
+        <property name="designation" column="designation"/>
+        <property name="platForms" column="platform"/>
+        <property name="employmentType" column="employment_type"/>
+        <property name="mandayRate" column="manday_rate"/>
+        <property name="assignedOffice" column="assigned_office"/>
+        <property name="startDate" column="start_date"/>
+        <property name="endDate" column="end_date"/>
+        <property name="status" column="status"/>
+    </class>
+</hibernate-mapping>

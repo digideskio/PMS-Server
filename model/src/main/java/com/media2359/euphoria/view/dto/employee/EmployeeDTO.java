@@ -22,7 +22,8 @@ import java.util.Date;
  **/
 
 public class EmployeeDTO implements Serializable {
-
+    
+	private String employeeKey;
 	private String name;
 	private String mobile;
 	private String personalEmail;
@@ -35,6 +36,14 @@ public class EmployeeDTO implements Serializable {
 	private Date startDate;
 	private Date endDate;
 	private String status;
+	
+	
+	public String getEmployeeKey() {
+		return employeeKey;
+	}
+	public void setEmployeeKey(String employeeKey) {
+		this.employeeKey = employeeKey;
+	}
 	public String getName() {
 		return name;
 	}

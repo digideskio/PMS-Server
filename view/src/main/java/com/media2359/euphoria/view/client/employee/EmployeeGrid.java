@@ -58,7 +58,7 @@ public class EmployeeGrid extends Composite {
 	
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<EmployeeDTO> {
-		@Path("name")
+		@Path("employeeKey")
 		ModelKeyProvider<EmployeeDTO> key();
 		
 		ValueProvider<EmployeeDTO, String> name();

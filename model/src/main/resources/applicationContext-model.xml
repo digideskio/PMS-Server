@@ -15,6 +15,7 @@
 	    <property name="mappingResources">
 	      <list>
 	        <value>mapping/project.hbm.xml</value>
+	        <value>mapping/employee.hbm.xml</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">
@@ -31,6 +32,9 @@
         </property>
     </bean>
     <bean id="projectDao" class="com.media2359.euphoria.dao.project.ProjectDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="employeeDao" class="com.media2359.euphoria.dao.employee.EmployeeDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>
