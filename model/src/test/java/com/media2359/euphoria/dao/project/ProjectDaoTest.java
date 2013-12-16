@@ -36,4 +36,13 @@ public class ProjectDaoTest {
 		log.info("Number of projects returned:"+projects.size());
 		
 	}
+	
+	@Test
+	public void testGetProject() {
+		Project project = projectDao.getProject("1");
+		Assert.assertNotNull(project);
+		log.info("Project Name:" + project.getName());
+	}
+		
 }
+

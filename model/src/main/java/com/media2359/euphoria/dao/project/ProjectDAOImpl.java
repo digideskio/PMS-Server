@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 @Repository
 @Transactional(readOnly = true)
@@ -33,5 +34,11 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	@SuppressWarnings("unchecked")
 	public List<Project> getAllProjects() {
 		 return this.getHibernateTemplate().find("from Project");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Project getProject(String id) {
+		 Project tmpProject = (Project) this.getHibernateTemplate().get(Project.class, id);
+		 return tmpProject;
 	}
 }
