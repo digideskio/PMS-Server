@@ -15,5 +15,7 @@ import com.media2359.euphoria.model.project.Project;
 
 public interface ProjectDAO {
 	List<Project> getAllProjects();
-	Project getProject(String id);
+	Project getProject(Integer id);
+	void addProject(Project project);
+	Integer getMaxKey();
 }
