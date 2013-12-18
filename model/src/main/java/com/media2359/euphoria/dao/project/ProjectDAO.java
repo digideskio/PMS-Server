@@ -18,4 +18,5 @@ public interface ProjectDAO {
 	Project getProject(Integer id);
 	void addProject(Project project);
 	Integer getMaxKey();
+	void deleteProject(Integer id);
 }

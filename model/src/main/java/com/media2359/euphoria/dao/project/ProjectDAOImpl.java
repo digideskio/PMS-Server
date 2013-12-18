@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -81,6 +82,22 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		session.beginTransaction();
 		session.save(project);
 		session.getTransaction().commit();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteProject(Integer id) {
+		Session session = this.getSession();
+
+		Transaction tx1 = session.beginTransaction();
+		
+		Query q = session.createQuery("delete Project where id=?");
+		q.setInteger(0, id);
+		
+		log.info("deleteProject()->sQuery::" + q.toString());
+		q.executeUpdate();
+		tx1.commit();
+		//session.close();
 		
 	}
 }

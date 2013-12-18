@@ -63,6 +63,21 @@ public class ProjectDaoTest {
 		Assert.assertNotNull(project2);
 		log.info("Project Name:" + project2.getName());
 	}
+	
+	@Test
+	public void testDeleteProject() {
+		Project project1;
+		Project project2;
+		
+		Integer maxKey = projectDao.getMaxKey();
+		log.info("TestDeleteProject->MaxKey::" + maxKey.toString());
+		//project1 = projectDao.getProject(maxKey);
+		
+		projectDao.deleteProject(maxKey);
+		project2 = projectDao.getProject(maxKey);
+		Assert.assertNull(project2);
+		
+	}
 		
 }
 
