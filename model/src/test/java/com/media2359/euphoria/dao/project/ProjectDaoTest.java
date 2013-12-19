@@ -36,4 +36,48 @@ public class ProjectDaoTest {
 		log.info("Number of projects returned:"+projects.size());
 		
 	}
+	
+	@Test
+	public void testGetProject() {
+		Project project = projectDao.getProject(Integer.valueOf(1));
+		Assert.assertNotNull(project);
+		log.info("Project Name:" + project.getName());
+	}
+	
+	@Test
+	public void testAddProject() {
+		Project project1 = new Project();
+		Project project2;
+		project1.setId(Integer.valueOf(0));
+		project1.setName("TEST123");
+		project1.setDescription("Project Unit Test for save a project");
+		project1.setManDaysLeft(100);
+		project1.setProjectManager("Mgr123");
+		
+		projectDao.addProject(project1);
+		
+		Integer maxKey = projectDao.getMaxKey();
+		log.info("MaxKey::" + maxKey.toString());
+		project2 = projectDao.getProject(maxKey);
+		
+		Assert.assertNotNull(project2);
+		log.info("Project Name:" + project2.getName());
+	}
+	
+	@Test
+	public void testDeleteProject() {
+		Project project1;
+		Project project2;
+		
+		Integer maxKey = projectDao.getMaxKey();
+		log.info("TestDeleteProject->MaxKey::" + maxKey.toString());
+		//project1 = projectDao.getProject(maxKey);
+		
+		projectDao.deleteProject(maxKey);
+		project2 = projectDao.getProject(maxKey);
+		Assert.assertNull(project2);
+		
+	}
+		
 }
+

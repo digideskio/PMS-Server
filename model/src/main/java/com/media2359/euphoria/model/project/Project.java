@@ -16,7 +16,7 @@ import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 public class Project {
-	private String id;
+	private Integer id;
 	private String name;
 	private String description;
 	private String projectManager;
@@ -36,7 +36,7 @@ public class Project {
 	}
 	
 	public Project(ProjectDTO dto) {
-		this.id = dto.getId();
+		this.id = Integer.valueOf(dto.getId());
 		this.name = dto.getName();
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();
@@ -73,11 +73,11 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -116,7 +116,7 @@ public class Project {
 	
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
-		projectDTO.setId(getId());
+		projectDTO.setId(getId().toString());
 		projectDTO.setName(getName());
 		projectDTO.setDescription(getDescription());
 		projectDTO.setProjectManager(getProjectManager());
