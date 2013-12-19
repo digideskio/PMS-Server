@@ -26,7 +26,8 @@ public class WeeklyManpowerRequest {
 	Date startDate;
 	Date endDate;
 	String comments;
-	Employee createdBy;
+	Employee employee;
+	String createdBy;
 
 	/**
 	 * 

@@ -76,4 +76,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return response;
 		
  	}
+
+	@Override
+	public String addEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return "Success";
+	}
+
+	@Override
+	public String modifyEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return "Success";
+	}
+
+	@Override
+	public String deleteEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return "Success";
+	}
+
+	@Override
+	public Employee getEmployeeDetails(Employee employee) {
+		// TODO Auto-generated method stub
+		Employee emp = new Employee();
+		return emp;
+	}
 }
