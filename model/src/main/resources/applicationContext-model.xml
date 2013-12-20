@@ -37,6 +37,8 @@
     <bean id="employeeDao" class="com.media2359.euphoria.dao.employee.EmployeeDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="echoDao" class="com.media2359.euphoria.dao.demo.EchoDaoImpl">
+    </bean>
     
     <bean id="employee" class="com.media2359.euphoria.model.employee.Employee" >
     </bean>
