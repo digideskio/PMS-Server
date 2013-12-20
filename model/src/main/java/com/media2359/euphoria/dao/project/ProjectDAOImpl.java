@@ -100,4 +100,18 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		//session.close();
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void updateProject(Project project) {
+		Session session = this.getSession();
+
+		Transaction tx1 = session.beginTransaction();
+		
+		session.update(project);
+		
+		tx1.commit();
+		//session.close();
+		
+	}
+	
 }

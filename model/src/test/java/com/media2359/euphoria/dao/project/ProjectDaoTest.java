@@ -78,6 +78,26 @@ public class ProjectDaoTest {
 		Assert.assertNull(project2);
 		
 	}
+	
+	@Test
+	public void testUpdateProject() {
+		Project project1;
+		Project project2;
+		
+		Integer maxKey = projectDao.getMaxKey();
+		log.info("TestUpdateProject->MaxKey::" + maxKey.toString());
+		
+		project1 = projectDao.getProject(maxKey);
+		project1.setName("TEST_UPD" + maxKey.toString());
+		projectDao.updateProject(project1);
+		
+		project2 = projectDao.getProject(maxKey);
+		
+		String s1 = "TEST_UPD" + maxKey.toString();
+		
+		Assert.assertTrue(s1.equalsIgnoreCase(project2.getName()));
+		
+	}
 		
 }
 
