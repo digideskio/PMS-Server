@@ -9,6 +9,9 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.server.allocation;
 
+
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
@@ -28,7 +31,8 @@ public interface RequestManpowerService extends RemoteService{
 	
 	// Request Manpower request
 	
-	public String requestManpower(Project project, WeeklyManpowerRequest weeklyManpowerReq);
+	public String requestManpower(Project project, 
+			WeeklyManpowerRequest weeklyManpowerReq,Date startDate, Date endDate);
 	
 	
 
