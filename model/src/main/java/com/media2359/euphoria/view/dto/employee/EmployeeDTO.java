@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class EmployeeDTO implements Serializable {
     
-	private String employeeKey;
+	private Integer employeeKey;
 	private String name;
 	private String mobile;
 	private String personalEmail;
@@ -39,9 +39,9 @@ public class EmployeeDTO implements Serializable {
 	
 	
 	public String getEmployeeKey() {
-		return employeeKey;
+		return employeeKey.toString();
 	}
-	public void setEmployeeKey(String employeeKey) {
+	public void setEmployeeKey(Integer employeeKey) {
 		this.employeeKey = employeeKey;
 	}
 	public String getName() {
@@ -148,19 +148,16 @@ public class EmployeeDTO implements Serializable {
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "EmployeeDTO [name=" + name + ", mobile=" + mobile
-				+ ", personalEmail=" + personalEmail + ", companyEmail="
-				+ companyEmail + ", designation=" + designation
-				+ ", platForms=" + platForms + ", employmentType="
-				+ employmentType + ", mandayRate=" + mandayRate
-				+ ", assignedOffice=" + assignedOffice + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", status=" + status
-				+ "]";
+		return "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
+				+ ", mobile=" + mobile + ", personalEmail=" + personalEmail
+				+ ", companyEmail=" + companyEmail + ", designation="
+				+ designation + ", platForms=" + platForms
+				+ ", employmentType=" + employmentType + ", mandayRate="
+				+ mandayRate + ", assignedOffice=" + assignedOffice
+				+ ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", status=" + status + "]";
 	}
 	
 }

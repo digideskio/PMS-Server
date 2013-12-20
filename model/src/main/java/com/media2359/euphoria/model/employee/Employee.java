@@ -25,7 +25,7 @@ import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
  **/
 
 public class Employee {
-	private String employeeKey;
+	private Integer employeeKey;
 	private String name;
 	private String mobile;
 	private String personalEmail;
@@ -49,6 +49,7 @@ public class Employee {
 	}
 
 	public Employee(EmployeeDTO employeeDTO) {
+		this.employeeKey = Integer.valueOf(employeeDTO.getEmployeeKey());
 		this.name = employeeDTO.getName();
 		this.personalEmail = employeeDTO.getPersonalEmail();
 		this.companyEmail = employeeDTO.getCompanyEmail();
@@ -63,11 +64,11 @@ public class Employee {
 	}
 
 	
-	public String getEmployeeKey() {
+	public Integer getEmployeeKey() {
 		return employeeKey;
 	}
 
-	public void setEmployeeKey(String employeeKey) {
+	public void setEmployeeKey(Integer employeeKey) {
 		this.employeeKey = employeeKey;
 	}
 
