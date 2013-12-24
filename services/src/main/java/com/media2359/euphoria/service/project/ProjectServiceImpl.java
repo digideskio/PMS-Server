@@ -54,26 +54,51 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project getProjectDetails(String projectId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Project getProjectDetails(Integer projectId) {
+		return projectDao.getProject(projectId);
 	}
 
 	@Override
 	public String addProject(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			projectDao.addProject(project);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+		
 	}
 
 	@Override
 	public String modifyProject(Project project) {
+		
+		try{
+			projectDao.updateProject(project);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+		
+	}
+
+	@Override
+	public String deleteProject(Project project) {
+		try{
+			projectDao.deleteProject(project.getId());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public Integer calculateProjectCost(Project project) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String deleteProject(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getMaxKey() {
+		return projectDao.getMaxKey();
 	}
 }

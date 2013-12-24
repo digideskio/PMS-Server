@@ -42,4 +42,7 @@
     
     <bean id="employee" class="com.media2359.euphoria.model.employee.Employee" >
     </bean>
+    
+    <bean id="project" class="com.media2359.euphoria.model.project.Project" >
+     </bean>   
 </beans>

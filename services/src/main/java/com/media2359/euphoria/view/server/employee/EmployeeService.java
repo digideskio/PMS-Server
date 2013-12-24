@@ -39,4 +39,7 @@ public interface EmployeeService extends RemoteService {
 	
 	// Gets the emplyee details from the database 
 	public Employee getEmployeeDetails(Employee employee);
+	
+	// Gets the max key for the employee
+	public Integer getMaxKey();
 }

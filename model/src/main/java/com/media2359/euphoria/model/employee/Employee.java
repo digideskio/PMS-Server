@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.employee;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -38,6 +39,9 @@ public class Employee {
 	private Date startDate;
 	private Date endDate;
 	private String status;
+	private String company_id="Media2359";
+	private String created_by_id ;
+	private Timestamp create_tstamp; 
 	
 	Set<Platform> skills;
 	Set<Role> roles;
@@ -204,6 +208,37 @@ public class Employee {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	
+	public String getCompany_id() {
+		return company_id;
+	}
+
+	public void setCompany_id(String company_id) {
+		this.company_id = company_id;
+	}
+	
+	
+	
+
+	public String getCreated_by_id() {
+		return created_by_id;
+	}
+
+	public void setCreated_by_id(String created_by_id) {
+		this.created_by_id = created_by_id;
+	}
+
+	public Timestamp getCreate_tstamp() {
+		return new Timestamp(new Date().getTime());
+	}
+
+	public void setCreate_tstamp(Timestamp create_tstamp) {
+		this.create_tstamp = create_tstamp;
 	}
 
 	/**

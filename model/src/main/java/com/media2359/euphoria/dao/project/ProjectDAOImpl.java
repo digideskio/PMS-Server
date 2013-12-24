@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.model.project.Project;
-import com.media2359.euphoria.view.dto.project.ProjectDTO;
+
 
 @Repository
 @Transactional(readOnly = true)
