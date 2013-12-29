@@ -7,57 +7,27 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.model.project;
+package com.media2359.euphoria.view.dto.project;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-
-
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Project;
 
-/**
- * ProjectTeam
- *
- * TODO Write something about this class
- * 
- * @author ty
- * @version 1.1 2013
- **/
-
-@Entity 
-@Table(name = "project_team")  
-public class ProjectTeam implements java.io.Serializable {
-	
+public class ProjectTeamDTO implements Serializable {
 	private Integer projectTeamKey;
 	private String projectTeamName;
 	private Project project;
 	
-	/*Set<Employee> projectManagers;
-	Set<Employee> teamMembers;*/
+	Set<Employee> projectManagers;
+	Set<Employee> teamMembers;
 
-	/**
-	 * 
-	 */
-	public ProjectTeam() {
-		// TODO Auto-generated constructor stub
+	public ProjectTeamDTO() {
+
 	}
 
-	@Id
-	@GeneratedValue(generator = "ProjectTeamGenerator")     
-	@GenericGenerator(name = "ProjectTeamGenerator", strategy = "increment") 
-	@Column(name = "project_team_key")
 	public Integer getProjectTeamKey() {
 		return projectTeamKey;
 	}
@@ -65,8 +35,7 @@ public class ProjectTeam implements java.io.Serializable {
 	public void setProjectTeamKey(Integer projectTeamKey) {
 		this.projectTeamKey = projectTeamKey;
 	}
-	
-	@Column(name = "project_team_name") 
+
 	public String getProjectTeamName() {
 		return projectTeamName;
 	}
@@ -74,9 +43,7 @@ public class ProjectTeam implements java.io.Serializable {
 	public void setProjectTeamName(String projectTeamName) {
 		this.projectTeamName = projectTeamName;
 	}
-	
-	@OneToOne
-	@JoinColumn(name="project_key")
+
 	public Project getProject() {
 		return project;
 	}
@@ -85,7 +52,7 @@ public class ProjectTeam implements java.io.Serializable {
 		this.project = project;
 	}
 
-/*	public Set<Employee> getProjectManagers() {
+	public Set<Employee> getProjectManagers() {
 		return projectManagers;
 	}
 
@@ -99,8 +66,8 @@ public class ProjectTeam implements java.io.Serializable {
 
 	public void setTeamMembers(Set<Employee> teamMembers) {
 		this.teamMembers = teamMembers;
-	}*/
-	
-	
+	}
 
+	
+	
 }

@@ -15,7 +15,22 @@ import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
-public class Project {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity 
+@Table(name = "project")  
+public class Project implements java.io.Serializable{
 	private Integer id;
 	private String name;
 	private String description;
@@ -48,6 +63,7 @@ public class Project {
 	/**
 	 * @return the description
 	 */
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -62,6 +78,7 @@ public class Project {
 	/**
 	 * @return the name
 	 */
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -73,6 +90,10 @@ public class Project {
 		this.name = name;
 	}
 
+	@Id
+	@GeneratedValue(generator = "ProjectGenerator")     
+	@GenericGenerator(name = "ProjectGenerator", strategy = "increment") 
+	@Column(name = "project_key")
 	public Integer getId() {
 		return id;
 	}
@@ -81,6 +102,7 @@ public class Project {
 		this.id = id;
 	}
 	
+	@Column(name = "project_manager")
 	public String getProjectManager() {
 		return projectManager;
 	}
@@ -89,6 +111,7 @@ public class Project {
 		this.projectManager = projectManager;
 	}
 	
+	@Column(name = "mandays_left")
 	public Integer getManDaysLeft() {
 		return manDaysLeft;
 	}
@@ -97,6 +120,7 @@ public class Project {
 		this.manDaysLeft = manDaysLeft;
 	}
 	
+	@Column(name = "milestone_cnt")
 	public Integer getMilestoneCount() {
 		return milestoneCount;
 	}
@@ -105,6 +129,7 @@ public class Project {
 		this.milestoneCount = milestoneCount;
 	}
 	
+	@Column(name = "completed_milestone_cnt")
 	public Integer getCompletedMilestoneCount() {
 		return completedMilestoneCount;
 	}

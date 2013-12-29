@@ -15,16 +15,29 @@ import java.util.Set;
 import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 /**
  * Employee
  * 
  * TODO Write something about this class
  * 
- * @author Praveen
+ * @author ty
  * @version 1.0 2013
  **/
-
-public class Employee {
+@Entity 
+@Table(name = "employee")  
+public class Employee implements java.io.Serializable{
 	private Integer employeeKey;
 	private String name;
 	private String mobile;
@@ -63,7 +76,10 @@ public class Employee {
 		this.status = employeeDTO.getStatus();
 	}
 
-	
+	@Id
+	@GeneratedValue(generator = "EmployeeGenerator")     
+	@GenericGenerator(name = "EmployeeGenerator", strategy = "increment") 
+	@Column(name = "employee_key")
 	public Integer getEmployeeKey() {
 		return employeeKey;
 	}
@@ -71,7 +87,8 @@ public class Employee {
 	public void setEmployeeKey(Integer employeeKey) {
 		this.employeeKey = employeeKey;
 	}
-
+	
+	@Column(name = "full_name")
 	public String getName() {
 		return name;
 	}
@@ -80,6 +97,7 @@ public class Employee {
 		this.name = name;
 	}
 
+	@Column(name = "mobile_nbr")
 	public String getMobile() {
 		return mobile;
 	}
@@ -88,6 +106,7 @@ public class Employee {
 		this.mobile = mobile;
 	}
 
+	@Column(name = "personal_email_addr")
 	public String getPersonalEmail() {
 		return personalEmail;
 	}
@@ -96,6 +115,7 @@ public class Employee {
 		this.personalEmail = personalEmail;
 	}
 
+	@Column(name = "company_eamil_addr")
 	public String getCompanyEmail() {
 		return companyEmail;
 	}
@@ -104,6 +124,7 @@ public class Employee {
 		this.companyEmail = companyEmail;
 	}
 
+	@Column(name = "designation")
 	public String getDesignation() {
 		return designation;
 	}
@@ -112,6 +133,7 @@ public class Employee {
 		this.designation = designation;
 	}
 
+	@Column(name = "employment_type")
 	public String getEmploymentType() {
 		return employmentType;
 	}
@@ -125,6 +147,7 @@ public class Employee {
 	/**
 	 * @return the platForms
 	 */
+	@Column(name = "platform")
 	public String getPlatForms() {
 		return platForms;
 	}
@@ -139,6 +162,7 @@ public class Employee {
 	/**
 	 * @return the mandayRate
 	 */
+	@Column(name = "manday_rate")
 	public String getMandayRate() {
 		return mandayRate;
 	}
@@ -153,6 +177,7 @@ public class Employee {
 	/**
 	 * @return the assignedOffice
 	 */
+	@Column(name = "assigned_office")
 	public String getAssignedOffice() {
 		return assignedOffice;
 	}
@@ -167,6 +192,7 @@ public class Employee {
 	/**
 	 * @return the startDate
 	 */
+	@Column(name = "start_date")
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -181,6 +207,7 @@ public class Employee {
 	/**
 	 * @return the endDate
 	 */
+	@Column(name = "end_date")
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -195,6 +222,7 @@ public class Employee {
 	/**
 	 * @return the status
 	 */
+	@Column(name = "status")
 	public String getStatus() {
 		return status;
 	}
