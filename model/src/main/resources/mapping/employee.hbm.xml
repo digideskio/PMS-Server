@@ -15,6 +15,7 @@
         <id name="employeeKey" column="employee_key" >
            <generator class="increment"/>
         </id>
+        <property name="company_id" column ="company_id"/>
         <property name="name" column="full_name"/>
         <property name="mobile" column="mobile_nbr"/>
         <property name="personalEmail" column="personal_email_addr"/>
@@ -26,6 +27,8 @@
         <property name="assignedOffice" column="assigned_office"/>
         <property name="startDate" column="start_date"/>
         <property name="endDate" column="end_date"/>
+        <property name="created_by_id" column="create_by_id"/>
+        <property name="create_tstamp" column="create_tstamp"/>
         <property name="status" column="status"/>
     </class>
 </hibernate-mapping>

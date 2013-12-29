@@ -147,6 +147,8 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	@SuppressWarnings("unchecked")
 	public Employee getEmployee(Integer employeeKey) {
 		 Employee tmpEmployee = (Employee) this.getHibernateTemplate().get(Employee.class, employeeKey);
+		 
+		 System.out.println("Employee received from the database is "+tmpEmployee);
 		 return tmpEmployee;
 	}
 	

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.gwt.benchmarks.client.Setup;
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
@@ -39,7 +39,11 @@ public class EmployeeServiceTest {
 		employee.setMobile("83222489");
 		employee.setDesignation("Project Manager");
 		employee.setCompanyEmail("shiv.kole@media2359.com");
-		employee.setEmploymentType("Permananent");
+		employee.setEmploymentType("Permanent");
+		employee.setCreated_by_id("shiv.kole@gmail.com");
+		
+		
+		
 	}
 	
 	
@@ -55,31 +59,36 @@ public class EmployeeServiceTest {
 	public void testAddEmployee(){
 		
 		String result = employeeService.addEmployee(employee);
-		Assert.assertEquals("Success", result);
+		Assert.assertEquals("SUCCESS", result);
 		
 	
 	}
 	
 	@Test
-	public void testModifyEmployee(){
+	public void testGetEmployeeDetails(){
+		Employee emp1 = new Employee();
+		emp1.setEmployeeKey(employeeService.getMaxKey());
+		Employee employee1 = employeeService.getEmployeeDetails(emp1);
+		Assert.assertNotNull(employee1);
 		
+	}
+	
+	@Test
+	public void testModifyEmployee(){
 		employee.setPersonalEmail("shiv_rec@yahoo.com");
 		String result = employeeService.modifyEmployee(employee);
-		Assert.assertEquals("Success", result);
+		Assert.assertEquals("SUCCESS", result);
 		
 	}
 	
 	@Test
 	public void testDeleteEmployee(){
-		String result = employeeService.modifyEmployee(employee);
-		Assert.assertEquals("Success", result);
+		Employee emp1 = new Employee();
+		emp1.setEmployeeKey(employeeService.getMaxKey());
+		String result = employeeService.deleteEmployee(emp1);
+		Assert.assertEquals("SUCCESS", result);
 		
 	}
 	
-	@Test
-	public void testGetEmployeeDetails(){
-		Employee employee1 = employeeService.getEmployeeDetails(employee);
-		Assert.assertNotNull(employee1);
-		
-	}
+
 }

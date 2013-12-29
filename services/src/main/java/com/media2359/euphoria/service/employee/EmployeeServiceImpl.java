@@ -79,26 +79,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public String addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return "Success";
+		try{
+			employeeDao.addEmployee(employee);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
 	}
 
 	@Override
 	public String modifyEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return "Success";
+		try{
+			employeeDao.updateEmployee(employee);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
 	}
 
 	@Override
 	public String deleteEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return "Success";
+		try{
+			employeeDao.deleteEmployee(employee.getEmployeeKey());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
 	}
 
 	@Override
 	public Employee getEmployeeDetails(Employee employee) {
+		System.out.println("++++++ Employee Key +++++++"+employee.getEmployeeKey());
+		return employeeDao.getEmployee(employee.getEmployeeKey());
+	}
+
+	@Override
+	public Integer getMaxKey() {
 		// TODO Auto-generated method stub
-		Employee emp = new Employee();
-		return emp;
+		return employeeDao.getMaxKey();
 	}
 }

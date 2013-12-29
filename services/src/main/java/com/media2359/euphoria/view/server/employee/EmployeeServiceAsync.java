@@ -21,9 +21,9 @@ package com.media2359.euphoria.view.server.employee;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
-import com.media2359.euphoria.view.message.project.ProjectListRequest;
-import com.media2359.euphoria.view.message.project.ProjectListResponse;
+
 
 public interface EmployeeServiceAsync {
 	public void getAllEmployees(EmployeeListRequest request, AsyncCallback<EmployeeListResponse> callback);
+	
 }
