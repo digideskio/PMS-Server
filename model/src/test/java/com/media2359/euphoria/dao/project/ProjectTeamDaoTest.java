@@ -10,6 +10,7 @@
 package com.media2359.euphoria.dao.project;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -35,6 +36,13 @@ public class ProjectTeamDaoTest {
 		List<ProjectTeam> projectTeams = projectTeamDao.getAllProjectTeams();
 		Assert.assertNotNull(projectTeams);
 		log.info("Number of Project Teams returned:"+projectTeams.size());
+		
+		ListIterator iterator = projectTeams.listIterator();
+		
+		ProjectTeam projectTeam = iterator.hasNext()?(ProjectTeam) iterator.next():null;
+		
+		
+		log.info("Project returned in Project Team:"+ projectTeam.getProject().toString());
 		
 	}
 	
@@ -78,27 +86,34 @@ public class ProjectTeamDaoTest {
 		project2 = projectDao.getProject(maxKey);
 		Assert.assertNull(project2);
 		
-	}
+	}*/
 	
 	@Test
-	public void testUpdateProject() {
-		Project project1;
-		Project project2;
+	public void testUpdateProjectTeam() {
+		ProjectTeam projectTeam1;
+		ProjectTeam projectTeam2;
 		
-		Integer maxKey = projectDao.getMaxKey();
-		log.info("TestUpdateProject->MaxKey::" + maxKey.toString());
+		Integer maxKey = projectTeamDao.getMaxKey();
+		log.info("TestUpdateProjectTeam->MaxKey::" + maxKey.toString());
 		
-		project1 = projectDao.getProject(maxKey);
-		project1.setName("TEST_UPD" + maxKey.toString());
-		projectDao.updateProject(project1);
+		projectTeam1 = projectTeamDao.getProjectTeam(maxKey);
 		
-		project2 = projectDao.getProject(maxKey);
+		Assert.assertNotNull(projectTeam1);
+		
+		log.info("ProjectTeam->toString()::" + projectTeam1.toString());
+		
+		projectTeam1.setProjectTeamName("TEST_UPD"+ maxKey.toString());
+		
+		projectTeamDao.updateProjectTeam(projectTeam1);
+		
+		/*projectTeam2 = projectTeamDao.getProjectTeam(maxKey);
 		
 		String s1 = "TEST_UPD" + maxKey.toString();
 		
-		Assert.assertTrue(s1.equalsIgnoreCase(project2.getName()));
 		
-	}*/
+		Assert.assertTrue(s1.equalsIgnoreCase(projectTeam2.getProjectTeamName()));*/
+		
+	}
 		
 }
 

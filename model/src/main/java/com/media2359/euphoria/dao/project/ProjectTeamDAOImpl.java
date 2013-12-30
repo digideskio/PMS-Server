@@ -108,7 +108,7 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 
 		Transaction tx1 = session.beginTransaction();
 		
-		session.update(projectTeam);
+		session.saveOrUpdate(projectTeam);
 		
 		tx1.commit();
 		//session.close();

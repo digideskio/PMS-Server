@@ -12,6 +12,7 @@ package com.media2359.euphoria.model.project;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,8 +45,8 @@ public class ProjectTeam implements java.io.Serializable {
 	private String projectTeamName;
 	private Project project;
 	
-	/*Set<Employee> projectManagers;
-	Set<Employee> teamMembers;*/
+	/*Set<Employee> projectManagers;*/
+	Set<Employee> teamMembers;
 
 	/**
 	 * 
@@ -85,13 +86,22 @@ public class ProjectTeam implements java.io.Serializable {
 		this.project = project;
 	}
 
+	@Override
+	public String toString() {
+		return "ProjectTeam [projectTeamKey=" + projectTeamKey
+				+ ", projectTeamName=" + projectTeamName + ", project="
+				+ project + "]";
+	}
+
 /*	public Set<Employee> getProjectManagers() {
 		return projectManagers;
 	}
 
 	public void setProjectManagers(Set<Employee> projectManagers) {
 		this.projectManagers = projectManagers;
-	}
+	}*/
+
+	@OneToMany(cascade = CascadeType.ALL)
 
 	public Set<Employee> getTeamMembers() {
 		return teamMembers;
@@ -99,7 +109,7 @@ public class ProjectTeam implements java.io.Serializable {
 
 	public void setTeamMembers(Set<Employee> teamMembers) {
 		this.teamMembers = teamMembers;
-	}*/
+	}
 	
 	
 

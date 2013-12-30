@@ -241,7 +241,7 @@ public class Employee implements java.io.Serializable{
 	 * 
 	 * @return
 	 */
-	
+	@Column(name = "company_id")
 	public String getCompany_id() {
 		return company_id;
 	}
@@ -252,7 +252,7 @@ public class Employee implements java.io.Serializable{
 	
 	
 	
-
+	@Column(name="create_by_id")
 	public String getCreated_by_id() {
 		return created_by_id;
 	}
@@ -261,6 +261,7 @@ public class Employee implements java.io.Serializable{
 		this.created_by_id = created_by_id;
 	}
 
+	@Column(name="create_tstamp")
 	public Timestamp getCreate_tstamp() {
 		return new Timestamp(new Date().getTime());
 	}

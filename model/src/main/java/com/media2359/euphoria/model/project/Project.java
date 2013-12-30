@@ -150,4 +150,19 @@ public class Project implements java.io.Serializable{
 		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
 		return projectDTO;
 	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + ", description="
+				+ description + ", projectManager=" + projectManager
+				+ ", manDaysLeft=" + manDaysLeft + ", milestoneCount="
+				+ milestoneCount + ", completedMilestoneCount="
+				+ completedMilestoneCount + ", projectPlan=" + projectPlan
+				+ ", weeklyManpowerRequests=" + weeklyManpowerRequests
+				+ ", weeklyManpowerAllocations=" + weeklyManpowerAllocations
+				+ ", projectTasks=" + projectTasks + ", projectTeam="
+				+ projectTeam + ", platformProjections=" + platformProjections
+				+ ", projectDocuments=" + projectDocuments + "]";
+	}
+	
 }
