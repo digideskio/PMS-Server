@@ -28,7 +28,7 @@ import com.media2359.euphoria.model.project.ProjectTeam;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 @Repository
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTeamDAO {
 	private final Logger log = Logger.getLogger(ProjectTeamDAOImpl.class);
 	
@@ -43,19 +43,25 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ProjectTeam getProjectTeam(Integer projectKey) {
-		 ProjectTeam tmpProjectTeam = (ProjectTeam) this.getHibernateTemplate().get(ProjectTeam.class, projectKey);
-		 return tmpProjectTeam;
+	public ProjectTeam getProjectTeam(Integer projectTeamKey) {
+		Session session = this.getSession();
+		Transaction tx1 = session.beginTransaction();
+
+		ProjectTeam tmpProjectTeam = (ProjectTeam) session.get(ProjectTeam.class, projectTeamKey);
+		tx1.commit();
+		return tmpProjectTeam;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
+		log.info("## I am here 0 ...");
+		Transaction tx1 = session.beginTransaction();
+		log.info("## I am here 1 ...");
 		Query query = session.createQuery("select max(projectTeamKey) from ProjectTeam");
 		
-		
 //		Object[] rows = new Object[1];
-		
+		log.info("## I am here 2 ...");
 		List results  = query.list();
 		
 		log.info("results::"+results.toString());
@@ -72,6 +78,7 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 		log.info("iterator.hasNext()::"+iterator.hasNext());
 		//log.info("iterator.next().getClass::"+iterator.next().getClass().toString());
 //		java.lang.Object[] rows = (java.lang.Object[]) iterator.next();
+		tx1.commit();
 		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
 		
 	}

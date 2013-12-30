@@ -289,4 +289,20 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setDesignation(getDesignation());
 		return employeeDTO;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeKey=" + employeeKey + ", name=" + name
+				+ ", mobile=" + mobile + ", personalEmail=" + personalEmail
+				+ ", companyEmail=" + companyEmail + ", designation="
+				+ designation + ", platForms=" + platForms
+				+ ", employmentType=" + employmentType + ", mandayRate="
+				+ mandayRate + ", assignedOffice=" + assignedOffice
+				+ ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", status=" + status + ", company_id=" + company_id
+				+ ", created_by_id=" + created_by_id + ", create_tstamp="
+				+ create_tstamp + ", skills=" + skills + ", roles=" + roles
+				+ ", leavePlan=" + leavePlan + "]";
+	}
+	
 }

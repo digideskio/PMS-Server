@@ -15,14 +15,17 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
 
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -101,8 +104,10 @@ public class ProjectTeam implements java.io.Serializable {
 		this.projectManagers = projectManagers;
 	}*/
 
-	@OneToMany(cascade = CascadeType.ALL)
-
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name="project_team_employee_xref", 
+	joinColumns = {@JoinColumn(name="project_team_key", referencedColumnName="project_team_key")},
+	inverseJoinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")})
 	public Set<Employee> getTeamMembers() {
 		return teamMembers;
 	}
