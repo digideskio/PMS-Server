@@ -45,14 +45,60 @@ public class ProjectServiceImpl implements ProjectService {
 				= new ArrayList<ProjectDTO> ();
 			for(Project project:projects) {
 				ProjectDTO respProject = project.createProjectDTO();
-				respProject.setManDaysLeft(random.nextInt(1000));			//Temporary, change later-Praveen
-				respProject.setMilestoneCount(random.nextInt(100));			//Temporary, change later-Praveen
-				respProject.setCompletedMilestoneCount(random.nextInt(10));	//Temporary, change later-Praveen
 				respProjects.add(respProject);
 				
 			}
 			response.setProjects(respProjects);
 		}
 		return response;
+	}
+
+	@Override
+	public Project getProjectDetails(Integer projectId) {
+		return projectDao.getProject(projectId);
+	}
+
+	@Override
+	public String addProject(Project project) {
+		try{
+			projectDao.addProject(project);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+		
+	}
+
+	@Override
+	public String modifyProject(Project project) {
+		
+		try{
+			projectDao.updateProject(project);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+		
+	}
+
+	@Override
+	public String deleteProject(Project project) {
+		try{
+			projectDao.deleteProject(project.getId());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public Integer calculateProjectCost(Project project) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMaxKey() {
+		return projectDao.getMaxKey();
 	}
 }

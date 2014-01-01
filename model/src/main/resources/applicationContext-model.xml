@@ -12,9 +12,11 @@
                            ">
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource"/>
-	    <property name="mappingResources">
+	    <property name="annotatedClasses">
 	      <list>
-	        <value>mapping/project.hbm.xml</value>
+	        <value>com.media2359.euphoria.model.project.Project</value>
+	        <value>com.media2359.euphoria.model.project.ProjectTeam</value>
+	        <value>com.media2359.euphoria.model.employee.Employee</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">
@@ -33,4 +35,20 @@
     <bean id="projectDao" class="com.media2359.euphoria.dao.project.ProjectDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="employeeDao" class="com.media2359.euphoria.dao.employee.EmployeeDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="projectTeamDao" class="com.media2359.euphoria.dao.project.ProjectTeamDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="echoDao" class="com.media2359.euphoria.dao.demo.EchoDaoImpl">
+    </bean>
+    
+    <bean id="employee" class="com.media2359.euphoria.model.employee.Employee" >
+    </bean>
+    
+    <bean id="project" class="com.media2359.euphoria.model.project.Project" >
+     </bean>   
 </beans>

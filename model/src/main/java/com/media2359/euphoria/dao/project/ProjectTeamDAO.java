@@ -12,12 +12,13 @@ package com.media2359.euphoria.dao.project;
 import java.util.List;
 
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.model.project.ProjectTeam;
 
-public interface ProjectDAO {
-	List<Project> getAllProjects();
-	Project getProject(Integer id);
-	void addProject(Project project);
-	Integer getMaxKey();
-	void deleteProject(Integer id);
-	void updateProject(Project project);
+public interface ProjectTeamDAO {
+	List<ProjectTeam> getAllProjectTeams();
+	ProjectTeam getProjectTeam(Integer projectKey);
+	public Integer getMaxKey();
+	void addProjectTeam(ProjectTeam projectTeam);
+	void deleteProjectTeam(Integer projectTeamKey);
+	void updateProjectTeam(ProjectTeam projectTeam);
 }

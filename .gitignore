@@ -11,3 +11,7 @@ view/src/main/webapp/euphoria
 .DS_Store
 gwt-unitCache/
 .gwt
+.metadata/
+.project
+view/src/main/gwt-unitCache/
+**/.gwt*

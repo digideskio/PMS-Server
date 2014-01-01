@@ -7,33 +7,25 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.model.manpower;
+package com.media2359.euphoria.view.server.project;
 
-import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.model.employee.Employee;
-
+import com.media2359.euphoria.model.project.Project;
 /**
- * WeeklyManpowerRequest
+ * ProjectTeamServiceAsync
  *
  * TODO Write something about this class
  * 
- * @author alfreds
+ * @author shivkole
  * @version 1.0 2013
  **/
 
-public class WeeklyManpowerRequest {
-	Date startDate;
-	Date endDate;
-	String comments;
-	Employee employee;
-	String createdBy;
-
-	/**
-	 * 
-	 */
-	public WeeklyManpowerRequest() {
-		// TODO Auto-generated constructor stub
-	}
+public interface ProjectTeamServiceAsync {
+		// Deletes the team member for a project
+		public void deleteProjectTeamMember(Project project, Employee employee,AsyncCallback<String> callback);
+		// Adds new team member to the project
+		public void addProjectTeamMember (Project project, Employee employee,AsyncCallback<String> callback);
 
 }

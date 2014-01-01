@@ -9,7 +9,10 @@
  ***************************************************************************/
 package com.media2359.euphoria.dao.project;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -20,24 +23,59 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.media2359.euphoria.dao.project.ProjectDAO;
+import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.model.project.ProjectTeam;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
-public class ProjectDaoTest {
+public class ProjectTeamDaoTest {
 	@Autowired
-	private ProjectDAO projectDao;
-	private Logger log = Logger.getLogger(ProjectDaoTest.class);
+	private ProjectTeamDAO projectTeamDao;
+	private Logger log = Logger.getLogger(ProjectTeamDaoTest.class);
 	
 	@Test
-	public void testGetAllProjects() {
-		List<Project> projects = projectDao.getAllProjects();
-		Assert.assertNotNull(projects);
-		log.info("Number of projects returned:"+projects.size());
+	public void testGetAllProjectTeams() {
+		List<ProjectTeam> projectTeams = projectTeamDao.getAllProjectTeams();
+		Assert.assertNotNull(projectTeams);
+		log.info("####Number of Project Teams returned:"+projectTeams.size());
+		
+		ListIterator iterator = projectTeams.listIterator();
+		
+		ProjectTeam projectTeam = iterator.hasNext()?(ProjectTeam) iterator.next():null;
+		
+		
+		log.info("####Project returned in Project Team:"+ projectTeam.getProject().toString());
 		
 	}
 	
 	@Test
+	public void testGetAllProjectTeamMembers() {
+		
+		
+		Integer maxKey = projectTeamDao.getMaxKey();
+		log.info("####testGetAllProjectTeamMembers->MaxKey(ProjectTeam)::" + maxKey.toString());
+		
+		ProjectTeam projectTeam1 = projectTeamDao.getProjectTeam(maxKey);
+		
+		Set<Employee> employees = projectTeam1.getTeamMembers();
+		Assert.assertNotNull(employees);
+		
+		log.info("####Number of Team Members:"+employees.size());
+		
+		Employee employee;
+		
+		for (Iterator<Employee> it = employees.iterator(); it.hasNext(); )
+		{
+			employee = it.next();
+
+			log.info("####Team Member Details:"+ employee.toString());
+		}
+		
+	}
+	
+	
+	/*@Test
 	public void testGetProject() {
 		Project project = projectDao.getProject(Integer.valueOf(1));
 		Assert.assertNotNull(project);
@@ -80,24 +118,31 @@ public class ProjectDaoTest {
 	}
 	
 	@Test
-	public void testUpdateProject() {
-		Project project1;
-		Project project2;
+	public void testUpdateProjectTeam() {
+		ProjectTeam projectTeam1;
+		ProjectTeam projectTeam2;
+		log.info("####TestUpdateProjectTeam Starts...");
+		Integer maxKey = projectTeamDao.getMaxKey();
+		log.info("####TestUpdateProjectTeam->MaxKey::" + maxKey.toString());
 		
-		Integer maxKey = projectDao.getMaxKey();
-		log.info("TestUpdateProject->MaxKey::" + maxKey.toString());
+		projectTeam1 = projectTeamDao.getProjectTeam(maxKey);
 		
-		project1 = projectDao.getProject(maxKey);
-		project1.setName("TEST_UPD" + maxKey.toString());
-		projectDao.updateProject(project1);
+		Assert.assertNotNull(projectTeam1);
 		
-		project2 = projectDao.getProject(maxKey);
+		log.info("####ProjectTeam->toString()::" + projectTeam1.toString());
+		
+		projectTeam1.setProjectTeamName("TEST_UPD"+ maxKey.toString());
+		
+		projectTeamDao.updateProjectTeam(projectTeam1);
+		
+		projectTeam2 = projectTeamDao.getProjectTeam(maxKey);
 		
 		String s1 = "TEST_UPD" + maxKey.toString();
 		
-		Assert.assertTrue(s1.equalsIgnoreCase(project2.getName()));
 		
-	}
+		Assert.assertTrue(s1.equalsIgnoreCase(projectTeam2.getProjectTeamName()));
+		
+	}*/
 		
 }
 

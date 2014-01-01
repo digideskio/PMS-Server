@@ -15,11 +15,29 @@ import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
-public class Project {
-	private String id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity 
+@Table(name = "project")  
+public class Project implements java.io.Serializable{
+	private Integer id;
 	private String name;
 	private String description;
 	private String projectManager;
+	private Integer manDaysLeft;
+	private Integer milestoneCount;
+	private Integer completedMilestoneCount;
 	private ProjectPlan projectPlan;
 	private Set<WeeklyManpowerRequest> weeklyManpowerRequests;
 	private Set<WeeklyManpowerAllocation> weeklyManpowerAllocations;
@@ -33,15 +51,19 @@ public class Project {
 	}
 	
 	public Project(ProjectDTO dto) {
-		this.id = dto.getId();
+		this.id = Integer.valueOf(dto.getId());
 		this.name = dto.getName();
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();
+		this.manDaysLeft=dto.getManDaysLeft();
+		this.milestoneCount=dto.getMilestoneCount();
+		this.completedMilestoneCount=dto.getMilestoneCount();
 	}
 
 	/**
 	 * @return the description
 	 */
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -56,6 +78,7 @@ public class Project {
 	/**
 	 * @return the name
 	 */
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -67,14 +90,19 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getId() {
+	@Id
+	@GeneratedValue(generator = "ProjectGenerator")     
+	@GenericGenerator(name = "ProjectGenerator", strategy = "increment") 
+	@Column(name = "project_key")
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
+	@Column(name = "project_manager")
 	public String getProjectManager() {
 		return projectManager;
 	}
@@ -83,12 +111,58 @@ public class Project {
 		this.projectManager = projectManager;
 	}
 	
+	@Column(name = "mandays_left")
+	public Integer getManDaysLeft() {
+		return manDaysLeft;
+	}
+
+	public void setManDaysLeft(Integer manDaysLeft) {
+		this.manDaysLeft = manDaysLeft;
+	}
+	
+	@Column(name = "milestone_cnt")
+	public Integer getMilestoneCount() {
+		return milestoneCount;
+	}
+
+	public void setMilestoneCount(Integer milestoneCount) {
+		this.milestoneCount = milestoneCount;
+	}
+	
+	@Column(name = "completed_milestone_cnt")
+	public Integer getCompletedMilestoneCount() {
+		return completedMilestoneCount;
+	}
+
+	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
+		this.completedMilestoneCount = completedMilestoneCount;
+	}
+	
+	
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
-		projectDTO.setId(getId());
+		projectDTO.setId(getId().toString());
 		projectDTO.setName(getName());
 		projectDTO.setDescription(getDescription());
 		projectDTO.setProjectManager(getProjectManager());
+		projectDTO.setManDaysLeft(getManDaysLeft());
+		projectDTO.setMilestoneCount(getMilestoneCount());
+		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
 		return projectDTO;
 	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + ", description="
+				+ description + ", projectManager=" + projectManager
+				+ ", manDaysLeft=" + manDaysLeft + ", milestoneCount="
+				+ milestoneCount + ", completedMilestoneCount="
+				+ completedMilestoneCount + ", projectPlan=" + projectPlan
+				+ ", weeklyManpowerRequests=" + weeklyManpowerRequests
+				+ ", weeklyManpowerAllocations=" + weeklyManpowerAllocations
+				+ ", projectTasks=" + projectTasks + ", projectTeam="
+				+ projectTeam + ", platformProjections=" + platformProjections
+				+ ", projectDocuments=" + projectDocuments + "]";
+	}
+	
 }

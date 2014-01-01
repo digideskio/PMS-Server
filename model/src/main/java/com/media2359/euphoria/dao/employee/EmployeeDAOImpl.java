@@ -19,16 +19,22 @@ package com.media2359.euphoria.dao.employee;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Project;
 
 
 @Repository
@@ -43,7 +49,8 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public List<Employee> getAllEmployees() {
-		 List<Employee> employeeList = new ArrayList<Employee>();
+		return this.getHibernateTemplate().find("from Employee");
+		 /*List<Employee> employeeList = new ArrayList<Employee>();
 		 
 		 Employee emp1  = new Employee();
 		 emp1.setName("Alfred");
@@ -134,6 +141,72 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		 emp6.setStatus("Active");
 		 employeeList.add(emp6);
 		 
-		 return employeeList;
+		 return employeeList;*/
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Employee getEmployee(Integer employeeKey) {
+		 Employee tmpEmployee = (Employee) this.getHibernateTemplate().get(Employee.class, employeeKey);
+		 
+		 System.out.println("Employee received from the database is "+tmpEmployee);
+		 return tmpEmployee;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Integer getMaxKey() {
+		Session session = this.getSession();
+		Query query = session.createQuery("select max(employeeKey) from Employee");
+		
+		
+		List results  = query.list();
+		
+		log.info("results::"+results.toString());
+		log.info("results::"+results.size());
+
+		
+		ListIterator iterator = results.listIterator();
+		log.info("iterator.hasNext()::"+iterator.hasNext());
+
+		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addEmployee(Employee employee) {
+		Session session = this.getSession();
+
+		session.beginTransaction();
+		session.save(employee);
+		session.getTransaction().commit();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteEmployee(Integer employeeKey) {
+		Session session = this.getSession();
+
+		Transaction tx1 = session.beginTransaction();
+		
+		Query q = session.createQuery("delete Employee where employeeKey=?");
+		q.setInteger(0, employeeKey);
+		
+		log.info("deleteEmployee()->sQuery::" + q.toString());
+		q.executeUpdate();
+		tx1.commit();
+		//session.close();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void updateEmployee(Employee employee) {
+		Session session = this.getSession();
+
+		Transaction tx1 = session.beginTransaction();
+		
+		session.update(employee);
+		
+		tx1.commit();
+		//session.close();
+		
 	}
 }

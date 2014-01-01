@@ -12,11 +12,14 @@
  --> 
 <hibernate-mapping>
     <class name="com.media2359.euphoria.model.project.Project" table="Project">
-        <id name="id" column="id" >
+        <id name="id" column="project_key" >
            <generator class="increment"/>
         </id>
         <property name="name" column="name"/>
         <property name="description" column="description"/>
         <property name="projectManager" column="project_manager"/>
+        <property name="manDaysLeft" column="mandays_left"/>
+        <property name="milestoneCount" column="milestone_cnt"/>
+        <property name="completedMilestoneCount" column="completed_milestone_cnt"/>
     </class>
 </hibernate-mapping>

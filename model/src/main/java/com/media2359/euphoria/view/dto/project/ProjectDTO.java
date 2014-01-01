@@ -10,6 +10,7 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ProjectDTO implements Serializable {
 	private String id;

@@ -10,12 +10,15 @@
 package com.media2359.euphoria.service.employee;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
@@ -25,11 +28,67 @@ import com.media2359.euphoria.view.server.employee.EmployeeService;
 public class EmployeeServiceTest {
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private Employee employee ; 
+	
+	
+	@Before
+	public void setUp(){
+		employee.setName("Shiv Ranjan Kole");
+		employee.setPersonalEmail("shiv.kole@gmail.com");
+		employee.setMobile("83222489");
+		employee.setDesignation("Project Manager");
+		employee.setCompanyEmail("shiv.kole@media2359.com");
+		employee.setEmploymentType("Permanent");
+		employee.setCreated_by_id("shiv.kole@gmail.com");
+		
+		
+		
+	}
+	
 	
 	@Test
 	public void testGetAllEmployees() {
-		EmployeeListResponse response = employeeService.getAllEmployees(new EmployeeListRequest());
+		EmployeeListResponse response = 
+				employeeService.getAllEmployees(new EmployeeListRequest());
 		Assert.assertNotNull(response);
 		Assert.assertNotNull(response.getEmployees());
 	}
+	
+	@Test
+	public void testAddEmployee(){
+		
+		String result = employeeService.addEmployee(employee);
+		Assert.assertEquals("SUCCESS", result);
+		
+	
+	}
+	
+	@Test
+	public void testGetEmployeeDetails(){
+		Employee emp1 = new Employee();
+		emp1.setEmployeeKey(employeeService.getMaxKey());
+		Employee employee1 = employeeService.getEmployeeDetails(emp1);
+		Assert.assertNotNull(employee1);
+		
+	}
+	
+	@Test
+	public void testModifyEmployee(){
+		employee.setPersonalEmail("shiv_rec@yahoo.com");
+		String result = employeeService.modifyEmployee(employee);
+		Assert.assertEquals("SUCCESS", result);
+		
+	}
+	
+	@Test
+	public void testDeleteEmployee(){
+		Employee emp1 = new Employee();
+		emp1.setEmployeeKey(employeeService.getMaxKey());
+		String result = employeeService.deleteEmployee(emp1);
+		Assert.assertEquals("SUCCESS", result);
+		
+	}
+	
+
 }

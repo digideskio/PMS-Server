@@ -76,4 +76,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return response;
 		
  	}
+
+	@Override
+	public String addEmployee(Employee employee) {
+		try{
+			employeeDao.addEmployee(employee);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public String modifyEmployee(Employee employee) {
+		try{
+			employeeDao.updateEmployee(employee);
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public String deleteEmployee(Employee employee) {
+		try{
+			employeeDao.deleteEmployee(employee.getEmployeeKey());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public Employee getEmployeeDetails(Employee employee) {
+		System.out.println("++++++ Employee Key +++++++"+employee.getEmployeeKey());
+		return employeeDao.getEmployee(employee.getEmployeeKey());
+	}
+
+	@Override
+	public Integer getMaxKey() {
+		// TODO Auto-generated method stub
+		return employeeDao.getMaxKey();
+	}
 }

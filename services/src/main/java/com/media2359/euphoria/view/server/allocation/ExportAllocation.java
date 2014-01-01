@@ -7,23 +7,22 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.server.employee;
+package com.media2359.euphoria.view.server.allocation;
+
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
 
 /**
- * EmployeeServiceAsync
+ * ExportAllocation
  *
  * TODO Write something about this class
  * 
- * @author Praveen
+ * @author shivkole
  * @version 1.0 2013
  **/
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
-import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
-
-
-public interface EmployeeServiceAsync {
-	public void getAllEmployees(EmployeeListRequest request, AsyncCallback<EmployeeListResponse> callback);
+public interface ExportAllocation extends RemoteService {
 	
+	public void exportAllocationtoCSV(WeeklyManpowerAllocation weeklyManpowerAllocation);
+
 }

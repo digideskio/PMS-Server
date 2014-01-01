@@ -24,37 +24,44 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.model.project.Project;
-
+import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 @Repository
-@Transactional(readOnly = true)
-public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
-	private final Logger log = Logger.getLogger(ProjectDAOImpl.class);
+//@Transactional(readOnly = true)
+public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTeamDAO {
+	private final Logger log = Logger.getLogger(ProjectTeamDAOImpl.class);
 	
 	@Autowired
-	public ProjectDAOImpl(SessionFactory sessionFactory) {
+	public ProjectTeamDAOImpl(SessionFactory sessionFactory) {
 		setSessionFactory(sessionFactory);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Project> getAllProjects() {
-		 return this.getHibernateTemplate().find("from Project");
+	public List<ProjectTeam> getAllProjectTeams() {
+		 return this.getHibernateTemplate().find("from ProjectTeam");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Project getProject(Integer id) {
-		 Project tmpProject = (Project) this.getHibernateTemplate().get(Project.class, id);
-		 return tmpProject;
+	public ProjectTeam getProjectTeam(Integer projectTeamKey) {
+		Session session = this.getSession();
+		Transaction tx1 = session.beginTransaction();
+
+		ProjectTeam tmpProjectTeam = (ProjectTeam) session.get(ProjectTeam.class, projectTeamKey);
+		tx1.commit();
+		return tmpProjectTeam;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
-		Query query = session.createQuery("select max(id) from Project");
-		
+		log.info("## I am here 0 ...");
+		Transaction tx1 = session.beginTransaction();
+		log.info("## I am here 1 ...");
+		Query query = session.createQuery("select max(projectTeamKey) from ProjectTeam");
 		
 //		Object[] rows = new Object[1];
-		
+		log.info("## I am here 2 ...");
 		List results  = query.list();
 		
 		log.info("results::"+results.toString());
@@ -71,30 +78,31 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		log.info("iterator.hasNext()::"+iterator.hasNext());
 		//log.info("iterator.next().getClass::"+iterator.next().getClass().toString());
 //		java.lang.Object[] rows = (java.lang.Object[]) iterator.next();
+		tx1.commit();
 		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void addProject(Project project) {
+	public void addProjectTeam(ProjectTeam projectTeam) {
 		Session session = this.getSession();
 
 		session.beginTransaction();
-		session.save(project);
+		session.save(projectTeam);
 		session.getTransaction().commit();
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void deleteProject(Integer id) {
+	public void deleteProjectTeam(Integer projectTeamKey) {
 		Session session = this.getSession();
 
 		Transaction tx1 = session.beginTransaction();
 		
-		Query q = session.createQuery("delete Project where id=?");
-		q.setInteger(0, id);
+		Query q = session.createQuery("delete ProjectTeam where projectTeamKey=?");
+		q.setInteger(0, projectTeamKey);
 		
-		log.info("deleteProject()->sQuery::" + q.toString());
+		log.info("deleteProjectTeam()->sQuery::" + q.toString());
 		q.executeUpdate();
 		tx1.commit();
 		//session.close();
@@ -102,12 +110,12 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void updateProject(Project project) {
+	public void updateProjectTeam(ProjectTeam projectTeam) {
 		Session session = this.getSession();
 
 		Transaction tx1 = session.beginTransaction();
 		
-		session.update(project);
+		session.saveOrUpdate(projectTeam);
 		
 		tx1.commit();
 		//session.close();
