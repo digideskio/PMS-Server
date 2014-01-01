@@ -21,6 +21,7 @@ import javax.persistence.Id;
 
 
 
+
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
@@ -28,6 +29,7 @@ import javax.persistence.Table;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.WhereJoinTable;
 
 import com.media2359.euphoria.model.employee.Employee;
 
@@ -48,7 +50,7 @@ public class ProjectTeam implements java.io.Serializable {
 	private String projectTeamName;
 	private Project project;
 	
-	/*Set<Employee> projectManagers;*/
+	Set<Employee> projectManagers;
 	Set<Employee> teamMembers;
 
 	/**
@@ -96,18 +98,24 @@ public class ProjectTeam implements java.io.Serializable {
 				+ project + "]";
 	}
 
-/*	public Set<Employee> getProjectManagers() {
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name="project_team_employee_xref", 
+	joinColumns = {@JoinColumn(name="project_team_key", referencedColumnName="project_team_key")},
+	inverseJoinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")})
+	@WhereJoinTable (clause="project_mgr_flg = 'Y'")
+	public Set<Employee> getProjectManagers() {
 		return projectManagers;
 	}
 
 	public void setProjectManagers(Set<Employee> projectManagers) {
 		this.projectManagers = projectManagers;
-	}*/
+	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name="project_team_employee_xref", 
 	joinColumns = {@JoinColumn(name="project_team_key", referencedColumnName="project_team_key")},
 	inverseJoinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")})
+	@WhereJoinTable (clause="project_mgr_flg = 'N'")
 	public Set<Employee> getTeamMembers() {
 		return teamMembers;
 	}

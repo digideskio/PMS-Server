@@ -8,7 +8,7 @@ import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.Project;
 
 
-@Service("RequestManpowerService")
+//@Service("RequestManpowerService")
 public class RequestManpowerService implements com.media2359.euphoria.view.server.allocation.RequestManpowerService {
 
 	@Override

@@ -39,7 +39,7 @@ public class ProjectDaoTest {
 	
 	@Test
 	public void testGetProject() {
-		Project project = projectDao.getProject(Integer.valueOf(1));
+		Project project = projectDao.getProject(Integer.valueOf(2));
 		Assert.assertNotNull(project);
 		log.info("Project Name:" + project.getName());
 	}

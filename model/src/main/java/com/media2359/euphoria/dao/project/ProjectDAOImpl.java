@@ -14,10 +14,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -50,6 +53,15 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
+		Criteria crit = session.createCriteria(Project.class); 
+		crit.setProjection(Projections.max("id"));
+		//crit.add(Restrictions.eq("id", 1));
+		List<Integer> maxKeys = crit.list();
+		log.info("results::"+maxKeys.toString());
+		log.info("results::"+maxKeys.size());
+		//log.info("Class Type::" + maxKeys.get(0).TYPE);
+		return maxKeys.get(0)==null?Integer.valueOf(-1):maxKeys.get(0);
+		/*session.getTransaction().begin();
 		Query query = session.createQuery("select max(id) from Project");
 		
 		
@@ -57,21 +69,24 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		
 		List results  = query.list();
 		
-		log.info("results::"+results.toString());
-		log.info("results::"+results.size());
-/*		for (Iterator it = results.iterator() ; it.hasNext(); )
+		//log.info("results::"+results.toString());
+		//log.info("results::"+results.size());
+		for (Iterator it = results.iterator() ; it.hasNext(); )
 		{
 			rows = (Object[])it.next();
 			
 		}
 		log.info("rows[0].class"+rows[0].getClass().toString());
-		return (Integer) rows[0];*/
+		return (Integer) rows[0];
 		
 		ListIterator iterator = results.listIterator();
-		log.info("iterator.hasNext()::"+iterator.hasNext());
+		//log.info("iterator.hasNext()::"+iterator.hasNext());
 		//log.info("iterator.next().getClass::"+iterator.next().getClass().toString());
 //		java.lang.Object[] rows = (java.lang.Object[]) iterator.next();
-		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
+		Integer maxKey = (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
+		results.clear();
+		session.getTransaction().commit();
+		return maxKey;*/
 		
 	}
 	
@@ -79,9 +94,9 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	public void addProject(Project project) {
 		Session session = this.getSession();
 
-		session.beginTransaction();
+		Transaction tx1 = session.beginTransaction();
 		session.save(project);
-		session.getTransaction().commit();
+		tx1.commit();
 		
 	}
 	

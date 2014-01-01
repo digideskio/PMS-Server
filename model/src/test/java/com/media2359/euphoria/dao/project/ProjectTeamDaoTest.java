@@ -45,6 +45,8 @@ public class ProjectTeamDaoTest {
 		ProjectTeam projectTeam = iterator.hasNext()?(ProjectTeam) iterator.next():null;
 		
 		
+		
+		
 		log.info("####Project returned in Project Team:"+ projectTeam.getProject().toString());
 		
 	}
@@ -72,7 +74,24 @@ public class ProjectTeamDaoTest {
 			log.info("####Team Member Details:"+ employee.toString());
 		}
 		
+		//test manager
+		Set<Employee> managers = projectTeam1.getProjectManagers();
+		Assert.assertNotNull(managers);
+		
+		log.info("####Number of Team managers:"+managers.size());
+		
+		Employee manager;
+		
+		for (Iterator<Employee> it = managers.iterator(); it.hasNext(); )
+		{
+			manager = it.next();
+
+			log.info("####Team Manager Details:"+ manager.toString());
+		}
+		
 	}
+	
+	
 	
 	
 	/*@Test
