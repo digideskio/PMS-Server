@@ -1,7 +1,6 @@
 bin
 target
 .settings
-*.jar
 *.war
 *.ear
 **/.gwt-*t
