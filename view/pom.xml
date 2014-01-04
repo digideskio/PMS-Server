@@ -89,13 +89,14 @@
 				<artifactId>gwt-maven-plugin</artifactId>
 				<version>2.5.1</version>
 				<configuration>
+					<module>com.media2359.euphoria.view.Euphoria</module>
+					<inplace>true</inplace>
 					<logLevel>INFO</logLevel>
 					<localWorkers>${gwt.localWorkers}</localWorkers>
 					<extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m -Xss512m</extraJvmArgs>				
 					<runTarget>index.jsp</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 				</configuration>
-				<!--
 				<executions>
 					<execution>
 						<goals>
@@ -105,15 +106,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<module>com.media2359.euphoria.view.Euphoria</module>
-					<inplace>true</inplace>
-					<logLevel>INFO</logLevel>
-					<localWorkers>${gwt.localWorkers}</localWorkers>
-					<extraJvmArgs>-XX:MaxPermSize=128m -Xmx512m -Xss512m</extraJvmArgs>
-					<runTarget>euphoria/hosted.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
-				</configuration> -->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
