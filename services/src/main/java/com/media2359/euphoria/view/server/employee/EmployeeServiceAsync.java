@@ -19,11 +19,26 @@ package com.media2359.euphoria.view.server.employee;
  **/
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 
 
 public interface EmployeeServiceAsync {
 	public void getAllEmployees(EmployeeListRequest request, AsyncCallback<EmployeeListResponse> callback);
+	
+	public void addEmployee(EmployeeDTO employee,AsyncCallback<String> callback);
+	
+	// Modifies the employee details to the database 
+	public void modifyEmployee(EmployeeDTO employee,AsyncCallback<String> callback);
+	//Deletes the employee details from the database 
+	
+	public void deleteEmployee(EmployeeDTO employee,AsyncCallback<String> callback);
+	
+	// Gets the emplyee details from the database 
+	public void getEmployeeDetails(EmployeeDTO employee,AsyncCallback<EmployeeDTO> callback);
+	
+	// Gets the max key for the employee
+	public void getMaxKey(AsyncCallback<Integer> callback);
 	
 }
