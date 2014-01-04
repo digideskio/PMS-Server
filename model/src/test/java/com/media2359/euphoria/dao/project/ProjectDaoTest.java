@@ -14,7 +14,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,13 +26,16 @@ import com.media2359.euphoria.model.project.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class ProjectDaoTest {
 	@Autowired
 	private ProjectDAO projectDao;
 	private Logger log = Logger.getLogger(ProjectDaoTest.class);
 	
 	@Test
-	public void testGetAllProjects() {
+	public void test1GetAllProjects() {
+		log.info("ProjectDaoTest->test1");
 		List<Project> projects = projectDao.getAllProjects();
 		Assert.assertNotNull(projects);
 		log.info("Number of projects returned:"+projects.size());
@@ -38,14 +43,16 @@ public class ProjectDaoTest {
 	}
 	
 	@Test
-	public void testGetProject() {
+	public void test2GetProject() {
+		log.info("ProjectDaoTest->test2");
 		Project project = projectDao.getProject(Integer.valueOf(2));
 		Assert.assertNotNull(project);
 		log.info("Project Name:" + project.getName());
 	}
 	
 	@Test
-	public void testAddProject() {
+	public void test3AddProject() {
+		log.info("ProjectDaoTest->test3");
 		Project project1 = new Project();
 		Project project2;
 		project1.setId(Integer.valueOf(0));
@@ -65,7 +72,8 @@ public class ProjectDaoTest {
 	}
 	
 	@Test
-	public void testDeleteProject() {
+	public void test5DeleteProject() {
+		log.info("ProjectDaoTest->test5");
 		Project project1;
 		Project project2;
 		
@@ -80,7 +88,8 @@ public class ProjectDaoTest {
 	}
 	
 	@Test
-	public void testUpdateProject() {
+	public void test4UpdateProject() {
+		log.info("ProjectDaoTest->test4");
 		Project project1;
 		Project project2;
 		

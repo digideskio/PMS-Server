@@ -22,7 +22,9 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,6 +36,7 @@ import com.media2359.euphoria.view.server.project.ProjectService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-services-test.xml"})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProjectServiceTest {
 	@Autowired
 	private ProjectService projectService;
@@ -50,33 +53,33 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void testGetAllProjects() {
+	public void test1GetAllProjects() {
 		ProjectListResponse response = projectService.getAllProjects(new ProjectListRequest());
 		Assert.assertNotNull(response);
 		Assert.assertNotNull(response.getProjects());
 	}
 	
 	@Test
-	public void testAddProject(){
+	public void test2AddProject(){
 		String result = projectService.addProject(project);
 		Assert.assertEquals("SUCCESS", result);
 	}
 	
 	@Test
-	public void testProjectDetails(){
+	public void test3ProjectDetails(){
 		Project proj = projectService.getProjectDetails(projectService.getMaxKey());
 		Assert.assertNotNull(proj);
 		
 	}
 	
 	@Test
-	public void testModifyProject(){
+	public void test4ModifyProject(){
 		String result = projectService.modifyProject(project);
 		Assert.assertEquals("SUCCESS", result);
 	}
 	
 	/*@Test
-	public void testDeleteProject(){
+	public void test5DeleteProject(){
 		Project proj = new Project();
 		log.info("####hty1####");
 		proj.setId(projectService.getMaxKey());

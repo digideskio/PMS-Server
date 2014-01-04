@@ -12,7 +12,9 @@ package com.media2359.euphoria.service.employee;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,6 +27,7 @@ import com.media2359.euphoria.view.server.employee.EmployeeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-services-test.xml"})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeServiceTest {
 	@Autowired
 	private EmployeeService employeeService;
@@ -48,7 +51,7 @@ public class EmployeeServiceTest {
 	
 	
 	@Test
-	public void testGetAllEmployees() {
+	public void test1GetAllEmployees() {
 		EmployeeListResponse response = 
 				employeeService.getAllEmployees(new EmployeeListRequest());
 		Assert.assertNotNull(response);
@@ -56,7 +59,7 @@ public class EmployeeServiceTest {
 	}
 	
 	@Test
-	public void testAddEmployee(){
+	public void test2AddEmployee(){
 		
 		String result = employeeService.addEmployee(employee);
 		Assert.assertEquals("SUCCESS", result);
@@ -65,7 +68,7 @@ public class EmployeeServiceTest {
 	}
 	
 	@Test
-	public void testGetEmployeeDetails(){
+	public void test3GetEmployeeDetails(){
 		Employee emp1 = new Employee();
 		emp1.setEmployeeKey(employeeService.getMaxKey());
 		Employee employee1 = employeeService.getEmployeeDetails(emp1);
@@ -74,7 +77,7 @@ public class EmployeeServiceTest {
 	}
 	
 	@Test
-	public void testModifyEmployee(){
+	public void test4ModifyEmployee(){
 		employee.setPersonalEmail("shiv_rec@yahoo.com");
 		String result = employeeService.modifyEmployee(employee);
 		Assert.assertEquals("SUCCESS", result);
@@ -82,7 +85,7 @@ public class EmployeeServiceTest {
 	}
 	
 	@Test
-	public void testDeleteEmployee(){
+	public void test5DeleteEmployee(){
 		Employee emp1 = new Employee();
 		emp1.setEmployeeKey(employeeService.getMaxKey());
 		String result = employeeService.deleteEmployee(emp1);

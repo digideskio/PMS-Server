@@ -24,7 +24,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,13 +38,14 @@ import com.media2359.euphoria.model.project.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeDaoTest {
 	@Autowired
 	private EmployeeDAO employeeDao;
 	private Logger log = Logger.getLogger(EmployeeDaoTest.class);
 	
 	@Test
-	public void testGetAllEmployees() {
+	public void test1GetAllEmployees() {
 		List<Employee> employees = employeeDao.getAllEmployees();
 		Assert.assertNotNull(employees);
 		log.info("Number of Employees returned:"+employees.size());
