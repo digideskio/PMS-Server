@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 /**
@@ -25,6 +26,8 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 public class ManpowerRequestAllocationPanel implements IsWidget {
 	VerticalLayoutContainer projectListContainer = null; 
 	ArrayList<Project> activeProjects = new ArrayList<Project>();
+	final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+														"Progress", "Loading. Please wait...");
 			
 	/**
 	 * Main method to create this widget. Called by the GWT Framework
@@ -36,9 +39,14 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 	
 	public void addProject(Project project) {
 		if(!activeProjects.contains(project)) {
+			messageBox.auto();
+			messageBox.show();//Show progress bar
+			
 			ManpowerAllocationProjectPanel projectPanel = new ManpowerAllocationProjectPanel();
 			projectPanel.setProject(project);
 			projectListContainer.add(projectPanel);
+			
+			messageBox.hide();//Hide progress bar
 		}
 	}
 	
