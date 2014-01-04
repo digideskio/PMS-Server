@@ -9,6 +9,8 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower;
 
+import org.junit.Ignore;
+
 import com.google.gwt.junit.client.GWTTestCase;
 import com.media2359.euphoria.view.client.manpower.request.ManpowerRequestAllocationPanel;
 
@@ -22,6 +24,7 @@ import com.media2359.euphoria.view.client.manpower.request.ManpowerRequestAlloca
  * @version 1.0 2013
  *
  */
+@Ignore
 public class ManpowerRequestAllocationPanelTest2 extends GWTTestCase {
 	ManpowerRequestAllocationPanel allocationPanel;
 
