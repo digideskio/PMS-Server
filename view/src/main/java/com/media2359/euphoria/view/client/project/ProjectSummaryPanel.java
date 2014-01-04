@@ -33,8 +33,8 @@ public class ProjectSummaryPanel extends Composite {
 
 	ProjectSummaryUiBinder uiBinder = GWT.create(ProjectSummaryUiBinder.class);
 
-	private ProjectServiceAsync projectService = GWT
-			.create(ProjectService.class);
+//	private ProjectServiceAsync projectService = GWT
+//			.create(ProjectService.class);
 
 	@UiField
 	ProjectGrid projectGrid;
@@ -79,7 +79,7 @@ public class ProjectSummaryPanel extends Composite {
 			}
 		};
 		log.info("Getting all projects in ProjectSummaryPanel");
-		projectService.getAllProjects(new ProjectListRequest(), callback);
+//		projectService.getAllProjects(new ProjectListRequest(), callback);
 		messageBox.auto();
 		messageBox.show();
 
