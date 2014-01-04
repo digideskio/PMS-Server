@@ -7,7 +7,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.manpower;
+package com.media2359.euphoria.view.client.manpower.request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,8 @@ public class MyProjectsPanel implements IsWidget {
 			@Override
 			public void onSelection(SelectionEvent<Project> event) {
 				Project selectedProject = event.getSelectedItem();
-				getParent().setAllocationPanelTitle(selectedProject.getName());
+				getParent().setProject(selectedProject);
+				//getParent().setAllocationPanelTitle(selectedProject.getName());
 			}			
 		});
 		grid.setSelectionModel(sm);

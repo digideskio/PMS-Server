@@ -80,8 +80,8 @@ public class ProjectSummaryPanel extends Composite {
 		};
 		log.info("Getting all projects in ProjectSummaryPanel");
 //		projectService.getAllProjects(new ProjectListRequest(), callback);
-		messageBox.auto();
-		messageBox.show();
+		//messageBox.auto();
+		//messageBox.show();
 
 	}
 }

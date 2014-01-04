@@ -7,7 +7,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.manpower;
+package com.media2359.euphoria.view.client.manpower.request;
 
 public class Project {
 	String name;
@@ -18,5 +18,9 @@ public class Project {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean equals(Project b) {
+		return ((b != null) && (name.equals(b.getName())));
 	}
 }
