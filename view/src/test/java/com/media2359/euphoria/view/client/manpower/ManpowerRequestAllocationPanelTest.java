@@ -9,16 +9,14 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.google.gwt.junit.GWTMockUtilities;
-import com.google.gwtmockito.GwtMock;
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import com.media2359.euphoria.view.client.manpower.request.ManpowerRequestAllocationPanel;
 
 /**
  * 

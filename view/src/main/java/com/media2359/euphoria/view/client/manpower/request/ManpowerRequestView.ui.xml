@@ -6,7 +6,8 @@
 	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
-	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower">
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower"
+	xmlns:request="urn:import:com.media2359.euphoria.view.client.manpower.request">
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
 		<ui:attributes top="4" right="4" bottom="4" left="4" />
@@ -70,8 +71,8 @@
 
 				<row:child layoutData="{rightPane}">
 					<gxt:ContentPanel headingText="Project" ui:field="header">
-						<project:ManpowerRequestAllocationPanel
-							ui:field="allocator"></project:ManpowerRequestAllocationPanel>
+						<request:ManpowerRequestAllocationPanel
+							ui:field="allocator"></request:ManpowerRequestAllocationPanel>
 					</gxt:ContentPanel>
 				</row:child>
 			</row:HorizontalLayoutContainer>
