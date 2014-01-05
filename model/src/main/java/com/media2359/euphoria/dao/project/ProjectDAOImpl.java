@@ -41,26 +41,52 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Project> getAllProjects() {
-		 return this.getHibernateTemplate().find("from Project");
+		Session session = this.getSession();
+		List<Project> projects = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			projects= this.getHibernateTemplate().find("from Project");
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return projects;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Project getProject(Integer id) {
-		 Project tmpProject = (Project) this.getHibernateTemplate().get(Project.class, id);
-		 return tmpProject;
+		
+		Session session = this.getSession();
+		Project project = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			project = (Project) this.getHibernateTemplate().get(Project.class, id);
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return project;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
-		Criteria crit = session.createCriteria(Project.class); 
-		crit.setProjection(Projections.max("id"));
-		//crit.add(Restrictions.eq("id", 1));
-		List<Integer> maxKeys = crit.list();
-		log.info("results::"+maxKeys.toString());
-		log.info("results::"+maxKeys.size());
-		//log.info("Class Type::" + maxKeys.get(0).TYPE);
-		return maxKeys.get(0)==null?Integer.valueOf(-1):maxKeys.get(0);
+		Integer maxKey = Integer.valueOf(-1);
+		try{
+			Transaction tx1 = session.beginTransaction();
+			Criteria crit = session.createCriteria(Project.class); 
+			crit.setProjection(Projections.max("id"));
+			//crit.add(Restrictions.eq("id", 1));
+			List<Integer> maxKeys = crit.list();
+			log.info("results::"+maxKeys.toString());
+			log.info("results::"+maxKeys.size());
+			//log.info("Class Type::" + maxKeys.get(0).TYPE);
+			maxKey= (maxKeys.get(0)==null?Integer.valueOf(-1):maxKeys.get(0));
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return maxKey;
 		/*session.getTransaction().begin();
 		Query query = session.createQuery("select max(id) from Project");
 		
@@ -93,17 +119,19 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 	@SuppressWarnings("unchecked")
 	public void addProject(Project project) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		session.save(project);
 		tx1.commit();
-		
+		}catch(Exception e){
+			
+		}finally{session.close();}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void deleteProject(Integer id) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		Query q = session.createQuery("delete Project where id=?");
@@ -113,18 +141,23 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		q.executeUpdate();
 		tx1.commit();
 		//session.close();
-		
+		}catch(Exception e){
+			
+		}finally{session.close();}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void updateProject(Project project) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		session.update(project);
 		
 		tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		//session.close();
 		
 	}

@@ -49,7 +49,16 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public List<Employee> getAllEmployees() {
-		return this.getHibernateTemplate().find("from Employee");
+		Session session = this.getSession();
+		List<Employee> employees = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			employees= this.getHibernateTemplate().find("from Employee");
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return employees;
 		 /*List<Employee> employeeList = new ArrayList<Employee>();
 		 
 		 Employee emp1  = new Employee();
@@ -146,45 +155,64 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public Employee getEmployee(Integer employeeKey) {
-		 Employee tmpEmployee = (Employee) this.getHibernateTemplate().get(Employee.class, employeeKey);
-		 
-		 System.out.println("Employee received from the database is "+tmpEmployee);
-		 return tmpEmployee;
+		Session session = this.getSession(); 
+		Employee employee = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			employee = (Employee) this.getHibernateTemplate().get(Employee.class, employeeKey);
+			 
+			System.out.println("Employee received from the database is "+employee);
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		 return employee;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
-		Query query = session.createQuery("select max(employeeKey) from Employee");
-		
-		
-		List results  = query.list();
-		
-		log.info("results::"+results.toString());
-		log.info("results::"+results.size());
-
-		
-		ListIterator iterator = results.listIterator();
-		log.info("iterator.hasNext()::"+iterator.hasNext());
-
-		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
-		
+		Integer maxKey = Integer.valueOf(-1);
+		try{
+			Transaction tx1 = session.beginTransaction();
+			Query query = session.createQuery("select max(employeeKey) from Employee");
+			
+			
+			List results  = query.list();
+			
+			log.info("results::"+results.toString());
+			log.info("results::"+results.size());
+	
+			
+			ListIterator iterator = results.listIterator();
+			log.info("iterator.hasNext()::"+iterator.hasNext());
+	
+			maxKey = ( (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1)));
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		 return maxKey;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void addEmployee(Employee employee) {
 		Session session = this.getSession();
+		try{
 
 		session.beginTransaction();
 		session.save(employee);
 		session.getTransaction().commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void deleteEmployee(Integer employeeKey) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		Query q = session.createQuery("delete Employee where employeeKey=?");
@@ -194,18 +222,23 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		q.executeUpdate();
 		tx1.commit();
 		//session.close();
-		
+		}catch(Exception e){
+			
+		}finally{session.close();}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void updateEmployee(Employee employee) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		session.update(employee);
 		
 		tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		//session.close();
 		
 	}

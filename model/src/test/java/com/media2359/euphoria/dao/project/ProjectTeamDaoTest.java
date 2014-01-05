@@ -137,10 +137,10 @@ public class ProjectTeamDaoTest {
 		project2 = projectDao.getProject(maxKey);
 		Assert.assertNull(project2);
 		
-	}
+	}*/
 	
 	@Test
-	public void testUpdateProjectTeam() {
+	public void test3UpdateProjectTeam() {
 		ProjectTeam projectTeam1;
 		ProjectTeam projectTeam2;
 		log.info("####TestUpdateProjectTeam Starts...");
@@ -155,8 +155,9 @@ public class ProjectTeamDaoTest {
 		
 		projectTeam1.setProjectTeamName("TEST_UPD"+ maxKey.toString());
 		
+		log.info("####UpdateProjectTeam Start ###");
 		projectTeamDao.updateProjectTeam(projectTeam1);
-		
+		log.info("####UpdateProjectTeam End ###");
 		projectTeam2 = projectTeamDao.getProjectTeam(maxKey);
 		
 		String s1 = "TEST_UPD" + maxKey.toString();
@@ -164,7 +165,7 @@ public class ProjectTeamDaoTest {
 		
 		Assert.assertTrue(s1.equalsIgnoreCase(projectTeam2.getProjectTeamName()));
 		
-	}*/
+	}
 		
 }
 

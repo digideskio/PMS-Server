@@ -39,22 +39,38 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 	
 	@SuppressWarnings("unchecked")
 	public List<ProjectTeam> getAllProjectTeams() {
-		 return this.getHibernateTemplate().find("from ProjectTeam");
+		Session session = this.getSession();
+		List<ProjectTeam> projectTeams = null;
+		try{
+		Transaction tx1 = session.beginTransaction();
+		 projectTeams =  this.getHibernateTemplate().find("from ProjectTeam");
+		}catch(Exception e){
+			 
+		 }finally{session.close();}
+		 
+		 return projectTeams;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public ProjectTeam getProjectTeam(Integer projectTeamKey) {
 		Session session = this.getSession();
+		ProjectTeam tmpProjectTeam = null;
+		try{
 		Transaction tx1 = session.beginTransaction();
 
-		ProjectTeam tmpProjectTeam = (ProjectTeam) session.get(ProjectTeam.class, projectTeamKey);
+		tmpProjectTeam = (ProjectTeam) session.get(ProjectTeam.class, projectTeamKey);
 		tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		return tmpProjectTeam;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Integer getMaxKey() {
 		Session session = this.getSession();
+		ListIterator iterator = null;
+		try{
 		log.info("## I am here 0 ...");
 		Transaction tx1 = session.beginTransaction();
 		log.info("## I am here 1 ...");
@@ -74,29 +90,40 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 		log.info("rows[0].class"+rows[0].getClass().toString());
 		return (Integer) rows[0];*/
 		
-		ListIterator iterator = results.listIterator();
+		iterator = results.listIterator();
 		log.info("iterator.hasNext()::"+iterator.hasNext());
 		//log.info("iterator.next().getClass::"+iterator.next().getClass().toString());
 //		java.lang.Object[] rows = (java.lang.Object[]) iterator.next();
 		tx1.commit();
-		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
 		
+		}catch(Exception e){
+			//"ToDo"
+		}
+		finally {
+			log.info("## I am here 3 ...");
+			session.close();
+			log.info("## I am here 4 ...");
+		}
+		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void addProjectTeam(ProjectTeam projectTeam) {
 		Session session = this.getSession();
-
+		try{
 		session.beginTransaction();
 		session.save(projectTeam);
 		session.getTransaction().commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void deleteProjectTeam(Integer projectTeamKey) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		Query q = session.createQuery("delete ProjectTeam where projectTeamKey=?");
@@ -105,6 +132,9 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 		log.info("deleteProjectTeam()->sQuery::" + q.toString());
 		q.executeUpdate();
 		tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		//session.close();
 		
 	}
@@ -112,12 +142,15 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 	@SuppressWarnings("unchecked")
 	public void updateProjectTeam(ProjectTeam projectTeam) {
 		Session session = this.getSession();
-
+		try{
 		Transaction tx1 = session.beginTransaction();
 		
 		session.saveOrUpdate(projectTeam);
 		
 		tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
 		//session.close();
 		
 	}
