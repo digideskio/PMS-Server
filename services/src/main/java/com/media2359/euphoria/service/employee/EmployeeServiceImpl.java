@@ -78,8 +78,18 @@ public class EmployeeServiceImpl implements EmployeeService {
  	}
 
 	@Override
-	public String addEmployee(Employee employee) {
+	public String addEmployee(EmployeeDTO employeeDto) {
+		Employee employee = null;
 		try{
+			employee = new Employee();
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setCompanyEmail(employeeDto.getCompanyEmail());
+			employee.setDesignation(employeeDto.getDesignation());
+			employee.setEmploymentType(employeeDto.getEmploymentType());
+			employee.setStartDate(employeeDto.getStartDate());
+			employee.setEndDate(employeeDto.getEndDate());
+			employee.setMandayRate(employeeDto.getMandayRate());
+			
 			employeeDao.addEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
@@ -88,8 +98,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public String modifyEmployee(Employee employee) {
+	public String modifyEmployee(EmployeeDTO employeeDto) {
+		Employee employee = null;
 		try{
+			employee = new Employee();
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setCompanyEmail(employeeDto.getCompanyEmail());
+			employee.setDesignation(employeeDto.getDesignation());
+			employee.setEmploymentType(employeeDto.getEmploymentType());
+			employee.setStartDate(employeeDto.getStartDate());
+			employee.setEndDate(employeeDto.getEndDate());
+			employee.setMandayRate(employeeDto.getMandayRate());
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
@@ -98,9 +117,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public String deleteEmployee(Employee employee) {
+	public String deleteEmployee(EmployeeDTO employeeDto) {
 		try{
-			employeeDao.deleteEmployee(employee.getEmployeeKey());
+			employeeDao.deleteEmployee(Integer.parseInt(employeeDto.getEmployeeKey()));
 		}catch(Exception exp){
 			return "FAILED";
 		}
@@ -108,9 +127,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeDetails(Employee employee) {
-		System.out.println("++++++ Employee Key +++++++"+employee.getEmployeeKey());
-		return employeeDao.getEmployee(employee.getEmployeeKey());
+	public EmployeeDTO getEmployeeDetails(EmployeeDTO employeeDto) {
+		System.out.println("++++++ Employee Key +++++++"+employeeDto.getEmployeeKey());
+		Employee employee = employeeDao.getEmployee(Integer.parseInt(employeeDto.getEmployeeKey()));
+		
+		EmployeeDTO respEmployee =  employee.createEmployeeDTO();
+		
+		respEmployee.setName(employee.getName());
+		respEmployee.setCompanyEmail(employee.getCompanyEmail());
+		respEmployee.setDesignation(employee.getDesignation());
+		respEmployee.setEmploymentType(employee.getEmploymentType());
+		respEmployee.setMobile(employee.getMobile());
+		respEmployee.setPersonalEmail(employee.getPersonalEmail());
+		respEmployee.setPlatForms(employee.getPlatForms());
+		respEmployee.setEmploymentType(employee.getEmploymentType());
+		respEmployee.setMandayRate(employee.getMandayRate());
+		respEmployee.setAssignedOffice(employee.getAssignedOffice());
+		respEmployee.setStartDate(employee.getStartDate());
+		respEmployee.setEndDate(employee.getEndDate());
+		respEmployee.setStatus(employee.getStatus());
+		
+		return respEmployee;
 	}
 
 	@Override

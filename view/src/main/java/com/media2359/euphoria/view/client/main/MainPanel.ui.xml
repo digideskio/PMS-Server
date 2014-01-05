@@ -8,7 +8,8 @@
 	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
 	xmlns:project="urn:import:com.media2359.euphoria.view.client.project"
-	xmlns:manpower="urn:import:com.media2359.euphoria.view.client.manpower"
+	xmlns:manpowerrqst="urn:import:com.media2359.euphoria.view.client.manpower.request"
+	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee">
 	
 	
@@ -123,10 +124,10 @@
           <container:SimpleContainer width="85%"> 
           <gxt:TabPanel width="100%">
                  <gxt:child config="{requestConfig}">
-        	        <manpower:ManpowerRequestPanel></manpower:ManpowerRequestPanel>
+        	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
                  </gxt:child>
                  <gxt:child config="{approvalConfig}">
-        	        <manpower:ManpowerApprovalPanel></manpower:ManpowerApprovalPanel>
+        	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
                  </gxt:child>                
                  <gxt:child config="{projectConfig}">
     	             <project:ProjectSummaryPanel></project:ProjectSummaryPanel>

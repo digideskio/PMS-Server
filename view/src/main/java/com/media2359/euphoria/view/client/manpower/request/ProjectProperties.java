@@ -7,9 +7,10 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.manpower;
+package com.media2359.euphoria.view.client.manpower.request;
 
 import com.google.gwt.editor.client.Editor.Path;
+import com.media2359.euphoria.view.client.manpower.request.Project;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;

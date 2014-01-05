@@ -7,17 +7,14 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.manpower;
+package com.media2359.euphoria.view.client.manpower.request;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class ManpowerRequestPanel  implements IsWidget {
 	interface ManpowerUiBinder extends UiBinder<VerticalLayoutContainer, ManpowerRequestPanel> {
@@ -29,8 +26,6 @@ public class ManpowerRequestPanel  implements IsWidget {
 	MyProjectsPanel selector;
 	@UiField
 	ManpowerRequestAllocationPanel allocator;
-	@UiField
-	ContentPanel header;
 	
 	VerticalLayoutContainer vp;
 
@@ -43,12 +38,7 @@ public class ManpowerRequestPanel  implements IsWidget {
 		return vp;
 	}
 
-	public void setAllocationPanelTitle(String title) {
-		header.setHeadingText(title);
-	}
-	
-	@UiHandler("addResource")
-	public void addResource(SelectEvent ce) {
-		allocator.addNewRow();
+	public void setProject(Project project) {
+		allocator.addProject(project);
 	}
 }

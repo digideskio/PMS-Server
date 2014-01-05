@@ -58,6 +58,7 @@ public class EmployeeServiceTest {
 		Assert.assertNotNull(response.getEmployees());
 	}
 	
+	/*
 	@Test
 	public void test2AddEmployee(){
 		
@@ -93,5 +94,7 @@ public class EmployeeServiceTest {
 		
 	}
 	
-
+ */
+	
+	
 }
