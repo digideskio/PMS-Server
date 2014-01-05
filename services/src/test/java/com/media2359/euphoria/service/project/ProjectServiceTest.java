@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
 import com.media2359.euphoria.view.server.project.ProjectService;
@@ -40,11 +40,13 @@ import com.media2359.euphoria.view.server.project.ProjectService;
 public class ProjectServiceTest {
 	@Autowired
 	private ProjectService projectService;
-	@Autowired
-	private Project project;
+	
 	private Logger log = Logger.getLogger(ProjectServiceTest.class);
+	private ProjectDTO project=null;
+	
 	@Before
 	public void setUp(){
+		project = new ProjectDTO();
 		project.setName("SGMalls");
 		project.setDescription("PM System for SG Malls");
 		project.setProjectManager("May Thei");
@@ -67,7 +69,7 @@ public class ProjectServiceTest {
 	
 	@Test
 	public void test3ProjectDetails(){
-		Project proj = projectService.getProjectDetails(projectService.getMaxKey());
+		ProjectDTO proj = projectService.getProjectDetails(projectService.getMaxKey());
 		Assert.assertNotNull(proj);
 		
 	}

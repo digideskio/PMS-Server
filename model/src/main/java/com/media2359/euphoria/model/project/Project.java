@@ -141,7 +141,7 @@ public class Project implements java.io.Serializable{
 	
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
-		projectDTO.setId(getId().toString());
+		projectDTO.setId(getId());
 		projectDTO.setName(getName());
 		projectDTO.setDescription(getDescription());
 		projectDTO.setProjectManager(getProjectManager());

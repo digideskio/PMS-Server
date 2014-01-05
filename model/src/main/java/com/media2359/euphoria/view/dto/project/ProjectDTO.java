@@ -12,8 +12,10 @@ package com.media2359.euphoria.view.dto.project;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.media2359.euphoria.model.project.Project;
+
 public class ProjectDTO implements Serializable {
-	private String id;
+	private Integer id;
 	private String name;
 	private String description;
 	private String projectManager;
@@ -25,11 +27,11 @@ public class ProjectDTO implements Serializable {
 
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -81,6 +83,22 @@ public class ProjectDTO implements Serializable {
 
 	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
 		this.completedMilestoneCount = completedMilestoneCount;
+	}
+	
+	/*
+	 * Prepares the Project froom the projectDTO
+	 */
+	
+	public Project prepareProject(){
+		Project project = new Project();
+		project.setId(id);
+		project.setManDaysLeft(manDaysLeft);
+		project.setMilestoneCount(completedMilestoneCount);
+		project.setName(name);
+		project.setProjectManager(projectManager);
+		project.setDescription(description);
+		project.setCompletedMilestoneCount(completedMilestoneCount);
+		return project;
 	}
 	
 }

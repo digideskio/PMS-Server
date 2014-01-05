@@ -21,16 +21,16 @@ public interface ProjectService extends RemoteService {
 	// Gets all the project details 
 	public ProjectListResponse getAllProjects(ProjectListRequest request);
 	// Gets the details of the specific project
-	public Project  getProjectDetails(Integer projectId);
+	public ProjectDTO  getProjectDetails(Integer projectId);
 	// Adds the project to the project database
-	public String addProject(Project project);
+	public String addProject(ProjectDTO project);
 	// Modifies the project to the project database
-	public String modifyProject(Project project);
+	public String modifyProject(ProjectDTO project);
 	// Deletes the project
-	public String deleteProject(Project project);
+	public String deleteProject(ProjectDTO project);
 	
 	// Calculates the cost of the project 
-	public Integer calculateProjectCost(Project project);
+	public Integer calculateProjectCost(ProjectDTO project);
 	
 	// Get the maximum key of the project 
 	public Integer getMaxKey();

@@ -54,51 +54,52 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project getProjectDetails(Integer projectId) {
-		return projectDao.getProject(projectId);
+	public ProjectDTO getProjectDetails(Integer projectId) {
+		return projectDao.getProject(projectId).createProjectDTO();
 	}
 
-	@Override
-	public String addProject(Project project) {
-		try{
-			projectDao.addProject(project);
-		}catch(Exception exp){
-			return "FAILED";
-		}
-		return "SUCCESS";
-		
-	}
+	
 
-	@Override
-	public String modifyProject(Project project) {
-		
-		try{
-			projectDao.updateProject(project);
-		}catch(Exception exp){
-			return "FAILED";
-		}
-		return "SUCCESS";
-		
-	}
-
-	@Override
-	public String deleteProject(Project project) {
-		try{
-			projectDao.deleteProject(project.getId());
-		}catch(Exception exp){
-			return "FAILED";
-		}
-		return "SUCCESS";
-	}
-
-	@Override
-	public Integer calculateProjectCost(Project project) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Integer getMaxKey() {
 		return projectDao.getMaxKey();
+	}
+
+	@Override
+	public String addProject(ProjectDTO projectDto) {
+		try{
+			projectDao.addProject(projectDto.prepareProject());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public String modifyProject(ProjectDTO projectDto) {
+		try{
+			projectDao.updateProject(projectDto.prepareProject());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+
+	}
+
+	@Override
+	public String deleteProject(ProjectDTO projectDto) {
+		try{
+			projectDao.deleteProject(projectDto.getId());
+		}catch(Exception exp){
+			return "FAILED";
+		}
+		return "SUCCESS";
+	}
+
+	@Override
+	public Integer calculateProjectCost(ProjectDTO project) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
