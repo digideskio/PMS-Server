@@ -7,7 +7,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
-	xmlns:project="urn:import:com.media2359.euphoria.view.client.project"
 	xmlns:manpowerrqst="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee">
@@ -128,10 +127,10 @@
                  </gxt:child>
                  <gxt:child config="{approvalConfig}">
         	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
-                 </gxt:child>                
+                 </gxt:child>             <!--     
                  <gxt:child config="{projectConfig}">
     	             <project:ProjectSummaryPanel></project:ProjectSummaryPanel>
-                 </gxt:child>
+                 </gxt:child>-->
                  <gxt:child config="{staffrollConfig}">
 	                 <employee:EmployeePanel></employee:EmployeePanel>
                  </gxt:child> 

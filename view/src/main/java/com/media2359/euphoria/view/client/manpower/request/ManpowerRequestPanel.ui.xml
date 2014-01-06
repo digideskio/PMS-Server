@@ -6,15 +6,19 @@
 	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:form="urn:import:com.sencha.gxt.widget.core.client.form"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
-	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower"
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.manpower.common"
 	xmlns:request="urn:import:com.media2359.euphoria.view.client.manpower.request">
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
 		<ui:attributes top="4" right="4" bottom="4" left="4" />
 	</ui:with>
-	
+
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="buttonMargins">
-		<ui:attributes top="10" right="4" bottom="1" left="4" />
+		<ui:attributes top="4" left="10" right="10" bottom="4" />
+	</ui:with>
+
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="smallButtonMargins">
+		<ui:attributes top="5"  left="10" right="10" bottom="5" />
 	</ui:with>
 	
 	<ui:with
@@ -22,7 +26,7 @@
 		field="topPane">
 		<ui:attributes width="1.0" height="0.10" margins="{centerMargins}" />
 	</ui:with>
-	
+
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="bottomPane">
@@ -43,10 +47,17 @@
 
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
-		field="addResourcePane">
-		<ui:attributes width="0.1" height="0.5" margins="{buttonMargins}" />
+		field="buttonLayout">
+		<ui:attributes height="0.6" margins="{buttonMargins}" />
 	</ui:with>
-	<row:VerticalLayoutContainer> 
+	
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+		field="smallButtonLayout">
+		<ui:attributes height="0.6" margins="{smallButtonMargins}" />
+	</ui:with>
+		
+	<row:VerticalLayoutContainer>
 		<row:child layoutData="{topPane}">
 			<row:HorizontalLayoutContainer>
 				<row:child layoutData="{leftPane}">
@@ -54,10 +65,21 @@
 					</row:SimpleContainer>
 				</row:child>
 
-				<row:child layoutData="{addResourcePane}">
-					<row:SimpleContainer >
-						<button:TextButton text="Add Resource" ui:field="addResource"></button:TextButton>					
-					</row:SimpleContainer>					
+				<row:child layoutData="{rightPane}">
+					<row:HorizontalLayoutContainer>
+						<row:child layoutData="{smallButtonLayout}">
+							<button:TextButton text="&lt;" ui:field="previousWeek" pixelSize="10,50"></button:TextButton>
+						</row:child>
+						<row:child layoutData="{smallButtonLayout}">	
+							<form:TextField ui:field="weekStarting" text="dd/mm/yyyy" enabled="false"></form:TextField>
+						</row:child>
+						<row:child layoutData="{smallButtonLayout}">
+							<button:TextButton text="&gt;" ui:field="nextWeek" pixelSize="10,50"></button:TextButton>
+						</row:child>	
+						<row:child layoutData="{buttonLayout}">
+							<button:TextButton text="Save" ui:field="saveAllocation" pixelSize="100,50"></button:TextButton>
+						</row:child>	
+					</row:HorizontalLayoutContainer>
 				</row:child>
 			</row:HorizontalLayoutContainer>
 		</row:child>
@@ -65,12 +87,13 @@
 			<row:HorizontalLayoutContainer>
 				<row:child layoutData="{leftPane}">
 					<row:SimpleContainer borders="true">
-						<request:MyProjectsPanel ui:field="selector"></request:MyProjectsPanel>
+						<project:MyProjectsPanel ui:field="selector"></project:MyProjectsPanel>
 					</row:SimpleContainer>
 				</row:child>
 
 				<row:child layoutData="{rightPane}">
 					<row:VerticalLayoutContainer>
+						<gxt:Header text="Allocate Resource"></gxt:Header>
 						<request:ManpowerRequestAllocationPanel
 							ui:field="allocator"></request:ManpowerRequestAllocationPanel>
 					</row:VerticalLayoutContainer>

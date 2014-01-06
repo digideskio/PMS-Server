@@ -10,11 +10,15 @@
 package com.media2359.euphoria.view.client.manpower.request;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
+import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
+import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 /**
  * View class for allocating Weekly Manpower requests
@@ -24,33 +28,41 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
  * 
  */
 public class ManpowerRequestAllocationPanel implements IsWidget {
-	VerticalLayoutContainer projectListContainer = null; 
-	ArrayList<Project> activeProjects = new ArrayList<Project>();
+	ManpowerAllocationProjectPanel allocationPanel = null;
+	ArrayList<ProjectDTO> activeProjects = new ArrayList<ProjectDTO>();
 	final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 														"Progress", "Loading. Please wait...");
-			
+	private Logger log = Logger.getLogger("EuphoriaLogger");	
+	ContentPanel projectPane = null;
+	
 	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
 	public Widget asWidget() {
-		projectListContainer = new VerticalLayoutContainer();
-		return projectListContainer;
+	    projectPane = new ContentPanel();
+	    projectPane.addStyleName("margin-10");	
+	    
+	    allocationPanel = new ManpowerAllocationProjectPanel();
+		projectPane.add(allocationPanel);
+		return projectPane;
 	}
 	
-	public void addProject(Project project) {
-		if(!activeProjects.contains(project)) {
-			messageBox.auto();
-			messageBox.show();//Show progress bar
-			
-			ManpowerAllocationProjectPanel projectPanel = new ManpowerAllocationProjectPanel();
-			projectPanel.setProject(project);
-			projectListContainer.add(projectPanel);
-			
-			messageBox.hide();//Hide progress bar
-		}
+	public void setProject(ProjectDTO project, Date weekStartDate) {
+		//TODO: First get the existing allocation data
+		
+		//Now set the new project
+		projectPane.setTitle(project.getName());
+		allocationPanel.setWeekStartDate(weekStartDate);
+		allocationPanel.setProject(project);
+		allocationPanel.reload();
 	}
 	
-	public void removeProject(Project project) {
+	public void setWeekStartDate(Date startDate) {
+		allocationPanel.setWeekStartDate(startDate);
+		allocationPanel.reload();
+	}
+	
+	public void removeProject(ProjectDTO project) {
 		if(activeProjects.contains(project)) {
 			activeProjects.remove(project);
 		}
