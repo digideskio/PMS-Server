@@ -11,41 +11,26 @@ package com.media2359.euphoria.dao.manpower;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.List;
 
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
+import com.media2359.euphoria.model.project.*;
 
 /**
  * WeeklyManpowerRequestDAO
  *
  * TODO Write something about this class
  * 
- * @author alfreds
+ * @author ty
  * @version 1.0 2013
  **/
 
 public interface WeeklyManpowerRequestDAO {
-	/**
-	 * 
-	 * TODO Write something about this method
-	 *
-	 * @returns Set<WeeklyManpowerRequest>
-	 */
-	Set<WeeklyManpowerRequest> findAllRequestsForEmployee(Employee employee);
-	
-	/**
-	 * 
-	 * TODO Write something about this method
-	 *
-	 * @returns Set<WeeklyManpowerRequest>
-	 */
+
+	/*Set<WeeklyManpowerRequest> findAllRequestsForEmployee(Employee employee);
 	Set<WeeklyManpowerRequest> findRequestsForEmployee(Employee employee, Date startDate, Date endDate);
+	void saveManpowerRequestsForEmployee(Employee employee, Set<WeeklyManpowerRequest> weeklyManpowerRequests);*/
 	
-	/**
-	 * 
-	 * TODO Write something about this method
-	 *
-	 * @returns void
-	 */
-	void saveManpowerRequestsForEmployee(Employee employee, Set<WeeklyManpowerRequest> weeklyManpowerRequests);
+	List<WeeklyManpowerRequest> findAllWklyMpowerRqstByProjectWeek(Date startDate, Date endDate, Project project);
 }

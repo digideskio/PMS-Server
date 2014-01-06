@@ -12,12 +12,20 @@ package com.media2359.euphoria.view.dto.manpower;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Project;
+import java.io.Serializable;
+
 /**
  * ManpowerRequestDTO
  *
  * TODO Write something about this class
  * 
- * @author alfreds
+ * @author ty
  * @version 1.0 2013
  **/
 
@@ -38,7 +46,9 @@ public class ManpowerRequestDTO {
 	private String approvedId;
 	private String comments;
 	private List<PlatformRequestDTO> platformRequestDtoList;
-	
+	private String createdBy;
+	private Date createdTstmp;
+	private Project project;
 	
 	public Integer getWeeklyManpowerRequestKey() {
 		return weeklyManpowerRequestKey;
@@ -88,6 +98,24 @@ public class ManpowerRequestDTO {
 	public void setPlatformRequestDtoList(
 			List<PlatformRequestDTO> platformRequestDtoList) {
 		this.platformRequestDtoList = platformRequestDtoList;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedTstmp() {
+		return createdTstmp;
+	}
+	public void setCreatedTstmp(Date createdTstmp) {
+		this.createdTstmp = createdTstmp;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
 	}
 	
 	
