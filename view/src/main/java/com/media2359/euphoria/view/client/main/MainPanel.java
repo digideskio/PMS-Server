@@ -17,9 +17,11 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 
@@ -29,11 +31,14 @@ public class MainPanel extends Composite {
 	}
 
 	@UiField Label welcomelabel;
+	@UiField BorderLayoutContainer con;
 	
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
 	public MainPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
+		//collapse the WEST region
+		con.collapse(LayoutRegion.WEST);
 		populateUsername();
 	}
 	

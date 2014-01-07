@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
 import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
 import com.sencha.gxt.core.client.util.DateWrapper;
+import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -41,6 +42,9 @@ public class ManpowerRequestPanel  implements IsWidget {
 	@UiField
 	TextField weekStarting;
 	
+	@UiField
+	Header header;
+	
 	VerticalLayoutContainer vp;
 	
 	private Logger log = Logger.getLogger("EuphoriaLogger");
@@ -49,6 +53,8 @@ public class ManpowerRequestPanel  implements IsWidget {
     DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy");
     
     private Date currentWeekStartDate = null;
+    
+    private static final String HEADER_TEMPLATE = "Allocate resource for the week starting ";
 
 	@Override
 	public Widget asWidget() {
@@ -60,8 +66,11 @@ public class ManpowerRequestPanel  implements IsWidget {
 		wrapper = wrapper.addDays(-1 * (wrapper.getDayInWeek()-1));
 		currentWeekStartDate = wrapper.asDate();
 		
-		weekStarting.setText(fmt.format(currentWeekStartDate));
+		String dateStr = fmt.format(currentWeekStartDate);
+		weekStarting.setText(dateStr);
 		weekStarting.setSize("80", "50");
+		
+		header.setText(HEADER_TEMPLATE + dateStr);
 		return vp;
 	}
 
@@ -75,9 +84,9 @@ public class ManpowerRequestPanel  implements IsWidget {
 		wrapper = wrapper.addDays(7);//Next week start
 		currentWeekStartDate = wrapper.asDate();
 		log.info("New date is"+currentWeekStartDate);
-		
-		weekStarting.setText(fmt.format(currentWeekStartDate));
-		
+		String dateStr = fmt.format(currentWeekStartDate);
+		weekStarting.setText(dateStr);
+		header.setText(HEADER_TEMPLATE + dateStr);
 		allocator.setWeekStartDate(currentWeekStartDate);
 	}
 	
