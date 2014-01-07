@@ -61,72 +61,40 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	private ProjectDTO project;
 	private Date weekStartDate;
 	Grid<WeeklyResourcePlan> grid;
+	ComboBoxCell<EmployeeDTO> developerCombo;
+	ComboBoxCell<String> platformCombo;
 	 // A custom date format
     DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy");
-   private Map<String, EmployeeDTO> employeeMap;
+    private Map<String, EmployeeDTO> employeeMap;
+    private ListStore<EmployeeDTO> employeeListStore = null;
     private ListStore<WeeklyResourcePlan> store = null;
     private Logger log = Logger.getLogger("EuphoriaLogger");
     
-    private EmployeePresenter employeePresenter = new EmployeePresenter();
+    private WeeklyResourcePlanProperties props;
+    private EmployeeDTOProperties employeeProps;
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
 	public Widget asWidget() {
+		
+		props = GWT.create(WeeklyResourcePlanProperties.class);
+		employeeProps = GWT.create(EmployeeDTOProperties.class);
+		
+//		getEmployees();
 	    ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
 	    
 	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
 	    
-	    WeeklyResourcePlanProperties props = GWT.create(WeeklyResourcePlanProperties.class);
-	    
-
 	    ColumnConfig<WeeklyResourcePlan, String> platformColumn = new ColumnConfig<WeeklyResourcePlan, String>(props.platform(), 130, "Platform");
 	    platformColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
-	    ComboBoxCell<String> platformCombo = new ComboBoxCell<String>(Platforms.getAllPlatformsAsListStore(), new LabelProvider<String>() {
-	        @Override
-	        public String getLabel(String item) {
-	          return item;
-	        }
-	      });
 	    
-	    platformCombo.addSelectionHandler(new SelectionHandler<String>() {
-	   
-	        @Override
-	        public void onSelection(SelectionEvent<String> event) {
-	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
-	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
-	          log.info("Platform Selected"+ p.getId() + " selected " + event.getSelectedItem());
-	        }
-	      });
-	    platformCombo.setTriggerAction(TriggerAction.ALL);
-	    platformCombo.setForceSelection(true);
-       
+	    createPlatformCombo();
 	    platformColumn.setCell(platformCombo);
-        platformCombo.setWidth(110);
 
         
-	    ColumnConfig<WeeklyResourcePlan, String> developerColumn = new ColumnConfig<WeeklyResourcePlan, String>(props.developer(), 130, "Developer");
-	    developerColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
-	    ComboBoxCell<String> developerCombo = new ComboBoxCell<String>(EmployeesTest.getAllEmployeesAsListStore(), new LabelProvider<String>() {
-	        @Override
-	        public String getLabel(String item) {
-	          return item;
-	        }
-	      });
-	    
-	    developerCombo.addSelectionHandler(new SelectionHandler<String>() {
-	   
-	        @Override
-	        public void onSelection(SelectionEvent<String> event) {
-	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
-	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
-	          log.info("Developer Selected"+ p.getId() + " selected " + event.getSelectedItem());
-	        }
-	      });
-	    developerCombo.setTriggerAction(TriggerAction.ALL);
-	    developerCombo.setForceSelection(true);
-       
+	    ColumnConfig<WeeklyResourcePlan, EmployeeDTO> developerColumn = new ColumnConfig<WeeklyResourcePlan, EmployeeDTO>(props.developer(), 130, "Developer");
+	    createDeveloperCombo();
 	    developerColumn.setCell(developerCombo);
-	    developerCombo.setWidth(110);
 	    
 	    configs.add(platformColumn);
 	    configs.add(developerColumn);
@@ -194,7 +162,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		response.setWeekStartDate(new Date());
 		
 		ArrayList<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
-		
+//		getEmployees();
+		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
 		resourcePlan.setId("1");
 		resourcePlan.setDay1Am(true);
@@ -264,5 +233,70 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	public ProjectAllocationDTO getAllocationData() {
 		return new ProjectAllocationDTO();
 	}
-
+	
+//	private void getEmployees(){
+//		employeeMap = new HashMap<String, EmployeeDTO>();
+//		
+//		
+//        List<EmployeeDTO> employees = EmployeePresenter.getEmployees();
+//        if(employees == null)
+//        	log.info("Employees is null");
+//        else
+//        	log.info("Employees size is " + employees.size());
+//        if(employees != null && employees.size() > 0)
+//        	for(EmployeeDTO employee:employees){
+//        		log.info(employee.getName());
+//        		employeeMap.put(employee.getName(), employee);
+//        		employeeListStore.add(employee.getName());
+//        	}
+//        
+//	}
+	
+	private void createDeveloperCombo(){
+		
+		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.key());
+		 developerCombo = new ComboBoxCell<EmployeeDTO>(employeeListStore, new LabelProvider<EmployeeDTO>() {
+		        @Override
+		        public String getLabel(EmployeeDTO item) {
+		          return item.getName();
+		        }
+		      });
+		    
+		    developerCombo.addSelectionHandler(new SelectionHandler<EmployeeDTO>() {
+		   
+		        @Override
+		        public void onSelection(SelectionEvent<EmployeeDTO> event) {
+		          CellSelectionEvent<EmployeeDTO> sel = (CellSelectionEvent<EmployeeDTO>) event;
+		          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+		          log.info("Developer Selected"+ p.getId() + " selected " + event.getSelectedItem());
+		        }
+		      });
+		    developerCombo.setTriggerAction(TriggerAction.ALL);
+		    developerCombo.setForceSelection(true);
+		    developerCombo.setWidth(110);
+	}
+	
+	private void createPlatformCombo(){
+		
+				
+		platformCombo = new ComboBoxCell<String>(Platforms.getAllPlatformsAsListStore(), new LabelProvider<String>() {
+	        @Override
+	        public String getLabel(String item) {
+	          return item;
+	        }
+	      });
+	    
+	    platformCombo.addSelectionHandler(new SelectionHandler<String>() {
+	   
+	        @Override
+	        public void onSelection(SelectionEvent<String> event) {
+	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
+	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+	          log.info("Platform Selected"+ p.getId() + " selected " + event.getSelectedItem());
+	        }
+	      });
+	    platformCombo.setTriggerAction(TriggerAction.ALL);
+	    platformCombo.setForceSelection(true);
+	    platformCombo.setWidth(110);
+	}
 }

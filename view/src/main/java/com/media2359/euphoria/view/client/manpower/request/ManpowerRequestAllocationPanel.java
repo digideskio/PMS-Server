@@ -30,10 +30,13 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
  * @author AJ
  * @version 1.0
  * 
- */
+ */ 
+
+
 public class ManpowerRequestAllocationPanel implements IsWidget {
 	ManpowerAllocationProjectPanel allocationPanel = null;
 	ArrayList<ProjectDTO> activeProjects = new ArrayList<ProjectDTO>();
+	private TextButton addButton,resetButton;
 	final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 														"Progress", "Loading. Please wait...");
 	private Logger log = Logger.getLogger("EuphoriaLogger");	
@@ -49,27 +52,30 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 	    allocationPanel = new ManpowerAllocationProjectPanel();
 		projectPane.add(allocationPanel);
 		
-		projectPane.setButtonAlign(BoxLayoutPack.START);
-        
-		projectPane.addButton(new TextButton("Add Request", new SelectHandler() {
+		projectPane.setButtonAlign(BoxLayoutPack.START);     
+		addButton = new TextButton("Add Request", new SelectHandler() {
         	 
             @Override
             public void onSelect(SelectEvent event) {
             	allocationPanel.addRequest();
             }
 
-          })); 
-        
-		projectPane.addButton(new TextButton("Reset", new SelectHandler() {
-       	 
+          });
+		
+		
+		
+		resetButton = new TextButton("Reset", new SelectHandler() {       	 
             @Override
             public void onSelect(SelectEvent event) {
             	log.info(" Reset");
             }
-
-          })); 
-        
+          });
 		
+		projectPane.addButton(addButton);         
+		projectPane.addButton(resetButton);
+       
+		addButton.setEnabled(false);
+		resetButton.setEnabled(false);
 		return projectPane;
 	}
 	
@@ -80,6 +86,8 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		projectPane.setHeadingText(project.getName());
 		allocationPanel.setWeekStartDate(weekStartDate);
 		allocationPanel.setProject(project);
+		addButton.setEnabled(true);
+		resetButton.setEnabled(true);
 		allocationPanel.reload();
 	}
 	

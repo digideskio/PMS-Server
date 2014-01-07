@@ -39,7 +39,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
   private EmployeeGrid employeeGrid;
   private EmployeeServiceAsync employeeService;
   private Logger log = Logger.getLogger("EuphoriaLogger");
-  private List<EmployeeDTO> employees;
+  private static List<EmployeeDTO> employees;
   
   
   public EmployeePresenter(){
@@ -122,6 +122,11 @@ import com.sencha.gxt.widget.core.client.info.Info;
     	 return;
      EmployeeDTO p = listStore.get(event.getRowIndex());
 	 new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p).show();
+  }
+  
+  
+  public static List<EmployeeDTO> getEmployees(){
+	  return employees;
   }
   
 }

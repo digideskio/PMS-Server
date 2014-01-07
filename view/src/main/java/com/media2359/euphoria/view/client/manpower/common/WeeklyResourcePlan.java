@@ -9,13 +9,15 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower.common;
 
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+
 
 
 public class WeeklyResourcePlan {
 	String id;
 	
 	private String platform = "";
-	private String developer = "";
+	private EmployeeDTO developer = null;
 
 	private boolean day1Am = false;
 	private boolean day2Am = false;
@@ -35,7 +37,7 @@ public class WeeklyResourcePlan {
 	
 	
 	
-	public String getDeveloper() {
+	public EmployeeDTO getDeveloper() {
 		return developer;
 	}
 
@@ -108,7 +110,7 @@ public class WeeklyResourcePlan {
 		return day7Pm;
 	}
 	
-	public void setDeveloper(String developer) {
+	public void setDeveloper(EmployeeDTO developer) {
 		this.developer = developer;
 	}
 	
