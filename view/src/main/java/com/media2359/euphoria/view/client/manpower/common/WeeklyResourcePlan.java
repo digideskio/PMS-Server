@@ -13,6 +13,10 @@ package com.media2359.euphoria.view.client.manpower.common;
 
 public class WeeklyResourcePlan {
 	String id;
+	
+	private String platform = "";
+	private String developer = "";
+
 	private boolean day1Am = false;
 	private boolean day2Am = false;
 	private boolean day3Am = false;
@@ -29,6 +33,17 @@ public class WeeklyResourcePlan {
 	private boolean day6Pm = false;
 	private boolean day7Pm = false;
 	
+	
+	
+	public String getDeveloper() {
+		return developer;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+
 	public String getId() {
 		return id;
 	}
@@ -91,6 +106,14 @@ public class WeeklyResourcePlan {
 	
 	public boolean getDay7Pm() {
 		return day7Pm;
+	}
+	
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
+	
+	public void setPlatform(String platform) {
+		this.platform = platform;
 	}
 
 	public void setDay1Am(boolean day1Am) {

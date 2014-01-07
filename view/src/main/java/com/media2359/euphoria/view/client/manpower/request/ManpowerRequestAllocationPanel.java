@@ -19,6 +19,10 @@ import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProj
 import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 /**
  * View class for allocating Weekly Manpower requests
@@ -44,6 +48,28 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 	    
 	    allocationPanel = new ManpowerAllocationProjectPanel();
 		projectPane.add(allocationPanel);
+		
+		projectPane.setButtonAlign(BoxLayoutPack.START);
+        
+		projectPane.addButton(new TextButton("Add Request", new SelectHandler() {
+        	 
+            @Override
+            public void onSelect(SelectEvent event) {
+            	allocationPanel.addRequest();
+            }
+
+          })); 
+        
+		projectPane.addButton(new TextButton("Reset", new SelectHandler() {
+       	 
+            @Override
+            public void onSelect(SelectEvent event) {
+            	log.info(" Reset");
+            }
+
+          })); 
+        
+		
 		return projectPane;
 	}
 	
@@ -51,7 +77,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		//TODO: First get the existing allocation data
 		
 		//Now set the new project
-		projectPane.setTitle(project.getName());
+		projectPane.setHeadingText(project.getName());
 		allocationPanel.setWeekStartDate(weekStartDate);
 		allocationPanel.setProject(project);
 		allocationPanel.reload();

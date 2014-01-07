@@ -1,7 +1,3 @@
-euphoria-dev
-============
+The following is the latest build status of the source code
 
-Euphoria Development Testing
-
-
-https://www.codeship.io/projects/ac40d5d0-da86-0130-af56-16c1f3d7d065/status
+[ ![Codeship Status for 2359media/PMS-Server](https://www.codeship.io/projects/7e567c60-5907-0131-cf48-221b0240776d/status?branch=master)](https://www.codeship.io/projects/11744)
