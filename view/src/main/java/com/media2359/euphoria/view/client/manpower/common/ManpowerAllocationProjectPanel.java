@@ -11,15 +11,32 @@ package com.media2359.euphoria.view.client.manpower.common;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.core.EmployeesTest;
+import com.media2359.euphoria.view.client.core.Platforms;
+import com.media2359.euphoria.view.client.employee.EmployeePresenter;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
+import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.util.DateWrapper;
+import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.widget.core.client.FramedPanel;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
 import com.sencha.gxt.widget.core.client.grid.CellSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -27,6 +44,11 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.HeaderGroupConfig;
 import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent.CellSelectionChangedHandler;
+import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 
 /**
  * View class for allocating Weekly Manpower requests
@@ -41,9 +63,12 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	Grid<WeeklyResourcePlan> grid;
 	 // A custom date format
     DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy");
-    ListStore<WeeklyResourcePlan> store = null;
-	
-	/**
+   private Map<String, EmployeeDTO> employeeMap;
+    private ListStore<WeeklyResourcePlan> store = null;
+    private Logger log = Logger.getLogger("EuphoriaLogger");
+    
+    private EmployeePresenter employeePresenter = new EmployeePresenter();
+ 	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
 	public Widget asWidget() {
@@ -52,36 +77,94 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
 	    
 	    WeeklyResourcePlanProperties props = GWT.create(WeeklyResourcePlanProperties.class);
+	    
+
+	    ColumnConfig<WeeklyResourcePlan, String> platformColumn = new ColumnConfig<WeeklyResourcePlan, String>(props.platform(), 130, "Platform");
+	    platformColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
+	    ComboBoxCell<String> platformCombo = new ComboBoxCell<String>(Platforms.getAllPlatformsAsListStore(), new LabelProvider<String>() {
+	        @Override
+	        public String getLabel(String item) {
+	          return item;
+	        }
+	      });
+	    
+	    platformCombo.addSelectionHandler(new SelectionHandler<String>() {
+	   
+	        @Override
+	        public void onSelection(SelectionEvent<String> event) {
+	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
+	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+	          log.info("Platform Selected"+ p.getId() + " selected " + event.getSelectedItem());
+	        }
+	      });
+	    platformCombo.setTriggerAction(TriggerAction.ALL);
+	    platformCombo.setForceSelection(true);
+       
+	    platformColumn.setCell(platformCombo);
+        platformCombo.setWidth(110);
+
+        
+	    ColumnConfig<WeeklyResourcePlan, String> developerColumn = new ColumnConfig<WeeklyResourcePlan, String>(props.developer(), 130, "Developer");
+	    developerColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
+	    ComboBoxCell<String> developerCombo = new ComboBoxCell<String>(EmployeesTest.getAllEmployeesAsListStore(), new LabelProvider<String>() {
+	        @Override
+	        public String getLabel(String item) {
+	          return item;
+	        }
+	      });
+	    
+	    developerCombo.addSelectionHandler(new SelectionHandler<String>() {
+	   
+	        @Override
+	        public void onSelection(SelectionEvent<String> event) {
+	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
+	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+	          log.info("Developer Selected"+ p.getId() + " selected " + event.getSelectedItem());
+	        }
+	      });
+	    developerCombo.setTriggerAction(TriggerAction.ALL);
+	    developerCombo.setForceSelection(true);
+       
+	    developerColumn.setCell(developerCombo);
+	    developerCombo.setWidth(110);
+	    
+	    configs.add(platformColumn);
+	    configs.add(developerColumn);
+	    cm.addHeaderGroup(0, 0, new HeaderGroupConfig("Platform/Developer", 1, 2));
+	      
+	    
 	    ColumnConfig<WeeklyResourcePlan, Boolean> amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Am(), 100, "AM");
 		ColumnConfig<WeeklyResourcePlan, Boolean> pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
 		
-		cm.addHeaderGroup(0, 0, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
-		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
 
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
-		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
-		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
-		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
+		
+		
 		
 		
 		store = new ListStore<WeeklyResourcePlan>(props.key());
@@ -102,6 +185,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
         });
 
         grid.setSelectionModel(c);
+   
 	    return grid;
 	}
 
@@ -125,10 +209,14 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	
 	public void setProject(ProjectDTO project) {
 		this.project = project;
-		
 		//TODO: Add logic to fetch allocation data from server
 		WeeklyResourcePlanResponse response = getDummyWeeklyResourcePlan();
 		grid.getStore().replaceAll(response.getWeeklyResourcePlanList());
+	}
+	
+	public void addRequest(){
+		WeeklyResourcePlanResponse response = getDummyWeeklyResourcePlan();
+		grid.getStore().add(new WeeklyResourcePlan());
 	}
 	
 	public void setWeekStartDate(Date startDate) {
@@ -136,9 +224,14 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		DateWrapper wrapper = new DateWrapper(startDate);
 		ColumnModel<WeeklyResourcePlan> cm = grid.getColumnModel();
 		List<HeaderGroupConfig> headerGroups = cm.getHeaderGroups();
+		int i = 0;
 		for(HeaderGroupConfig config:headerGroups) {
-			config.setHtml(SafeHtmlUtils.fromString(fmt.format(wrapper.asDate())));
-			wrapper = wrapper.addDays(1);
+			    if(i == 0){
+			    	++i;
+			    	continue;
+			    }
+				config.setHtml(SafeHtmlUtils.fromString(fmt.format(wrapper.asDate())));
+				wrapper = wrapper.addDays(1);
 		}
 	}
 	
@@ -171,4 +264,5 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	public ProjectAllocationDTO getAllocationData() {
 		return new ProjectAllocationDTO();
 	}
+
 }

@@ -12,6 +12,9 @@ package com.media2359.euphoria.view.client.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+
 
 /**
  * Platforms
@@ -32,6 +35,7 @@ public enum Platforms {
 		
 		
 		private static List<Platforms> platformList;
+		private static ListStore<String> platformListStore;
 		private String text;
 		
 		public static Platforms parseString(String object) {
@@ -76,6 +80,30 @@ public enum Platforms {
 			platformList.add(JAVA);
 			
 			return platformList;
+		}
+		
+		
+		public static ListStore<String> getAllPlatformsAsListStore(){
+			if(platformListStore != null)
+				return platformListStore;
+			
+			platformListStore = new ListStore<String>(new ModelKeyProvider<String>() {
+			      @Override
+			      public String getKey(String item) {
+			        return item.toString();
+			      }
+			    });
+			
+			platformListStore.add(ANDROID.toString());
+			platformListStore.add(IOS.toString());
+			platformListStore.add(RUBY.toString());
+			platformListStore.add(GRAILS.toString());
+			platformListStore.add(SERVER.toString());
+			platformListStore.add(UI.toString());
+			platformListStore.add(HTML.toString());
+			platformListStore.add(JAVA.toString());
+			
+			return platformListStore;
 		}
 		
 

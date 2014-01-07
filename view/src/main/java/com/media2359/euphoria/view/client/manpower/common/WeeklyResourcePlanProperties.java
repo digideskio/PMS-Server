@@ -10,6 +10,10 @@ public interface WeeklyResourcePlanProperties extends
 	@Path("id")
 	ModelKeyProvider<WeeklyResourcePlan> key();
 
+	ValueProvider<WeeklyResourcePlan, String> platform();
+	
+	ValueProvider<WeeklyResourcePlan, String> developer();
+	
 	ValueProvider<WeeklyResourcePlan, Boolean> day1Am();
 
 	ValueProvider<WeeklyResourcePlan, Boolean> day2Am();
