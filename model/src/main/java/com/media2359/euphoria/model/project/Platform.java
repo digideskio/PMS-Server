@@ -14,19 +14,64 @@ package com.media2359.euphoria.model.project;
  *
  * TODO Write something about this class
  * 
- * @author alfreds
+ * @author ty
  * @version 1.0 2013
  **/
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.WhereJoinTable;
+
+@Entity 
+@Table(name = "platform") 
 public class Platform {
-	String name;
-	String description;
+	@Id
+	@GeneratedValue(generator = "platformGenerator")     
+	@GenericGenerator(name = "platformGenerator", strategy = "increment") 
+	@Column(name = "platform_key")
+	private Integer platformKey;
+	
+	@Column(name = "platform_id")
+	private String platformId;
 
 	/**
 	 * 
 	 */
 	public Platform() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getPlatformKey() {
+		return platformKey;
+	}
+
+	public void setPlatformKey(Integer platformKey) {
+		this.platformKey = platformKey;
+	}
+
+	public String getPlatformId() {
+		return platformId;
+	}
+
+	public void setPlatformId(String platformId) {
+		this.platformId = platformId;
+	}
+
+	@Override
+	public String toString() {
+		return "Platform [platformKey=" + platformKey + ", platformId="
+				+ platformId + "]";
 	}
 
 }

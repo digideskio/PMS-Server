@@ -151,7 +151,7 @@ public class WeeklyManpowerRequest {
 		this.createdTstmp = createdTstmp;
 	}
 
-	public ManpowerRequestDTO createProjectDTO() {
+	public ManpowerRequestDTO createManpowerRequestDTO() {
 		ManpowerRequestDTO manpowerRequestDTO = new ManpowerRequestDTO();
 		manpowerRequestDTO.setWeeklyManpowerRequestKey(weeklyManpowerRequestKey);
 		manpowerRequestDTO.setProjectKey(project.getId());

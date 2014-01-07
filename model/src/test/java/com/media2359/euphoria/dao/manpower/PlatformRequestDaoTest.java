@@ -36,35 +36,29 @@ import com.media2359.euphoria.model.manpower.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class WeeklyManpowerRequestDaoTest {
+public class PlatformRequestDaoTest {
 	@Autowired
-	private WeeklyManpowerRequestDAO weeklyManpowerRequestDAO;
-	private Logger log = Logger.getLogger(WeeklyManpowerRequestDaoTest.class);
+	private PlatformRequestDAO platformRequestDAO;
+	private Logger log = Logger.getLogger(PlatformRequestDaoTest.class);
 	
 	@Test
-	public void test1findAllWklyMpowerRqstByProjectWeek() throws Exception{
+	public void test1findAllPlatformRequest() throws Exception{
 		
 		try{
-		Date startDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2013-12-30");
-		Date endDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-05");
+		WeeklyManpowerRequest weeklyManpowerRequest = new WeeklyManpowerRequest();
+		weeklyManpowerRequest.setWeeklyManpowerRequestKey(Integer.valueOf(1));
 		
-		Project project = new Project();
-		project.setId(Integer.valueOf(2));
+		List<PlatformRequest> platformRequests = 
+				platformRequestDAO.findAllPlatformRequest(weeklyManpowerRequest);
 		
-		log.info("####startDate:"+startDate.toString());
-		log.info("####endDate:"+endDate.toString());
-		log.info("####project:"+project.toString());
+		Assert.assertNotNull(platformRequests);
+		log.info("####Count of Platform Request returned:"+ platformRequests.size());
 		
-		List<WeeklyManpowerRequest> weeklyManpowerRequests = 
-				weeklyManpowerRequestDAO.findAllWklyMpowerRqstByProjectWeek(startDate, endDate, project);
-		Assert.assertNotNull(weeklyManpowerRequests);
-		log.info("####Count of Manpower Request returned:"+weeklyManpowerRequests.size());
+		ListIterator iterator = platformRequests.listIterator();
 		
-		ListIterator iterator = weeklyManpowerRequests.listIterator();
+		PlatformRequest platformRequest = iterator.hasNext()?(PlatformRequest) iterator.next():null;
 		
-		WeeklyManpowerRequest weeklyManpowerRequest = iterator.hasNext()?(WeeklyManpowerRequest) iterator.next():null;
-		
-		log.info("####WeeklyManpowerRequest returned:"+ weeklyManpowerRequest.toString());
+		log.info("####PlatformRequst returned:"+ platformRequest.toString());
 		}catch(Exception e){
 			throw e;
 		}

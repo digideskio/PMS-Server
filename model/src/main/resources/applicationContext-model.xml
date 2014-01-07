@@ -18,6 +18,8 @@
 	        <value>com.media2359.euphoria.model.project.ProjectTeam</value>
 	        <value>com.media2359.euphoria.model.employee.Employee</value>
 	        <value>com.media2359.euphoria.model.manpower.WeeklyManpowerRequest</value>
+	        <value>com.media2359.euphoria.model.manpower.PlatformRequest</value>
+	        <value>com.media2359.euphoria.model.project.Platform</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">
@@ -44,6 +46,9 @@
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
     <bean id="weeklyManpowerRequestDao" class="com.media2359.euphoria.dao.manpower.WeeklyManpowerRequestDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="platformRequestDao" class="com.media2359.euphoria.dao.manpower.PlatformRequestDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
