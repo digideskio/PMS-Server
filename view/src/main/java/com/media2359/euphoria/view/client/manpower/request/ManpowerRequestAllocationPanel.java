@@ -55,7 +55,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
         	 
             @Override
             public void onSelect(SelectEvent event) {
-            	//allocationPanel.addRequest();
+            	allocationPanel.addRequest();
             }
 
           })); 
