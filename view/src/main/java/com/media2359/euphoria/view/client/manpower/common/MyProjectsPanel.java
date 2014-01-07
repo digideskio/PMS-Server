@@ -47,8 +47,8 @@ public class MyProjectsPanel implements IsWidget {
 		cm = new ColumnModel<ProjectDTO>(l);
 
 		store = new ListStore<ProjectDTO>(props.key());
-		store.addAll(getMyProjects());
-
+		ArrayList<ProjectDTO> projects = getMyProjects();
+		
 		grid = new Grid<ProjectDTO>(store, cm);
 		grid.setWidth("100%");
 
@@ -66,6 +66,11 @@ public class MyProjectsPanel implements IsWidget {
 			}			
 		});
 		grid.setSelectionModel(sm);
+		
+		if(projects != null) {
+			store.addAll(projects);
+			//grid.getSelectionModel().select(1, false);
+		}
 		return grid;
 	}
 	
