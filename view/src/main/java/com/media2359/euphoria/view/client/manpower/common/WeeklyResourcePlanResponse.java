@@ -2,17 +2,18 @@ package com.media2359.euphoria.view.client.manpower.common;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class WeeklyResourcePlanResponse {
 	Date weekStartDate;
-	ArrayList<WeeklyResourcePlan> weeklyResourcePlanList;
+	List<WeeklyResourcePlan> weeklyResourcePlanList;
 
-	public ArrayList<WeeklyResourcePlan> getWeeklyResourcePlanList() {
+	public List<WeeklyResourcePlan> getWeeklyResourcePlanList() {
 		return weeklyResourcePlanList;
 	}
 
 	public void setWeeklyResourcePlanList(
-			ArrayList<WeeklyResourcePlan> weeklyResourcePlanList) {
+			List<WeeklyResourcePlan> weeklyResourcePlanList) {
 		this.weeklyResourcePlanList = weeklyResourcePlanList;
 	}
 

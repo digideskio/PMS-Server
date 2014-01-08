@@ -58,7 +58,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
  * 
  */
 public class ManpowerAllocationProjectPanel implements IsWidget {
-	private ProjectDTO project;
 	private Date weekStartDate;
 	Grid<WeeklyResourcePlan> grid;
 	ComboBoxCell<EmployeeDTO> developerCombo;
@@ -72,6 +71,10 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
     
     private WeeklyResourcePlanProperties props;
     private EmployeeDTOProperties employeeProps;
+    
+    private List<WeeklyResourcePlan> orgWeeklyResourcePlanList;
+    
+    ProjectAllocationDTO projectAllocationDTO;
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
@@ -161,8 +164,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		WeeklyResourcePlanResponse response = new WeeklyResourcePlanResponse();
 		response.setWeekStartDate(new Date());
 		
-		ArrayList<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
-//		getEmployees();
+		List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
 		resourcePlan.setId("1");
@@ -170,22 +172,24 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		resourcePlan.setDay3Am(true);
 		resourcePlan.setDay5Pm(true);
 		weeklyResourcePlanList.add(resourcePlan);
-		
+				
 		response.setWeeklyResourcePlanList(weeklyResourcePlanList);
 		
 		return response;
 	}
 	
 	public void setProject(ProjectDTO project) {
-		this.project = project;
-		//TODO: Add logic to fetch allocation data from server
+		//TODO: Add logic to fetch allocation data from server as List<projectAllocationDTO> for projectDTO and startDate
+		projectAllocationDTO = new ProjectAllocationDTO();
+
 		WeeklyResourcePlanResponse response = getDummyWeeklyResourcePlan();
+		orgWeeklyResourcePlanList = response.getWeeklyResourcePlanList();
 		grid.getStore().replaceAll(response.getWeeklyResourcePlanList());
 	}
 	
 	public void addRequest(){
-		WeeklyResourcePlanResponse response = getDummyWeeklyResourcePlan();
-		grid.getStore().add(new WeeklyResourcePlan());
+		WeeklyResourcePlan weeklyPlan = new WeeklyResourcePlan();
+		grid.getStore().add(weeklyPlan);
 	}
 	
 	public void setWeekStartDate(Date startDate) {
@@ -209,7 +213,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	}
 	
 	public void resetAllocation() {
-		//Allocation is being requested to be reset
+		grid.getStore().clear();
+		grid.getStore().replaceAll(orgWeeklyResourcePlanList);
 	}
 	
 	/**
@@ -220,7 +225,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	 * @returns void
 	 */
 	public void setAllocationData(ProjectAllocationDTO allocationData) {
-		
+		orgWeeklyResourcePlanList = allocationData.getWeeklyResourcePlan();
+		grid.getStore().replaceAll(allocationData.getWeeklyResourcePlan());
 	}
 	
 	/**
@@ -231,27 +237,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	 * @returns ProjectAllocationDTO
 	 */
 	public ProjectAllocationDTO getAllocationData() {
-		return new ProjectAllocationDTO();
+		List<WeeklyResourcePlan> gridStore = grid.getStore().getAll();		
+		projectAllocationDTO.setWeeklyResourcePlan(grid.getStore().getAll());
+		return projectAllocationDTO;
 	}
-	
-//	private void getEmployees(){
-//		employeeMap = new HashMap<String, EmployeeDTO>();
-//		
-//		
-//        List<EmployeeDTO> employees = EmployeePresenter.getEmployees();
-//        if(employees == null)
-//        	log.info("Employees is null");
-//        else
-//        	log.info("Employees size is " + employees.size());
-//        if(employees != null && employees.size() > 0)
-//        	for(EmployeeDTO employee:employees){
-//        		log.info(employee.getName());
-//        		employeeMap.put(employee.getName(), employee);
-//        		employeeListStore.add(employee.getName());
-//        	}
-//        
-//	}
-	
+
 	private void createDeveloperCombo(){
 		
 		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.key());
@@ -268,6 +258,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		        public void onSelection(SelectionEvent<EmployeeDTO> event) {
 		          CellSelectionEvent<EmployeeDTO> sel = (CellSelectionEvent<EmployeeDTO>) event;
 		          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+		          p.setDeveloper(event.getSelectedItem());
 		          log.info("Developer Selected"+ p.getId() + " selected " + event.getSelectedItem());
 		        }
 		      });
@@ -292,6 +283,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	        public void onSelection(SelectionEvent<String> event) {
 	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
 	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
+	          p.setPlatform(event.getSelectedItem());
 	          log.info("Platform Selected"+ p.getId() + " selected " + event.getSelectedItem());
 	        }
 	      });
@@ -299,4 +291,5 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    platformCombo.setForceSelection(true);
 	    platformCombo.setWidth(110);
 	}
+	 
 }

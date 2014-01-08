@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
+import com.media2359.euphoria.view.client.manpower.common.ProjectAllocationDTO;
 import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
@@ -67,7 +68,7 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		resetButton = new TextButton("Reset", new SelectHandler() {       	 
             @Override
             public void onSelect(SelectEvent event) {
-            	log.info(" Reset");
+            	allocationPanel.resetAllocation();
             }
           });
 		
@@ -100,5 +101,9 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		if(activeProjects.contains(project)) {
 			activeProjects.remove(project);
 		}
+	}
+	
+	public ProjectAllocationDTO getAllocationData() {
+		return allocationPanel.getAllocationData();
 	}
 }

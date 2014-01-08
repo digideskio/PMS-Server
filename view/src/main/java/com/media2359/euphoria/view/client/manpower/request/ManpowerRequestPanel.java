@@ -104,6 +104,7 @@ public class ManpowerRequestPanel  implements IsWidget {
 	
 	@UiHandler("saveAllocation")
 	public void saveAllocation(SelectEvent event) {
+		allocator.getAllocationData();
 		Info.display("Info", "The allocation was saved successfully.");
 	}
 }
