@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
 import com.media2359.euphoria.view.client.manpower.common.ProjectAllocationDTO;
-import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;

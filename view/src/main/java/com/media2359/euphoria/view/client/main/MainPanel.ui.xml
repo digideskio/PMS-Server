@@ -21,6 +21,7 @@
 		.header-right{font-size:13px;color:white;padding:10%;}
 		.footerText{font-size:13px;text-align: center;font-family:Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;}	
 		.logout{font-size:12px;color:blue;padding:10%;cursor:pointer}
+		.view-body{font-size:12px;font-family:Arial,Verdana}
 	</ui:style>
    
    <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="dashboardConfig">
@@ -99,7 +100,7 @@
  
   <container:Viewport>
     <container:child layoutData="{outerData}">
-      <container:BorderLayoutContainer ui:field="con" borders="false">
+      <container:BorderLayoutContainer ui:field="con" borders="false" styleName="{style.view-body}">
         <container:north layoutData="{northData}">
           <container:HorizontalLayoutContainer styleName="{style.header}">
           	<container:child layoutData="{bannerLeft}">

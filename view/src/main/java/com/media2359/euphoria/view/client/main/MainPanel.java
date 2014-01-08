@@ -39,6 +39,9 @@ public class MainPanel extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		//collapse the WEST region
 		con.collapse(LayoutRegion.WEST);
+		
+		//Now set the style
+		//con.addStyleName("myBodyStyle");
 		populateUsername();
 	}
 	

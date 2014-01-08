@@ -69,7 +69,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public String addProject(ProjectDTO projectDto) {
 		try{
-			projectDao.addProject(projectDto.prepareProject());
+			//projectDao.addProject(projectDto.prepareProject());
 		}catch(Exception exp){
 			return "FAILED";
 		}
@@ -79,7 +79,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public String modifyProject(ProjectDTO projectDto) {
 		try{
-			projectDao.updateProject(projectDto.prepareProject());
+			//projectDao.updateProject(projectDto.prepareProject());
 		}catch(Exception exp){
 			return "FAILED";
 		}

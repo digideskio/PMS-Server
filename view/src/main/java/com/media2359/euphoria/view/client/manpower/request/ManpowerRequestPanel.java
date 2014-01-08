@@ -20,7 +20,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
-import com.media2359.euphoria.view.client.manpower.common.ProjectDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;

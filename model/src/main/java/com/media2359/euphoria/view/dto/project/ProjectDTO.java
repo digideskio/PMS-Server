@@ -10,9 +10,6 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
-import com.media2359.euphoria.model.project.Project;
 
 public class ProjectDTO implements Serializable {
 	private Integer id;
@@ -89,16 +86,16 @@ public class ProjectDTO implements Serializable {
 	 * Prepares the Project froom the projectDTO
 	 */
 	
-	public Project prepareProject(){
-		Project project = new Project();
-		project.setId(id);
-		project.setManDaysLeft(manDaysLeft);
-		project.setMilestoneCount(completedMilestoneCount);
-		project.setName(name);
-		project.setProjectManager(projectManager);
-		project.setDescription(description);
-		project.setCompletedMilestoneCount(completedMilestoneCount);
-		return project;
-	}
+//	public Project prepareProject(){
+//		Project project = new Project();
+//		project.setId(id);
+//		project.setManDaysLeft(manDaysLeft);
+//		project.setMilestoneCount(completedMilestoneCount);
+//		project.setName(name);
+//		project.setProjectManager(projectManager);
+//		project.setDescription(description);
+//		project.setCompletedMilestoneCount(completedMilestoneCount);
+//		return project;
+//	}
 	
 }
