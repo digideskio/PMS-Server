@@ -9,6 +9,8 @@
  ***************************************************************************/
 package com.media2359.euphoria.dao.project;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -25,6 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.media2359.euphoria.dao.project.ProjectDAO;
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
@@ -35,6 +38,13 @@ import com.media2359.euphoria.model.project.ProjectTeam;
 public class ProjectTeamDaoTest {
 	@Autowired
 	private ProjectTeamDAO projectTeamDao;
+	
+	@Autowired
+	private ProjectDAO projectDao;
+	
+	@Autowired
+	private EmployeeDAO employeeDao;
+	
 	private Logger log = Logger.getLogger(ProjectTeamDaoTest.class);
 	
 	@Test
@@ -138,9 +148,47 @@ public class ProjectTeamDaoTest {
 		Assert.assertNull(project2);
 		
 	}*/
+	/*@Test
+	public void test3AddProjectTeam() {
+		ProjectTeam projectTeam1 = new ProjectTeam();
+		ProjectTeam projectTeam2;
+		Project project = new Project();
+		Employee employee = new Employee();
+		Employee manager = new Employee();
+		Set<Employee> employees = new HashSet<Employee>();
+		Set<Employee> managers = new HashSet<Employee>();
+		
+		log.info("####test3AddProjectTeam Starts...");
+		
+		project = projectDao.getProject(Integer.valueOf(2));
+		employee = employeeDao.getEmployee(Integer.valueOf(1));
+		manager = employeeDao.getEmployee(Integer.valueOf(2));
+		
+		employees.add(employee);
+		managers.add(manager);
+		
+		projectTeam1.setProjectTeamName("Test Add Project Team");
+		projectTeam1.setProjectManagers(managers);
+		projectTeam1.setTeamMembers(employees);
+		projectTeam1.setCreatedBy("TY");
+		projectTeam1.setCreatedTstmp(new Date());
+		projectTeam1.setProject(project);
+		
+		Integer maxKey1 = projectTeamDao.getMaxKey();
+		log.info("####test3AddProjectTeam->MaxKey1::" + maxKey1.toString());
+		
+		projectTeamDao.addProjectTeam(projectTeam1);
+		
+		Integer maxKey2 = projectTeamDao.getMaxKey();
+		log.info("####test3AddProjectTeam->MaxKey2::" + maxKey1.toString());
+		
+	
+		Assert.assertTrue((maxKey1.intValue()+1)==(maxKey2.intValue()));
+		
+	}*/
 	
 	@Test
-	public void test3UpdateProjectTeam() {
+	public void test4UpdateProjectTeam() {
 		ProjectTeam projectTeam1;
 		ProjectTeam projectTeam2;
 		log.info("####TestUpdateProjectTeam Starts...");

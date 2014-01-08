@@ -11,6 +11,7 @@ package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 import com.media2359.euphoria.model.employee.Employee;
@@ -24,6 +25,9 @@ public class ProjectTeamDTO implements Serializable {
 	
 	Set<Employee> projectManagers;
 	Set<Employee> teamMembers;
+	
+	private String createdBy;
+	private Date createdTstmp;
 
 	public ProjectTeamDTO() {
 
@@ -68,7 +72,23 @@ public class ProjectTeamDTO implements Serializable {
 	public void setTeamMembers(Set<Employee> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
-	
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedTstmp() {
+		return createdTstmp;
+	}
+
+	public void setCreatedTstmp(Date createdTstmp) {
+		this.createdTstmp = createdTstmp;
+	}
+
 	public ProjectTeam prepareProjectTeam(){
 		ProjectTeam projectTeam = new ProjectTeam();
 		projectTeam.setProject(getProject());

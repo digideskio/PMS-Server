@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,6 +49,9 @@ public class ProjectTeam implements java.io.Serializable {
 	
 	Set<Employee> projectManagers;
 	Set<Employee> teamMembers;
+	
+	private String createdBy;
+	private Date createdTstmp;
 
 	/**
 	 * 
@@ -87,13 +91,6 @@ public class ProjectTeam implements java.io.Serializable {
 		this.project = project;
 	}
 
-	@Override
-	public String toString() {
-		return "ProjectTeam [projectTeamKey=" + projectTeamKey
-				+ ", projectTeamName=" + projectTeamName + ", project="
-				+ project + "]";
-	}
-
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name="project_team_employee_xref", 
 	joinColumns = {@JoinColumn(name="project_team_key", referencedColumnName="project_team_key")},
@@ -120,7 +117,34 @@ public class ProjectTeam implements java.io.Serializable {
 		this.teamMembers = teamMembers;
 	}
 	
+	@Column(name = "create_by_id")
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@Column(name = "create_tstamp")
+	public Date getCreatedTstmp() {
+		return createdTstmp;
+	}
+
+	public void setCreatedTstmp(Date createdTstmp) {
+		this.createdTstmp = createdTstmp;
+	}
+
+	@Override
+	public String toString() {
+		return "ProjectTeam [projectTeamKey=" + projectTeamKey
+				+ ", projectTeamName=" + projectTeamName + ", project="
+				+ project + ", projectManagers=" + projectManagers
+				+ ", teamMembers=" + teamMembers + ", createdBy=" + createdBy
+				+ ", createdTstmp=" + createdTstmp + "]";
+	}
 	
+
 	public ProjectTeamDTO prepareProjectTeamDTO(){
 		ProjectTeamDTO projectTeamDto = new ProjectTeamDTO();
 		projectTeamDto.setProject(getProject());
@@ -128,8 +152,8 @@ public class ProjectTeam implements java.io.Serializable {
 		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
 		projectTeamDto.setTeamMembers(getTeamMembers());
 		projectTeamDto.setProjectManagers(getProjectManagers());
+		projectTeamDto.setCreatedBy(getCreatedBy());
+		projectTeamDto.setCreatedTstmp(getCreatedTstmp());
 		return projectTeamDto;
 	}
-	
-
 }
