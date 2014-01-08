@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.manpower.common;
 
+import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 
 
@@ -19,21 +20,19 @@ public class WeeklyResourcePlan {
 	private String platform = "";
 	private EmployeeDTO developer = null;
 
-	private Boolean day1Am = false;
-	private Boolean day2Am = false;
-	private Boolean day3Am = false;
-	private Boolean day4Am = false;
-	private Boolean day5Am = false;
-	private Boolean day6Am = false;
-	private Boolean day7Am = false;
+	private AllocationStatus day1Am = AllocationStatus.FREE;
+	private AllocationStatus day2Am = AllocationStatus.FREE;
+	private AllocationStatus day3Am = AllocationStatus.FREE;
+	private AllocationStatus day4Am = AllocationStatus.FREE;
+	private AllocationStatus day5Am = AllocationStatus.FREE;
 
-	private Boolean day1Pm = false;
-	private Boolean day2Pm = false;
-	private Boolean day3Pm = false;
-	private Boolean day4Pm = false;
-	private Boolean day5Pm = false;
-	private Boolean day6Pm = false;
-	private Boolean day7Pm = false;
+
+	private AllocationStatus day1Pm = AllocationStatus.FREE;
+	private AllocationStatus day2Pm = AllocationStatus.FREE;
+	private AllocationStatus day3Pm = AllocationStatus.FREE;
+	private AllocationStatus day4Pm = AllocationStatus.FREE;
+	private AllocationStatus day5Pm = AllocationStatus.FREE;
+
 	
 	
 	
@@ -54,60 +53,45 @@ public class WeeklyResourcePlan {
 		this.id = id;
 	}
 	
-	public Boolean getDay1Am() {
+	public AllocationStatus getDay1Am() {
 		return day1Am;
 	}
 	
-	public Boolean getDay2Am() {
+	public AllocationStatus getDay2Am() {
 		return day2Am;
 	}
 	
-	public Boolean getDay3Am() {
+	public AllocationStatus getDay3Am() {
 		return day3Am;
 	}
 	
-	public Boolean getDay4Am() {
+	public AllocationStatus getDay4Am() {
 		return day4Am;
 	}
 	
-	public Boolean getDay5Am() {
+	public AllocationStatus getDay5Am() {
 		return day5Am;
 	}
 
-	public Boolean getDay6Am() {
-		return day6Am;
-	}
 	
-	public Boolean getDay7Am() {
-		return day7Am;
-	}
-	
-	public Boolean getDay1Pm() {
+	public AllocationStatus getDay1Pm() {
 		return day1Pm;
 	}
 	
-	public Boolean getDay2Pm() {
+	public AllocationStatus getDay2Pm() {
 		return day2Pm;
 	}
 	
-	public Boolean getDay3Pm() {
+	public AllocationStatus getDay3Pm() {
 		return day3Pm;
 	}
 	
-	public Boolean getDay4Pm() {
+	public AllocationStatus getDay4Pm() {
 		return day4Pm;
 	}
 	
-	public Boolean getDay5Pm() {
+	public AllocationStatus getDay5Pm() {
 		return day5Pm;
-	}
-	
-	public Boolean getDay6Pm() {
-		return day6Pm;
-	}
-	
-	public Boolean getDay7Pm() {
-		return day7Pm;
 	}
 	
 	public void setDeveloper(EmployeeDTO developer) {
@@ -118,59 +102,44 @@ public class WeeklyResourcePlan {
 		this.platform = platform;
 	}
 
-	public void setDay1Am(Boolean day1Am) {
+	public void setDay1Am(AllocationStatus day1Am) {
 		this.day1Am = day1Am;
 	}
 
-	public void setDay2Am(Boolean day2Am) {
+	public void setDay2Am(AllocationStatus day2Am) {
 		this.day2Am = day2Am;
 	}
 
-	public void setDay3Am(Boolean day3Am) {
+	public void setDay3Am(AllocationStatus day3Am) {
 		this.day3Am = day3Am;
 	}
 
-	public void setDay4Am(Boolean day4Am) {
+	public void setDay4Am(AllocationStatus day4Am) {
 		this.day4Am = day4Am;
 	}
 
-	public void setDay5Am(Boolean day5Am) {
+	public void setDay5Am(AllocationStatus day5Am) {
 		this.day5Am = day5Am;
 	}
 
-	public void setDay6Am(Boolean day6Am) {
-		this.day6Am = day6Am;
-	}
-
-	public void setDay7Am(Boolean day7Am) {
-		this.day7Am = day7Am;
-	}
-
-	public void setDay1Pm(Boolean day1Pm) {
+	public void setDay1Pm(AllocationStatus day1Pm) {
 		this.day1Pm = day1Pm;
 	}
 
-	public void setDay2Pm(Boolean day2Pm) {
+	public void setDay2Pm(AllocationStatus day2Pm) {
 		this.day2Pm = day2Pm;
 	}
 
-	public void setDay3Pm(Boolean day3Pm) {
+	public void setDay3Pm(AllocationStatus day3Pm) {
 		this.day3Pm = day3Pm;
 	}
 
-	public void setDay4Pm(Boolean day4Pm) {
+	public void setDay4Pm(AllocationStatus day4Pm) {
 		this.day4Pm = day4Pm;
 	}
 
-	public void setDay5Pm(Boolean day5Pm) {
+	public void setDay5Pm(AllocationStatus day5Pm) {
 		this.day5Pm = day5Pm;
 	}
 
-	public void setDay6Pm(Boolean day6Pm) {
-		this.day6Pm = day6Pm;
-	}
-
-	public void setDay7Pm(Boolean day7Pm) {
-		this.day7Pm = day7Pm;
-	}
 }

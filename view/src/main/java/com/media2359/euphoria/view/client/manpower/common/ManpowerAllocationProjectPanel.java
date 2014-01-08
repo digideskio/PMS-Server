@@ -15,14 +15,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.core.AllocationGridColorCell;
+import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.client.core.Platforms;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
@@ -32,14 +40,12 @@ import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.event.CellClickEvent;
 import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
-import com.sencha.gxt.widget.core.client.grid.CellSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.HeaderGroupConfig;
-import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent;
-import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent.CellSelectionChangedHandler;
 
 /**
  * View class for allocating Weekly Manpower requests
@@ -48,14 +54,29 @@ import com.sencha.gxt.widget.core.client.selection.CellSelectionChangedEvent.Cel
  * @version 1.0
  * 
  */
+
+interface Templates extends SafeHtmlTemplates {
+    /**
+     * The template for this Cell, which includes styles and a value.
+     * 
+     * @param styles the styles to include in the style attribute of the div
+     * @param value the safe value. Since the value type is {@link SafeHtml},
+     *          it will not be escaped before including it in the template.
+     *          Alternatively, you could make the value type String, in which
+     *          case the value would be escaped.
+     * @return a {@link SafeHtml} instance
+     */
+    @SafeHtmlTemplates.Template("<div style=\"{0}\">{1}</div>")
+    SafeHtml cell(SafeStyles styles, SafeHtml value);
+  }
+
+
 public class ManpowerAllocationProjectPanel implements IsWidget {
-	private Date weekStartDate;
 	Grid<WeeklyResourcePlan> grid;
 	ComboBoxCell<EmployeeDTO> developerCombo;
 	ComboBoxCell<String> platformCombo;
 	 // A custom date format
     DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy");
-    private Map<String, EmployeeDTO> employeeMap;
     private ListStore<EmployeeDTO> employeeListStore = null;
     private ListStore<WeeklyResourcePlan> store = null;
     private Logger log = Logger.getLogger("EuphoriaLogger");
@@ -69,12 +90,13 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
+    
+    private static Templates templates = GWT.create(Templates.class);
 	public Widget asWidget() {
 		
 		props = GWT.create(WeeklyResourcePlanProperties.class);
 		employeeProps = GWT.create(EmployeeDTOProperties.class);
 		
-//		getEmployees();
 	    ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
 	    
 	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
@@ -95,35 +117,54 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    cm.addHeaderGroup(0, 0, new HeaderGroupConfig("Platform/Developer", 1, 2));
 	      
 	    
-	    ColumnConfig<WeeklyResourcePlan, Boolean> amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Am(), 100, "AM");
-		ColumnConfig<WeeklyResourcePlan, Boolean> pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day1Pm(), 100, "PM");
+	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Am(), 100, "AM");
+		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
-		
+		amColumn.setCell(new AllocationGridColorCell());
+		pmColumn.setCell(new AllocationGridColorCell());
+		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day2Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
+		amColumn.setCell(new AllocationGridColorCell());
+		pmColumn.setCell(new AllocationGridColorCell());
+		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
 
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day3Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
+		amColumn.setCell(new AllocationGridColorCell());
+		pmColumn.setCell(new AllocationGridColorCell());
+		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day4Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
+		amColumn.setCell(new AllocationGridColorCell());
+		pmColumn.setCell(new AllocationGridColorCell());
+		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, Boolean>(props.day5Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Am(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Pm(), 100, "PM");
 		configs.add(amColumn);
 		configs.add(pmColumn);
+		amColumn.setCell(new AllocationGridColorCell());
+		pmColumn.setCell(new AllocationGridColorCell());
+		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
 		
 		
@@ -137,16 +178,12 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    grid.getView().setStripeRows(true);
 	    grid.getView().setColumnLines(true);
 	    
-        CellSelectionModel<WeeklyResourcePlan> c = new CellSelectionModel<WeeklyResourcePlan>();
-        c.addCellSelectionChangedHandler(new CellSelectionChangedHandler<WeeklyResourcePlan>() {
-
-          @Override
-          public void onCellSelectionChanged(CellSelectionChangedEvent<WeeklyResourcePlan> event) {
-        	  
-          }
+	    grid.addCellClickHandler(new CellClickEvent.CellClickHandler() {
+            @Override
+            public void onCellClick(CellClickEvent evt) {
+            	gridCellClicked(evt,grid.getStore());
+            }
         });
-
-        grid.setSelectionModel(c);
    
 	    return grid;
 	}
@@ -159,9 +196,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
 		resourcePlan.setId("1");
-		resourcePlan.setDay1Am(true);
-		resourcePlan.setDay3Am(true);
-		resourcePlan.setDay5Pm(true);
+		resourcePlan.setDay1Am(AllocationStatus.EXCEEDED);
+		resourcePlan.setDay3Am(AllocationStatus.EXCEEDED);
+		resourcePlan.setDay5Pm(AllocationStatus.EXCEEDED);
+		resourcePlan.setDay1Pm(AllocationStatus.LEAVE);
+		resourcePlan.setDay2Pm(AllocationStatus.HOLIDAY);
 		weeklyResourcePlanList.add(resourcePlan);
 				
 		response.setWeeklyResourcePlanList(weeklyResourcePlanList);
@@ -184,7 +223,6 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	}
 	
 	public void setWeekStartDate(Date startDate) {
-		this.weekStartDate = startDate;
 		DateWrapper wrapper = new DateWrapper(startDate);
 		ColumnModel<WeeklyResourcePlan> cm = grid.getColumnModel();
 		List<HeaderGroupConfig> headerGroups = cm.getHeaderGroups();
@@ -200,7 +238,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	}
 	
 	public void reload() {
-		grid.getView().refresh(true);//Update the grid headers
+		grid.getView().refresh(true);
 	}
 	
 	public void resetAllocation() {
@@ -208,25 +246,13 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		grid.getStore().replaceAll(orgWeeklyResourcePlanList);
 	}
 	
-	/**
-	 * 
-	 * TODO This needs to be implemented by Praveen Jose. This will be called
-	 * during 'Review Allocation' and 'Approve Allocation'
-	 *
-	 * @returns void
-	 */
+
 	public void setAllocationData(ProjectAllocationDTO allocationData) {
 		orgWeeklyResourcePlanList = allocationData.getWeeklyResourcePlan();
 		grid.getStore().replaceAll(allocationData.getWeeklyResourcePlan());
 	}
 	
-	/**
-	 * 
-	 * TODO This needs to be implemented by Praveen Jose. This will be called during
-	 * 'Request Allocation' and 'Approve Allocation'
-	 *
-	 * @returns ProjectAllocationDTO
-	 */
+
 	public ProjectAllocationDTO getAllocationData() {
 		List<WeeklyResourcePlan> gridStore = grid.getStore().getAll();		
 		projectAllocationDTO.setWeeklyResourcePlan(grid.getStore().getAll());
@@ -282,5 +308,59 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    platformCombo.setForceSelection(true);
 	    platformCombo.setWidth(110);
 	}
-	 
+	
+	
+	  
+	   void gridCellClicked(CellClickEvent event, ListStore<WeeklyResourcePlan> listStore){ 
+	     if(event.getCellIndex()<2)
+	    	 return;
+	     WeeklyResourcePlan p = listStore.get(event.getRowIndex());
+	     
+	     switch(event.getCellIndex()){
+		     case 2: if(p.getDay1Am().equals(AllocationStatus.HOLIDAY)||p.getDay1Am().equals(AllocationStatus.LEAVE))
+		    	     	return;
+		          	 p.setDay1Am(getNewAllocationStatus(p.getDay1Am()));break;
+		     case 3: if(p.getDay1Pm().equals(AllocationStatus.HOLIDAY)||p.getDay1Pm().equals(AllocationStatus.LEAVE))
+	    	     	  return;
+		     		 p.setDay1Pm(getNewAllocationStatus(p.getDay1Pm()));break;
+		     case 4: if(p.getDay2Am().equals(AllocationStatus.HOLIDAY)||p.getDay2Am().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     		 p.setDay2Am(getNewAllocationStatus(p.getDay2Am()));break;
+		     case 5: if(p.getDay2Pm().equals(AllocationStatus.HOLIDAY)||p.getDay2Pm().equals(AllocationStatus.LEAVE))
+		    	 		return;
+		     		 p.setDay2Pm(getNewAllocationStatus(p.getDay2Pm()));break;
+		     case 6: if(p.getDay3Am().equals(AllocationStatus.HOLIDAY)||p.getDay3Am().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     	   	 p.setDay3Am(getNewAllocationStatus(p.getDay3Am()));break;
+		     case 7: if(p.getDay3Pm().equals(AllocationStatus.HOLIDAY)||p.getDay3Pm().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     		 p.setDay3Pm(getNewAllocationStatus(p.getDay3Pm()));break;
+		     case 8: if(p.getDay4Am().equals(AllocationStatus.HOLIDAY)||p.getDay4Am().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     		 p.setDay4Am(getNewAllocationStatus(p.getDay4Am()));break;
+		     case 9: if(p.getDay4Pm().equals(AllocationStatus.HOLIDAY)||p.getDay4Pm().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     		 p.setDay4Pm(getNewAllocationStatus(p.getDay4Pm()));break;
+		     case 10: if(p.getDay5Am().equals(AllocationStatus.HOLIDAY)||p.getDay5Am().equals(AllocationStatus.LEAVE))
+   	     	  			return;
+		     		 p.setDay5Am(getNewAllocationStatus(p.getDay5Am()));break;
+		     case 11: if(p.getDay5Pm().equals(AllocationStatus.HOLIDAY)||p.getDay5Pm().equals(AllocationStatus.LEAVE))
+		    	 		return;
+		     		 p.setDay5Pm(getNewAllocationStatus(p.getDay5Pm()));break;
+		     default: break;
+	     }
+	     reload();
+	  }
+	  
+	   private AllocationStatus getNewAllocationStatus(AllocationStatus previousStatus){
+		   switch(previousStatus){
+			   	case FREE: return AllocationStatus.SELECTED;
+			   	case SELECTED: return AllocationStatus.FREE;
+			   	case EXCEEDED: return AllocationStatus.SELECTED_EXCEEDED;
+			   	case SELECTED_EXCEEDED: return AllocationStatus.EXCEEDED;
+			   	default:   return previousStatus;
+		   }
+		   
+	   }
+	  
 }

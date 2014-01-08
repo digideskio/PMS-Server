@@ -1,6 +1,7 @@
 package com.media2359.euphoria.view.client.manpower.common;
 
 import com.google.gwt.editor.client.Editor.Path;
+import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
@@ -15,31 +16,31 @@ public interface WeeklyResourcePlanProperties extends
 	
 	ValueProvider<WeeklyResourcePlan, EmployeeDTO> developer();
 	
-	ValueProvider<WeeklyResourcePlan, Boolean> day1Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day1Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day2Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day2Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day3Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day3Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day4Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day4Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day5Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day5Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day6Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day6Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day7Am();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day7Am();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day1Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day1Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day2Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day2Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day3Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day3Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day4Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day4Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day5Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day5Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day6Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day6Pm();
 
-	ValueProvider<WeeklyResourcePlan, Boolean> day7Pm();
+	ValueProvider<WeeklyResourcePlan, AllocationStatus> day7Pm();
 }
