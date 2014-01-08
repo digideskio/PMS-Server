@@ -41,7 +41,7 @@ public class MainPanel extends Composite {
 		con.collapse(LayoutRegion.WEST);
 		
 		//Now set the style
-		//con.addStyleName("myBodyStyle");
+		con.addStyleName("myBodyStyle");
 		populateUsername();
 	}
 	

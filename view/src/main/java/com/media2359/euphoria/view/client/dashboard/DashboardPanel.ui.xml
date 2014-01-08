@@ -8,34 +8,34 @@
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid" xmlns:d="urn:import:com.media2359.euphoria.view.client.dashboard">
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="topMargins">
-		<ui:attributes top="1" right="1" bottom="1" left="1" />
+		<ui:attributes top="10" right="100" bottom="10" left="10" />
 	</ui:with>
 
 	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="bottomMargins">
-		<ui:attributes top="1" right="1" bottom="1" left="1" />
+		<ui:attributes top="10" right="100" bottom="10" left="10" />
 	</ui:with>
 		
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="topPane">
-		<ui:attributes margins="{topMargins}" />
+		<ui:attributes margins="{topMargins}" width="850" height="250" />
 	</ui:with>
 	
 	
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="bottomPane">
-		<ui:attributes margins="{bottomMargins}" />
+		<ui:attributes margins="{bottomMargins}" width="900" height="100" />
 	</ui:with>
 	
 	<row:VerticalLayoutContainer>
 		<row:child layoutData="{topPane}">
-			<gxt:FramedPanel headingText="Projects" pixelSize="600, 500">
+			<gxt:FramedPanel headingText="Projects">
 				<d:ProjectSummaryPanel></d:ProjectSummaryPanel>
 			</gxt:FramedPanel>
 		</row:child>
 		<row:child layoutData="{bottomPane}">
-			<gxt:FramedPanel headingText="Milestones" pixelSize="600, 200">
+			<gxt:FramedPanel headingText="Milestones">
 				<d:MilestonesSummaryPanel></d:MilestonesSummaryPanel>
 			</gxt:FramedPanel>	
 		</row:child>
