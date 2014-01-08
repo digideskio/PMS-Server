@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 
 /**
  * ProjectTeamService
@@ -27,19 +28,12 @@ import com.media2359.euphoria.model.project.ProjectTeam;
 @RemoteServiceRelativePath("service/ProjectTeamService")
 public interface ProjectTeamService extends RemoteService{
 	
-	// Adds the prject team to the prject
-	public String addProjectTeam(Project project, ProjectTeam projectTeam);
 	
-	// Modifies the project team to the prject
-	public String modifyProjectTeam(Project project, ProjectTeam projectTeam);
+	// Gets the project team member
+	public ProjectTeamDTO getProjectTeam(Integer projectKey);
 	
-	// Get all the team members 
-	public ProjectTeam getAllTeamMembers(Project project);
-	
-	// Deletes the team member for a project
-	public String deleteProjectTeamMember(Project project, Employee employee);
-	// Adds new team member to the project
-	public String addProjectTeamMember (Project project, Employee employee);
+	// Adds the project team member 
+	public String submitProjectTeam(ProjectTeamDTO projectTeamDTO);
 	
 	
 

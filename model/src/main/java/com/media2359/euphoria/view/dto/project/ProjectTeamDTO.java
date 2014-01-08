@@ -15,6 +15,7 @@ import java.util.Set;
 
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.model.project.ProjectTeam;
 
 public class ProjectTeamDTO implements Serializable {
 	private Integer projectTeamKey;
@@ -66,6 +67,16 @@ public class ProjectTeamDTO implements Serializable {
 
 	public void setTeamMembers(Set<Employee> teamMembers) {
 		this.teamMembers = teamMembers;
+	}
+	
+	public ProjectTeam prepareProjectTeam(){
+		ProjectTeam projectTeam = new ProjectTeam();
+		projectTeam.setProject(getProject());
+		projectTeam.setProjectManagers(getProjectManagers());
+		projectTeam.setProjectTeamKey(getProjectTeamKey());
+		projectTeam.setProjectTeamName(getProjectTeamName());
+		projectTeam.setTeamMembers(getTeamMembers());
+		return projectTeam;
 	}
 
 	

@@ -9,7 +9,6 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,20 +17,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-
-
-
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.WhereJoinTable;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 
 /**
  * ProjectTeam
@@ -124,6 +120,16 @@ public class ProjectTeam implements java.io.Serializable {
 		this.teamMembers = teamMembers;
 	}
 	
+	
+	public ProjectTeamDTO prepareProjectTeamDTO(){
+		ProjectTeamDTO projectTeamDto = new ProjectTeamDTO();
+		projectTeamDto.setProject(getProject());
+		projectTeamDto.setProjectTeamName(getProjectTeamName());
+		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
+		projectTeamDto.setTeamMembers(getTeamMembers());
+		projectTeamDto.setProjectManagers(getProjectManagers());
+		return projectTeamDto;
+	}
 	
 
 }
