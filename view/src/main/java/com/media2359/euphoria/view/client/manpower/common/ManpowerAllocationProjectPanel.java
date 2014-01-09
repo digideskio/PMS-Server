@@ -12,11 +12,7 @@ package com.media2359.euphoria.view.client.manpower.common;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
-
-import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -25,8 +21,8 @@ import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.core.AllocationGridColorCell;
@@ -40,7 +36,6 @@ import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.widget.core.client.event.CellClickEvent;
 import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -50,7 +45,7 @@ import com.sencha.gxt.widget.core.client.grid.HeaderGroupConfig;
 /**
  * View class for allocating Weekly Manpower requests
  * 
- * @author AJ
+ * @author Praveen,AJ
  * @version 1.0
  * 
  */
@@ -85,19 +80,19 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
     private EmployeeDTOProperties employeeProps;
     
     private List<WeeklyResourcePlan> orgWeeklyResourcePlanList;
+    private  ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs;
     
     ProjectAllocationDTO projectAllocationDTO;
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
-    
-    private static Templates templates = GWT.create(Templates.class);
+
 	public Widget asWidget() {
 		
 		props = GWT.create(WeeklyResourcePlanProperties.class);
 		employeeProps = GWT.create(EmployeeDTOProperties.class);
 		
-	    ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
+	    configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
 	    
 	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
 	    
@@ -119,75 +114,49 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    
 	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Am(), 100, "AM");
 		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Pm(), 100, "PM");
-		configs.add(amColumn);
-		configs.add(pmColumn);
-		amColumn.setCell(new AllocationGridColorCell());
-		pmColumn.setCell(new AllocationGridColorCell());
-		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
-		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Pm(), 100, "PM");
-		configs.add(amColumn);
-		configs.add(pmColumn);
-		amColumn.setCell(new AllocationGridColorCell());
-		pmColumn.setCell(new AllocationGridColorCell());
-		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
-		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
 
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Pm(), 100, "PM");
-		configs.add(amColumn);
-		configs.add(pmColumn);
-		amColumn.setCell(new AllocationGridColorCell());
-		pmColumn.setCell(new AllocationGridColorCell());
-		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
-		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Pm(), 100, "PM");
-		configs.add(amColumn);
-		configs.add(pmColumn);
-		amColumn.setCell(new AllocationGridColorCell());
-		pmColumn.setCell(new AllocationGridColorCell());
-		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
-		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
+		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Am(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Pm(), 100, "PM");
+		prepareGrid(amColumn, pmColumn);
+		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
+		
+		store = new ListStore<WeeklyResourcePlan>(props.key());
+ 
+		grid = new Grid<WeeklyResourcePlan>(store, cm);
+	    grid.setBorders(true);
+	    grid.getView().setStripeRows(true);
+	    grid.getView().setColumnLines(true);
+	    return grid;
+	}
+
+	private void prepareGrid(ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn, ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn){
 		configs.add(amColumn);
 		configs.add(pmColumn);
 		amColumn.setCell(new AllocationGridColorCell());
 		pmColumn.setCell(new AllocationGridColorCell());
 		amColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
 		pmColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 0px 0px;"));
-		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
+		amColumn.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		pmColumn.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
-		
-		
-		
-		store = new ListStore<WeeklyResourcePlan>(props.key());
- 
-	    
-	    grid = new Grid<WeeklyResourcePlan>(store, cm);
-	    grid.setBorders(true);
-	    grid.getView().setStripeRows(true);
-	    grid.getView().setColumnLines(true);
-	    
-	    grid.addCellClickHandler(new CellClickEvent.CellClickHandler() {
-            @Override
-            public void onCellClick(CellClickEvent evt) {
-            	gridCellClicked(evt,grid.getStore());
-            }
-        });
-   
-	    return grid;
 	}
-
 	private WeeklyResourcePlanResponse getDummyWeeklyResourcePlan() {
 		WeeklyResourcePlanResponse response = new WeeklyResourcePlanResponse();
 		response.setWeekStartDate(new Date());
@@ -196,11 +165,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
 		resourcePlan.setId("1");
-		resourcePlan.setDay1Am(AllocationStatus.EXCEEDED);
-		resourcePlan.setDay3Am(AllocationStatus.EXCEEDED);
-		resourcePlan.setDay5Pm(AllocationStatus.EXCEEDED);
+		resourcePlan.setDay1Am(AllocationStatus.SELECTED);
 		resourcePlan.setDay1Pm(AllocationStatus.LEAVE);
+		resourcePlan.setDay2Am(AllocationStatus.EXCEEDED);
 		resourcePlan.setDay2Pm(AllocationStatus.HOLIDAY);
+		resourcePlan.setDay3Am(AllocationStatus.SELECTED_EXCEEDED);
 		weeklyResourcePlanList.add(resourcePlan);
 				
 		response.setWeeklyResourcePlanList(weeklyResourcePlanList);
@@ -253,8 +222,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	}
 	
 
-	public ProjectAllocationDTO getAllocationData() {
-		List<WeeklyResourcePlan> gridStore = grid.getStore().getAll();		
+	public ProjectAllocationDTO getAllocationData() {	
 		projectAllocationDTO.setWeeklyResourcePlan(grid.getStore().getAll());
 		return projectAllocationDTO;
 	}
@@ -308,59 +276,5 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    platformCombo.setForceSelection(true);
 	    platformCombo.setWidth(110);
 	}
-	
-	
-	  
-	   void gridCellClicked(CellClickEvent event, ListStore<WeeklyResourcePlan> listStore){ 
-	     if(event.getCellIndex()<2)
-	    	 return;
-	     WeeklyResourcePlan p = listStore.get(event.getRowIndex());
-	     
-	     switch(event.getCellIndex()){
-		     case 2: if(p.getDay1Am().equals(AllocationStatus.HOLIDAY)||p.getDay1Am().equals(AllocationStatus.LEAVE))
-		    	     	return;
-		          	 p.setDay1Am(getNewAllocationStatus(p.getDay1Am()));break;
-		     case 3: if(p.getDay1Pm().equals(AllocationStatus.HOLIDAY)||p.getDay1Pm().equals(AllocationStatus.LEAVE))
-	    	     	  return;
-		     		 p.setDay1Pm(getNewAllocationStatus(p.getDay1Pm()));break;
-		     case 4: if(p.getDay2Am().equals(AllocationStatus.HOLIDAY)||p.getDay2Am().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     		 p.setDay2Am(getNewAllocationStatus(p.getDay2Am()));break;
-		     case 5: if(p.getDay2Pm().equals(AllocationStatus.HOLIDAY)||p.getDay2Pm().equals(AllocationStatus.LEAVE))
-		    	 		return;
-		     		 p.setDay2Pm(getNewAllocationStatus(p.getDay2Pm()));break;
-		     case 6: if(p.getDay3Am().equals(AllocationStatus.HOLIDAY)||p.getDay3Am().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     	   	 p.setDay3Am(getNewAllocationStatus(p.getDay3Am()));break;
-		     case 7: if(p.getDay3Pm().equals(AllocationStatus.HOLIDAY)||p.getDay3Pm().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     		 p.setDay3Pm(getNewAllocationStatus(p.getDay3Pm()));break;
-		     case 8: if(p.getDay4Am().equals(AllocationStatus.HOLIDAY)||p.getDay4Am().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     		 p.setDay4Am(getNewAllocationStatus(p.getDay4Am()));break;
-		     case 9: if(p.getDay4Pm().equals(AllocationStatus.HOLIDAY)||p.getDay4Pm().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     		 p.setDay4Pm(getNewAllocationStatus(p.getDay4Pm()));break;
-		     case 10: if(p.getDay5Am().equals(AllocationStatus.HOLIDAY)||p.getDay5Am().equals(AllocationStatus.LEAVE))
-   	     	  			return;
-		     		 p.setDay5Am(getNewAllocationStatus(p.getDay5Am()));break;
-		     case 11: if(p.getDay5Pm().equals(AllocationStatus.HOLIDAY)||p.getDay5Pm().equals(AllocationStatus.LEAVE))
-		    	 		return;
-		     		 p.setDay5Pm(getNewAllocationStatus(p.getDay5Pm()));break;
-		     default: break;
-	     }
-	     reload();
-	  }
-	  
-	   private AllocationStatus getNewAllocationStatus(AllocationStatus previousStatus){
-		   switch(previousStatus){
-			   	case FREE: return AllocationStatus.SELECTED;
-			   	case SELECTED: return AllocationStatus.FREE;
-			   	case EXCEEDED: return AllocationStatus.SELECTED_EXCEEDED;
-			   	case SELECTED_EXCEEDED: return AllocationStatus.EXCEEDED;
-			   	default:   return previousStatus;
-		   }
-		   
-	   }
-	  
+		  
 }
