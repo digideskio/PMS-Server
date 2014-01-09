@@ -52,18 +52,21 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ProjectTeam getProjectTeam(Integer projectTeamKey) {
+	public ProjectTeam getProjectTeam(Project project) {
 		Session session = this.getSession();
-		ProjectTeam tmpProjectTeam = null;
+		List<ProjectTeam> projectTeams = null;
+		ProjectTeam projectTeam = null;
 		try{
 		Transaction tx1 = session.beginTransaction();
-
-		tmpProjectTeam = (ProjectTeam) session.get(ProjectTeam.class, projectTeamKey);
+		projectTeams = this.getHibernateTemplate().find("from ProjectTeam a where a.project = ?", 
+				new Object[]{project});
+		
+		projectTeam = projectTeams.size()>0?projectTeams.get(0):null;
 		tx1.commit();
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}finally{session.close();}
-		return tmpProjectTeam;
+		return projectTeam;
 	}
 	
 	@SuppressWarnings("unchecked")

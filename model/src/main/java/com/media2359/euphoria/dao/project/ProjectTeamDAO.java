@@ -16,7 +16,7 @@ import com.media2359.euphoria.model.project.ProjectTeam;
 
 public interface ProjectTeamDAO {
 	List<ProjectTeam> getAllProjectTeams();
-	ProjectTeam getProjectTeam(Integer projectKey);
+	ProjectTeam getProjectTeam(Project project);
 	public Integer getMaxKey();
 	void addProjectTeam(ProjectTeam projectTeam);
 	void deleteProjectTeam(Integer projectTeamKey);
