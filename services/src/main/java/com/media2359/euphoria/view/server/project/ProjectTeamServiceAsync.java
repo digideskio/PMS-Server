@@ -11,6 +11,7 @@ package com.media2359.euphoria.view.server.project;
 
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 /**
  * ProjectTeamServiceAsync
@@ -24,7 +25,7 @@ import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 public interface ProjectTeamServiceAsync {
 		
 	// Gets the project team member
-	public void getProjectTeam(Integer projectKey,AsyncCallback<ProjectTeamDTO> callback);
+	public void getProjectTeam(ProjectDTO projectDto,AsyncCallback<ProjectTeamDTO> callback);
 	
 	// Adds the project team member 
 	public void submitProjectTeam(ProjectTeamDTO projectTeamDTO,AsyncCallback<String> callback);

@@ -16,6 +16,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 /**
  * RequestManpowerService
@@ -31,8 +33,8 @@ public interface RequestManpowerService extends RemoteService{
 	
 	// Request Manpower request
 	
-	public String requestManpower(Project project, 
-			WeeklyManpowerRequest weeklyManpowerReq,Date startDate, Date endDate);
+	public ProjectAllocationDTO requestManpower(ProjectDTO projectdto,
+			Date startDate, Date endDate);
 	
 	
 

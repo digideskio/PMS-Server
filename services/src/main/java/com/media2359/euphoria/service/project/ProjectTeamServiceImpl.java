@@ -1,15 +1,17 @@
 package com.media2359.euphoria.service.project;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.dao.project.ProjectTeamDAO;
+import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 import com.media2359.euphoria.view.server.project.ProjectTeamService;
@@ -22,9 +24,9 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 	private ProjectTeamDAO projectTeamDao;
 	
 	@Override
-	public ProjectTeamDTO getProjectTeam(Integer projectKey) {
+	public ProjectTeamDTO getProjectTeam(ProjectDTO projectDTO) {
 		Project project = new Project();
-		project.setId(projectKey);
+		project.setId(projectDTO.getId());
 		return projectTeamDao.getProjectTeam(project).prepareProjectTeamDTO();
 	}
 
@@ -32,30 +34,22 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 	@Override
 	public String submitProjectTeam(ProjectTeamDTO projectTeamDto)  {
 		try{
-			ProjectTeam projectTeam = projectTeamDao.getProjectTeam(projectTeamDto.getProject());
+			Project project = new Project();
+			project.setId(projectTeamDto.getProjectDto().getId());
+			ProjectTeam projectTeam = projectTeamDao.getProjectTeam(project);
 			if(projectTeam!=null){
-				projectTeam.setProject(projectTeamDto.getProject());
-				projectTeam.setProjectManagers(projectTeamDto.getProjectManagers());
-				projectTeam.setProjectTeamKey(projectTeamDto.getProjectTeamKey());
-				projectTeam.setProjectTeamName(projectTeamDto.getProjectTeamName());
-				projectTeam.setTeamMembers(projectTeamDto.getTeamMembers());
-				projectTeam.setCreatedBy(projectTeamDto.getCreatedBy());
-				projectTeam.setCreatedTstmp(new Date());
+				
+				prepareProjectTeam(projectTeamDto, projectTeam);
 				projectTeamDao.updateProjectTeam(projectTeam);
 				
 			}else{
 				projectTeam = new ProjectTeam();
-				projectTeam.setProject(projectTeamDto.getProject());
-				projectTeam.setProjectManagers(projectTeamDto.getProjectManagers());
-				projectTeam.setProjectTeamKey(projectTeamDto.getProjectTeamKey());
-				projectTeam.setProjectTeamName(projectTeamDto.getProjectTeamName());
-				projectTeam.setTeamMembers(projectTeamDto.getTeamMembers());
-				projectTeam.setCreatedBy(projectTeamDto.getCreatedBy());
-				projectTeam.setCreatedTstmp(new Date());
+				prepareProjectTeam(projectTeamDto, projectTeam);
 				projectTeamDao.addProjectTeam(projectTeam);
 			}
 			return "SUCCESS";
 		}catch(Exception exp){
+			exp.printStackTrace();
 			return "FAILED";
 		}
 	}
@@ -65,12 +59,72 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 	@Transactional(rollbackFor=Exception.class,propagation=Propagation.REQUIRED)
 	private void updateProjectTeam(ProjectTeamDTO projectTeamDto) throws Exception{
 
-		
-		
-		
-		
 	}
 	*/
+	
+	private void prepareProjectTeam(ProjectTeamDTO projectTeamDto, ProjectTeam projectTeam) {
+		
+		
+		Project project = new Project();
+		project.setId(projectTeamDto.getProjectDto().getId());
+		project.setManDaysLeft(projectTeamDto.getProjectDto().getManDaysLeft());
+		project.setMilestoneCount(projectTeamDto.getProjectDto().getCompletedMilestoneCount());
+		project.setName(projectTeamDto.getProjectDto().getName());
+		project.setProjectManager(projectTeamDto.getProjectDto().getProjectManager());
+		project.setDescription(projectTeamDto.getProjectDto().getDescription());
+		project.setCompletedMilestoneCount(projectTeamDto.getProjectDto().getCompletedMilestoneCount());
+		projectTeam.setProject(project);
+		
+		
+		Set<Employee> projectManagerSet = new HashSet<Employee>();
+		
+		for(EmployeeDTO employeeDto : projectTeamDto.getProjectManagers()){
+			Employee employee = new Employee();
+			employee.setName(employeeDto.getName());
+			employee.setMobile(employeeDto.getMobile());
+			employee.setPersonalEmail(employeeDto.getPersonalEmail());
+			employee.setCompanyEmail(employeeDto.getCompanyEmail());
+			employee.setDesignation(employeeDto.getDesignation());
+			employee.setPlatForms(employeeDto.getPlatForms());
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setEmploymentType(employeeDto.getEmploymentType());
+			employee.setStartDate(employeeDto.getStartDate());
+			employee.setEndDate(employeeDto.getEndDate());
+			employee.setMandayRate(employeeDto.getMandayRate());
+			projectManagerSet.add(employee);
+		}
+		
+		projectTeam.setProjectManagers(projectManagerSet);
+		
+		projectTeam.setProjectTeamKey(projectTeamDto.getProjectTeamKey());
+		projectTeam.setProjectTeamName(projectTeamDto.getProjectTeamName());
+		
+		
+		Set<Employee> teamMemberSet = new HashSet<Employee>();
+		
+		for(EmployeeDTO employeeDto: projectTeamDto.getTeamMembers()){
+			Employee employee = new Employee();
+			employee.setName(employeeDto.getName());
+			employee.setMobile(employeeDto.getMobile());
+			employee.setPersonalEmail(employeeDto.getPersonalEmail());
+			employee.setCompanyEmail(employeeDto.getCompanyEmail());
+			employee.setDesignation(employeeDto.getDesignation());
+			employee.setPlatForms(employeeDto.getPlatForms());
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setEmploymentType(employeeDto.getEmploymentType());
+			employee.setStartDate(employeeDto.getStartDate());
+			employee.setEndDate(employeeDto.getEndDate());
+			employee.setMandayRate(employeeDto.getMandayRate());
+			teamMemberSet.add(employee);
+			
+		}
+		projectTeam.setTeamMembers(teamMemberSet);
+		projectTeam.setCreatedBy(projectTeamDto.getCreatedBy());
+		projectTeam.setCreatedTstmp(new Date());
+		
+	}
+	
+	
 
 	
 

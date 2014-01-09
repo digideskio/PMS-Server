@@ -3,6 +3,7 @@ package com.media2359.euphoria.service.project;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
@@ -30,7 +31,10 @@ public class ProjectTeamServiceTest {
 	@Autowired 
 	ProjectService projectService;
 	
+
+	
 	private ProjectTeamDTO projectTeamDto;
+	Integer projectKey;
 	
 	@Before
 	public void setUp(){
@@ -53,22 +57,40 @@ public class ProjectTeamServiceTest {
 		teamMembers.add(emp3);
 		
 		projectTeamDto.setProjectTeamName("Team Experts");
+		projectTeamDto.setCreatedBy("shiv.kole@gmail.com");
+	    
 		Project project = new Project();
+		projectKey = projectService.getMaxKey();
+		project.setId(projectKey);
+		
+		projectTeamDto.setProjectDto(project.createProjectDTO());
 		
 		
 	}
 	
 	
 	@Test
-	public void testSubmitProjectTeam(){
+	public void test1SubmitProjectTeam(){
 		
+		//String result = projectTeamService.submitProjectTeam(projectTeamDto);
+		//Assert.assertEquals("SUCCESS", result);
 	}
 	
 
 	
 	@Test
-	public void testGetAllTeamMembers(){
-		
+	public void test2GetAllTeamMembers(){
+		/*
+		System.out.println("++++++MAX PROJECT KEY IS ++++"+projectKey);
+		ProjectDTO projectDto = new ProjectDTO();
+		projectDto.setId(projectKey);
+		ProjectTeamDTO getProjectTeamDTO = projectTeamService.getProjectTeam(projectDto);
+		Assert.assertNotNull(getProjectTeamDTO);
+		Assert.assertEquals(projectTeamDto.getProjectTeamName(),
+				getProjectTeamDTO.getProjectTeamName());
+		Assert.assertEquals(projectTeamDto.getTeamMembers().size(), 
+				getProjectTeamDTO.getTeamMembers().size());
+				*/
 	}
 	
 	

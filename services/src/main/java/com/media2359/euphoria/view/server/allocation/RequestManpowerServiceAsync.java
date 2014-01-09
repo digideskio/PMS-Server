@@ -9,9 +9,13 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.server.allocation;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 /**
  * RequestManpowerServiceAsync
@@ -25,6 +29,7 @@ import com.media2359.euphoria.model.project.Project;
 public interface RequestManpowerServiceAsync {
 	
 	// 
-	public void requestManpower(Project project, WeeklyManpowerRequest weeklyManpowerReq, AsyncCallback<String> callback);
+	public void requestManpower(ProjectDTO projectDto, Date startDate,  
+			Date endDate , AsyncCallback<ProjectAllocationDTO> callback);
 
 }

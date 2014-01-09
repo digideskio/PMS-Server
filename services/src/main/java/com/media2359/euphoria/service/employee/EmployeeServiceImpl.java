@@ -82,9 +82,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		try{
 			employee = new Employee();
-			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setName(employeeDto.getName());
+			employee.setMobile(employeeDto.getMobile());
+			employee.setPersonalEmail(employeeDto.getPersonalEmail());
 			employee.setCompanyEmail(employeeDto.getCompanyEmail());
 			employee.setDesignation(employeeDto.getDesignation());
+			employee.setPlatForms(employeeDto.getPlatForms());
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
 			employee.setEmploymentType(employeeDto.getEmploymentType());
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
@@ -102,9 +106,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		try{
 			employee = new Employee();
-			employee.setAssignedOffice(employeeDto.getAssignedOffice());
+			employee.setName(employeeDto.getName());
+			employee.setMobile(employeeDto.getMobile());
+			employee.setPersonalEmail(employeeDto.getPersonalEmail());
 			employee.setCompanyEmail(employeeDto.getCompanyEmail());
 			employee.setDesignation(employeeDto.getDesignation());
+			employee.setPlatForms(employeeDto.getPlatForms());
+			employee.setAssignedOffice(employeeDto.getAssignedOffice());
 			employee.setEmploymentType(employeeDto.getEmploymentType());
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
