@@ -10,21 +10,18 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import com.media2359.euphoria.model.employee.Employee;
-import com.media2359.euphoria.model.project.Project;
-import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 
 public class ProjectTeamDTO implements Serializable {
 	private Integer projectTeamKey;
 	private String projectTeamName;
-	private Project project;
+	private ProjectDTO projectDto;
 	
-	Set<Employee> projectManagers;
-	Set<Employee> teamMembers;
+	Set<EmployeeDTO> projectManagers;
+	Set<EmployeeDTO> teamMembers;
 	
 	private String createdBy;
 	private Date createdTstmp;
@@ -49,27 +46,31 @@ public class ProjectTeamDTO implements Serializable {
 		this.projectTeamName = projectTeamName;
 	}
 
-	public Project getProject() {
-		return project;
+	
+	
+	
+
+	public ProjectDTO getProjectDto() {
+		return projectDto;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectDto(ProjectDTO projectDto) {
+		this.projectDto = projectDto;
 	}
 
-	public Set<Employee> getProjectManagers() {
+	public Set<EmployeeDTO> getProjectManagers() {
 		return projectManagers;
 	}
 
-	public void setProjectManagers(Set<Employee> projectManagers) {
+	public void setProjectManagers(Set<EmployeeDTO> projectManagers) {
 		this.projectManagers = projectManagers;
 	}
 
-	public Set<Employee> getTeamMembers() {
+	public Set<EmployeeDTO> getTeamMembers() {
 		return teamMembers;
 	}
 
-	public void setTeamMembers(Set<Employee> teamMembers) {
+	public void setTeamMembers(Set<EmployeeDTO> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
 
@@ -88,7 +89,7 @@ public class ProjectTeamDTO implements Serializable {
 	public void setCreatedTstmp(Date createdTstmp) {
 		this.createdTstmp = createdTstmp;
 	}
-
+/*
 	public ProjectTeam prepareProjectTeam(){
 		ProjectTeam projectTeam = new ProjectTeam();
 		projectTeam.setProject(getProject());
@@ -96,9 +97,10 @@ public class ProjectTeamDTO implements Serializable {
 		projectTeam.setProjectTeamKey(getProjectTeamKey());
 		projectTeam.setProjectTeamName(getProjectTeamName());
 		projectTeam.setTeamMembers(getTeamMembers());
+		projectTeam.setCreatedBy(getCreatedBy());
 		return projectTeam;
 	}
-
+*/
 	
 	
 }

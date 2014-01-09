@@ -21,8 +21,8 @@ package com.media2359.euphoria.service.project;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,39 +55,46 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void test1GetAllProjects() {
-		ProjectListResponse response = projectService.getAllProjects(new ProjectListRequest());
-		Assert.assertNotNull(response);
-		Assert.assertNotNull(response.getProjects());
-	}
-	
-	@Test
-	public void test2AddProject(){
+	public void test1AddProject(){
 		String result = projectService.addProject(project);
 		Assert.assertEquals("SUCCESS", result);
 	}
 	
 	@Test
+	public void test2GetAllProjects() {
+		ProjectListResponse response = projectService.getAllProjects(new ProjectListRequest());
+		Assert.assertNotNull(response);
+		Assert.assertNotNull(response.getProjects());
+	}
+	
+	
+	
+	@Test
 	public void test3ProjectDetails(){
-		ProjectDTO proj = projectService.getProjectDetails(projectService.getMaxKey());
-		Assert.assertNotNull(proj);
+		ProjectDTO projDto = projectService.getProjectDetails(projectService.getMaxKey());
+		Assert.assertNotNull(projDto);
+		Assert.assertEquals(project.getName(), projDto.getName());
 		
 	}
 	
 	@Test
 	public void test4ModifyProject(){
+		project.setProjectManager("SHIV");
 		String result = projectService.modifyProject(project);
 		Assert.assertEquals("SUCCESS", result);
+		ProjectDTO projDto = projectService.getProjectDetails(projectService.getMaxKey());
+		Assert.assertEquals("SHIV",projDto.getProjectManager() );
 	}
 	
-	/*@Test
 	public void test5DeleteProject(){
-		Project proj = new Project();
+		ProjectDTO proj = new ProjectDTO();
 		log.info("####hty1####");
 		proj.setId(projectService.getMaxKey());
 		log.info("####hty2####");
 		String result = projectService.deleteProject(proj);
 		log.info("####HTY3####");
 		Assert.assertEquals("SUCCESS", result);
-	}*/
+		ProjectDTO projDto = projectService.getProjectDetails(projectService.getMaxKey());
+		Assert.assertNull(projDto);
+	}
 }

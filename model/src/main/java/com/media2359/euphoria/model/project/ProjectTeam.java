@@ -10,6 +10,7 @@
 package com.media2359.euphoria.model.project;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,6 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.WhereJoinTable;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 
 /**
@@ -147,11 +149,21 @@ public class ProjectTeam implements java.io.Serializable {
 
 	public ProjectTeamDTO prepareProjectTeamDTO(){
 		ProjectTeamDTO projectTeamDto = new ProjectTeamDTO();
-		projectTeamDto.setProject(getProject());
+		projectTeamDto.setProjectDto(getProject().createProjectDTO());
 		projectTeamDto.setProjectTeamName(getProjectTeamName());
 		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
-		projectTeamDto.setTeamMembers(getTeamMembers());
-		projectTeamDto.setProjectManagers(getProjectManagers());
+		
+		Set<EmployeeDTO> teamMemberSet = new HashSet<EmployeeDTO>();
+		for(Employee employee: getTeamMembers()){
+			teamMemberSet.add(employee.createEmployeeDTO());
+		}
+		projectTeamDto.setTeamMembers(teamMemberSet);
+		
+		Set<EmployeeDTO> projectManagerSet = new HashSet<EmployeeDTO>();
+		for(Employee employee: getProjectManagers()){
+			projectManagerSet.add(employee.createEmployeeDTO());
+		}
+		projectTeamDto.setProjectManagers(projectManagerSet);
 		projectTeamDto.setCreatedBy(getCreatedBy());
 		projectTeamDto.setCreatedTstmp(getCreatedTstmp());
 		return projectTeamDto;
