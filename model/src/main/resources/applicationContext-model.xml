@@ -51,6 +51,9 @@
     <bean id="platformRequestDao" class="com.media2359.euphoria.dao.manpower.PlatformRequestDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="platformDao" class="com.media2359.euphoria.dao.project.PlatformDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
     
     <bean id="echoDao" class="com.media2359.euphoria.dao.demo.EchoDaoImpl">
     </bean>
