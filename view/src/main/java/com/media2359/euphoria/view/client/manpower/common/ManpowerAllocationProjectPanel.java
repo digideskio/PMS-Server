@@ -227,6 +227,10 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		return projectAllocationDTO;
 	}
 
+	public void setClickEnabled(boolean clickEnabled){
+		AllocationGridColorCell.CLICK_ENABLED = clickEnabled;
+	}
+	
 	private void createDeveloperCombo(){
 		
 		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.key());

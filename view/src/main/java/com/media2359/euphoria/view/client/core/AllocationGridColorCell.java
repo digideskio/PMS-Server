@@ -25,7 +25,10 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
 	interface Templates extends SafeHtmlTemplates {
 
 	    @SafeHtmlTemplates.Template("<div><a class=\"{2}\" title=\"{1}\">{0}</a></div>")
-	    SafeHtml cell(SafeHtml value, String tooltip, String style);
+	    SafeHtml toolTipCell(SafeHtml value, String tooltip, String style);
+	    
+	    @SafeHtmlTemplates.Template("<div><a class=\"{1}\">{0}</a></div>")
+	    SafeHtml noToolTipCell(SafeHtml value, String style);
 	  }
 	
     private static  AllocationGridColorCellImages images = GWT.create(AllocationGridColorCellImages.class);
@@ -33,6 +36,7 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     private ImageResource image;
     private static Templates templates = GWT.create(Templates.class);
     
+    public static boolean CLICK_ENABLED=true; 
     
     public AllocationGridColorCell(){
     	super(BrowserEvents.MOUSEOVER,BrowserEvents.CLICK);
@@ -41,12 +45,13 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     public void render(Context context, AllocationStatus value, SafeHtmlBuilder sb) {
       if (value == null) 
         return;
-      else if(value.equals(AllocationStatus.HOLIDAY)||value.equals(AllocationStatus.LEAVE)){
-    	  final String styles = SafeStylesUtils.forVerticalAlign(VerticalAlign.MIDDLE).asString();
-    	  final SafeHtml valueHtml = SafeHtmlUtils.fromString(value.toString());
-	      final SafeHtml rendered = templates.cell(valueHtml, value.getTooltip(), styles);
-    	  sb.append(rendered);
-    	  
+      
+      String style = null;
+      SafeHtml valueHtml = null;
+      
+      if(value.equals(AllocationStatus.HOLIDAY)||value.equals(AllocationStatus.LEAVE)){
+    	  style = SafeStylesUtils.forVerticalAlign(VerticalAlign.MIDDLE).asString();
+    	  valueHtml = SafeHtmlUtils.fromString(value.toString());    	  
       }
       else{	      
 	      switch (value){
@@ -56,14 +61,14 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
 	      	case SELECTED_EXCEEDED: image = images.SelectExceeded();break;
 	      	default: image=images.Free();
 	      }
+	      style = SafeStylesUtils.forVerticalAlign(VerticalAlign.MIDDLE).asString();
+	      valueHtml = AbstractImagePrototype.create(image).getSafeHtml();
+      }      
+      if(CLICK_ENABLED)
+    	  sb.append(templates.toolTipCell(valueHtml, value.getEnabledTooltip(), style));
+      else
+    	  sb.append(templates.toolTipCell(valueHtml, value.getDisabledTooltip(),style));
 
-	      final String styles = SafeStylesUtils.forVerticalAlign(VerticalAlign.MIDDLE).asString();
-	      final SafeHtml imageHtml = AbstractImagePrototype.create(image).getSafeHtml();
-	      final SafeHtml rendered = templates.cell(imageHtml, value.getTooltip(), styles);
-	      
-	      sb.append(rendered);
-
-      }
       }
     
     
@@ -71,14 +76,14 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     public void onBrowserEvent(Context context, Element parent, AllocationStatus value,
             NativeEvent event, ValueUpdater<AllocationStatus> valueUpdater) {
     	super.onBrowserEvent(context, parent, value, event, valueUpdater);
-
-    	if(!event.getType().equals(BrowserEvents.CLICK))
-    		setCursor(parent, value);
-    	else{
-    		AllocationStatus newValue = getNewAllocationStatus(value);
-			valueUpdater.update(newValue);
-			setCursor(parent, newValue);
-    	}
+    	if(CLICK_ENABLED)
+	    	if(!event.getType().equals(BrowserEvents.CLICK))
+	    		setCursor(parent, value);
+	    	else{
+	    		AllocationStatus newValue = getNewAllocationStatus(value);
+				valueUpdater.update(newValue);
+				setCursor(parent, newValue);
+	    	}
     	
     
     }

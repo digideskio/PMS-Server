@@ -31,15 +31,17 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 public enum AllocationStatus {
 
 
-    	HOLIDAY("Holiday"," You can't select on holiday!"), LEAVE("Leave"," You can't select on leave!"), FREE("Free"," Not Selected, You May Select."), SELECTED(
-    			"Selected"," Selected, You May Unselect."), EXCEEDED("Exceeded"," Warning! Allocation exceeded."), SELECTED_EXCEEDED("Selected_Exceeded","Warning! Exceeded allocation selected.");
+    	HOLIDAY("Holiday"," You can't select on holiday!", "Holiday"), LEAVE("Leave"," You can't select on leave!","Leave"), FREE("Free"," Not Selected, You May Select.","Not Selected"), SELECTED(
+    			"Selected"," Selected, You May Unselect.", "Selected"), EXCEEDED("Exceeded"," Warning! Allocation exceeded.","Exceed Allocation"), SELECTED_EXCEEDED("Selected_Exceeded","Warning! Exceeded allocation selected.","Exceed Allocation Selected");
 		
 		private String text;
-		private String tooltip;
+		private String enabledTooltip;
+		private String disabledTooltip;
 	    
-		AllocationStatus(String text, String tooltip) {
+		AllocationStatus(String text, String enabledTooltip, String disabledTooltip) {
 			this.text = text;
-			this.tooltip = tooltip;
+			this.enabledTooltip = enabledTooltip;
+			this.disabledTooltip = disabledTooltip;
 		}
 
 		@Override
@@ -47,8 +49,12 @@ public enum AllocationStatus {
 			return text;
 		}
 		
-		public String getTooltip(){
-			return tooltip;
+		public String getEnabledTooltip(){
+			return enabledTooltip;
+		}
+		
+		public String getDisabledTooltip(){
+			return disabledTooltip;
 		}
 
 	}
