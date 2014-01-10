@@ -31,6 +31,7 @@ import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.model.project.ProjectTeamEmployeeXref;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/applicationContext-model-test.xml"})
@@ -71,28 +72,27 @@ public class ProjectTeamDaoTest {
 		ProjectTeam projectTeam = projectTeamDao.getProjectTeam(project);
 		Assert.assertNotNull(projectTeam);
 		//test employee
-		Set<Employee> employees = projectTeam.getTeamMembers();
-		Assert.assertNotNull(employees);
+		Set<ProjectTeamEmployeeXref> projectTeamEmployeeXrefs1 = projectTeam.getTeamMembers();
+		Assert.assertNotNull(projectTeamEmployeeXrefs1);
 		
-		log.info("####Number of Team Members:"+employees.size());
+		log.info("####Number of Team Members:"+projectTeamEmployeeXrefs1.size());
 		
 		Employee employee;
-		
-		for (Iterator<Employee> it = employees.iterator(); it.hasNext(); )
+		for (ProjectTeamEmployeeXref projectTeamEmployeeXref: projectTeamEmployeeXrefs1)
 		{
-			employee = it.next();
+			employee = projectTeamEmployeeXref.getPk().getEmployee();
 			log.info("####Team Member Details:"+ employee.toString());
 		}
 		
 		//test manager
-		Set<Employee> managers = projectTeam.getProjectManagers();
-		Assert.assertNotNull(managers);
-		log.info("####Number of Team managers:"+managers.size());
+		Set<ProjectTeamEmployeeXref> projectTeamEmployeeXrefs2 = projectTeam.getProjectManagers();
+		Assert.assertNotNull(projectTeamEmployeeXrefs2);
+		log.info("####Number of Team managers:"+projectTeamEmployeeXrefs2.size());
 		
 		Employee manager;
-		for (Iterator<Employee> it = managers.iterator(); it.hasNext(); )
+		for (ProjectTeamEmployeeXref projectTeamEmployeeXref: projectTeamEmployeeXrefs2)
 		{
-			manager = it.next();
+			manager = projectTeamEmployeeXref.getPk().getEmployee();
 			log.info("####Team Manager Details:"+ manager.toString());
 		}
 		

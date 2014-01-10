@@ -20,6 +20,7 @@
 	        <value>com.media2359.euphoria.model.manpower.WeeklyManpowerRequest</value>
 	        <value>com.media2359.euphoria.model.manpower.PlatformRequest</value>
 	        <value>com.media2359.euphoria.model.project.Platform</value>
+	        <value>com.media2359.euphoria.model.project.ProjectTeamEmployeeXref</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">

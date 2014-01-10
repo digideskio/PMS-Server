@@ -26,6 +26,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 import org.hibernate.annotations.WhereJoinTable;
 
 import com.media2359.euphoria.model.employee.Employee;
@@ -49,8 +50,11 @@ public class ProjectTeam implements java.io.Serializable {
 	private String projectTeamName;
 	private Project project;
 	
-	Set<Employee> projectManagers;
-	Set<Employee> teamMembers;
+	/*Set<Employee> projectManagers;
+	Set<Employee> teamMembers;*/
+	
+	Set<ProjectTeamEmployeeXref> projectManagers;
+	Set<ProjectTeamEmployeeXref> teamMembers;
 	
 	private String createdBy;
 	private Date createdTstmp;
@@ -93,7 +97,7 @@ public class ProjectTeam implements java.io.Serializable {
 		this.project = project;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	/*@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name="project_team_employee_xref", 
 	joinColumns = {@JoinColumn(name="project_team_key", referencedColumnName="project_team_key")},
 	inverseJoinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")})
@@ -117,13 +121,33 @@ public class ProjectTeam implements java.io.Serializable {
 
 	public void setTeamMembers(Set<Employee> teamMembers) {
 		this.teamMembers = teamMembers;
+	}*/
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.projectTeam", cascade=CascadeType.ALL)
+	@Where (clause="project_mgr_flg = 'Y'")
+	public Set<ProjectTeamEmployeeXref> getProjectManagers() {
+		return projectManagers;
 	}
 	
+	public void setProjectManagers(Set<ProjectTeamEmployeeXref> projectManagers) {
+		this.projectManagers = projectManagers;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.projectTeam", cascade=CascadeType.ALL)
+	@Where (clause="project_mgr_flg = 'N'")
+	public Set<ProjectTeamEmployeeXref> getTeamMembers() {
+		return teamMembers;
+	}
+
+	public void setTeamMembers(Set<ProjectTeamEmployeeXref> teamMembers) {
+		this.teamMembers = teamMembers;
+	}
+
 	@Column(name = "create_by_id")
 	public String getCreatedBy() {
 		return createdBy;
 	}
-
+	
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
@@ -145,7 +169,6 @@ public class ProjectTeam implements java.io.Serializable {
 				+ ", teamMembers=" + teamMembers + ", createdBy=" + createdBy
 				+ ", createdTstmp=" + createdTstmp + "]";
 	}
-	
 
 	public ProjectTeamDTO prepareProjectTeamDTO(){
 		ProjectTeamDTO projectTeamDto = new ProjectTeamDTO();
@@ -154,14 +177,14 @@ public class ProjectTeam implements java.io.Serializable {
 		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
 		
 		Set<EmployeeDTO> teamMemberSet = new HashSet<EmployeeDTO>();
-		for(Employee employee: getTeamMembers()){
-			teamMemberSet.add(employee.createEmployeeDTO());
+		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
+			teamMemberSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
 		}
 		projectTeamDto.setTeamMembers(teamMemberSet);
 		
 		Set<EmployeeDTO> projectManagerSet = new HashSet<EmployeeDTO>();
-		for(Employee employee: getProjectManagers()){
-			projectManagerSet.add(employee.createEmployeeDTO());
+		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
+			projectManagerSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
 		}
 		projectTeamDto.setProjectManagers(projectManagerSet);
 		projectTeamDto.setCreatedBy(getCreatedBy());

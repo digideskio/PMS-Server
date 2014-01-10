@@ -11,6 +11,7 @@ import com.media2359.euphoria.dao.project.ProjectTeamDAO;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.model.project.ProjectTeamEmployeeXref;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
@@ -64,6 +65,7 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 	
 	private void prepareProjectTeam(ProjectTeamDTO projectTeamDto, ProjectTeam projectTeam) {
 		
+		ProjectTeamEmployeeXref projectTeamEmployeeXref=null;
 		
 		Project project = new Project();
 		project.setId(projectTeamDto.getProjectDto().getId());
@@ -76,10 +78,9 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 		projectTeam.setProject(project);
 		
 		
-		Set<Employee> projectManagerSet = new HashSet<Employee>();
-		
 		for(EmployeeDTO employeeDto : projectTeamDto.getProjectManagers()){
 			Employee employee = new Employee();
+			employee.setEmployeeKey(Integer.valueOf(employeeDto.getEmployeeKey()));
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
 			employee.setPersonalEmail(employeeDto.getPersonalEmail());
@@ -91,19 +92,22 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
 			employee.setMandayRate(employeeDto.getMandayRate());
-			projectManagerSet.add(employee);
+			 
+			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
+			projectTeamEmployeeXref.setEmployee(employee);
+			projectTeamEmployeeXref.setProjectTeam(projectTeam);
+			projectTeamEmployeeXref.setProjectMgrFlg("Y");
+			
+			projectTeam.getProjectManagers().add(projectTeamEmployeeXref);
 		}
-		
-		projectTeam.setProjectManagers(projectManagerSet);
 		
 		projectTeam.setProjectTeamKey(projectTeamDto.getProjectTeamKey());
 		projectTeam.setProjectTeamName(projectTeamDto.getProjectTeamName());
 		
 		
-		Set<Employee> teamMemberSet = new HashSet<Employee>();
-		
 		for(EmployeeDTO employeeDto: projectTeamDto.getTeamMembers()){
 			Employee employee = new Employee();
+			employee.setEmployeeKey(Integer.valueOf(employeeDto.getEmployeeKey()));
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
 			employee.setPersonalEmail(employeeDto.getPersonalEmail());
@@ -115,10 +119,15 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
 			employee.setMandayRate(employeeDto.getMandayRate());
-			teamMemberSet.add(employee);
+			
+			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
+			projectTeamEmployeeXref.setEmployee(employee);
+			projectTeamEmployeeXref.setProjectTeam(projectTeam);
+			projectTeamEmployeeXref.setProjectMgrFlg("N");
+			
+			projectTeam.getTeamMembers().add(projectTeamEmployeeXref);
 			
 		}
-		projectTeam.setTeamMembers(teamMemberSet);
 		projectTeam.setCreatedBy(projectTeamDto.getCreatedBy());
 		projectTeam.setCreatedTstmp(new Date());
 		
