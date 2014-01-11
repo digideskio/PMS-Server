@@ -19,15 +19,62 @@
 
 	<!-- Convenience properties to control framework versions -->
 	<properties>
-		<spring.framework.version>3.2.3.RELEASE</spring.framework.version>
-		<gwt.version>2.5.1</gwt.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+		<gwtVersion>2.5.1</gwtVersion>
+		<spring.security.version>3.1.4.RELEASE</spring.security.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<gxt.version>3.0.1</gxt.version>
 		<gwt.localWorkers>2</gwt.localWorkers>
 	</properties>
 
+	<!-- Global repositories -->
+	<repositories>
+		<repository>
+			<id>maven-repo</id>
+			<name>Maven Central Repo</name>
+			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
+			<id>spring4gwt-repo</id>
+			<name>Spring4GWT Repo</name>
+			<url>http://gwtrepo.googlecode.com/svn/repo</url>
+		</repository>
+		<repository>
+			<id>spring-maven-milestone</id>
+			<name>Spring Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>		
+	</repositories>
+
 	<!-- All the dependencies are configured here -->
 	<dependencies>
-
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt.gwtmockito</groupId>
+			<artifactId>gwtmockito</artifactId>
+			<version>1.1.1</version>
+			<scope>test</scope>
+		</dependency>		
 	</dependencies>
 
 	<!-- All the common build settings -->

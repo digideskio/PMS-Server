@@ -15,7 +15,6 @@
 
 	<properties>
 		<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -27,7 +26,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwt.version}</version>
+			<version>${gwtVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.media2359</groupId>
@@ -40,42 +39,29 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gwt4spring</groupId>
-			<artifactId>gwt4spring</artifactId>
+			<groupId>org.spring4gwt</groupId>
+			<artifactId>spring4gwt</artifactId>
 			<version>0.0.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/spring4gwt-0.0.1.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.sencha.gxt</groupId>
 			<artifactId>gxt</artifactId>
-			<version>3.0.1</version>
+			<version>${gxt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-openid</artifactId>
-			<version>3.1.4.RELEASE</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>3.1.4.RELEASE</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>1.0.5.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt.gwtmockito</groupId>
-			<artifactId>gwtmockito</artifactId>
-			<version>1.1.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-web</artifactId>
-			<version>2.0.4</version>
 		</dependency>
 	</dependencies>
 	<build>

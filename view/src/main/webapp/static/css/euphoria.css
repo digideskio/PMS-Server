@@ -5,3 +5,13 @@
 .info-style {
 	font-family: Arial;	
 }
+
+.info-green {
+	font-family: Arial;	
+	background-color: green;
+}
+
+.info-blue {
+	font-family: Arial;	
+	background-color: blue;
+}

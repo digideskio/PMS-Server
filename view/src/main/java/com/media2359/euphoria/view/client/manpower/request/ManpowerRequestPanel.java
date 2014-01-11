@@ -19,6 +19,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.common.NotificationBox;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.sencha.gxt.core.client.util.DateWrapper;
@@ -26,7 +27,6 @@ import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class ManpowerRequestPanel  implements IsWidget {
 	interface ManpowerUiBinder extends UiBinder<VerticalLayoutContainer, ManpowerRequestPanel> {
@@ -105,6 +105,6 @@ public class ManpowerRequestPanel  implements IsWidget {
 	@UiHandler("saveAllocation")
 	public void saveAllocation(SelectEvent event) {
 		allocator.getAllocationData();
-		Info.display("Info", "The allocation was saved successfully.");
+		NotificationBox.success("Success", "The allocation was saved successfully.");
 	}
 }
