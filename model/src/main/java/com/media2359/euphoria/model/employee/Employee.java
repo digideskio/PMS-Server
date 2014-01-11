@@ -11,15 +11,24 @@ package com.media2359.euphoria.model.employee;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 
@@ -45,7 +54,7 @@ public class Employee implements java.io.Serializable{
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private String platForms;
+	private Set<Platform> platForms;
 	private String employmentType;
 	private String mandayRate;
 	private String assignedOffice;
@@ -78,6 +87,12 @@ public class Employee implements java.io.Serializable{
 		this.startDate = employeeDTO.getStartDate();
 		this.endDate = employeeDTO.getEndDate();
 		this.status = employeeDTO.getStatus();
+
+		this.platForms = new HashSet(0);
+		for(PlatformDTO platFormDto: employeeDTO.getPlatFormDtos()){
+			Platform platForm = new Platform(platFormDto);
+			this.platForms.add(platForm);
+		}
 	}
 
 	@Id
@@ -146,22 +161,18 @@ public class Employee implements java.io.Serializable{
 		this.employmentType = employmentType;
 	}
 	
-	
-
-	/**
-	 * @return the platForms
-	 */
-	@Column(name = "platform")
-	public String getPlatForms() {
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name="employee_platform_xref", 
+	joinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")},
+	inverseJoinColumns = {@JoinColumn(name="platform_key", referencedColumnName="platform_key")})
+	public Set<Platform> getPlatForms() {
 		return platForms;
 	}
 
-	/**
-	 * @param platForms the platForms to set
-	 */
-	public void setPlatForms(String platForms) {
+	public void setPlatForms(Set<Platform> platForms) {
 		this.platForms = platForms;
 	}
+
 
 	/**
 	 * @return the mandayRate
@@ -287,6 +298,13 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setEmploymentType(getEmploymentType());
 		employeeDTO.setMobile(getMobile());
 		employeeDTO.setDesignation(getDesignation());
+		
+		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
+		for (Platform platform: platForms){
+			PlatformDTO platformDto = platform.createPlatformDTO();
+			employeeDTO.getPlatFormDtos().add(platformDto);
+		}
+		
 		return employeeDTO;
 	}
 

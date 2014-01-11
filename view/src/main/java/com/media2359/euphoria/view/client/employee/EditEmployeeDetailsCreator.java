@@ -304,7 +304,8 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		case P_EMAIL:return (employeeDTO.getPersonalEmail()!=null?employeeDTO.getPersonalEmail():"");
 		case C_EMIAL:return (employeeDTO.getCompanyEmail()!=null?employeeDTO.getCompanyEmail():"");
 		case DESIGNATION:return (employeeDTO.getDesignation()!=null?employeeDTO.getDesignation():"");
-		case PLATFORMS:return (employeeDTO.getPlatForms()!=null?employeeDTO.getPlatForms():"");
+		//case PLATFORMS:return (employeeDTO.getPlatForms()!=null?employeeDTO.getPlatForms():"");
+		case PLATFORMS:return (employeeDTO.getPlatFormDtos()!=null?employeeDTO.getPlatFormDtos():"");
 		case EMPLOYMENT:return (employeeDTO.getEmploymentType()!=null?employeeDTO.getEmploymentType():"");
 		case MANDAY:return (employeeDTO.getMandayRate()!=null?employeeDTO.getMandayRate():"");
 		case OFFICE:return (employeeDTO.getAssignedOffice()!=null?employeeDTO.getAssignedOffice():"");

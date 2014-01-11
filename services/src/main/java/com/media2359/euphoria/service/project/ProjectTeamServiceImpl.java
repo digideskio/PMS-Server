@@ -79,7 +79,7 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 		
 		
 		for(EmployeeDTO employeeDto : projectTeamDto.getProjectManagers()){
-			Employee employee = new Employee();
+			/*Employee employee = new Employee();
 			employee.setEmployeeKey(Integer.valueOf(employeeDto.getEmployeeKey()));
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
@@ -91,7 +91,9 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 			employee.setEmploymentType(employeeDto.getEmploymentType());
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
-			employee.setMandayRate(employeeDto.getMandayRate());
+			employee.setMandayRate(employeeDto.getMandayRate());*/
+			
+			Employee employee = new Employee(employeeDto);
 			 
 			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
 			projectTeamEmployeeXref.setEmployee(employee);
@@ -106,7 +108,7 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 		
 		
 		for(EmployeeDTO employeeDto: projectTeamDto.getTeamMembers()){
-			Employee employee = new Employee();
+			/*Employee employee = new Employee();
 			employee.setEmployeeKey(Integer.valueOf(employeeDto.getEmployeeKey()));
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
@@ -118,7 +120,9 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 			employee.setEmploymentType(employeeDto.getEmploymentType());
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
-			employee.setMandayRate(employeeDto.getMandayRate());
+			employee.setMandayRate(employeeDto.getMandayRate());*/
+			
+			Employee employee = new Employee(employeeDto);
 			
 			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
 			projectTeamEmployeeXref.setEmployee(employee);

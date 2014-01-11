@@ -9,10 +9,13 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.employee;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.*;
@@ -112,17 +115,26 @@ public class EmployeeDetailsPresenter {
 		employeeDTO.setEndDate(((DateField)sourceWindow.getEndDate()).getValue());
 		employeeDTO.setStatus(((SimpleComboBox)sourceWindow.getStatus()).getText());
 		
-		StringBuffer platform = new StringBuffer();
+		/*StringBuffer platform = new StringBuffer();*/
+		Set<PlatformDTO> platFormDtos = new HashSet(0);
 		for(CheckBox checkBox : sourceWindow.getPlatformChecks())
 		{
-			if(checkBox.getValue())
-				platform.append(checkBox.getBoxLabel()).append(",");
+			if(checkBox.getValue()){
+				//platform.append(checkBox.getBoxLabel()).append(",");
+				PlatformDTO platformDto = new PlatformDTO();
+				platformDto.setPlatformId(checkBox.getBoxLabel());
+				platformDto.setPlatformKey(Integer.valueOf(0));//<==ToDo
+				
+				platFormDtos.add(platformDto);
+			}	
+			
 		}
 		
-		if(platform.length()>0)
+		/*if(platform.length()>0)
 			platform.deleteCharAt(platform.length());
 		
-		employeeDTO.setPlatForms(platform.toString());
+		employeeDTO.setPlatForms(platform.toString());*/
+		employeeDTO.setPlatFormDtos(platFormDtos);
 		log.info(employeeDTO.toString());
 		return employeeDTO;
 	}

@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 			for(Employee employee:employees){
 				
-				EmployeeDTO respEmployee =  employee.createEmployeeDTO();
+				/*EmployeeDTO respEmployee =  employee.createEmployeeDTO();
 				
 				respEmployee.setName(employee.getName());
 				respEmployee.setCompanyEmail(employee.getCompanyEmail());
@@ -67,7 +67,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 				respEmployee.setEndDate(employee.getEndDate());
 				respEmployee.setStatus(employee.getStatus());
 				
-				respEmployees.add(respEmployee);
+				respEmployees.add(respEmployee);*/
+				respEmployees.add(employee.createEmployeeDTO());
 			}
 			
 			response.setEmployees(respEmployees);
@@ -81,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String addEmployee(EmployeeDTO employeeDto) {
 		Employee employee = null;
 		try{
-			employee = new Employee();
+			/*employee = new Employee();
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
 			employee.setPersonalEmail(employeeDto.getPersonalEmail());
@@ -94,7 +95,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEndDate(employeeDto.getEndDate());
 			employee.setMandayRate(employeeDto.getMandayRate());
 			
-			employeeDao.addEmployee(employee);
+			employeeDao.addEmployee(employee);*/
+			
+			employee = new Employee(employeeDto);
 		}catch(Exception exp){
 			return "FAILED";
 		}
@@ -105,7 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String modifyEmployee(EmployeeDTO employeeDto) {
 		Employee employee = null;
 		try{
-			employee = new Employee();
+			/*employee = new Employee();
 			employee.setName(employeeDto.getName());
 			employee.setMobile(employeeDto.getMobile());
 			employee.setPersonalEmail(employeeDto.getPersonalEmail());
@@ -116,7 +119,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmploymentType(employeeDto.getEmploymentType());
 			employee.setStartDate(employeeDto.getStartDate());
 			employee.setEndDate(employeeDto.getEndDate());
-			employee.setMandayRate(employeeDto.getMandayRate());
+			employee.setMandayRate(employeeDto.getMandayRate());*/
+			
+			employee = new Employee(employeeDto);
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
@@ -139,7 +144,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		System.out.println("++++++ Employee Key +++++++"+employeeDto.getEmployeeKey());
 		Employee employee = employeeDao.getEmployee(Integer.parseInt(employeeDto.getEmployeeKey()));
 		
-		EmployeeDTO respEmployee =  employee.createEmployeeDTO();
+		/*EmployeeDTO respEmployee =  employee.createEmployeeDTO();
 		
 		respEmployee.setName(employee.getName());
 		respEmployee.setCompanyEmail(employee.getCompanyEmail());
@@ -153,7 +158,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		respEmployee.setAssignedOffice(employee.getAssignedOffice());
 		respEmployee.setStartDate(employee.getStartDate());
 		respEmployee.setEndDate(employee.getEndDate());
-		respEmployee.setStatus(employee.getStatus());
+		respEmployee.setStatus(employee.getStatus());*/
+		
+		EmployeeDTO respEmployee =  employee.createEmployeeDTO();
 		
 		return respEmployee;
 	}

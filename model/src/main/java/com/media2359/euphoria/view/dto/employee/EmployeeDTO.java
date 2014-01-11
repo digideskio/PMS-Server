@@ -11,7 +11,9 @@ package com.media2359.euphoria.view.dto.employee;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 /**
  * Employee
  *
@@ -29,7 +31,7 @@ public class EmployeeDTO implements Serializable {
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private String platForms;
+	private Set<PlatformDTO> platFormDtos;
 	private String employmentType;
 	private String mandayRate;
 	private String assignedOffice;
@@ -74,11 +76,12 @@ public class EmployeeDTO implements Serializable {
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
-	public String getPlatForms() {
-		return platForms;
+	
+	public Set<PlatformDTO> getPlatFormDtos() {
+		return platFormDtos;
 	}
-	public void setPlatForms(String platForms) {
-		this.platForms = platForms;
+	public void setPlatFormDtos(Set<PlatformDTO> platFormDtos) {
+		this.platFormDtos = platFormDtos;
 	}
 	public String getEmploymentType() {
 		return employmentType;
@@ -146,18 +149,16 @@ public class EmployeeDTO implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
 				+ ", mobile=" + mobile + ", personalEmail=" + personalEmail
 				+ ", companyEmail=" + companyEmail + ", designation="
-				+ designation + ", platForms=" + platForms
+				+ designation + ", platFormsDtos=" + platFormDtos
 				+ ", employmentType=" + employmentType + ", mandayRate="
 				+ mandayRate + ", assignedOffice=" + assignedOffice
 				+ ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", status=" + status + "]";
 	}
-	
+
 }

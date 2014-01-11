@@ -33,6 +33,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.WhereJoinTable;
 
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
+
 @Entity 
 @Table(name = "platform") 
 public class Platform {
@@ -51,6 +53,11 @@ public class Platform {
 	public Platform() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Platform(PlatformDTO platFormDto){
+		this.platformKey=platFormDto.getPlatformKey();
+		this.platformId=platFormDto.getPlatformId();
+	}
 
 	public Integer getPlatformKey() {
 		return platformKey;
@@ -66,6 +73,14 @@ public class Platform {
 
 	public void setPlatformId(String platformId) {
 		this.platformId = platformId;
+	}
+	
+	public PlatformDTO createPlatformDTO(){
+		PlatformDTO platformDto = new PlatformDTO();
+		platformDto.setPlatformKey(this.getPlatformKey());
+		platformDto.setPlatformId(this.getPlatformId());
+		
+		return platformDto;
 	}
 
 	@Override
