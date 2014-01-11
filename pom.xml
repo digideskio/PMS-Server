@@ -20,7 +20,7 @@
 	<!-- Convenience properties to control framework versions -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
 		<gwtVersion>2.5.1</gwtVersion>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
