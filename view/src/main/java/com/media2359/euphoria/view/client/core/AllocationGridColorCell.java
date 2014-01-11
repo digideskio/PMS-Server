@@ -59,6 +59,7 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
 	      	case SELECTED: image = images.Selected();break;
 	      	case EXCEEDED: image = images.Exceeded();break;
 	      	case SELECTED_EXCEEDED: image = images.SelectExceeded();break;
+	      	case ALLOCATED: image = images.AllocationApproved();break;
 	      	default: image=images.Free();
 	      }
 	      style = SafeStylesUtils.forVerticalAlign(VerticalAlign.MIDDLE).asString();

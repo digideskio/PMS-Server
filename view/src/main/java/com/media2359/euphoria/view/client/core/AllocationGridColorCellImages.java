@@ -16,5 +16,8 @@ public interface AllocationGridColorCellImages extends ClientBundle {
 	
 	@Source("allocation_sel_exc.png")
 	  ImageResource SelectExceeded();
+	
+	@Source("allocation_appr.png")
+	  ImageResource AllocationApproved();
 
 	}
