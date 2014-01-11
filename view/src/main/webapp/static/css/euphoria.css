@@ -2,6 +2,11 @@
 * Euphoria Application CSS file
 *
 **/
+body {
+	font-family: Arial, Verdana;
+	font-size: 16px;
+}
+
 .info-style {
 	font-family: Arial;	
 }
@@ -14,4 +19,15 @@
 .info-blue {
 	font-family: Arial;	
 	background-color: blue;
+}
+
+.myBodyStyle {
+	font-family: Arial, Verdana;
+	font-size: 16px;
+}
+
+.myTabStyle {
+	font-family: Arial, Verdana;
+	font-size: 16px;
+	padding: 1px 1px 1px 1px;
 }

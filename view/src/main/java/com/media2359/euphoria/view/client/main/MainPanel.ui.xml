@@ -124,7 +124,7 @@
         </container:west>
         <container:center layoutData="{centerData}" >
           <container:SimpleContainer width="85%"> 
-          <gxt:TabPanel width="100%">
+          <gxt:TabPanel width="100%" ui:field="maintab">
                  <gxt:child config="{dashboardConfig}">
     	            <dashboard:DashboardPanel />
                  </gxt:child>

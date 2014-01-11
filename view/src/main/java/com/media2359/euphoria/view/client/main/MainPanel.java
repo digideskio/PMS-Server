@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
@@ -32,6 +33,7 @@ public class MainPanel extends Composite {
 
 	@UiField Label welcomelabel;
 	@UiField BorderLayoutContainer con;
+	@UiField TabPanel maintab;
 	
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
@@ -42,6 +44,10 @@ public class MainPanel extends Composite {
 		
 		//Now set the style
 		con.addStyleName("myBodyStyle");
+		
+		//Tab panel
+		maintab.addStyleName("myTabStyle");
+		
 		populateUsername();
 	}
 	
