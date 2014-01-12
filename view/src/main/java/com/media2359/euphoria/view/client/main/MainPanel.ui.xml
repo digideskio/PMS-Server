@@ -10,14 +10,14 @@
 	xmlns:dashboard="urn:import:com.media2359.euphoria.view.client.dashboard"
 	xmlns:manpowerrqst="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.request"
-	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee">
-	<!--  xmlns:project="urn:import:com.media2359.euphoria.view.client.project" -->
+	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee"
+	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
 	
 	
 	<ui:style>
 		.little-padding{padding:10px;font-size:14px;}
-		.header{font-family:Arial, Verdana,Trebuchet MS, Lucida, Helvetica, Sans-Serif;background-color:black;background-image:url("/static/images/header_bg.gif");background-repeat:repeat-x;}
-		.header-left{background: url(/static/images/banner_image.jpg) no-repeat;display:inline-block; padding-left: 10px; width: 70%}
+		.header{font-family:Arial, Verdana,Trebuchet MS, Lucida, Helvetica, Sans-Serif;background-color:black;background-image:url("/static/images/header_bg.gif");background-repeat:repeat-x;z-index:-50}
+		.header-left{background: url(/static/images/2359medialogo.png) no-repeat;display:inline-block; padding-left: 10px; width: 70%}
 		.header-right{font-size:13px;color:white;padding:10%;}
 		.footerText{font-size:13px;text-align: center;font-family:Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;}	
 		.logout{font-size:12px;color:blue;padding:10%;cursor:pointer}
@@ -52,6 +52,9 @@
     <ui:attributes top="1" right="1" bottom="1" left="1" />
   </ui:with>
 
+  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="topMargins">
+    <ui:attributes top="10" right="0" bottom="0" left="10" />
+  </ui:with>
   <ui:with type="com.sencha.gxt.core.client.util.Margins" field="northMargins">
     <ui:attributes top="5" right="5" bottom="5" left="5" />
   </ui:with>
@@ -72,7 +75,7 @@
     <ui:attributes margins="{outerMargins}" />
   </ui:with>
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="northData">
-    <ui:attributes size="0.1" margins="{northMargins}" />
+    <ui:attributes size="100" margins="{northMargins}" />
   </ui:with>
   <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="westData">
     <ui:attributes size="0.2" margins="{westMargins}" collapsible="true" split="true" />
@@ -89,7 +92,7 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerLeft">
-		<ui:attributes width="0.70" height="1.0" margins="{centerMargins}" />
+		<ui:attributes width="0.70" height="1.0" margins="{topMargins}" />
 	</ui:with>
 
 	<ui:with
@@ -135,8 +138,7 @@
         	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
                  </gxt:child>     
                  <gxt:child config="{projectConfig}">
-                 	<g:Label text="Removed by AJ due to problem created by Shiv" />
-    	               <!-- <project:ProjectSummaryPanel /> -->
+                 	<project:ProjectSummaryPanel />
                  </gxt:child>
                  <gxt:child config="{staffrollConfig}">
 	                 <employee:EmployeePanel></employee:EmployeePanel>

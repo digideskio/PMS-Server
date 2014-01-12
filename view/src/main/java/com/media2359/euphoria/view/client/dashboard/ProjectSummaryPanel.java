@@ -45,7 +45,8 @@ public class ProjectSummaryPanel implements IsWidget, AsyncCallback<ProjectListR
 				"Completed Milestones");
 		ColumnConfig<ProjectDTO, String> controlsCol = new ColumnConfig<ProjectDTO, String>(
 				ProjectProperties.name(), 90, "Controls");
-
+		
+		
 		List<ColumnConfig<ProjectDTO, ?>> columns = new ArrayList<ColumnConfig<ProjectDTO, ?>>();
 		columns.add(nameCol);
 		columns.add(manDaysCol);

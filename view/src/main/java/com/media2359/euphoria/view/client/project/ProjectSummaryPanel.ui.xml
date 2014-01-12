@@ -15,7 +15,7 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="outerPane">
-		<ui:attributes width="1.0" height="0.7" margins="{centerMargins}" />
+		<ui:attributes width="600" height="600" margins="{centerMargins}" />
 	</ui:with>
 	
 	<row:VerticalLayoutContainer>

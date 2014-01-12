@@ -19,19 +19,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
+import com.media2359.euphoria.view.server.project.ProjectService;
+import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
-import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
-public class ProjectSummaryPanel extends Composite {
+public class ProjectSummaryPanel extends Composite implements AsyncCallback<ProjectListResponse>{
 	interface ProjectSummaryUiBinder extends
 			UiBinder<VerticalLayoutContainer, ProjectSummaryPanel> {
 	}
 
 	ProjectSummaryUiBinder uiBinder = GWT.create(ProjectSummaryUiBinder.class);
 
-//	private ProjectServiceAsync projectService = GWT
-//			.create(ProjectService.class);
+	private ProjectServiceAsync projectService = GWT.create(ProjectService.class);
 
 	@UiField
 	ProjectGrid projectGrid;
@@ -50,35 +50,26 @@ public class ProjectSummaryPanel extends Composite {
 	}
 
 	private void loadData() {
-		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
-				"Progress", "Loading data. Please wait...");
+		ProjectRpcHelper.getAllProjects(this);
+	}
 
-		final AsyncCallback<ProjectListResponse> callback = new AsyncCallback<ProjectListResponse>() {
+	@Override
+	public void onFailure(Throwable caught) {
+		AlertMessageBox alert = new AlertMessageBox("Error",
+				caught.getMessage());
+		alert.show();		
+	}
 
-			public void onFailure(Throwable caught) {
-				messageBox.hide();
-				AlertMessageBox alert = new AlertMessageBox("Error",
-						caught.getMessage());
-				alert.show();
-			}
+	@Override
+	public void onSuccess(ProjectListResponse result) {
+		List<ProjectDTO> projects = result.getProjects();
 
-			public void onSuccess(ProjectListResponse result) {
-				messageBox.hide();
-				List<ProjectDTO> projects = result.getProjects();
-
-				if ((projects != null) && (!projects.isEmpty())) {
-					// Now populate GXT Grid
-					projectGrid.populateData(projects);
-				} else {
-					// Remove all items
-					projectGrid.clear();
-				}
-			}
-		};
-		log.info("Getting all projects in ProjectSummaryPanel");
-//		projectService.getAllProjects(new ProjectListRequest(), callback);
-		//messageBox.auto();
-		//messageBox.show();
-
+		if ((projects != null) && (!projects.isEmpty())) {
+			// Now populate GXT Grid
+			projectGrid.populateData(projects);
+		} else {
+			// Remove all items
+			projectGrid.clear();
+		}
 	}
 }

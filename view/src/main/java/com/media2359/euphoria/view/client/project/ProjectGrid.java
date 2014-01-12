@@ -81,14 +81,14 @@ public class ProjectGrid extends Composite {
 		
 		gridView = new GridView<ProjectDTO>();
 		gridView.setAutoFill(true);
+		gridView.setStripeRows(true);
 
 		grid = new Grid<ProjectDTO>(listStore, columnModel, gridView);
+		//grid.setSize("600", "500");
 		initWidget(grid);
 	}
 	
 	private void populateViewButton(ColumnConfig viewDetailsCol){
-		
-
 		viewDetailsCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
 		viewDetailsCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
 		ViewCell image = new ViewCell();
@@ -104,10 +104,9 @@ public class ProjectGrid extends Composite {
 			}
 		});
 		viewDetailsCol.setCell(image);
-		
 	}
+	
 	private void addFilters(){
-
 		StringFilter<ProjectDTO> nameFilter = new StringFilter<ProjectDTO>(gridProperties.name());
 		GridFilters<ProjectDTO> filters = new GridFilters<ProjectDTO>();
 		filters.initPlugin(grid);
@@ -116,10 +115,8 @@ public class ProjectGrid extends Composite {
 	}
 
 	public void populateData(List<ProjectDTO> projects) {
-		
-			listStore.replaceAll(projects);
-			addFilters();
-
+		listStore.replaceAll(projects);
+		addFilters();
 	}
 	
 	public void clear() {

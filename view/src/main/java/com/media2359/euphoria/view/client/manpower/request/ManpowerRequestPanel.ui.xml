@@ -86,7 +86,7 @@
 		<row:child layoutData="{bottomPane}">
 			<row:HorizontalLayoutContainer>
 				<row:child layoutData="{leftPane}">
-					<row:SimpleContainer borders="true">
+					<row:SimpleContainer borders="true" height="600">
 						<project:MyProjectsPanel ui:field="selector"></project:MyProjectsPanel>
 					</row:SimpleContainer>
 				</row:child>
