@@ -46,9 +46,11 @@ public class EmployeeDaoTest {
 	
 	@Test
 	public void test1GetAllEmployees() {
+		log.info("test1GetAllEmployees start...");
 		List<Employee> employees = employeeDao.getAllEmployees();
 		Assert.assertNotNull(employees);
 		log.info("Number of Employees returned:"+employees.size());
+		log.info("test1GetAllEmployees end...");
 		
 	}
 }

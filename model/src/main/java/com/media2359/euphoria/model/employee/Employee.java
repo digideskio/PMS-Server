@@ -35,6 +35,8 @@ import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 /**
@@ -63,7 +65,7 @@ public class Employee implements java.io.Serializable{
 	private String status;
 	private String company_id="Media2359";
 	private String created_by_id ;
-	private Timestamp create_tstamp; 
+	private Date create_tstamp; 
 	
 	Set<Platform> skills;
 	Set<Role> roles;
@@ -210,6 +212,7 @@ public class Employee implements java.io.Serializable{
 	/**
 	 * @return the startDate
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
 	public Date getStartDate() {
 		return startDate;
@@ -225,6 +228,7 @@ public class Employee implements java.io.Serializable{
 	/**
 	 * @return the endDate
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_date")
 	public Date getEndDate() {
 		return endDate;
@@ -276,11 +280,11 @@ public class Employee implements java.io.Serializable{
 	}
 
 	@Column(name="create_tstamp")
-	public Timestamp getCreate_tstamp() {
-		return new Timestamp(new Date().getTime());
+	public Date getCreate_tstamp() {
+		return create_tstamp;
 	}
 
-	public void setCreate_tstamp(Timestamp create_tstamp) {
+	public void setCreate_tstamp(Date create_tstamp) {
 		this.create_tstamp = create_tstamp;
 	}
 
@@ -310,6 +314,7 @@ public class Employee implements java.io.Serializable{
 		
 		return employeeDTO;
 	}
+
 
 	@Override
 	public String toString() {
