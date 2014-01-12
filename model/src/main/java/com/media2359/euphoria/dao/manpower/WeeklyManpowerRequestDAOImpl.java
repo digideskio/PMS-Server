@@ -68,5 +68,92 @@ public class WeeklyManpowerRequestDAOImpl extends HibernateDaoSupport implements
 			 
 		return weeklyManpowerRequests;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public WeeklyManpowerRequest getManpowerRequest(Integer wklyManpowerRqstKey){
+		Session session = this.getSession();
+		List<WeeklyManpowerRequest> wklyManpowerRqsts = null;
+		WeeklyManpowerRequest wklyManpowerRqst = null;
+		try{
+		Transaction tx1 = session.beginTransaction();
+		wklyManpowerRqsts = this.getHibernateTemplate().find("from WeeklyManpowerRequest a where a.weeklyManpowerRequestKey = ?", 
+				new Object[]{wklyManpowerRqstKey});
+		
+		wklyManpowerRqst = wklyManpowerRqsts.size()>0?wklyManpowerRqsts.get(0):null;
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		return wklyManpowerRqst;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Integer getMaxKey() {
+		Session session = this.getSession();
+		ListIterator iterator = null;
+		try{
+		Transaction tx1 = session.beginTransaction();
+		Query query = session.createQuery("select max(weeklyManpowerRequestKey) from WeeklyManpowerRequest");
+		
+		List results  = query.list();
+		
+		iterator = results.listIterator();
+		tx1.commit();
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return (Integer) (iterator.hasNext()?iterator.next():Integer.valueOf(-1));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst){
+		Session session = this.getSession();
+		try{
+		session.beginTransaction();
+		session.save(wklyManpowerRqst);
+		session.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteWeeklyManpowerRequest(Integer wklyManpowerRqstKey){
+		Session session = this.getSession();
+		try{
+		Transaction tx1 = session.beginTransaction();
+		
+		Query q = session.createQuery("delete WeeklyManpowerRequest where wklyManpowerRqstKey=?");
+		q.setInteger(0, wklyManpowerRqstKey);
+		
+		log.info("deleteWeeklyManpowerRequest()->sQuery::" + q.toString());
+		q.executeUpdate();
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void updateWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst){
+		Session session = this.getSession();
+		try{
+		Transaction tx1 = session.beginTransaction();
+		
+		session.saveOrUpdate(wklyManpowerRqst);
+		
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
+	
 
 }

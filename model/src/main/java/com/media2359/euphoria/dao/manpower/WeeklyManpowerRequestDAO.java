@@ -33,4 +33,9 @@ public interface WeeklyManpowerRequestDAO {
 	void saveManpowerRequestsForEmployee(Employee employee, Set<WeeklyManpowerRequest> weeklyManpowerRequests);*/
 	
 	List<WeeklyManpowerRequest> findAllWklyMpowerRqstByProjectWeek(Date startDate, Date endDate, Project project);
+	WeeklyManpowerRequest getManpowerRequest(Integer wklyManpowerRqstKey);
+	public Integer getMaxKey();
+	void addWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
+	void deleteWeeklyManpowerRequest(Integer wklyManpowerRqstKey);
+	void updateWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
 }
