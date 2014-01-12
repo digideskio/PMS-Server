@@ -40,8 +40,8 @@ public class EmployeeDTO implements Serializable {
 	private String status;
 	
 	
-	public String getEmployeeKey() {
-		return employeeKey.toString();
+	public Integer getEmployeeKey() {
+		return employeeKey;
 	}
 	public void setEmployeeKey(Integer employeeKey) {
 		this.employeeKey = employeeKey;

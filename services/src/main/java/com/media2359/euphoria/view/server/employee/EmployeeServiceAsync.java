@@ -18,8 +18,11 @@ package com.media2359.euphoria.view.server.employee;
  * @version 1.0 2013
  **/
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 
@@ -40,5 +43,8 @@ public interface EmployeeServiceAsync {
 	
 	// Gets the max key for the employee
 	public void getMaxKey(AsyncCallback<Integer> callback);
+	
+	// Gets all the list of the platform 
+	public void  findAllPlatforms(AsyncCallback<List<PlatformDTO>> callback);
 	
 }

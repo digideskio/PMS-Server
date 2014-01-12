@@ -18,9 +18,12 @@ package com.media2359.euphoria.view.server.employee;
  * @version 1.0 2013
  **/
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 
@@ -42,4 +45,7 @@ public interface EmployeeService extends RemoteService {
 	
 	// Gets the max key for the employee
 	public Integer getMaxKey();
+	
+	// Gets all the platforms for the employee
+	public List<PlatformDTO> findAllPlatforms();
 }

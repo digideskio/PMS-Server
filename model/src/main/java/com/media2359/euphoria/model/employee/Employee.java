@@ -75,7 +75,7 @@ public class Employee implements java.io.Serializable{
 	}
 
 	public Employee(EmployeeDTO employeeDTO) {
-		this.employeeKey = Integer.valueOf(employeeDTO.getEmployeeKey());
+		this.employeeKey = employeeDTO.getEmployeeKey();
 		this.name = employeeDTO.getName();
 		this.personalEmail = employeeDTO.getPersonalEmail();
 		this.companyEmail = employeeDTO.getCompanyEmail();
@@ -89,10 +89,13 @@ public class Employee implements java.io.Serializable{
 		this.status = employeeDTO.getStatus();
 
 		this.platForms = new HashSet(0);
-		for(PlatformDTO platFormDto: employeeDTO.getPlatFormDtos()){
-			Platform platForm = new Platform(platFormDto);
-			this.platForms.add(platForm);
+		if(employeeDTO.getPlatFormDtos()!=null){
+			for(PlatformDTO platFormDto: employeeDTO.getPlatFormDtos()){
+				Platform platForm = new Platform(platFormDto);
+				this.platForms.add(platForm);
+			}
 		}
+		
 	}
 
 	@Id

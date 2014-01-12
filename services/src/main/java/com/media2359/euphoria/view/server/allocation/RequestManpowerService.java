@@ -34,7 +34,9 @@ public interface RequestManpowerService extends RemoteService{
 	// Request Manpower request
 	
 	public ProjectAllocationDTO requestManpower(ProjectDTO projectdto,
-			Date startDate, Date endDate);
+			Date startDate);
+	
+	public String submitManpowerRequest(ProjectAllocationDTO projectAllocationDto);
 	
 	
 

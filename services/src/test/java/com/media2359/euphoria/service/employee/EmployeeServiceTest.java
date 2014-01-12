@@ -9,6 +9,8 @@
  ***************************************************************************/
 package com.media2359.euphoria.service.employee;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
@@ -31,23 +35,25 @@ import com.media2359.euphoria.view.server.employee.EmployeeService;
 public class EmployeeServiceTest {
 	@Autowired
 	private EmployeeService employeeService;
-	@Autowired
-	private Employee employee ; 
+
+	private EmployeeDTO employeeDto ; 
 	
 	
 	@Before
 	public void setUp(){
-		employee.setName("Shiv Ranjan Kole");
-		employee.setPersonalEmail("shiv.kole@gmail.com");
-		employee.setMobile("83222489");
-		employee.setDesignation("Project Manager");
-		employee.setCompanyEmail("shiv.kole@media2359.com");
-		employee.setEmploymentType("Permanent");
-		employee.setCreated_by_id("shiv.kole@gmail.com");
+		employeeDto = new EmployeeDTO();
+		employeeDto.setName("Shiv Ranjan Kole");
+		employeeDto.setPersonalEmail("shiv.kole@gmail.com");
+		employeeDto.setMobile("83222489");
+		employeeDto.setDesignation("Project Manager");
+		employeeDto.setCompanyEmail("shiv.kole@media2359.com");
+		employeeDto.setEmploymentType("Permanent");
 		
 		
 		
 	}
+	
+	
 	
 	
 	@Test
@@ -58,11 +64,11 @@ public class EmployeeServiceTest {
 		Assert.assertNotNull(response.getEmployees());
 	}
 	
-	/*
+	
 	@Test
 	public void test2AddEmployee(){
 		
-		String result = employeeService.addEmployee(employee);
+		String result = employeeService.addEmployee(employeeDto);
 		Assert.assertEquals("SUCCESS", result);
 		
 	
@@ -70,31 +76,37 @@ public class EmployeeServiceTest {
 	
 	@Test
 	public void test3GetEmployeeDetails(){
-		Employee emp1 = new Employee();
+		EmployeeDTO emp1 = new EmployeeDTO();
 		emp1.setEmployeeKey(employeeService.getMaxKey());
-		Employee employee1 = employeeService.getEmployeeDetails(emp1);
+		EmployeeDTO employee1 = employeeService.getEmployeeDetails(emp1);
 		Assert.assertNotNull(employee1);
 		
 	}
 	
 	@Test
 	public void test4ModifyEmployee(){
-		employee.setPersonalEmail("shiv_rec@yahoo.com");
-		String result = employeeService.modifyEmployee(employee);
+		employeeDto.setPersonalEmail("shiv_rec@yahoo.com");
+		String result = employeeService.modifyEmployee(employeeDto);
 		Assert.assertEquals("SUCCESS", result);
 		
 	}
 	
 	@Test
 	public void test5DeleteEmployee(){
-		Employee emp1 = new Employee();
+		EmployeeDTO emp1 = new EmployeeDTO();
 		emp1.setEmployeeKey(employeeService.getMaxKey());
 		String result = employeeService.deleteEmployee(emp1);
 		Assert.assertEquals("SUCCESS", result);
 		
 	}
 	
- */
+	@Test
+	public void test6GetAllPlatforms(){
+		List<PlatformDTO> platformDTOs = employeeService.findAllPlatforms();
+		Assert.assertNotNull(platformDTOs);
+	}
+	
+ 
 	
 	
 }

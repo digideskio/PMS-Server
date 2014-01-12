@@ -25,8 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.dao.project.PlatformDAO;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
@@ -36,6 +39,10 @@ import com.media2359.euphoria.view.server.employee.EmployeeService;
 public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeDAO employeeDao;
+	
+	@Autowired
+	private PlatformDAO platformDao;
+	
 	private final Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	
 	public EmployeeListResponse getAllEmployees(EmployeeListRequest request) {
@@ -51,23 +58,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 			for(Employee employee:employees){
 				
-				/*EmployeeDTO respEmployee =  employee.createEmployeeDTO();
-				
-				respEmployee.setName(employee.getName());
-				respEmployee.setCompanyEmail(employee.getCompanyEmail());
-				respEmployee.setDesignation(employee.getDesignation());
-				respEmployee.setEmploymentType(employee.getEmploymentType());
-				respEmployee.setMobile(employee.getMobile());
-				respEmployee.setPersonalEmail(employee.getPersonalEmail());
-				respEmployee.setPlatForms(employee.getPlatForms());
-				respEmployee.setEmploymentType(employee.getEmploymentType());
-				respEmployee.setMandayRate(employee.getMandayRate());
-				respEmployee.setAssignedOffice(employee.getAssignedOffice());
-				respEmployee.setStartDate(employee.getStartDate());
-				respEmployee.setEndDate(employee.getEndDate());
-				respEmployee.setStatus(employee.getStatus());
-				
-				respEmployees.add(respEmployee);*/
 				respEmployees.add(employee.createEmployeeDTO());
 			}
 			
@@ -82,23 +72,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String addEmployee(EmployeeDTO employeeDto) {
 		Employee employee = null;
 		try{
-			/*employee = new Employee();
-			employee.setName(employeeDto.getName());
-			employee.setMobile(employeeDto.getMobile());
-			employee.setPersonalEmail(employeeDto.getPersonalEmail());
-			employee.setCompanyEmail(employeeDto.getCompanyEmail());
-			employee.setDesignation(employeeDto.getDesignation());
-			employee.setPlatForms(employeeDto.getPlatForms());
-			employee.setAssignedOffice(employeeDto.getAssignedOffice());
-			employee.setEmploymentType(employeeDto.getEmploymentType());
-			employee.setStartDate(employeeDto.getStartDate());
-			employee.setEndDate(employeeDto.getEndDate());
-			employee.setMandayRate(employeeDto.getMandayRate());
-			
-			employeeDao.addEmployee(employee);*/
-			
 			employee = new Employee(employeeDto);
+			employee.setCreated_by_id("SYSTEM");
+			employeeDao.addEmployee(employee);
 		}catch(Exception exp){
+			exp.printStackTrace();
 			return "FAILED";
 		}
 		return "SUCCESS";
@@ -108,20 +86,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String modifyEmployee(EmployeeDTO employeeDto) {
 		Employee employee = null;
 		try{
-			/*employee = new Employee();
-			employee.setName(employeeDto.getName());
-			employee.setMobile(employeeDto.getMobile());
-			employee.setPersonalEmail(employeeDto.getPersonalEmail());
-			employee.setCompanyEmail(employeeDto.getCompanyEmail());
-			employee.setDesignation(employeeDto.getDesignation());
-			employee.setPlatForms(employeeDto.getPlatForms());
-			employee.setAssignedOffice(employeeDto.getAssignedOffice());
-			employee.setEmploymentType(employeeDto.getEmploymentType());
-			employee.setStartDate(employeeDto.getStartDate());
-			employee.setEndDate(employeeDto.getEndDate());
-			employee.setMandayRate(employeeDto.getMandayRate());*/
-			
 			employee = new Employee(employeeDto);
+			employee.setCreated_by_id("SYSTEM");
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
@@ -132,7 +98,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public String deleteEmployee(EmployeeDTO employeeDto) {
 		try{
-			employeeDao.deleteEmployee(Integer.parseInt(employeeDto.getEmployeeKey()));
+			employeeDao.deleteEmployee(employeeDto.getEmployeeKey());
 		}catch(Exception exp){
 			return "FAILED";
 		}
@@ -142,24 +108,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO getEmployeeDetails(EmployeeDTO employeeDto) {
 		System.out.println("++++++ Employee Key +++++++"+employeeDto.getEmployeeKey());
-		Employee employee = employeeDao.getEmployee(Integer.parseInt(employeeDto.getEmployeeKey()));
-		
-		/*EmployeeDTO respEmployee =  employee.createEmployeeDTO();
-		
-		respEmployee.setName(employee.getName());
-		respEmployee.setCompanyEmail(employee.getCompanyEmail());
-		respEmployee.setDesignation(employee.getDesignation());
-		respEmployee.setEmploymentType(employee.getEmploymentType());
-		respEmployee.setMobile(employee.getMobile());
-		respEmployee.setPersonalEmail(employee.getPersonalEmail());
-		respEmployee.setPlatForms(employee.getPlatForms());
-		respEmployee.setEmploymentType(employee.getEmploymentType());
-		respEmployee.setMandayRate(employee.getMandayRate());
-		respEmployee.setAssignedOffice(employee.getAssignedOffice());
-		respEmployee.setStartDate(employee.getStartDate());
-		respEmployee.setEndDate(employee.getEndDate());
-		respEmployee.setStatus(employee.getStatus());*/
-		
+		Employee employee = employeeDao.getEmployee(employeeDto.getEmployeeKey());
 		EmployeeDTO respEmployee =  employee.createEmployeeDTO();
 		
 		return respEmployee;
@@ -169,5 +118,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Integer getMaxKey() {
 		// TODO Auto-generated method stub
 		return employeeDao.getMaxKey();
+	}
+
+	@Override
+	public List<PlatformDTO> findAllPlatforms() {
+		List<PlatformDTO> platformDTOList = new ArrayList<PlatformDTO>();
+		List<Platform> platformList = platformDao.findAllPlatforms();
+		for(Platform platform :platformList){
+			PlatformDTO platformDTO = platform.createPlatformDTO();
+			platformDTOList.add(platformDTO);
+		}
+		return platformDTOList;
+		
 	}
 }

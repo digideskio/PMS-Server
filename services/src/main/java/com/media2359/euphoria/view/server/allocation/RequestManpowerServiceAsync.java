@@ -30,6 +30,9 @@ public interface RequestManpowerServiceAsync {
 	
 	// 
 	public void requestManpower(ProjectDTO projectDto, Date startDate,  
-			Date endDate , AsyncCallback<ProjectAllocationDTO> callback);
+			 AsyncCallback<ProjectAllocationDTO> callback);
+	
+	public void submitManpowerRequest(ProjectAllocationDTO projectAllocationDto , 
+			AsyncCallback<String> callback);
 
 }

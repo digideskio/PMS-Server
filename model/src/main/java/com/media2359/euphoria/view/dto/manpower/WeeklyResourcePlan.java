@@ -10,13 +10,14 @@
 package com.media2359.euphoria.view.dto.manpower;
 
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 
 
 
 public class WeeklyResourcePlan {
 	String id;
 	
-	private String platform = "";
+	private PlatformDTO platform ;
 	private EmployeeDTO developer = null;
 
 	private Boolean day1Am = false;
@@ -41,10 +42,7 @@ public class WeeklyResourcePlan {
 		return developer;
 	}
 
-	public String getPlatform() {
-		return platform;
-	}
-
+	
 
 	public String getId() {
 		return id;
@@ -114,9 +112,7 @@ public class WeeklyResourcePlan {
 		this.developer = developer;
 	}
 	
-	public void setPlatform(String platform) {
-		this.platform = platform;
-	}
+	
 
 	public void setDay1Am(Boolean day1Am) {
 		this.day1Am = day1Am;
@@ -173,4 +169,18 @@ public class WeeklyResourcePlan {
 	public void setDay7Pm(Boolean day7Pm) {
 		this.day7Pm = day7Pm;
 	}
+
+
+
+	public PlatformDTO getPlatform() {
+		return platform;
+	}
+
+
+
+	public void setPlatform(PlatformDTO platform) {
+		this.platform = platform;
+	}
+	
+	
 }
