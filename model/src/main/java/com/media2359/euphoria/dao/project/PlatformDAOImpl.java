@@ -26,6 +26,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.*;
 
 
@@ -70,6 +71,19 @@ public class PlatformDAOImpl extends HibernateDaoSupport implements PlatformDAO 
 			
 		}finally{session.close();}
 		return maxKey;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addPlatform(Platform platform){
+		Session session = this.getSession();
+		try{
+		session.beginTransaction();
+		session.save(platform);
+		session.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
 	}
 	
 }

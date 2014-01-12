@@ -15,4 +15,6 @@ import com.media2359.euphoria.model.project.*;
 
 public interface PlatformDAO {
 	List<Platform> findAllPlatforms();
+	Integer getMaxKey();
+	void addPlatform(Platform platform);
 }

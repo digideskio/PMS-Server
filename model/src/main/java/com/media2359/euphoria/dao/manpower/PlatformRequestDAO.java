@@ -33,4 +33,6 @@ public interface PlatformRequestDAO {
 	void saveManpowerRequestsForEmployee(Employee employee, Set<WeeklyManpowerRequest> weeklyManpowerRequests);*/
 	
 	List<PlatformRequest> findAllPlatformRequest(WeeklyManpowerRequest weeklyManpowerRequest);
+	Integer getMaxKey();
+	void addPlatformRequest(PlatformRequest platformRequest);
 }

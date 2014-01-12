@@ -20,10 +20,12 @@ import com.media2359.euphoria.model.manpower.PlatformRequest;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -67,6 +69,38 @@ public class PlatformRequestDAOImpl extends HibernateDaoSupport implements Platf
 		}
 			 
 		return platformRequests;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Integer getMaxKey() {
+		Session session = this.getSession();
+		Integer maxKey = Integer.valueOf(-1);
+		try{
+			Transaction tx1 = session.beginTransaction();
+			Criteria crit = session.createCriteria(Platform.class); 
+			crit.setProjection(Projections.max("platformRequestKey"));
+			List<Integer> maxKeys = crit.list();
+			log.info("results::"+maxKeys.toString());
+			log.info("results::"+maxKeys.size());
+			maxKey= (maxKeys.get(0)==null?Integer.valueOf(-1):maxKeys.get(0));
+			tx1.commit();
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return maxKey;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addPlatformRequest(PlatformRequest platformRequest){
+		Session session = this.getSession();
+		try{
+		session.beginTransaction();
+		session.save(platformRequest);
+		session.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
 	}
 
 }
