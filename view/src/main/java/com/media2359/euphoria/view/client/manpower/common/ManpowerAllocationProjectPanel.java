@@ -226,7 +226,20 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		projectAllocationDTO.setWeeklyResourcePlan(grid.getStore().getAll());
 		return projectAllocationDTO;
 	}
+	
+	public ProjectAllocationDTO save(){
+		return getAllocationData();
+	}
 
+	public ProjectAllocationDTO approve(){
+		return getAllocationData();
+	}
+	
+	public ProjectAllocationDTO delete(){
+		return getAllocationData();
+	}
+
+	
 	public void setClickEnabled(boolean clickEnabled){
 		AllocationGridColorCell.CLICK_ENABLED = clickEnabled;
 	}
