@@ -61,53 +61,60 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			List<WeeklyManpowerRequest> weeklyManpowerReqList = 
 					weeklyManpowerRequestDao.findAllWklyMpowerRqstByProjectWeek(startDate, endDate, 
 							project);
-			List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
-			List<PlatformRequest> platformReqList = platformRequestDao.findAllPlatformRequest(weeklyManpowerReqList.get(0));
-			
-			projectAllocationDTO.setProjectId(project.getId());
-			projectAllocationDTO.setStartOfWeek(startDate);
-			
-			for(PlatformRequest platformreq : platformReqList){
-				WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
+			if(weeklyManpowerReqList!=null && weeklyManpowerReqList.size()>0){
+				System.out.println("Size of WeeklyManpower Request is "+weeklyManpowerReqList.size());
 				
-				// Set the platform 
-				weeklyResourcePlan.setPlatform(platformreq.getPlatform().createPlatformDTO());
-				// Set the developer
-				weeklyResourcePlan.setDeveloper(platformreq.getEmployee().createEmployeeDTO());
+				List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
+				List<PlatformRequest> platformReqList = platformRequestDao.findAllPlatformRequest(weeklyManpowerReqList.get(0));
 				
-				// Set the resource plan
-				Integer startDayOfTheWeek ;
-				Integer endDayOfTheWeek;
+				projectAllocationDTO.setProjectId(project.getId());
+				projectAllocationDTO.setStartOfWeek(startDate);
 				
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(platformreq.getStartDate());
-				startDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-				
-				calendar.setTime(platformreq.getEndDate());
-				endDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-				
-				System.out.println("THE START DAY OF THE WEEK IS "+startDayOfTheWeek+" : END DAY "
-						+ "OF THE WEEK IS "+endDayOfTheWeek);
-				
-				for(int i=startDayOfTheWeek ;i<=endDayOfTheWeek;i++){
-					String methodName = "setDay"+String.valueOf(i);
-					String amMethodName = methodName+"Am";
-					String pmMethodName = methodName+"Pm";
+				for(PlatformRequest platformreq : platformReqList){
+					WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
 					
-					Method method =weeklyResourcePlan.getClass().getMethod(amMethodName, 
-							new Class<?>[0]);
-					method.invoke(weeklyResourcePlan, new Boolean(true));
+					// Set the platform 
+					weeklyResourcePlan.setPlatform(platformreq.getPlatform().createPlatformDTO());
+					// Set the developer
+					weeklyResourcePlan.setDeveloper(platformreq.getEmployee().createEmployeeDTO());
 					
-					method =weeklyResourcePlan.getClass().getMethod(pmMethodName, 
-							new Class<?>[0]);
-					method.invoke(weeklyResourcePlan, new Boolean(true));
+					// Set the resource plan
+					Integer startDayOfTheWeek ;
+					Integer endDayOfTheWeek;
 					
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(platformreq.getStartDate());
+					startDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+					
+					calendar.setTime(platformreq.getEndDate());
+					endDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+					
+					System.out.println("THE START DAY OF THE WEEK IS "+startDayOfTheWeek+" : END DAY "
+							+ "OF THE WEEK IS "+endDayOfTheWeek);
+					
+					for(int i=startDayOfTheWeek ;i<=endDayOfTheWeek;i++){
+						String methodName = "setDay"+String.valueOf(i);
+						String amMethodName = methodName+"Am";
+						String pmMethodName = methodName+"Pm";
+						
+						Method method =weeklyResourcePlan.getClass().getMethod(amMethodName, 
+								new Class<?>[0]);
+						method.invoke(weeklyResourcePlan, new Boolean(true));
+						
+						method =weeklyResourcePlan.getClass().getMethod(pmMethodName, 
+								new Class<?>[0]);
+						method.invoke(weeklyResourcePlan, new Boolean(true));
+						
+					}
+					
+					weeklyResourcePlanList.add(weeklyResourcePlan);
 				}
 				
-				weeklyResourcePlanList.add(weeklyResourcePlan);
+				projectAllocationDTO.setWeeklyResourcePlan(weeklyResourcePlanList);
+				
 			}
 			
-			projectAllocationDTO.setWeeklyResourcePlan(weeklyResourcePlanList);
+			
 			
 		}catch(Exception exp){
 			exp.printStackTrace();
@@ -172,7 +179,8 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					
 					System.out.println("End  Date is "+endDate);
 					platformRequest.setEndDate(endDate);
-					platformRequestList.add(platformRequest);
+					//platformRequestList.add(platformRequest);
+					platformRequestDao.addPlatformRequest(platformRequest);
 					
 				}
 			

@@ -100,16 +100,15 @@ public class RequestManpowerServiceTest {
 		*/
 	}
 	
-	/*
+	
 	@Test
 	public void test2RequestManpower(){
 		ProjectAllocationDTO projectAllDto =requestManpowerService.
 				requestManpower(projectDTO,startOfWeek);
-		Assert.notNull(projectAllDto);
+		//Assert.notNull(projectAllDto);
 		
 	}
 	
-	*/
 	
 
 }
