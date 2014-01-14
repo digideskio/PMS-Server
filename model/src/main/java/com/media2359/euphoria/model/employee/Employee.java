@@ -64,8 +64,8 @@ public class Employee implements java.io.Serializable{
 	private Date endDate;
 	private String status;
 	private String company_id="Media2359";
-	private String created_by_id ;
-	private Date create_tstamp; 
+	private String createdById;
+	private Date createTstamp; 
 	
 	Set<Platform> skills;
 	Set<Role> roles;
@@ -269,23 +269,22 @@ public class Employee implements java.io.Serializable{
 	}
 	
 	
-	
 	@Column(name="create_by_id")
-	public String getCreated_by_id() {
-		return created_by_id;
+	public String getCreatedById() {
+		return createdById;
 	}
 
-	public void setCreated_by_id(String created_by_id) {
-		this.created_by_id = created_by_id;
+	public void setCreatedById(String createdById) {
+		this.createdById = createdById;
 	}
 
 	@Column(name="create_tstamp")
-	public Date getCreate_tstamp() {
-		return create_tstamp;
+	public Date getCreateTstamp() {
+		return createTstamp;
 	}
 
-	public void setCreate_tstamp(Date create_tstamp) {
-		this.create_tstamp = create_tstamp;
+	public void setCreateTstamp(Date createTstamp) {
+		this.createTstamp = createTstamp;
 	}
 
 	/**
@@ -305,6 +304,8 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setEmploymentType(getEmploymentType());
 		employeeDTO.setMobile(getMobile());
 		employeeDTO.setDesignation(getDesignation());
+		employeeDTO.setCreatedById(getCreatedById());
+		employeeDTO.setCreateTstamp(getCreateTstamp());
 		
 		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
 		for (Platform platform: platForms){
@@ -314,7 +315,6 @@ public class Employee implements java.io.Serializable{
 		
 		return employeeDTO;
 	}
-
 
 	@Override
 	public String toString() {
@@ -326,8 +326,8 @@ public class Employee implements java.io.Serializable{
 				+ mandayRate + ", assignedOffice=" + assignedOffice
 				+ ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", status=" + status + ", company_id=" + company_id
-				+ ", created_by_id=" + created_by_id + ", create_tstamp="
-				+ create_tstamp + ", skills=" + skills + ", roles=" + roles
+				+ ", createdById=" + createdById + ", createTstamp="
+				+ createTstamp + ", skills=" + skills + ", roles=" + roles
 				+ ", leavePlan=" + leavePlan + "]";
 	}
 	

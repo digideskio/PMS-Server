@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.service.employee;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -48,7 +49,8 @@ public class EmployeeServiceTest {
 		employeeDto.setDesignation("Project Manager");
 		employeeDto.setCompanyEmail("shiv.kole@media2359.com");
 		employeeDto.setEmploymentType("Permanent");
-		
+		employeeDto.setCreatedById("TY");
+		employeeDto.setCreateTstamp(new Date());
 		
 		
 	}

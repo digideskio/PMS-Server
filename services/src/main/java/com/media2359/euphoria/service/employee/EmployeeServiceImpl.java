@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		try{
 			employee = new Employee(employeeDto);
-			employee.setCreated_by_id("SYSTEM");
+			employee.setCreatedById("SYSTEM");
 			employeeDao.addEmployee(employee);
 		}catch(Exception exp){
 			exp.printStackTrace();
@@ -87,7 +87,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		try{
 			employee = new Employee(employeeDto);
-			employee.setCreated_by_id("SYSTEM");
+			employee.setCreatedById("SYSTEM");
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
