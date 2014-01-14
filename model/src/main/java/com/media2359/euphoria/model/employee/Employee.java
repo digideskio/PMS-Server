@@ -65,7 +65,9 @@ public class Employee implements java.io.Serializable{
 	private String status;
 	private String company_id="Media2359";
 	private String createdById;
-	private Date createTstamp; 
+	private Date createTstamp;
+	private String lastUpdById;
+	private Date lastUpdTstamp;
 	
 	Set<Platform> skills;
 	Set<Role> roles;
@@ -89,6 +91,8 @@ public class Employee implements java.io.Serializable{
 		this.startDate = employeeDTO.getStartDate();
 		this.endDate = employeeDTO.getEndDate();
 		this.status = employeeDTO.getStatus();
+		this.lastUpdById = employeeDTO.getLastUpdById();
+		this.lastUpdTstamp = employeeDTO.getLastUpdTstamp();
 
 		this.platForms = new HashSet(0);
 		if(employeeDTO.getPlatFormDtos()!=null){
@@ -287,8 +291,24 @@ public class Employee implements java.io.Serializable{
 		this.createTstamp = createTstamp;
 	}
 
-	/**
+	
+	@Column(name="last_upd_by_id")
+	public String getLastUpdById() {
+		return lastUpdById;
+	}
 
+	public void setLastUpdById(String lastUpdById) {
+		this.lastUpdById = lastUpdById;
+	}
+
+	@Column(name="last_upd_tstamp")
+	public Date getLastUpdTstamp() {
+		return lastUpdTstamp;
+	}
+
+	public void setLastUpdTstamp(Date lastUpdTstamp) {
+		this.lastUpdTstamp = lastUpdTstamp;
+	}
 
 	/**
 	 * TODO Write something about this method
@@ -306,6 +326,8 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setDesignation(getDesignation());
 		employeeDTO.setCreatedById(getCreatedById());
 		employeeDTO.setCreateTstamp(getCreateTstamp());
+		employeeDTO.setLastUpdById(getLastUpdById());
+		employeeDTO.setLastUpdTstamp(getLastUpdTstamp());
 		
 		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
 		for (Platform platform: platForms){
@@ -327,8 +349,9 @@ public class Employee implements java.io.Serializable{
 				+ ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", status=" + status + ", company_id=" + company_id
 				+ ", createdById=" + createdById + ", createTstamp="
-				+ createTstamp + ", skills=" + skills + ", roles=" + roles
-				+ ", leavePlan=" + leavePlan + "]";
+				+ createTstamp + ", lastUpdById=" + lastUpdById
+				+ ", lastUpdTstamp=" + lastUpdTstamp + ", skills=" + skills
+				+ ", roles=" + roles + ", leavePlan=" + leavePlan + "]";
 	}
-	
+
 }

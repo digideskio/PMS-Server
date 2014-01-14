@@ -89,8 +89,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = null;
 		try{
 			employee = new Employee(employeeDto);
-			employee.setCreatedById("SYSTEM");
-			employee.setCreateTstamp(new Date());
+			employee.setLastUpdById("SYSTEM");
+			employee.setLastUpdTstamp(new Date());
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";

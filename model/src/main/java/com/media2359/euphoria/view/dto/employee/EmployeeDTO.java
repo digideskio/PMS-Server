@@ -40,6 +40,8 @@ public class EmployeeDTO implements Serializable {
 	private String status;
 	private String createdById;
 	private Date createTstamp; 
+	private String lastUpdById;
+	private Date lastUpdTstamp;
 	
 	
 	public Integer getEmployeeKey() {
@@ -165,6 +167,20 @@ public class EmployeeDTO implements Serializable {
 	public void setCreateTstamp(Date createTstamp) {
 		this.createTstamp = createTstamp;
 	}
+	
+	
+	public String getLastUpdById() {
+		return lastUpdById;
+	}
+	public void setLastUpdById(String lastUpdById) {
+		this.lastUpdById = lastUpdById;
+	}
+	public Date getLastUpdTstamp() {
+		return lastUpdTstamp;
+	}
+	public void setLastUpdTstamp(Date lastUpdTstamp) {
+		this.lastUpdTstamp = lastUpdTstamp;
+	}
 	@Override
 	public String toString() {
 		return "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
@@ -175,8 +191,10 @@ public class EmployeeDTO implements Serializable {
 				+ mandayRate + ", assignedOffice=" + assignedOffice
 				+ ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", status=" + status + ", createdById=" + createdById
-				+ ", createTstamp=" + createTstamp + "]";
+				+ ", createTstamp=" + createTstamp + ", lastUpdById="
+				+ lastUpdById + ", lastUpdTstamp=" + lastUpdTstamp + "]";
 	}
+
 
 
 }
