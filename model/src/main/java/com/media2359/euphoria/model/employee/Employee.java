@@ -216,7 +216,7 @@ public class Employee implements java.io.Serializable{
 	/**
 	 * @return the startDate
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
 	public Date getStartDate() {
 		return startDate;
@@ -309,6 +309,7 @@ public class Employee implements java.io.Serializable{
 	public void setLastUpdTstamp(Date lastUpdTstamp) {
 		this.lastUpdTstamp = lastUpdTstamp;
 	}
+
 
 	/**
 	 * TODO Write something about this method

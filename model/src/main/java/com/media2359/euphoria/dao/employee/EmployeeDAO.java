@@ -22,6 +22,7 @@ package com.media2359.euphoria.dao.employee;
 import java.util.List;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 
 
 public interface EmployeeDAO {
@@ -31,4 +32,5 @@ public interface EmployeeDAO {
 	Integer getMaxKey();
 	void deleteEmployee(Integer employeeKey);
 	void updateEmployee(Employee employee);
+	List<Employee> getEmployeesByPlatform(Platform platform);
 }

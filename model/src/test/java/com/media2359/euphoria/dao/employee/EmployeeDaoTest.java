@@ -32,8 +32,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.dao.project.PlatformDAO;
 import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,6 +44,9 @@ import com.media2359.euphoria.model.project.Project;
 public class EmployeeDaoTest {
 	@Autowired
 	private EmployeeDAO employeeDao;
+	
+	/*@Autowired
+	private PlatformDAO platformDao;*/
 	private Logger log = Logger.getLogger(EmployeeDaoTest.class);
 	
 	@Test
@@ -51,6 +56,20 @@ public class EmployeeDaoTest {
 		Assert.assertNotNull(employees);
 		log.info("Number of Employees returned:"+employees.size());
 		log.info("test1GetAllEmployees end...");
+		
+	}
+	
+	
+	@Test
+	public void test2getEmployeesByPlatform() {
+		log.info("####test2getEmployeesByPlatform start...");
+		Platform platform = new Platform();
+		platform.setPlatformKey(Integer.valueOf(1));
+		
+		List<Employee> employees = employeeDao.getEmployeesByPlatform(platform);
+		Assert.assertNotNull(employees);
+		log.info("####Number of Employees by platform returned:"+employees.size());
+		log.info("####test2getEmployeesByPlatform end...");
 		
 	}
 }

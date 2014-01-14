@@ -194,7 +194,5 @@ public class EmployeeDTO implements Serializable {
 				+ ", createTstamp=" + createTstamp + ", lastUpdById="
 				+ lastUpdById + ", lastUpdTstamp=" + lastUpdTstamp + "]";
 	}
-
-
-
+	
 }
