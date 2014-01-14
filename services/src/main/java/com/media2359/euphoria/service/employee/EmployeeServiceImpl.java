@@ -18,6 +18,7 @@ package com.media2359.euphoria.service.employee;
  **/
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -74,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try{
 			employee = new Employee(employeeDto);
 			employee.setCreatedById("SYSTEM");
+			employee.setCreateTstamp(new Date());
 			employeeDao.addEmployee(employee);
 		}catch(Exception exp){
 			exp.printStackTrace();
@@ -88,6 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try{
 			employee = new Employee(employeeDto);
 			employee.setCreatedById("SYSTEM");
+			employee.setCreateTstamp(new Date());
 			employeeDao.updateEmployee(employee);
 		}catch(Exception exp){
 			return "FAILED";
