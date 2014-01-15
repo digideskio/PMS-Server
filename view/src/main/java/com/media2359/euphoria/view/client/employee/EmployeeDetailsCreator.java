@@ -31,7 +31,6 @@ public interface EmployeeDetailsCreator {
 	public Component createCompanyEmail();
 	public Component createDesignation();
 	public Component createEmployment();
-	public CheckBox[] createPlatforms();
 	public Component createManDayRate();
 	public Component createAssignedOffice();
 	public Component createStartDate();

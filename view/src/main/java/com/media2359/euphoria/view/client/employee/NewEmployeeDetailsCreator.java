@@ -237,31 +237,6 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	  return combo;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createPlatforms(com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox, com.sencha.gxt.widget.core.client.form.CheckBox)
-	 */
-	@Override
-	public CheckBox[] createPlatforms() {
-		
-		
-		
-//		employeeService.findAllPlatforms(callback)(callback);
-		List<Platforms> allPlatforms =Platforms.getAllPlatforms();
-		   
-		   if(allPlatforms == null)
-			   return null;
-		   
-		   CheckBox[] returnCheckBoxes = new CheckBox[allPlatforms.size()];
-		   
-		  for(int i=0; i<returnCheckBoxes.length; i++){
-			  
-			  returnCheckBoxes[i] = new CheckBox();
-			  returnCheckBoxes[i].setBoxLabel(allPlatforms.get(i).toString());			  
-		  }
-		  
-		  return returnCheckBoxes;
-		
-	}
 
 	/* (non-Javadoc)
 	 * @see com.media2359.euphoria.view.client.employee.EmployeeDetailsCreator#createAndAddButtons(com.sencha.gxt.widget.core.client.button.TextButton, com.sencha.gxt.widget.core.client.button.TextButton, com.sencha.gxt.widget.core.client.FramedPanel)
