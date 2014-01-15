@@ -36,6 +36,10 @@ public class PlatformDTO implements Serializable {
 		this.platformId = platformId;
 	}
 
-	
+	@Override
+	public String toString(){
+		return platformId;
+	}
+
 	
 }

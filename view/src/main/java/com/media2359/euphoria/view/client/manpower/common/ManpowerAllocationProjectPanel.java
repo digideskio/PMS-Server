@@ -22,6 +22,7 @@ import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -30,12 +31,17 @@ import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.client.core.Platforms;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.server.employee.EmployeeService;
+import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -69,15 +75,17 @@ interface Templates extends SafeHtmlTemplates {
 public class ManpowerAllocationProjectPanel implements IsWidget {
 	Grid<WeeklyResourcePlan> grid;
 	ComboBoxCell<EmployeeDTO> developerCombo;
-	ComboBoxCell<String> platformCombo;
+	ComboBoxCell<PlatformDTO> platformCombo;
 	 // A custom date format
     DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy");
     private ListStore<EmployeeDTO> employeeListStore = null;
+    private ListStore<PlatformDTO> platformListStore = null;
     private ListStore<WeeklyResourcePlan> store = null;
     private Logger log = Logger.getLogger("EuphoriaLogger");
     
     private WeeklyResourcePlanProperties props;
     private EmployeeDTOProperties employeeProps;
+    private PlatformDTOProperties platformProps;
     
     private List<WeeklyResourcePlan> orgWeeklyResourcePlanList;
     private  ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs;
@@ -91,12 +99,13 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		
 		props = GWT.create(WeeklyResourcePlanProperties.class);
 		employeeProps = GWT.create(EmployeeDTOProperties.class);
+		platformProps = GWT.create(PlatformDTOProperties.class);
 		
 	    configs = new ArrayList<ColumnConfig<WeeklyResourcePlan, ?>>();
 	    
 	    ColumnModel<WeeklyResourcePlan> cm = new ColumnModel<WeeklyResourcePlan>(configs);
 	    
-	    ColumnConfig<WeeklyResourcePlan, String> platformColumn = new ColumnConfig<WeeklyResourcePlan, String>(props.platform(), 130, "Platform");
+	    ColumnConfig<WeeklyResourcePlan, PlatformDTO> platformColumn = new ColumnConfig<WeeklyResourcePlan, PlatformDTO>(props.platform(), 130, "Platform");
 	    platformColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
 	    
 	    createPlatformCombo();
@@ -246,7 +255,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	
 	private void createDeveloperCombo(){
 		
-		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.key());
+		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.employeeKey());
 		 developerCombo = new ComboBoxCell<EmployeeDTO>(employeeListStore, new LabelProvider<EmployeeDTO>() {
 		        @Override
 		        public String getLabel(EmployeeDTO item) {
@@ -271,19 +280,20 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	
 	private void createPlatformCombo(){
 		
-				
-		platformCombo = new ComboBoxCell<String>(Platforms.getAllPlatformsAsListStore(), new LabelProvider<String>() {
+	platformListStore = new ListStore<PlatformDTO>(platformProps.platformKey());
+	platformCombo = new ComboBoxCell<PlatformDTO>(platformListStore, new LabelProvider<PlatformDTO>() {
 	        @Override
-	        public String getLabel(String item) {
-	          return item;
+	        public String getLabel(PlatformDTO item) {
+	          return item.getPlatformId();
 	        }
 	      });
-	    
-	    platformCombo.addSelectionHandler(new SelectionHandler<String>() {
+
+	
+	    platformCombo.addSelectionHandler(new SelectionHandler<PlatformDTO>() {
 	   
 	        @Override
-	        public void onSelection(SelectionEvent<String> event) {
-	          CellSelectionEvent<String> sel = (CellSelectionEvent<String>) event;
+	        public void onSelection(SelectionEvent<PlatformDTO> event) {
+	          CellSelectionEvent<PlatformDTO> sel = (CellSelectionEvent<PlatformDTO>) event;
 	          WeeklyResourcePlan p = store.get(sel.getContext().getIndex());
 	          p.setPlatform(event.getSelectedItem());
 	          log.info("Platform Selected"+ p.getId() + " selected " + event.getSelectedItem());
@@ -292,6 +302,27 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    platformCombo.setTriggerAction(TriggerAction.ALL);
 	    platformCombo.setForceSelection(true);
 	    platformCombo.setWidth(110);
+	    
+	    EmployeeServiceAsync employeeService = GWT.create(EmployeeService.class);
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Loading data. Please wait...");
+		final AsyncCallback<List<PlatformDTO>> callback = new AsyncCallback<List<PlatformDTO>>() {
+
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(List<PlatformDTO> result) {
+				messageBox.hide();
+				platformCombo.getStore().replaceAll(result);
+			}
+		};
+	    employeeService.findAllPlatforms(callback);
+	    messageBox.auto();
+		messageBox.show();
 	}
 		  
 }

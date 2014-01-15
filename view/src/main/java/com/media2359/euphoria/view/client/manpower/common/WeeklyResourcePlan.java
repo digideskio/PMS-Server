@@ -11,13 +11,14 @@ package com.media2359.euphoria.view.client.manpower.common;
 
 import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 
 
 
 public class WeeklyResourcePlan {
 	String id;
 	
-	private String platform = "";
+	private PlatformDTO platform = null;
 	private EmployeeDTO developer = null;
 
 	private AllocationStatus day1Am = AllocationStatus.FREE;
@@ -40,7 +41,7 @@ public class WeeklyResourcePlan {
 		return developer;
 	}
 
-	public String getPlatform() {
+	public PlatformDTO getPlatform() {
 		return platform;
 	}
 
@@ -98,7 +99,7 @@ public class WeeklyResourcePlan {
 		this.developer = developer;
 	}
 	
-	public void setPlatform(String platform) {
+	public void setPlatform(PlatformDTO platform) {
 		this.platform = platform;
 	}
 

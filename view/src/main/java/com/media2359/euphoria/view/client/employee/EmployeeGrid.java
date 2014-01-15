@@ -61,7 +61,7 @@ public class EmployeeGrid extends Composite {
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<EmployeeDTO> {
 		@Path("employeeKey")
-		ModelKeyProvider<EmployeeDTO> key();
+		ModelKeyProvider<EmployeeDTO> employeeKey();
 		
 		ValueProvider<EmployeeDTO, String> name();
 		ValueProvider<EmployeeDTO, String> mobile();		
@@ -80,7 +80,7 @@ public class EmployeeGrid extends Composite {
 		
 		employeePresenter = new EmployeePresenter(this);
 		
-		listStore = new ListStore<EmployeeDTO>(gridProperties.key());
+		listStore = new ListStore<EmployeeDTO>(gridProperties.employeeKey());
 
 		ColumnConfig<EmployeeDTO, String> nameCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.name(), 150, "Name");

@@ -184,10 +184,6 @@ public class EmployeeDetailsWindow {
 			messageBox.auto();
 			messageBox.show();
 			
-		  
-//		  platformChecks = employeeDetailsCreator.createPlatforms();
-		  
-
 			List<HorizontalPanel> platformPanels=new ArrayList<HorizontalPanel>();
 		  if(platformChecks !=null && platformChecks.length > 1){
 				  
