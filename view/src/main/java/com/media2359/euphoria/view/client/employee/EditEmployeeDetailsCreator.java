@@ -96,6 +96,8 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	public Component createStartDate() {
 		  DateField field = new DateField();
 		  field.setAllowBlank(false);
+		  if(getDTOValue(S_DATE) == null)
+			  return field;
 		  if(!(getDTOValue(S_DATE) == null && ((String)getDTOValue(S_DATE)).isEmpty()))
 			  field.setOriginalValue((Date) getDTOValue(S_DATE));
 		  return field;
@@ -107,6 +109,8 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	@Override
 	public Component createEndDate() {
 		  DateField field = new DateField();
+		  if(getDTOValue(E_DATE) == null)
+			  return field;
 		  if(getDTOValue(E_DATE) != null && !getDTOValue(E_DATE).toString().contains("null")){
 			  field.setOriginalValue((Date) getDTOValue(E_DATE));
 			  field.setValue((Date) getDTOValue(E_DATE));
@@ -304,7 +308,6 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		case P_EMAIL:return (employeeDTO.getPersonalEmail()!=null?employeeDTO.getPersonalEmail():"");
 		case C_EMIAL:return (employeeDTO.getCompanyEmail()!=null?employeeDTO.getCompanyEmail():"");
 		case DESIGNATION:return (employeeDTO.getDesignation()!=null?employeeDTO.getDesignation():"");
-		//case PLATFORMS:return (employeeDTO.getPlatForms()!=null?employeeDTO.getPlatForms():"");
 		case PLATFORMS:return (employeeDTO.getPlatFormDtos()!=null?employeeDTO.getPlatFormDtos():"");
 		case EMPLOYMENT:return (employeeDTO.getEmploymentType()!=null?employeeDTO.getEmploymentType():"");
 		case MANDAY:return (employeeDTO.getMandayRate()!=null?employeeDTO.getMandayRate():"");

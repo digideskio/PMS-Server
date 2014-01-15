@@ -13,10 +13,18 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.client.core.*;
+import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
+import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
+import com.media2359.euphoria.view.server.employee.EmployeeService;
+import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.StringLabelProvider;
 import com.sencha.gxt.widget.core.client.Component;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
 import com.sencha.gxt.widget.core.client.form.DateField;
@@ -235,6 +243,9 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	@Override
 	public CheckBox[] createPlatforms() {
 		
+		
+		
+//		employeeService.findAllPlatforms(callback)(callback);
 		List<Platforms> allPlatforms =Platforms.getAllPlatforms();
 		   
 		   if(allPlatforms == null)

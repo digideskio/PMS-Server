@@ -13,10 +13,18 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
+import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
+import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
+import com.media2359.euphoria.view.server.employee.EmployeeService;
+import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.widget.core.client.Window;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.*;
 import com.sencha.gxt.widget.core.client.info.Info;
@@ -35,26 +43,34 @@ import com.sencha.gxt.widget.core.client.info.Info;
 public class EmployeeDetailsPresenter {
 
 	Logger log = Logger.getLogger("EuphoriaLogger");
-	public static final int ADD=0,VIEW=1,EDIT=2;
+	private int createType;
+	private EmployeePresenter empPresenter;
 		
+	public EmployeeDetailsPresenter(int createType, EmployeePresenter empPresenter) {
+		this.createType=createType;
+		this.empPresenter = empPresenter;
+	}
+
 	protected void submitButtonClicked(EmployeeDetailsWindow sourceWindow){
-	    if(sourceWindow.getFormPanel().isValid(false)){
-	    	boolean atleastOnePlatformSelected = false;
-	    	for(int i=0; i<=sourceWindow.getPlatformChecks().length; i++){
-	    		if(!sourceWindow.getPlatformChecks()[i].getValue())
-	    			continue;
-	    		atleastOnePlatformSelected = true;
-	    		break;
-	    	}
-	    	if(atleastOnePlatformSelected){
-	    		sourceWindow.getWindow().hide();		    	
-		    	saveEmployee(createEmployeeDTO(sourceWindow));
-	    	}else{
-	    		new Alert("Save", "Please select atleast one platform before you can save!");
-	    	}
-	    }else{
+	    if(createType==EmployeeDetailsWindow.ADD && !sourceWindow.getFormPanel().isValid(false))
+	    {
 	    	new Alert("Save", "Please correct highlighted errors before you can save!");
+	    	return;
 	    }
+    	
+	    boolean atleastOnePlatformSelected = false;
+    	for(int i=0; i<=sourceWindow.getPlatformChecks().length; i++){
+    		if(!sourceWindow.getPlatformChecks()[i].getValue())
+    			continue;
+    		atleastOnePlatformSelected = true;
+    		break;
+    	}
+    	if(atleastOnePlatformSelected){		    	
+	    	saveEmployee(createEmployeeDTO(sourceWindow),sourceWindow);
+    	}else{
+    		new Alert("Save", "Please select atleast one platform before you can save!");
+    	}
+	    
 	}
 
 	protected void cancelButtonClicked(EmployeeDetailsWindow sourceWindow){
@@ -89,12 +105,40 @@ public class EmployeeDetailsPresenter {
 	
 	protected void editButtonClicked(EmployeeDetailsWindow sourceWindow) {
 		sourceWindow.getWindow().hide();
-		new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,sourceWindow.getEmployeeDTO()).show();
+		new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,sourceWindow.getEmployeeDTO(),empPresenter).show();
 		
 	}
 	
-	private void saveEmployee(EmployeeDTO employeeDTO){
-		Info.display("Save", "Employee saved!");
+	private void saveEmployee(EmployeeDTO employeeDTO, final EmployeeDetailsWindow sourceWindow){
+		
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Saving Employee. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				sourceWindow.getWindow().hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				log.info("#!#!#!#!#!#! Saving Employee Successful#!#!#!#!");
+				messageBox.hide();	
+				sourceWindow.getWindow().hide();
+				empPresenter.loadData();
+			}
+
+		};
+		log.info("#!#!#!#!#!#! Saving Employee #!#!#!#!");
+		
+	
+		if(createType == EmployeeDetailsWindow.ADD)
+			empPresenter.getEmployeeService().addEmployee(employeeDTO, callback);
+		else if(createType == EmployeeDetailsWindow.EDIT)
+			empPresenter.getEmployeeService().modifyEmployee(employeeDTO, callback);
+		messageBox.auto();
 	}
 
 	private void createAccount(EmployeeDTO employeeDTO){
@@ -129,13 +173,9 @@ public class EmployeeDetailsPresenter {
 			}	
 			
 		}
-		
-		/*if(platform.length()>0)
-			platform.deleteCharAt(platform.length());
-		
-		employeeDTO.setPlatForms(platform.toString());*/
+	
 		employeeDTO.setPlatFormDtos(platFormDtos);
-		log.info(employeeDTO.toString());
+//		log.info(employeeDTO.toString());
 		return employeeDTO;
 	}
 

@@ -13,12 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
+import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
+import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
+import com.media2359.euphoria.view.server.employee.EmployeeService;
+import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.Window;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
@@ -65,21 +74,23 @@ public class EmployeeDetailsWindow {
 	  private EmployeeDetailsPresenter employeeDetailsPresenter;
 	  
 	  private EmployeeDTO employeeDTO;
-
-	  public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO){
+	  private EmployeePresenter empPresenter;
+	  	  
+	  public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO, EmployeePresenter empPresenter){
 		  this.employeeDTO=employeeDTO;
+		  this.empPresenter = empPresenter;
 		  switch (createType){
 			  case ADD: employeeDetailsCreator = new NewEmployeeDetailsCreator();break;
 			  case VIEW: employeeDetailsCreator = new ViewEmployeeDetailsCreator(employeeDTO);break;
 			  case EDIT: employeeDetailsCreator = new EditEmployeeDetailsCreator(employeeDTO);break;
 			  default: employeeDetailsCreator = new ViewEmployeeDetailsCreator(employeeDTO);break;
 		  }
-		  createNewWindow();
-		  employeeDetailsPresenter = new EmployeeDetailsPresenter();
+		  createNewWindow(createType,employeeDTO);
+		  employeeDetailsPresenter = new EmployeeDetailsPresenter(createType, empPresenter);
 	  }  
 	  
 	  @SuppressWarnings("unchecked")
-	private void createNewWindow(){  
+	private void createNewWindow(final int createType,final EmployeeDTO employeeDTO){  
 		  
 		  
 		  name = employeeDetailsCreator.createName();
@@ -94,10 +105,90 @@ public class EmployeeDetailsWindow {
 		  endDate = employeeDetailsCreator.createEndDate();
 		  status = employeeDetailsCreator.createStatus();
 		  
-		  platformChecks = employeeDetailsCreator.createPlatforms();
-		  log.info("Number of check boxes returned are "+platformChecks.length);
+			final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+					"Progress", "Loading data. Please wait...");
+			final AsyncCallback<List<PlatformDTO>> callback = new AsyncCallback<List<PlatformDTO>>() {
 
-		  List<HorizontalPanel> platformPanels=new ArrayList<HorizontalPanel>();
+				public void onFailure(Throwable caught) {
+					messageBox.hide();
+					AlertMessageBox alert = new AlertMessageBox("Error",
+							caught.getMessage());
+					alert.show();
+				}
+
+				public void onSuccess(List<PlatformDTO> result) {
+					messageBox.hide();
+					
+					platformChecks = new CheckBox[result.size()];
+					
+					for(int i=0; i<result.size();i++){
+						platformChecks[i]= new CheckBox();
+						platformChecks[i].setBoxLabel(result.get(i).getPlatformId());
+						if(createType == VIEW){
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+							platformChecks[i].setReadOnly(true);
+						}else if (createType == EDIT){
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+						}
+					}
+					
+					log.info("Number of check boxes returned are "+platformChecks.length);
+					
+					List<HorizontalPanel> platformPanels=new ArrayList<HorizontalPanel>();
+					  if(platformChecks !=null && platformChecks.length > 1){
+							  
+						  for(int i=0;i<(int) Math.ceil((double)platformChecks.length/4.0); i++){
+							  HorizontalPanel hPanel = new HorizontalPanel();
+							  for(int j=(i*4); j<=(i*4)+3; j++){
+								  if(j>=platformChecks.length)
+									  break;
+								   hPanel.add(platformChecks[j]); 	
+							  }
+							  platformPanels.add(hPanel) ;
+						  }
+					  }
+					  
+					  VerticalLayoutContainer p = new VerticalLayoutContainer();
+					  p.add(new FieldLabel(name, "Full Name"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(mobile, "Mobile Number"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(personalEmail, "Personal Email"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(companyEmail, "Company Email"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(designation, "Designation"), new VerticalLayoutData(1, 35));
+
+					  if(platformPanels.size()>0){
+						  for(int i=0; i<platformPanels.size(); i++)
+						  {
+							  if(i != 0 )
+								  p.add(new FieldLabel(platformPanels.get(i)), new VerticalLayoutData(1, 35));	
+							  else
+								  p.add(new FieldLabel(platformPanels.get(i), "Platform"), new VerticalLayoutData(1, 35));	
+						  }
+					  }
+					  p.add(new FieldLabel(employment, "Employment Type"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(mandayRate, "Manday Rate"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(assignedOffice, "Assigned Office"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(startDate, "Start Date"), new VerticalLayoutData(1, 35));
+					  p.add(new FieldLabel(endDate, "End Date"), new VerticalLayoutData(1, 35));		  
+					  p.add(new FieldLabel(status, "Status"), new VerticalLayoutData(1, 35));
+					  
+					  
+					  formPanel.remove(0);
+					  formPanel.add(p);
+					  
+					  window.setPixelSize(500, p.getWidgetCount()*50);
+
+				}
+
+			};
+			empPresenter.getEmployeeService().findAllPlatforms(callback);
+			messageBox.auto();
+			messageBox.show();
+			
+		  
+//		  platformChecks = employeeDetailsCreator.createPlatforms();
+		  
+
+			List<HorizontalPanel> platformPanels=new ArrayList<HorizontalPanel>();
 		  if(platformChecks !=null && platformChecks.length > 1){
 				  
 			  for(int i=0;i<(int) Math.ceil((double)platformChecks.length/4.0); i++){

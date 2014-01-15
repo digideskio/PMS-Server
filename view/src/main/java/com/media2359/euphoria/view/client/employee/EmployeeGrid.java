@@ -28,6 +28,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.media2359.euphoria.view.client.core.DeleteCell;
 import com.media2359.euphoria.view.client.core.EditCell;
 import com.media2359.euphoria.view.client.core.ViewCell;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
@@ -66,7 +68,7 @@ public class EmployeeGrid extends Composite {
 		ValueProvider<EmployeeDTO, String> personalEmail();		
 		ValueProvider<EmployeeDTO, String> companyEmail();		
 		ValueProvider<EmployeeDTO, String> designation();		
-		ValueProvider<EmployeeDTO, String> platForms();		
+		ValueProvider<EmployeeDTO, String> platforms();		
 		ValueProvider<EmployeeDTO, String> employmentType();
 	}
 
@@ -76,7 +78,7 @@ public class EmployeeGrid extends Composite {
 
 	public EmployeeGrid() {
 		
-		employeePresenter = new EmployeePresenter();
+		employeePresenter = new EmployeePresenter(this);
 		
 		listStore = new ListStore<EmployeeDTO>(gridProperties.key());
 
@@ -87,13 +89,19 @@ public class EmployeeGrid extends Composite {
 		ColumnConfig<EmployeeDTO, String> emailCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.companyEmail(), 300, "Email Address");
 		ColumnConfig<EmployeeDTO, String> platformsCol = new ColumnConfig<EmployeeDTO, String>(
-				gridProperties.platForms(), 300, "Platforrm");
+				gridProperties.platforms(), 300, "Platforrm");
 		ColumnConfig designationCol = new ColumnConfig<EmployeeDTO, String>(
 				gridProperties.designation(), 150, "Designation");
 		ColumnConfig<EmployeeDTO, String> editCol = new ColumnConfig<EmployeeDTO, String>(
-				gridProperties.name(), 150, "Edit");
+				gridProperties.name(),100, "Edit");
+		ColumnConfig<EmployeeDTO, String> delCol = new ColumnConfig<EmployeeDTO, String>(
+				gridProperties.name(),100, "Delete");
 		
+		
+		editCol.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		delCol.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		populateEditButton(editCol);
+		populateDeleteButton(delCol);
 		  
 		List<ColumnConfig<EmployeeDTO, ?>> columns = new ArrayList<ColumnConfig<EmployeeDTO, ?>>();
 		columns.add(nameCol);
@@ -102,6 +110,7 @@ public class EmployeeGrid extends Composite {
 		columns.add(platformsCol);
 		columns.add(designationCol);
 		columns.add(editCol);
+		columns.add(delCol);
 		ColumnModel<EmployeeDTO> columnModel = new ColumnModel<EmployeeDTO>(columns);
 		
 		gridView = new GridView<EmployeeDTO>();
@@ -132,11 +141,30 @@ public class EmployeeGrid extends Composite {
 		editCol.setCell(image);
 		
 	}
+
+	private void populateDeleteButton(ColumnConfig delCol){		
+
+		delCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
+		delCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
+		DeleteCell image = new DeleteCell();
+
+		image.addSelectHandler(new SelectHandler() {
+			
+			public void onSelect(SelectEvent event) {
+				
+				employeePresenter.deleteEmployeeDetailsButtonClicked(event,listStore);
+				
+			}
+		});
+		delCol.setCell(image);
+		
+	}
+
 	
 	private void addFilters(){
 
 		StringFilter<EmployeeDTO> nameFilter = new StringFilter<EmployeeDTO>(gridProperties.name());
-		StringFilter<EmployeeDTO> platformFilter = new StringFilter<EmployeeDTO>(gridProperties.platForms());
+		StringFilter<EmployeeDTO> platformFilter = new StringFilter<EmployeeDTO>(gridProperties.platforms());
 		StringFilter<EmployeeDTO> designationFilter = new StringFilter<EmployeeDTO>(gridProperties.designation());
 		GridFilters<EmployeeDTO> filters = new GridFilters<EmployeeDTO>();
 		filters.initPlugin(grid);

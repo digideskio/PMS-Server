@@ -43,8 +43,6 @@ public class EmployeePanel extends Composite {
 	
 	EmployeePanelUiBinder uiBinder = GWT.create(EmployeePanelUiBinder.class);
 
-	private EmployeeServiceAsync employeeService = GWT
-			.create(EmployeeService.class);
 	
 	@UiField
 	EmployeeGrid employeeGrid;
@@ -55,7 +53,7 @@ public class EmployeePanel extends Composite {
 	 */
 	public EmployeePanel() {
 		initWidget(uiBinder.createAndBindUi(this));
-		employeePresenter = new EmployeePresenter(employeeGrid,employeeService);
+		employeePresenter = new EmployeePresenter(employeeGrid);
 		/**
 		 * Fetch the data when this panel is shown
 		 */

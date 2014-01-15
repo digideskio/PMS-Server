@@ -13,16 +13,22 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
 import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
+import com.media2359.euphoria.view.server.employee.EmployeeService;
 import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
+import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.CellClickEvent;
+import com.sencha.gxt.widget.core.client.event.HideEvent;
+import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.info.Info;
 
@@ -37,18 +43,12 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
   public class EmployeePresenter {
   private EmployeeGrid employeeGrid;
-  private EmployeeServiceAsync employeeService;
   private Logger log = Logger.getLogger("EuphoriaLogger");
   private static List<EmployeeDTO> employees;
+  private final EmployeeServiceAsync employeeService = GWT.create(EmployeeService.class);
   
-  
-  public EmployeePresenter(){
-	  
-  }
-  
-  public EmployeePresenter(EmployeeGrid employeeGrid, EmployeeServiceAsync employeeService){
+  public EmployeePresenter(EmployeeGrid employeeGrid){
 	  this.employeeGrid = employeeGrid;
-	  this.employeeService = employeeService;
 	  
   }
   
@@ -68,7 +68,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
 		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 				"Progress", "Loading data. Please wait...");
 		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>() {
-
+	  
 			public void onFailure(Throwable caught) {
 				messageBox.hide();
 				AlertMessageBox alert = new AlertMessageBox("Error",
@@ -85,7 +85,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
 			}
 
 		};
-		log.info("Getting all Employees to EmployeeSummaryPanel");
+			
 		employeeService.getAllEmployees(new EmployeeListRequest(), callback);
 		messageBox.auto();
 		messageBox.show();
@@ -93,7 +93,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
   protected void addButtonClicked(SelectEvent event){
 	    Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
 	    
-	    new EmployeeDetailsWindow(EmployeeDetailsWindow.ADD,null).show();
+	    new EmployeeDetailsWindow(EmployeeDetailsWindow.ADD,null,this).show();
   }
   
   
@@ -102,7 +102,49 @@ import com.sencha.gxt.widget.core.client.info.Info;
       Context c = event.getContext();
       int row = c.getIndex();
       EmployeeDTO p = listStore.get(row);
-	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p).show();
+	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p,this).show();
+  }
+  
+  protected void deleteEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
+	  
+      Context c = event.getContext();
+      int row = c.getIndex();
+      final EmployeeDTO p = listStore.get(row);
+      
+      final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Deleting data. Please wait...");
+		
+		
+	  final ConfirmMessageBox mb = new ConfirmMessageBox("Confirmation Required", "Please Confirm you wish to delete record of '"+p.getName()+"' !");
+	    mb.addHideHandler(new HideHandler() {
+	      public void onHide(HideEvent event) {
+	        if (mb.getHideButton() == mb.getButtonById(PredefinedButton.YES.name())) {
+	        	
+	        	final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	        		  
+	    			public void onFailure(Throwable caught) {
+	    				messageBox.hide();
+	    				AlertMessageBox alert = new AlertMessageBox("Error",
+	    						caught.getMessage());
+	    				alert.show();
+	    			}
+
+	    			public void onSuccess(String result) {
+	    				messageBox.hide();
+	    				loadData();		
+	    			}
+
+	    		};
+	        	
+	        	employeeService.deleteEmployee(p, callback);
+	        	messageBox.auto();
+	    		messageBox.show();
+	        }
+	      }
+	    });
+//	    mb.setWidth(40);
+	    mb.show();
+	    		
   }
   
   private void populateEmployeeGrid(){
@@ -115,13 +157,16 @@ import com.sencha.gxt.widget.core.client.info.Info;
 		
   }
   
+  public EmployeeServiceAsync getEmployeeService(){
+	  return employeeService;
+  }
   
   protected void gridCellClicked(CellClickEvent event, ListStore<EmployeeDTO> listStore){
 	  
      if(event.getCellIndex()>4)
     	 return;
      EmployeeDTO p = listStore.get(event.getRowIndex());
-	 new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p).show();
+	 new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p, this).show();
   }
   
   

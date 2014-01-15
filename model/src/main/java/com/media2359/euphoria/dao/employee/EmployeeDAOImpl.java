@@ -109,7 +109,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	public void addEmployee(Employee employee) {
 		Session session = this.getSession();
 		try{
-
+		log.info("#!#!#!#!#!  Adding Employeee...#!#!#!#!");
 		session.beginTransaction();
 		session.save(employee);
 		session.getTransaction().commit();
@@ -121,6 +121,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public void deleteEmployee(Integer employeeKey) {
+		log.info("#!#!#!#!#!  Deleting Employeee...#!#!#!#!");
 		Session session = this.getSession();
 		try{
 		Transaction tx1 = session.beginTransaction();
@@ -139,6 +140,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	
 	@SuppressWarnings("unchecked")
 	public void updateEmployee(Employee employee) {
+		log.info("#!#!#!#!#!  Updating Employeee...#!#!#!#!");
 		Session session = this.getSession();
 		try{
 		Transaction tx1 = session.beginTransaction();

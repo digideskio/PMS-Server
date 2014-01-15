@@ -11,6 +11,7 @@ package com.media2359.euphoria.view.dto.employee;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
@@ -84,6 +85,24 @@ public class EmployeeDTO implements Serializable {
 	public Set<PlatformDTO> getPlatFormDtos() {
 		return platFormDtos;
 	}
+	
+	public String getPlatforms(){
+		
+		String platforms =  "";
+		Iterator i = platFormDtos.iterator();
+		
+		while(i.hasNext())
+		{
+			platforms += ((PlatformDTO)i.next()).getPlatformId();
+			if(i.hasNext())
+			platforms +=",";		
+		}
+		
+		return platforms;
+		
+		
+	}
+	
 	public void setPlatFormDtos(Set<PlatformDTO> platFormDtos) {
 		this.platFormDtos = platFormDtos;
 	}
