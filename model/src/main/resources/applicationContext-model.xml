@@ -25,6 +25,7 @@
 	        <value>com.media2359.euphoria.model.user.Role</value>
 	        <value>com.media2359.euphoria.model.employee.EmployeeLeave</value>
 	        <value>com.media2359.euphoria.model.employee.Holiday</value>
+	        <value>com.media2359.euphoria.model.milestone.ProjectMilestone</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">
