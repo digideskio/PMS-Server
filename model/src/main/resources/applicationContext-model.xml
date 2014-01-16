@@ -23,6 +23,7 @@
 	        <value>com.media2359.euphoria.model.project.ProjectTeamEmployeeXref</value>
 	        <value>com.media2359.euphoria.model.user.User</value>
 	        <value>com.media2359.euphoria.model.user.Role</value>
+	        <value>com.media2359.euphoria.model.employee.EmployeeLeave</value>
 	      </list>
 	    </property>
  	    <property name="hibernateProperties">
@@ -59,6 +60,10 @@
     </bean>
     
     <bean id="userDao" class="com.media2359.euphoria.dao.user.UserDAOImpl">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="employeeLeaveDao" class="com.media2359.euphoria.dao.employee.EmployeeLeaveDAOImpl">
     	<property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
