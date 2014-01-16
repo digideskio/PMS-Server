@@ -13,5 +13,6 @@ gwt-unitCache/
 .gwt
 .metadata/
 .project
+.sonar/
 view/src/main/gwt-unitCache/
 **/.gwt*

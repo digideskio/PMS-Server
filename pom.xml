@@ -6,7 +6,7 @@
 	<groupId>com.media2359</groupId>
 	<artifactId>euphoria-main</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1-alpha-2</version>
+	<version>1.0.2-SNAPSHOT</version>
 
 	<name>Euphoria Project Management System</name>
 
@@ -26,6 +26,8 @@
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<gxt.version>3.0.1</gxt.version>
 		<gwt.localWorkers>2</gwt.localWorkers>
+		
+		 <sonar.language>java</sonar.language>
 	</properties>
 
 	<!-- Global repositories -->
