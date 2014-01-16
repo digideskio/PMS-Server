@@ -3,6 +3,7 @@ package com.media2359.euphoria.view.client.manpower.common;
 import com.google.gwt.editor.client.Editor.Path;
 import com.media2359.euphoria.view.client.core.AllocationStatus;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
@@ -12,7 +13,8 @@ public interface WeeklyResourcePlanProperties extends
 	@Path("id")
 	ModelKeyProvider<WeeklyResourcePlan> key();
 
-	ValueProvider<WeeklyResourcePlan, String> platform();
+	//@Path("platform.platformId")
+	ValueProvider<WeeklyResourcePlan, PlatformDTO> platform();
 	
 	ValueProvider<WeeklyResourcePlan, EmployeeDTO> developer();
 	

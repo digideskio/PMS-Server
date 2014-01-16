@@ -25,20 +25,20 @@
 			background-color: black;
 			background-image: url("/static/images/header_bg.gif");
 			background-repeat: repeat-x;
-			z-index: -50
 		}
 		
 		.header-left {
 			background: url(/static/images/2359medialogo.png) no-repeat;
 			display: inline-block;
 			padding-left: 10px;
-			width: 70%
+			width: 80%
 		}
 		
 		.header-right {
 			font-size: 13px;
-			color: white;
 			padding: 10%;
+			cursor: pointer;
+			z-index: 500;
 		}
 		
 		.footerText {
@@ -52,7 +52,6 @@
 			color: blue;
 			padding: 10%;
 			cursor: pointer;
-			z-index: 10
 		}
 		
 		.view-body {
@@ -128,8 +127,7 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
 		field="westData">
-		<ui:attributes size="0.2" margins="{westMargins}"
-			collapsible="true" split="true" />
+		<ui:attributes size="0.1" margins="{westMargins}" hidden="true"/>
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
@@ -139,8 +137,7 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
 		field="eastData">
-		<ui:attributes size="0.1" margins="{eastMargins}"
-			hidden="true" />
+		<ui:attributes size="0.1" margins="{eastMargins}" hidden="true" />
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
@@ -177,6 +174,7 @@
 										styleName="{style.header-right}" icon="{resources.gear}">
 										<button:menu>
 											<menu:Menu ui:field="buttonMenu">
+												<menu:MenuItem text="Settings" ui:field="settingsButton"/>
 												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
 											</menu:Menu>
 										</button:menu>
@@ -189,7 +187,7 @@
 					</container:HorizontalLayoutContainer>
 				</container:north>
 				<container:west layoutData="{westData}">
-					<gxt:ContentPanel width="15%" headingText="Quick Menu" />
+					<gxt:ContentPanel width="0%" />
 				</container:west>
 				<container:center layoutData="{centerData}">
 					<container:SimpleContainer width="85%">
@@ -207,7 +205,7 @@
 								<project:ProjectSummaryPanel />
 							</gxt:child>
 							<gxt:child config="{staffrollConfig}">
-								<employee:EmployeePanel></employee:EmployeePanel>
+								<employee:EmployeePanel />
 							</gxt:child>
 						</gxt:TabPanel>
 					</container:SimpleContainer>

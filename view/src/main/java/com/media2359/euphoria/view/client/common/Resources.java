@@ -7,7 +7,7 @@ import com.google.gwt.resources.client.ImageResource;
 public interface Resources extends ClientBundle {
 	public Resources INSTANCE = GWT.create(Resources.class);
 
-	@Source("manager.png")
+	@Source("staff.png")
 	ImageResource manager();
 
 	@Source("dashboard.png")
