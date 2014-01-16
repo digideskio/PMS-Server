@@ -3,6 +3,7 @@ package com.media2359.euphoria.view.client.manpower.common;
 import java.util.Date;
 import java.util.List;
 
+import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 public class ProjectAllocationDTO {

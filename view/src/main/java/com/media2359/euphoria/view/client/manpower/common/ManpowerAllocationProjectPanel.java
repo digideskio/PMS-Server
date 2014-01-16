@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -27,12 +28,12 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.core.AllocationGridColorCell;
-import com.media2359.euphoria.view.client.core.AllocationStatus;
-import com.media2359.euphoria.view.client.core.Platforms;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.dto.util.AllocationStatus;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
 import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
@@ -121,28 +122,28 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    cm.addHeaderGroup(0, 0, new HeaderGroupConfig("Platform/Developer", 1, 2));
 	      
 	    
-	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Am(), 100, "AM");
-		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1Pm(), 100, "PM");
+	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1AmEnm(), 100, "AM");
+		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2AmEnm(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
 
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3AmEnm(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4AmEnm(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Am(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5Pm(), 100, "PM");
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5AmEnm(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
 		
@@ -174,11 +175,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
 		resourcePlan.setId("1");
-		resourcePlan.setDay1Am(AllocationStatus.SELECTED);
-		resourcePlan.setDay1Pm(AllocationStatus.LEAVE);
-		resourcePlan.setDay2Am(AllocationStatus.EXCEEDED);
-		resourcePlan.setDay2Pm(AllocationStatus.HOLIDAY);
-		resourcePlan.setDay3Am(AllocationStatus.SELECTED_EXCEEDED);
+		resourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
+		resourcePlan.setDay1PmEnm(AllocationStatus.LEAVE);
+		resourcePlan.setDay2AmEnm(AllocationStatus.EXCEEDED);
+		resourcePlan.setDay2PmEnm(AllocationStatus.HOLIDAY);
+		resourcePlan.setDay3AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 		weeklyResourcePlanList.add(resourcePlan);
 				
 		response.setWeeklyResourcePlanList(weeklyResourcePlanList);

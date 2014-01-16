@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
+
 public class WeeklyResourcePlanResponse {
 	Date weekStartDate;
 	List<WeeklyResourcePlan> weeklyResourcePlanList;

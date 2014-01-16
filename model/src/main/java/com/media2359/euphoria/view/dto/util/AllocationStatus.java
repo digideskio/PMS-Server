@@ -7,15 +7,10 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.core;
+package com.media2359.euphoria.view.dto.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ImageResource;
-import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.data.shared.ModelKeyProvider;
 
 
 /**

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
+
 public class ProjectAllocationDTO {
 	ProjectDTO projectDTO;
 	
