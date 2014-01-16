@@ -10,6 +10,9 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
+import java.util.Set;
+
+import com.media2359.euphoria.model.milestone.ProjectMilestone;
 
 public class ProjectDTO implements Serializable {
 	private Integer id;
@@ -19,6 +22,7 @@ public class ProjectDTO implements Serializable {
 	private Integer manDaysLeft;
 	private Integer milestoneCount;
 	private Integer completedMilestoneCount;
+	private Set<ProjectMilestone> projectMilestone;
 
 	public ProjectDTO() {
 
@@ -81,6 +85,15 @@ public class ProjectDTO implements Serializable {
 	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
 		this.completedMilestoneCount = completedMilestoneCount;
 	}
+
+	public Set<ProjectMilestone> getProjectMilestone() {
+		return projectMilestone;
+	}
+
+	public void setProjectMilestone(Set<ProjectMilestone> projectMilestone) {
+		this.projectMilestone = projectMilestone;
+	}
+	
 	
 	/*
 	 * Prepares the Project froom the projectDTO

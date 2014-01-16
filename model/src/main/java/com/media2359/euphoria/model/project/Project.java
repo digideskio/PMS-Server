@@ -13,10 +13,13 @@ import java.util.Set;
 
 import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
+import com.media2359.euphoria.model.milestone.ProjectMilestone;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -24,7 +27,9 @@ import javax.persistence.Id;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.FetchType;;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -45,6 +50,7 @@ public class Project implements java.io.Serializable{
 	private ProjectTeam projectTeam;
 	private Set<PlatformProjection> platformProjections;
 	private Set<ProjectDocument> projectDocuments;
+	private Set<ProjectMilestone> projectMilestone;
 
 	public Project() {
 		// TODO Auto-generated constructor stub
@@ -58,6 +64,7 @@ public class Project implements java.io.Serializable{
 		this.manDaysLeft=dto.getManDaysLeft();
 		this.milestoneCount=dto.getMilestoneCount();
 		this.completedMilestoneCount=dto.getMilestoneCount();
+		this.projectMilestone =dto.getProjectMilestone();
 	}
 
 	/**
@@ -138,7 +145,15 @@ public class Project implements java.io.Serializable{
 		this.completedMilestoneCount = completedMilestoneCount;
 	}
 	
-	
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="project")
+	public Set<ProjectMilestone> getProjectMilestone() {
+		return projectMilestone;
+	}
+
+	public void setProjectMilestone(Set<ProjectMilestone> projectMilestone) {
+		this.projectMilestone = projectMilestone;
+	}
+
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
 		projectDTO.setId(getId());
@@ -148,6 +163,8 @@ public class Project implements java.io.Serializable{
 		projectDTO.setManDaysLeft(getManDaysLeft());
 		projectDTO.setMilestoneCount(getMilestoneCount());
 		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
+		projectDTO.setProjectMilestone(getProjectMilestone());
+		
 		return projectDTO;
 	}
 
@@ -162,7 +179,7 @@ public class Project implements java.io.Serializable{
 				+ ", weeklyManpowerAllocations=" + weeklyManpowerAllocations
 				+ ", projectTasks=" + projectTasks + ", projectTeam="
 				+ projectTeam + ", platformProjections=" + platformProjections
-				+ ", projectDocuments=" + projectDocuments + "]";
+				+ ", projectDocuments=" + projectDocuments
+				+ ", projectMilestone=" + projectMilestone + "]";
 	}
-	
 }

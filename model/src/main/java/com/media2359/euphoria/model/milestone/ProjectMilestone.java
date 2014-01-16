@@ -180,7 +180,7 @@ public class ProjectMilestone implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "ProjectMilestone [milestoneKey=" + milestoneKey + ", project="
-				+ project + ", milestoneDate=" + milestoneDate
+				+ project.getName() + ", milestoneDate=" + milestoneDate
 				+ ", milestoneDesc=" + milestoneDesc + ", createdById="
 				+ createdById + ", createTstamp=" + createTstamp
 				+ ", lastUpdById=" + lastUpdById + ", lastUpdTstamp="
