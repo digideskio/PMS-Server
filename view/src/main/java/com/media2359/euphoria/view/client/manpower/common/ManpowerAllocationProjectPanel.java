@@ -110,7 +110,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    platformColumn.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 2px 3px;"));
 	    
 	    createPlatformCombo();
-	    //platformColumn.setCell(platformCombo);
+	    platformColumn.setCell(platformCombo);
 
         
 	    ColumnConfig<WeeklyResourcePlan, EmployeeDTO> developerColumn = new ColumnConfig<WeeklyResourcePlan, EmployeeDTO>(props.developer(), 130, "Developer");
