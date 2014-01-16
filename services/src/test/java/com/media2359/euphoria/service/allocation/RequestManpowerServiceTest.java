@@ -52,7 +52,7 @@ public class RequestManpowerServiceTest {
 		Integer projectId = projectService.getMaxKey();
 		projectDTO = projectService.getProjectDetails(projectId);
 		
-		projectAllocationDTO.setProjectId(projectId);
+		projectAllocationDTO.setProjectDTO(projectDTO);
 		
 		
 		
@@ -105,7 +105,7 @@ public class RequestManpowerServiceTest {
 	public void test2RequestManpower(){
 		ProjectAllocationDTO projectAllDto =requestManpowerService.
 				requestManpower(projectDTO,startOfWeek);
-		//Assert.notNull(projectAllDto);
+		Assert.notNull(projectAllDto);
 		
 	}
 	

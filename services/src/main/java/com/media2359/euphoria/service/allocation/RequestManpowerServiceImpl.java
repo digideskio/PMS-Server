@@ -67,7 +67,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 				List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 				List<PlatformRequest> platformReqList = platformRequestDao.findAllPlatformRequest(weeklyManpowerReqList.get(0));
 				
-				projectAllocationDTO.setProjectId(project.getId());
+				projectAllocationDTO.setProjectDTO(project.createProjectDTO());
 				projectAllocationDTO.setStartOfWeek(startDate);
 				
 				for(PlatformRequest platformreq : platformReqList){
@@ -135,8 +135,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			weeklyManpowerRequest = new WeeklyManpowerRequest();
 			platformRequestList = new ArrayList<PlatformRequest>();
 			
-			Project project = new Project();
-			project.setId(projectAllocationDto.getProjectId());
+			Project project = new Project(projectAllocationDto.getProjectDTO());
 			weeklyManpowerRequest.setProject(project);
 			weeklyManpowerRequest.setStartDate(projectAllocationDto.getStartOfWeek());
 			

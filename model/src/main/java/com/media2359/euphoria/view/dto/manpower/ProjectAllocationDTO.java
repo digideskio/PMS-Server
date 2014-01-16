@@ -3,17 +3,21 @@ package com.media2359.euphoria.view.dto.manpower;
 import java.util.Date;
 import java.util.List;
 
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
+
 public class ProjectAllocationDTO {
-	Integer projectId;
+	ProjectDTO projectDTO;
+	
 	Date startOfWeek;
 	List<WeeklyResourcePlan> weeklyResourcePlan;
 	
 	
-	public Integer getProjectId() {
-		return projectId;
+	
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
 	}
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
 	}
 	public Date getStartOfWeek() {
 		return startOfWeek;
