@@ -10,28 +10,21 @@
 package com.media2359.euphoria.view.client.main;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
-import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.TabPanel;
-import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.HideEvent;
-import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 
 public class MainPanel extends Composite {
 	interface MyUiBinder extends UiBinder<Widget, MainPanel> {
 
 	}
 
-	@UiField Label welcomelabel;
+	@UiField TextButton welcomelabel;
 	@UiField BorderLayoutContainer con;
 	@UiField TabPanel maintab;
 	
@@ -59,7 +52,7 @@ public class MainPanel extends Composite {
 	public static native String getUsername()/*-{
     	return $wnd.getLoginUsername();
 	}-*/; 
-	
+	/*
 	@UiHandler("logoutButton")
 	public void handleLogout(ClickEvent clickEvent) {
 		final ConfirmMessageBox confirm = new ConfirmMessageBox("Confirmation","Are you sure you want to logout?");
@@ -74,5 +67,5 @@ public class MainPanel extends Composite {
 		        }
 		      });
 		confirm.show();
-	}
+	}*/
 }

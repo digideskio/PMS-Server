@@ -1,94 +1,152 @@
 <!-- HelloWidgetWorld.ui.xml -->
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" 
-	xmlns:menu="urn:import:com.sencha.gxt.widget.core.client.menu"
+	xmlns:gxt="urn:import:com.sencha.gxt.widget.core.client" xmlns:menu="urn:import:com.sencha.gxt.widget.core.client.menu"
 	xmlns:button="urn:import:com.sencha.gxt.widget.core.client.button"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:container="urn:import:com.sencha.gxt.widget.core.client.container"
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
 	xmlns:dashboard="urn:import:com.media2359.euphoria.view.client.dashboard"
 	xmlns:manpowerrqst="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.request"
 	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee"
 	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
-	
-	
+
+	<ui:with type="com.media2359.euphoria.view.client.common.Resources"
+		field="resources" />
+
 	<ui:style>
-		.little-padding{padding:10px;font-size:14px;}
-		.header{font-family:Arial, Verdana,Trebuchet MS, Lucida, Helvetica, Sans-Serif;background-color:black;background-image:url("/static/images/header_bg.gif");background-repeat:repeat-x;z-index:-50}
-		.header-left{background: url(/static/images/2359medialogo.png) no-repeat;display:inline-block; padding-left: 10px; width: 70%}
-		.header-right{font-size:13px;color:white;padding:10%;}
-		.footerText{font-size:13px;text-align: center;font-family:Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;}	
-		.logout{font-size:12px;color:blue;padding:10%;cursor:pointer}
-		.view-body{font-size:12px;font-family:Arial,Verdana}
+		.little-padding {
+			padding: 10px;
+			font-size: 14px;
+		}
+		
+		.header {
+			font-family: Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;
+			background-color: black;
+			background-image: url("/static/images/header_bg.gif");
+			background-repeat: repeat-x;
+			z-index: -50
+		}
+		
+		.header-left {
+			background: url(/static/images/2359medialogo.png) no-repeat;
+			display: inline-block;
+			padding-left: 10px;
+			width: 70%
+		}
+		
+		.header-right {
+			font-size: 13px;
+			color: white;
+			padding: 10%;
+		}
+		
+		.footerText {
+			font-size: 13px;
+			text-align: center;
+			font-family: Arial, Verdana, Trebuchet MS, Lucida, Helvetica, Sans-Serif;
+		}
+		
+		.logout {
+			font-size: 12px;
+			color: blue;
+			padding: 10%;
+			cursor: pointer;
+			z-index: 10
+		}
+		
+		.view-body {
+			font-size: 12px;
+			font-family: Arial, Verdana
+		}
 	</ui:style>
-   
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="dashboardConfig">
-   		<ui:attributes text="Dashboard    " />
-   </ui:with>
-   
-   <ui:with type="com.sencha.gxt.widget.core.client.button.IconButton.IconConfig" field="logoutButtonConfig">
-   		<ui:attributes style="{style.logout}" overStyle="{style.logout}" disableStyle="{style.logout}"/>
-   </ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="requestConfig">
-   		<ui:attributes text="Manpower Requests    " />
-   </ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+		field="dashboardConfig">
+		<ui:attributes text="Dashboard    " icon="{resources.dashboard}" />
+	</ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="approvalConfig">
-   		<ui:attributes text="Manpower Approvals    " />
-   </ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.button.IconButton.IconConfig"
+		field="logoutButtonConfig">
+		<ui:attributes style="{style.logout}" overStyle="{style.logout}"
+			disableStyle="{style.logout}" />
+	</ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="projectConfig">
-   		<ui:attributes text="Projects     " />
-   </ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+		field="requestConfig">
+		<ui:attributes text="Manpower Requests    " icon="{resources.request}" />
+	</ui:with>
 
-   <ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig" field="staffrollConfig">
-   		<ui:attributes text="Staff Roll   " />
-   </ui:with>
-   
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="outerMargins">
-    <ui:attributes top="1" right="1" bottom="1" left="1" />
-  </ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+		field="approvalConfig">
+		<ui:attributes text="Manpower Approvals    " icon="{resources.approve}" />
+	</ui:with>
 
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="topMargins">
-    <ui:attributes top="10" right="0" bottom="0" left="10" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="northMargins">
-    <ui:attributes top="5" right="5" bottom="5" left="5" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="westMargins">
-    <ui:attributes top="0" right="5" bottom="0" left="5" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
-    <ui:attributes top="0" right="5" bottom="0" left="0" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="eastMargins">
-    <ui:attributes top="0" right="5" bottom="0" left="0" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.core.client.util.Margins" field="southMargins">
-    <ui:attributes top="5" right="0" bottom="5" left="0" />
-  </ui:with>
- 
-  <ui:with type="com.sencha.gxt.widget.core.client.container.MarginData" field="outerData">
-    <ui:attributes margins="{outerMargins}" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="northData">
-    <ui:attributes size="100" margins="{northMargins}" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="westData">
-    <ui:attributes size="0.2" margins="{westMargins}" collapsible="true" split="true" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="centerData">
-    <ui:attributes size="0.7" margins="{centerMargins}" />
-  </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="eastData">
-    <ui:attributes size="0.1" margins="{eastMargins}" hidden="true"/>
-  </ui:with>
-  <ui:with type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData" field="southData">
-    <ui:attributes size="0.05" margins="{southMargins}" />
-  </ui:with>
+	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+		field="projectConfig">
+		<ui:attributes text="Projects     " icon="{resources.project}" />
+	</ui:with>
+
+	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
+		field="staffrollConfig">
+		<ui:attributes text="Staff Roll   " icon="{resources.manager}" />
+	</ui:with>
+
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="outerMargins">
+		<ui:attributes top="1" right="1" bottom="1" left="1" />
+	</ui:with>
+
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="topMargins">
+		<ui:attributes top="10" right="0" bottom="0" left="10" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="northMargins">
+		<ui:attributes top="5" right="5" bottom="5" left="5" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="westMargins">
+		<ui:attributes top="0" right="5" bottom="0" left="5" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="centerMargins">
+		<ui:attributes top="0" right="5" bottom="0" left="0" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="eastMargins">
+		<ui:attributes top="0" right="5" bottom="0" left="0" />
+	</ui:with>
+	<ui:with type="com.sencha.gxt.core.client.util.Margins" field="southMargins">
+		<ui:attributes top="5" right="0" bottom="5" left="0" />
+	</ui:with>
+
+	<ui:with type="com.sencha.gxt.widget.core.client.container.MarginData"
+		field="outerData">
+		<ui:attributes margins="{outerMargins}" />
+	</ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
+		field="northData">
+		<ui:attributes size="100" margins="{northMargins}" />
+	</ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
+		field="westData">
+		<ui:attributes size="0.2" margins="{westMargins}"
+			collapsible="true" split="true" />
+	</ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
+		field="centerData">
+		<ui:attributes size="0.7" margins="{centerMargins}" />
+	</ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
+		field="eastData">
+		<ui:attributes size="0.1" margins="{eastMargins}"
+			hidden="true" />
+	</ui:with>
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
+		field="southData">
+		<ui:attributes size="0.05" margins="{southMargins}" />
+	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerLeft">
@@ -99,62 +157,71 @@
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerRight">
 		<ui:attributes width="0.30" height="1.0" margins="{centerMargins}" />
-	</ui:with>  
- 
-  <container:Viewport>
-    <container:child layoutData="{outerData}">
-      <container:BorderLayoutContainer ui:field="con" borders="false" styleName="{style.view-body}">
-        <container:north layoutData="{northData}">
-          <container:HorizontalLayoutContainer styleName="{style.header}">
-          	<container:child layoutData="{bannerLeft}">
-          	  <container:SimpleContainer styleName="{style.header-left}">
-          	  </container:SimpleContainer>		
-          	</container:child>
-          	<container:child layoutData="{bannerRight}">  	
-          	  <container:HorizontalLayoutContainer>
-          	  	<container:child>
-          	  		<g:Label text="" ui:field="welcomelabel" styleName="{style.header-right}"></g:Label>
-          	  	</container:child>
-          	  	<container:child>
-          	  		<g:Hyperlink text="Logout" ui:field="logoutButton" styleName="{style.logout}"></g:Hyperlink>
-          	  	</container:child>
-          	  </container:HorizontalLayoutContainer>
-          	</container:child> 
-          </container:HorizontalLayoutContainer>
-        </container:north>
-        <container:west layoutData="{westData}">
-          <gxt:ContentPanel width="15%" headingText="Quick Menu"/>
-        </container:west>
-        <container:center layoutData="{centerData}" >
-          <container:SimpleContainer width="85%"> 
-          <gxt:TabPanel width="100%" ui:field="maintab">
-                 <gxt:child config="{dashboardConfig}">
-    	            <dashboard:DashboardPanel />
-                 </gxt:child>
-                 <gxt:child config="{requestConfig}">
-        	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
-                 </gxt:child>
-                 <gxt:child config="{approvalConfig}">
-        	        <manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
-                 </gxt:child>     
-                 <gxt:child config="{projectConfig}">
-                 	<project:ProjectSummaryPanel />
-                 </gxt:child>
-                 <gxt:child config="{staffrollConfig}">
-	                 <employee:EmployeePanel></employee:EmployeePanel>
-                 </gxt:child> 
-          </gxt:TabPanel>        
-          </container:SimpleContainer>
-        </container:center>
-        <container:east layoutData="{eastData}">
-          <gxt:ContentPanel width="1%"/>
-        </container:east>        
-        <container:south layoutData="{southData}">
-          <container:SimpleContainer>
-          	 <g:Label text="Copyright - 2359 Media Pte Ltd 2014" horizontalAlignment="center" styleName="{style.footerText}"></g:Label>
-          </container:SimpleContainer>
-        </container:south>
-      </container:BorderLayoutContainer>
-    </container:child>
-  </container:Viewport>
+	</ui:with>
+
+	<container:Viewport>
+		<container:child layoutData="{outerData}">
+			<container:BorderLayoutContainer
+				ui:field="con" borders="false" styleName="{style.view-body}">
+				<container:north layoutData="{northData}">
+					<container:HorizontalLayoutContainer
+						styleName="{style.header}">
+						<container:child layoutData="{bannerLeft}">
+							<container:SimpleContainer styleName="{style.header-left}">
+							</container:SimpleContainer>
+						</container:child>
+						<container:child layoutData="{bannerRight}">
+							<container:HorizontalLayoutContainer>
+								<container:child>
+									<button:TextButton text="" ui:field="welcomelabel"
+										styleName="{style.header-right}" icon="{resources.gear}">
+										<button:menu>
+											<menu:Menu ui:field="buttonMenu">
+												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
+											</menu:Menu>
+										</button:menu>
+									</button:TextButton>
+								</container:child>
+								<!-- <container:child> <g:Hyperlink text="Logout" ui:field="logoutButton" 
+									styleName="{style.logout}"></g:Hyperlink> </container:child> -->
+							</container:HorizontalLayoutContainer>
+						</container:child>
+					</container:HorizontalLayoutContainer>
+				</container:north>
+				<container:west layoutData="{westData}">
+					<gxt:ContentPanel width="15%" headingText="Quick Menu" />
+				</container:west>
+				<container:center layoutData="{centerData}">
+					<container:SimpleContainer width="85%">
+						<gxt:TabPanel width="100%" ui:field="maintab">
+							<gxt:child config="{dashboardConfig}">
+								<dashboard:DashboardPanel />
+							</gxt:child>
+							<gxt:child config="{requestConfig}">
+								<manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
+							</gxt:child>
+							<gxt:child config="{approvalConfig}">
+								<manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
+							</gxt:child>
+							<gxt:child config="{projectConfig}">
+								<project:ProjectSummaryPanel />
+							</gxt:child>
+							<gxt:child config="{staffrollConfig}">
+								<employee:EmployeePanel></employee:EmployeePanel>
+							</gxt:child>
+						</gxt:TabPanel>
+					</container:SimpleContainer>
+				</container:center>
+				<container:east layoutData="{eastData}">
+					<gxt:ContentPanel width="1%" />
+				</container:east>
+				<container:south layoutData="{southData}">
+					<container:SimpleContainer>
+						<g:Label text="Copyright - 2359 Media Pte Ltd 2014"
+							horizontalAlignment="center" styleName="{style.footerText}"></g:Label>
+					</container:SimpleContainer>
+				</container:south>
+			</container:BorderLayoutContainer>
+		</container:child>
+	</container:Viewport>
 </ui:UiBinder>
