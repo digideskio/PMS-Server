@@ -10,98 +10,105 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
+import java.util.Set;
+
+import com.media2359.euphoria.model.milestone.ProjectMilestone;
 
 public class ProjectDTO implements Serializable {
-	private Integer id;
-	private String name;
-	private String description;
-	private String projectManager;
-	private Integer manDaysLeft;
-	private Integer milestoneCount;
-	private Integer completedMilestoneCount;
-	private Integer projectedMandays;
-	private Integer usedMandays;
-	
-	
+        private Integer id;
+        private String name;
+        private String description;
+        private String projectManager;
+        private Integer manDaysLeft;
+        private Integer milestoneCount;
+        private Integer completedMilestoneCount;
+        private Set<ProjectMilestone> projectMilestone;
 
-	public ProjectDTO() {
+        public ProjectDTO() {
 
-	}
+        }
 
-	public Integer getId() {
-		return id;
-	}
+        public Integer getId() {
+                return id;
+        }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+        public void setId(Integer id) {
+                this.id = id;
+        }
 
-	public String getName() {
-		return name;
-	}
+        public String getName() {
+                return name;
+        }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+        public void setName(String name) {
+                this.name = name;
+        }
 
-	public String getDescription() {
-		return description;
-	}
+        public String getDescription() {
+                return description;
+        }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+        public void setDescription(String description) {
+                this.description = description;
+        }
 
 
-	public String getProjectManager() {
-		return projectManager;
-	}
+        public String getProjectManager() {
+                return projectManager;
+        }
 
-	public void setProjectManager(String projectManager) {
-		this.projectManager = projectManager;
-	}
+        public void setProjectManager(String projectManager) {
+                this.projectManager = projectManager;
+        }
 
 
-	public Integer getManDaysLeft() {
-		return manDaysLeft;
-	}
+        public Integer getManDaysLeft() {
+                return manDaysLeft;
+        }
 
-	public void setManDaysLeft(Integer manDaysLeft) {
-		this.manDaysLeft = manDaysLeft;
-	}
+        public void setManDaysLeft(Integer manDaysLeft) {
+                this.manDaysLeft = manDaysLeft;
+        }
 
-	public Integer getMilestoneCount() {
-		return milestoneCount;
-	}
+        public Integer getMilestoneCount() {
+                return milestoneCount;
+        }
 
-	public void setMilestoneCount(Integer milestoneCount) {
-		this.milestoneCount = milestoneCount;
-	}
+        public void setMilestoneCount(Integer milestoneCount) {
+                this.milestoneCount = milestoneCount;
+        }
 
-	public Integer getCompletedMilestoneCount() {
-		return completedMilestoneCount;
-	}
+        public Integer getCompletedMilestoneCount() {
+                return completedMilestoneCount;
+        }
 
-	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
-		this.completedMilestoneCount = completedMilestoneCount;
-	}
+        public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
+                this.completedMilestoneCount = completedMilestoneCount;
+        }
 
-	public Integer getProjectedMandays() {
-		return projectedMandays;
-	}
+        public Set<ProjectMilestone> getProjectMilestone() {
+                return projectMilestone;
+        }
 
-	public void setProjectedMandays(Integer projectedMandays) {
-		this.projectedMandays = projectedMandays;
-	}
-
-	public Integer getUsedMandays() {
-		return usedMandays;
-	}
-
-	public void setUsedMandays(Integer usedMandays) {
-		this.usedMandays = usedMandays;
-	}
-	
-	
-	
+        public void setProjectMilestone(Set<ProjectMilestone> projectMilestone) {
+                this.projectMilestone = projectMilestone;
+        }
+        
+        
+        /*
+         * Prepares the Project froom the projectDTO
+         */
+        
+//        public Project prepareProject(){
+//                Project project = new Project();
+//                project.setId(id);
+//                project.setManDaysLeft(manDaysLeft);
+//                project.setMilestoneCount(completedMilestoneCount);
+//                project.setName(name);
+//                project.setProjectManager(projectManager);
+//                project.setDescription(description);
+//                project.setCompletedMilestoneCount(completedMilestoneCount);
+//                return project;
+//        }
+        
 }
