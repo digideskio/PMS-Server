@@ -22,6 +22,8 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
@@ -48,4 +50,6 @@ public interface EmployeeService extends RemoteService {
 	
 	// Gets all the platforms for the employee
 	public List<PlatformDTO> findAllPlatforms();
+	
+	public List<EmployeeDTO> getEmployeesByPlatform(PlatformDTO platformDTO);
 }

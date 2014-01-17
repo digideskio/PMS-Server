@@ -26,6 +26,7 @@ import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.dto.util.AllocationStatus;
 import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
 import com.media2359.euphoria.view.server.project.ProjectService;
 
@@ -58,7 +59,7 @@ public class RequestManpowerServiceTest {
 		
 		try{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyy");
-			startOfWeek = simpleDateFormat.parse("12-01-2014");
+			startOfWeek = simpleDateFormat.parse("19-01-2014");
 			
 			System.out.println("+++START DATE++++ "+startOfWeek);
 			projectAllocationDTO.setStartOfWeek(startOfWeek);
@@ -70,16 +71,23 @@ public class RequestManpowerServiceTest {
 		List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 		
 		WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
-		weeklyResourcePlan.setDay1Am(true);
-		weeklyResourcePlan.setDay1Pm(true);
+		weeklyResourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
+		weeklyResourcePlan.setDay1PmEnm(AllocationStatus.SELECTED);
 		
-		weeklyResourcePlan.setDay2Am(true);
-		weeklyResourcePlan.setDay2Pm(true);
+		weeklyResourcePlan.setDay2AmEnm(AllocationStatus.SELECTED);
+		weeklyResourcePlan.setDay2PmEnm(AllocationStatus.SELECTED);
+		
+		weeklyResourcePlan.setDay5AmEnm(AllocationStatus.SELECTED);
+		weeklyResourcePlan.setDay5PmEnm(AllocationStatus.SELECTED);
 		
 		EmployeeDTO employeeDTO = new EmployeeDTO();
+		employeeDTO.setEmployeeKey(1);
 		Set<PlatformDTO> platformDtoSet = new HashSet<PlatformDTO>();
+		PlatformDTO platformDTO = new PlatformDTO();
+		platformDTO.setPlatformKey(1);
 		employeeDTO.setPlatFormDtos(platformDtoSet);
 		weeklyResourcePlan.setDeveloper(employeeDTO);
+		weeklyResourcePlan.setPlatform(platformDTO);
 		
 		weeklyResourcePlanList.add(weeklyResourcePlan);
 		
@@ -92,7 +100,10 @@ public class RequestManpowerServiceTest {
 	
 	@Test
 	public void test1SubmitManpowerRequest(){
+		
 		requestManpowerService.submitManpowerRequest(projectAllocationDTO);
+		
+		
 		/*
 		ProjectDTO projDto = projectService.getProjectDetails
 				(projectAllocationDTO.getProjectId());
@@ -103,12 +114,12 @@ public class RequestManpowerServiceTest {
 	
 	@Test
 	public void test2RequestManpower(){
+		
 		ProjectAllocationDTO projectAllDto =requestManpowerService.
 				requestManpower(projectDTO,startOfWeek);
 		Assert.notNull(projectAllDto);
 		
+	
 	}
-	
-	
 
 }

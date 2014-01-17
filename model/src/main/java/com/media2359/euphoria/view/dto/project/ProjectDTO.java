@@ -19,6 +19,10 @@ public class ProjectDTO implements Serializable {
 	private Integer manDaysLeft;
 	private Integer milestoneCount;
 	private Integer completedMilestoneCount;
+	private Integer projectedMandays;
+	private Integer usedMandays;
+	
+	
 
 	public ProjectDTO() {
 
@@ -81,21 +85,23 @@ public class ProjectDTO implements Serializable {
 	public void setCompletedMilestoneCount(Integer completedMilestoneCount) {
 		this.completedMilestoneCount = completedMilestoneCount;
 	}
+
+	public Integer getProjectedMandays() {
+		return projectedMandays;
+	}
+
+	public void setProjectedMandays(Integer projectedMandays) {
+		this.projectedMandays = projectedMandays;
+	}
+
+	public Integer getUsedMandays() {
+		return usedMandays;
+	}
+
+	public void setUsedMandays(Integer usedMandays) {
+		this.usedMandays = usedMandays;
+	}
 	
-	/*
-	 * Prepares the Project froom the projectDTO
-	 */
 	
-//	public Project prepareProject(){
-//		Project project = new Project();
-//		project.setId(id);
-//		project.setManDaysLeft(manDaysLeft);
-//		project.setMilestoneCount(completedMilestoneCount);
-//		project.setName(name);
-//		project.setProjectManager(projectManager);
-//		project.setDescription(description);
-//		project.setCompletedMilestoneCount(completedMilestoneCount);
-//		return project;
-//	}
 	
 }

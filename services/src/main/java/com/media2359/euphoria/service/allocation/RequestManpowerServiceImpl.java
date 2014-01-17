@@ -5,26 +5,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.media2359.euphoria.dao.employee.EmployeeLeaveDAO;
+import com.media2359.euphoria.dao.employee.HolidayDAO;
 import com.media2359.euphoria.dao.manpower.PlatformRequestDAO;
 import com.media2359.euphoria.dao.manpower.WeeklyManpowerRequestDAO;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.employee.EmployeeLeave;
+import com.media2359.euphoria.model.employee.Holiday;
 import com.media2359.euphoria.model.manpower.PlatformRequest;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
-import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.manpower.DailyResourcePlanDTO;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
-import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.dto.util.AllocationStatus;
 import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
 
 
@@ -36,7 +37,15 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 	WeeklyManpowerRequestDAO weeklyManpowerRequestDao ;
 	
 	@Autowired
-	PlatformRequestDAO platformRequestDao;            
+	PlatformRequestDAO platformRequestDao;
+	
+	@Autowired
+	EmployeeLeaveDAO employeeLeaveDao;
+	
+	@Autowired
+	HolidayDAO holidayDao;
+
+	         
 	
 	@Override
 	public ProjectAllocationDTO requestManpower(ProjectDTO projectDto,
@@ -50,7 +59,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			
 			GregorianCalendar gregorianCalendar = new GregorianCalendar();
 			gregorianCalendar.setTime(startDate);
-			gregorianCalendar.add(Calendar.DATE, 7);
+			gregorianCalendar.add(Calendar.DATE, 6);
 			
 			Date endDate = new Date();
 			endDate.setTime(gregorianCalendar.getTime().getTime());
@@ -70,45 +79,89 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 				projectAllocationDTO.setProjectDTO(project.createProjectDTO());
 				projectAllocationDTO.setStartOfWeek(startDate);
 				
-				for(PlatformRequest platformreq : platformReqList){
+				// Get all the distinct platoform-developer combinatiion 
+				
+				List<String> platformDeveloperList = getDistinctDevelopers(platformReqList);
+				
+				// For Each platform developer combination , find the list of the platformRequest
+				for(String platformDeveloper : platformDeveloperList){
+					List<PlatformRequest> developerPlatformReqList = getPlatformRequestList(platformDeveloper, platformReqList);
+					// Form a object of weeklyresource plan 
+					
 					WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
 					
-					// Set the platform 
-					weeklyResourcePlan.setPlatform(platformreq.getPlatform().createPlatformDTO());
+					weeklyResourcePlan.setPlatform(developerPlatformReqList.get(0).getPlatform().createPlatformDTO());
 					// Set the developer
-					weeklyResourcePlan.setDeveloper(platformreq.getEmployee().createEmployeeDTO());
+					weeklyResourcePlan.setDeveloper(developerPlatformReqList.get(0).getEmployee().createEmployeeDTO());
 					
-					// Set the resource plan
-					Integer startDayOfTheWeek ;
-					Integer endDayOfTheWeek;
-					
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(platformreq.getStartDate());
-					startDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-					
-					calendar.setTime(platformreq.getEndDate());
-					endDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-					
-					System.out.println("THE START DAY OF THE WEEK IS "+startDayOfTheWeek+" : END DAY "
-							+ "OF THE WEEK IS "+endDayOfTheWeek);
-					
-					for(int i=startDayOfTheWeek ;i<=endDayOfTheWeek;i++){
-						String methodName = "setDay"+String.valueOf(i);
-						String amMethodName = methodName+"Am";
-						String pmMethodName = methodName+"Pm";
+					for(PlatformRequest platformReq : developerPlatformReqList){
 						
-						Method method =weeklyResourcePlan.getClass().getMethod(amMethodName, 
-								new Class<?>[0]);
-						method.invoke(weeklyResourcePlan, new Boolean(true));
+						// Set the resource plan
+						Integer startDayOfTheWeek ;
+						Integer endDayOfTheWeek;
 						
-						method =weeklyResourcePlan.getClass().getMethod(pmMethodName, 
-								new Class<?>[0]);
-						method.invoke(weeklyResourcePlan, new Boolean(true));
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(platformReq.getStartDate());
+						startDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+						
+						calendar.setTime(platformReq.getEndDate());
+						endDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+						
+						System.out.println("THE START DAY OF THE WEEK IS "+startDayOfTheWeek+" : END DAY "
+								+ "OF THE WEEK IS "+endDayOfTheWeek);
+						
+						for(int i=startDayOfTheWeek ;i<=endDayOfTheWeek;i++){
+							
+							Method method;
+							Object returnObj;
+							String getMethodName = "getDay"+String.valueOf(i);
+							String setMethodName = "setDay"+String.valueOf(i);
+							String methodName;
+							
+							
+							methodName = getMethodName+"Am";
+							method =weeklyResourcePlan.getClass().getMethod(methodName, 
+									new Class<?>[0]);
+							returnObj= method.invoke(weeklyResourcePlan, null);
+							
+							// Enter if false
+							if(!(Boolean)returnObj){
+								methodName = setMethodName+"Am";
+								
+								Class[] paramBoolean = new Class[1];	
+								paramBoolean[0] = Boolean.class;
+								method =weeklyResourcePlan.getClass().getMethod(methodName, 
+										paramBoolean);
+								method.invoke(weeklyResourcePlan, new Boolean(true)) ;
+								setValue(weeklyResourcePlan, methodName+"Enm",platformReq,i);
+							}
+							
+							
+							methodName = getMethodName+"Pm";
+							method =weeklyResourcePlan.getClass().getMethod(methodName, 
+									new Class<?>[0]);
+							returnObj= method.invoke(weeklyResourcePlan, null);
+							
+							// Enter if false
+							if(!(Boolean)returnObj){
+								methodName = setMethodName+"Pm";
+								
+								Class[] paramBoolean = new Class[1];	
+								paramBoolean[0] = Boolean.class;
+								method =weeklyResourcePlan.getClass().getMethod(methodName, 
+										paramBoolean);
+								method.invoke(weeklyResourcePlan, new Boolean(true)) ;
+								setValue(weeklyResourcePlan, methodName+"Enm",platformReq,i);
+							}
+							
+							
+						}
 						
 					}
-					
 					weeklyResourcePlanList.add(weeklyResourcePlan);
+				
 				}
+				
 				
 				projectAllocationDTO.setWeeklyResourcePlan(weeklyResourcePlanList);
 				
@@ -123,6 +176,52 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		return projectAllocationDTO;
 		
 	}
+	
+	
+	private void setValue(WeeklyResourcePlan weeklyResourcePlan, String methodName,
+			PlatformRequest platformReq,Integer day) throws Exception{
+		
+		System.out.println("Inside setValue : day is "+day+" : Method Name is "+methodName);
+		Method method;
+		// Remember while storing we store only the Non Free Days
+		if(isLeave(platformReq,day)){
+			Class[] allocationStatusClass = new Class[1];	
+			allocationStatusClass[0] = AllocationStatus.class;
+			method =weeklyResourcePlan.getClass().getMethod(methodName, 
+					allocationStatusClass);
+			method.invoke(weeklyResourcePlan, AllocationStatus.LEAVE) ;
+		}
+		
+		// CHeck if Holiday
+		else if(isHoliday(platformReq,day)){
+			Class[] allocationStatusClass = new Class[1];	
+			allocationStatusClass[0] = AllocationStatus.class;
+
+			method =weeklyResourcePlan.getClass().getMethod(methodName, 
+					allocationStatusClass);
+			method.invoke(weeklyResourcePlan, AllocationStatus.HOLIDAY) ;
+		}
+		
+		
+		// Check if Selected 
+		else if("A".equals(platformReq.getWeeklyManpowerRequest().getApprovalStatus())){
+			Class[] allocationStatusClass = new Class[1];	
+			allocationStatusClass[0] = AllocationStatus.class;
+			method =weeklyResourcePlan.getClass().getMethod(methodName, 
+					allocationStatusClass);
+			method.invoke(weeklyResourcePlan, AllocationStatus.ALLOCATED) ;
+		}
+		
+		// Check if Selected 
+		else if("U".equals(platformReq.getWeeklyManpowerRequest().getApprovalStatus())){
+			Class[] allocationStatusClass = new Class[1];	
+			allocationStatusClass[0] = AllocationStatus.class;
+			method =weeklyResourcePlan.getClass().getMethod(methodName, 
+					allocationStatusClass);
+			method.invoke(weeklyResourcePlan, AllocationStatus.SELECTED) ;
+		}
+		
+	}
 
 	@Override
 	public String submitManpowerRequest(
@@ -130,10 +229,9 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		String result = "SUCCESS";
 		WeeklyManpowerRequest weeklyManpowerRequest = null;
-		List<PlatformRequest> platformRequestList = null;
+		
 		try{
 			weeklyManpowerRequest = new WeeklyManpowerRequest();
-			platformRequestList = new ArrayList<PlatformRequest>();
 			
 			Project project = new Project(projectAllocationDto.getProjectDTO());
 			weeklyManpowerRequest.setProject(project);
@@ -154,8 +252,13 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			
 			weeklyManpowerRequest.setCreatedTstmp(new Date());
 			
+			weeklyManpowerRequest.setApprovalStatus("U");
+			
+			// Persists Weekly manpower request
+			weeklyManpowerRequestDao.addWeeklyManpowerRequest(weeklyManpowerRequest);
+			
 			List<WeeklyResourcePlan> weeklyResourcePlans = projectAllocationDto.getWeeklyResourcePlan();
-			platformRequestList = new ArrayList<PlatformRequest>();
+			//platformRequestList = new ArrayList<PlatformRequest>();
 			
 			for(WeeklyResourcePlan weeklyResourcePlan : weeklyResourcePlans){
 				
@@ -171,13 +274,22 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					
 					PlatformRequest platformRequest = new PlatformRequest();
 					platformRequest.setWeeklyManpowerRequest(weeklyManpowerRequest);
-					platformRequest.setEmployee(prepareEmployee
-							(weeklyResourcePlan.getDeveloper()));
+					platformRequest.setEmployee(new Employee(
+							(weeklyResourcePlan.getDeveloper())));
+					platformRequest.setPlatform(new Platform(weeklyResourcePlan.getPlatform()));
+					
+					// Set the start date of the platform request
+					platformRequest.setStartDate(getStartDate(startofWeek, dailyResourcePlanDTO));
+					
+					// Set the end date of the platform request
 					Date endDate =getEndDate(weeklyResourcePlan, dailyResourcePlanDTO,
 							projectAllocationDto.getStartOfWeek());
 					
 					System.out.println("End  Date is "+endDate);
 					platformRequest.setEndDate(endDate);
+					
+					platformRequest.setCreateById("SYSTEM");
+					platformRequest.setCreateTstamp(new Date());
 					//platformRequestList.add(platformRequest);
 					platformRequestDao.addPlatformRequest(platformRequest);
 					
@@ -194,33 +306,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 	}
 	
 	
-	private Employee prepareEmployee(EmployeeDTO employeeDto){
-		
-		Employee employee = new Employee();
-		employee.setName(employeeDto.getName());
-		employee.setMobile(employeeDto.getMobile());
-		employee.setPersonalEmail(employeeDto.getPersonalEmail());
-		employee.setCompanyEmail(employeeDto.getCompanyEmail());
-		employee.setDesignation(employeeDto.getDesignation());
-		
-		Set<Platform> platformSet = new HashSet<Platform>();
-		Set<PlatformDTO> platformDtos = employeeDto.getPlatFormDtos();
-		for(PlatformDTO platformDTO : platformDtos){
-			Platform platform = new Platform();
-			platform.setPlatformId(platformDTO.getPlatformId());
-			platform.setPlatformKey(platformDTO.getPlatformKey());
-			platformSet.add(platform);
-		}
-		
-		employee.setPlatForms(platformSet);
-		employee.setAssignedOffice(employeeDto.getAssignedOffice());
-		employee.setEmploymentType(employeeDto.getEmploymentType());
-		employee.setStartDate(employeeDto.getStartDate());
-		employee.setEndDate(employeeDto.getEndDate());
-		employee.setMandayRate(employeeDto.getMandayRate());
-		return employee;
-		
-	}
+	
 	
 	
 	private List<DailyResourcePlanDTO> findStartDays(WeeklyResourcePlan weeklyResourcePlan){
@@ -228,7 +314,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		boolean continuation = false;
 		
-		if(weeklyResourcePlan.getDay1Am()){
+		if(weeklyResourcePlan.getDay1AmEnm()!=AllocationStatus.FREE){
 			DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 			dailyResourcePlanDTO.setDay(1);
 			dailyResourcePlanDTO.setHalf("AM");
@@ -236,7 +322,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation =true;
 		}
 			
-		if(weeklyResourcePlan.getDay1Pm()){
+		if(weeklyResourcePlan.getDay1PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(1);
@@ -250,7 +336,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		// Read Day 2 
 		
-		if(weeklyResourcePlan.getDay2Am()){
+		if(weeklyResourcePlan.getDay2AmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(2);
@@ -262,7 +348,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay2Pm()){
+		if(weeklyResourcePlan.getDay2PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(2);
@@ -279,7 +365,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		// Read Day 3
 		
-		if(weeklyResourcePlan.getDay3Am()){
+		if(weeklyResourcePlan.getDay3AmEnm()!=AllocationStatus.FREE){
 			
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
@@ -292,7 +378,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay3Pm()){
+		if(weeklyResourcePlan.getDay3PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(3);
@@ -307,7 +393,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		// Read Day 4
 		
 		
-		if(weeklyResourcePlan.getDay4Am()){
+		if(weeklyResourcePlan.getDay4AmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(4);
@@ -319,7 +405,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay4Pm()){
+		if(weeklyResourcePlan.getDay4PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(4);
@@ -334,7 +420,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		// Read Day 5
 		
-		if(weeklyResourcePlan.getDay5Am()){
+		if(weeklyResourcePlan.getDay5AmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(5);
@@ -347,7 +433,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay5Pm()){
+		if(weeklyResourcePlan.getDay5PmEnm()!=AllocationStatus.FREE){
 			
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
@@ -362,7 +448,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		}
 		
 		// Read Day 6
-		if(weeklyResourcePlan.getDay6Am()){
+		if(weeklyResourcePlan.getDay6AmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(6);
@@ -375,7 +461,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay6Pm()){
+		if(weeklyResourcePlan.getDay6PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(6);
@@ -389,7 +475,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		// Read Day 7
 		
-		if(weeklyResourcePlan.getDay7Am()){
+		if(weeklyResourcePlan.getDay7AmEnm()!=AllocationStatus.FREE){
 			
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
@@ -403,7 +489,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			continuation = false;
 		}
 		
-		if(weeklyResourcePlan.getDay7Pm()){
+		if(weeklyResourcePlan.getDay7PmEnm()!=AllocationStatus.FREE){
 			if(!continuation){
 				DailyResourcePlanDTO dailyResourcePlanDTO = new DailyResourcePlanDTO();
 				dailyResourcePlanDTO.setDay(7);
@@ -418,6 +504,22 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		return startDaysList;
 		
 		
+	}
+	
+	
+	private Date getStartDate(Date startofWeek, DailyResourcePlanDTO dailyResourcePlanDTO) 
+	throws Exception{
+		
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(startofWeek);
+		calendar.add(Calendar.DATE, dailyResourcePlanDTO.getDay()-1);
+		
+		Date platformStartDate = new Date();
+		platformStartDate.setTime(calendar.getTime().getTime());
+		
+		System.out.println("Platform Start Date is "+platformStartDate);
+		
+		return platformStartDate;
 	}
 	
 	
@@ -438,14 +540,14 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		for(int i=nextStartDay ;i<=7;i++){
 			String methodName = "getDay"+String.valueOf(i);
-			String amMethodName = methodName+"Am";
-			String pmMethodName = methodName+"Pm";
+			String amMethodName = methodName+"AmEnm";
+			String pmMethodName = methodName+"PmEnm";
 			Method method =weeklyResourcePlan.getClass().getMethod(amMethodName, 
 					new Class<?>[0]);
 			Object obj= method.invoke(weeklyResourcePlan, null);
-			Boolean flag = (Boolean) obj;
-			System.out.println("I IS "+i+" : Flag is "+flag);
-			if(!flag){
+			AllocationStatus allocationStatus = (AllocationStatus) obj;
+			System.out.println("I IS "+i+" : Allocation Status is "+allocationStatus);
+			if(allocationStatus==AllocationStatus.FREE){
 				day=i-1;
 				half="PM";
 				break;
@@ -454,8 +556,9 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 				method = weeklyResourcePlan.getClass().getMethod(pmMethodName, 
 						new Class<?>[0]);
 				obj= method.invoke(weeklyResourcePlan, null);
-				flag = (Boolean) obj;
-				if(!flag){
+				allocationStatus = (AllocationStatus) obj;
+				System.out.println("I IS "+i+" : Allocation Status is "+allocationStatus);
+				if(allocationStatus==AllocationStatus.FREE){
 					day=i;
 					half="AM";
 					break;
@@ -463,7 +566,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			}
 		}
 		
-		
+		// TODO Set proper date and time in the database
 		System.out.println("CALCULATE END OF MANPOWER DATE , Day is "+day+" : Half is "+half);
 		
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -475,6 +578,93 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		
 		return endOfWeek;
 	}
+	
+	
+	
+	
+	
+	/*
+	 * This function is to get the List of distinct combination of developers and platforms
+	 */
+	private List<String> getDistinctDevelopers(List<PlatformRequest> platformRequestList){
+		
+		List<String> developerPlatformList = new ArrayList<String>();
+		for(PlatformRequest platformRequest : platformRequestList){
+			String developerPlatform = String.valueOf(platformRequest.getPlatform().getPlatformKey())+"-"+
+					String.valueOf(platformRequest.getEmployee().getEmployeeKey());
+			System.out.println("Developer Name is "+developerPlatform);
+			if(!developerPlatformList.contains(developerPlatform)){
+				developerPlatformList.add(developerPlatform);
+			}
+		}
+		return developerPlatformList;
+	}
+	
+	/*
+	 * Gets the list of a platform request for a developer
+	 */
+	
+	private List<PlatformRequest> getPlatformRequestList(String toBeSearchedDeveloperPlatform, List<PlatformRequest> platformReqList){
+		List<PlatformRequest> platformReqs = new ArrayList<PlatformRequest>();
+		
+		for(PlatformRequest platformRequest : platformReqList){
+			String developerPlatform = String.valueOf(platformRequest.getPlatform().getPlatformKey())+"-"+
+					String.valueOf(platformRequest.getEmployee().getEmployeeKey());
+			if(developerPlatform.equals(toBeSearchedDeveloperPlatform))
+				platformReqs.add(platformRequest);
+		}
+		
+		System.out.println("Platform Request length is "+platformReqs.size());
+		return platformReqs;
+	}
+	
+	/*
+	 * Find out if it is a holiday or not
+	 */
+	private Boolean isHoliday(PlatformRequest platformRequest,int day){
+		
+		List<Holiday> holidayList = holidayDao.getAllHolidaysByRange
+				(platformRequest.getStartDate(), platformRequest.getEndDate());
+		for(Holiday holiday : holidayList){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(holiday.getHolidayDate());
+			int holidayDay = cal.get(Calendar.DAY_OF_WEEK);
+			if(day==holidayDay)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/*
+	 * Find out if it is a Leave Day or not
+	 */
+	
+	private Boolean isLeave(PlatformRequest platformRequest,int day){
+		List<EmployeeLeave> empLeaveList =
+				employeeLeaveDao.getAllLeavesByEmployee(platformRequest.getEmployee(), 
+						platformRequest.getStartDate(), platformRequest.getEndDate());
+		
+		for(EmployeeLeave employeeLeave : empLeaveList){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(employeeLeave.getLeaveDate());
+			int leaveDay = cal.get(Calendar.DAY_OF_WEEK);
+			if(day==leaveDay)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/*
+	 * Returns if the project has exceeded the mandays
+	 */
+	private Boolean isExceeded(Project project){
+		return false;
+	}
+	
+	
 	
 	
 
