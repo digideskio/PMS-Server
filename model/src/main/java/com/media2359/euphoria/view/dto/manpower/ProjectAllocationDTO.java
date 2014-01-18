@@ -1,12 +1,13 @@
 package com.media2359.euphoria.view.dto.manpower;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 
-public class ProjectAllocationDTO {
+public class ProjectAllocationDTO implements Serializable{
 	ProjectDTO projectDTO;
 	
 	Date startOfWeek;

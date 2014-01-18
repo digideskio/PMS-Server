@@ -10,13 +10,15 @@
 package com.media2359.euphoria.view.dto.manpower;
 
 
+import java.io.Serializable;
+
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.util.AllocationStatus;
 
 
 
-public class WeeklyResourcePlan {
+public class WeeklyResourcePlan implements Serializable{
 	String id;
 	
 	private PlatformDTO platform ;

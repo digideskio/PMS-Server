@@ -35,6 +35,8 @@ import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.util.AllocationStatus;
+import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
+import com.media2359.euphoria.view.server.allocation.RequestManpowerServiceAsync;
 import com.media2359.euphoria.view.server.employee.EmployeeService;
 import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
@@ -96,7 +98,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
     private ProjectDTO projectDTO;
     private Date startDate = new Date();
     
-//	private final RequestManpowerServiceAsync requestManpowerService = GWT.create(RequestManpowerService.class);
+	private final RequestManpowerServiceAsync requestManpowerService = GWT.create(RequestManpowerService.class);
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
