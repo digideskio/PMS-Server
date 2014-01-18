@@ -172,8 +172,8 @@ public class Project implements java.io.Serializable{
 		Set<ProjectMilestoneDTO> projectMilestoneDTOSet = new HashSet<ProjectMilestoneDTO>();
 		
 		if(getProjectMilestone()!=null){
-			for(ProjectMilestone projectMilestone: getProjectMilestone() ){
-				projectMilestoneDTOSet.add(projectMilestone.createProjectMilestoneDTO());
+			for(ProjectMilestone projectMileStone: this.projectMilestone ){
+				projectMilestoneDTOSet.add(projectMileStone.createProjectMilestoneDTO());
 			}
 		}
 		

@@ -9,40 +9,21 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.milestone;
 
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.media2359.euphoria.model.project.Platform;
-import com.media2359.euphoria.model.project.Project;
-import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
-import com.media2359.euphoria.view.dto.employee.EmployeeLeaveDTO;
-import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
-import com.media2359.euphoria.view.dto.project.PlatformDTO;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
-
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.hibernate.annotations.GenericGenerator;
+
+import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 /**
  * ProjectMilestone
  * 
@@ -90,7 +71,7 @@ public class ProjectMilestone implements java.io.Serializable{
 	public ProjectMilestone(ProjectMilestoneDTO projectMilestoneDTO) {
 		
 		this.setMilestoneKey(projectMilestoneDTO.getMilestoneKey());
-		this.setProject(projectMilestoneDTO.getProject());
+		this.setProject(new Project(projectMilestoneDTO.getProject()));
 		this.setMilestoneDate(projectMilestoneDTO.getMilestoneDate());
 		this.setMilestoneDesc(projectMilestoneDTO.getMilestoneDesc());
 		this.setCreatedById(projectMilestoneDTO.getCreatedById());
@@ -167,7 +148,10 @@ public class ProjectMilestone implements java.io.Serializable{
 		ProjectMilestoneDTO projectMilestoneDTO = new ProjectMilestoneDTO();
 		
 		projectMilestoneDTO.setMilestoneKey(this.getMilestoneKey());
-		projectMilestoneDTO.setProject(this.getProject());
+		ProjectDTO newProjectDTO = new ProjectDTO();
+		newProjectDTO.setId(this.getProject().getId());
+		projectMilestoneDTO.setProject(newProjectDTO);
+		
 		projectMilestoneDTO.setMilestoneDate(this.getMilestoneDate());
 		projectMilestoneDTO.setMilestoneDesc(this.getMilestoneDesc());
 		projectMilestoneDTO.setCreatedById(this.getCreatedById());

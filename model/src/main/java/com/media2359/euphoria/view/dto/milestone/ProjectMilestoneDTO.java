@@ -11,15 +11,8 @@ package com.media2359.euphoria.view.dto.milestone;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.media2359.euphoria.model.project.Project;
-import com.media2359.euphoria.view.dto.project.PlatformDTO;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
 /**
  * ProjectMilestoneDTO
  *
@@ -32,7 +25,7 @@ import com.media2359.euphoria.view.dto.project.PlatformDTO;
 public class ProjectMilestoneDTO implements Serializable {
     
 	private Integer milestoneKey;
-	private Project project;
+	private ProjectDTO project;
 	private Date milestoneDate;
 	private String milestoneDesc;
 	private String createdById;
@@ -46,12 +39,7 @@ public class ProjectMilestoneDTO implements Serializable {
 	public void setMilestoneKey(Integer milestoneKey) {
 		this.milestoneKey = milestoneKey;
 	}
-	public Project getProject() {
-		return project;
-	}
-	public void setProject(Project project) {
-		this.project = project;
-	}
+	
 	public Date getMilestoneDate() {
 		return milestoneDate;
 	}
@@ -89,20 +77,17 @@ public class ProjectMilestoneDTO implements Serializable {
 		this.lastUpdTstamp = lastUpdTstamp;
 	}
 	
-	public ProjectMilestoneDTO createMilestoneDTO(){
-		ProjectMilestoneDTO projectMilestoneDTO = new ProjectMilestoneDTO();
-		
-		projectMilestoneDTO.setCreatedById(getCreatedById());
-		projectMilestoneDTO.setCreateTstamp(getCreateTstamp());
-		projectMilestoneDTO.setLastUpdById(getLastUpdById());
-		projectMilestoneDTO.setLastUpdTstamp(getLastUpdTstamp());
-		projectMilestoneDTO.setMilestoneDate(getMilestoneDate());
-		projectMilestoneDTO.setMilestoneDesc(getMilestoneDesc());
-		projectMilestoneDTO.setMilestoneKey(getMilestoneKey());
-		projectMilestoneDTO.setProject(getProject());
-		return projectMilestoneDTO;
-
+	
+	
+	public ProjectDTO getProject() {
+		return project;
 	}
+	public void setProject(ProjectDTO project) {
+		this.project = project;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ProjectMilestoneDTO [milestoneKey=" + milestoneKey
