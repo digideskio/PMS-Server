@@ -202,16 +202,20 @@ public class EmployeeDTO implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
+		String str =  "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
 				+ ", mobile=" + mobile + ", personalEmail=" + personalEmail
 				+ ", companyEmail=" + companyEmail + ", designation="
-				+ designation + ", platFormDtos=" + platFormDtos
-				+ ", employmentType=" + employmentType + ", mandayRate="
+				+ designation + ", employmentType=" + employmentType + ", mandayRate="
 				+ mandayRate + ", assignedOffice=" + assignedOffice
 				+ ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", status=" + status + ", createdById=" + createdById
 				+ ", createTstamp=" + createTstamp + ", lastUpdById="
 				+ lastUpdById + ", lastUpdTstamp=" + lastUpdTstamp + "]";
+		
+		for(PlatformDTO platformDTO: platFormDtos)
+			str = str+ "\n PlatfromDTO: "+ platformDTO.toString();
+		
+		return str;
 	}
 	
 }

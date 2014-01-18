@@ -75,8 +75,11 @@ public class EmployeeDetailsWindow {
 	  
 	  private EmployeeDTO employeeDTO;
 	  private EmployeePresenter empPresenter;
-	  	  
-	  public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO, EmployeePresenter empPresenter){
+	  
+	  private List<PlatformDTO> allPlatformDTOs;
+
+
+	public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO, EmployeePresenter empPresenter){
 		  this.employeeDTO=employeeDTO;
 		  this.empPresenter = empPresenter;
 		  switch (createType){
@@ -119,16 +122,17 @@ public class EmployeeDetailsWindow {
 				public void onSuccess(List<PlatformDTO> result) {
 					messageBox.hide();
 					
-					platformChecks = new CheckBox[result.size()];
+					allPlatformDTOs = result;
+					platformChecks = new CheckBox[allPlatformDTOs.size()];
 					
-					for(int i=0; i<result.size();i++){
+					for(int i=0; i<allPlatformDTOs.size();i++){
 						platformChecks[i]= new CheckBox();
-						platformChecks[i].setBoxLabel(result.get(i).getPlatformId());
+						platformChecks[i].setBoxLabel(allPlatformDTOs.get(i).getPlatformId());
 						if(createType == VIEW){
-							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(allPlatformDTOs.get(i).getPlatformId()));
 							platformChecks[i].setReadOnly(true);
 						}else if (createType == EDIT){
-							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(allPlatformDTOs.get(i).getPlatformId()));
 						}
 					}
 					
@@ -390,7 +394,14 @@ public class EmployeeDetailsWindow {
 			return status;
 		}
 
+	  	  
+	    public List<PlatformDTO> getAllPlatformDTOs() {
+			return allPlatformDTOs;
+		}
 		
+		public void setAllPlatformDTOs(List<PlatformDTO> allPlatformDTOs) {
+			this.allPlatformDTOs = allPlatformDTOs;
+		}
     
 
 }
