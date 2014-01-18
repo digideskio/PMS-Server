@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.core.AllocationGridColorCell;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
@@ -91,7 +92,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
     private List<WeeklyResourcePlan> orgWeeklyResourcePlanList;
     private  ArrayList<ColumnConfig<WeeklyResourcePlan, ?>> configs;
     
-    ProjectAllocationDTO projectAllocationDTO;
+    private ProjectAllocationDTO projectAllocationDTO;
+    private ProjectDTO projectDTO;
+    private Date startDate = new Date();
+    
+//	private final RequestManpowerServiceAsync requestManpowerService = GWT.create(RequestManpowerService.class);
  	/**
 	 * Main method to create this widget. Called by the GWT Framework
 	 */
@@ -187,10 +192,40 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		return response;
 	}
 	
+	
+//	private void refreshWeeklyResourcePlan(){
+//		
+//		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+//				"Progress", "Loading data. Please wait...");
+//		final AsyncCallback<ProjectAllocationDTO> callback = new AsyncCallback<ProjectAllocationDTO>() {
+//	  
+//			public void onFailure(Throwable caught) {
+//				messageBox.hide();
+//				AlertMessageBox alert = new AlertMessageBox("Error",
+//						caught.getMessage());
+//				alert.show();
+//			}
+//
+//			public void onSuccess(ProjectAllocationDTO result) {
+//				messageBox.hide();
+//				projectAllocationDTO = result;
+//				grid.getStore().replaceAll(projectAllocationDTO.getWeeklyResourcePlan());
+//			}
+//
+//		};
+//			
+//		requestManpowerService.requestManpower(projectDTO, startDate, callback);
+//		messageBox.auto();
+//		messageBox.show();
+//	}
+	
 	public void setProject(ProjectDTO project) {
 		//TODO: Add logic to fetch allocation data from server as List<projectAllocationDTO> for projectDTO and startDate
+//		projectDTO = project;
+//		refreshWeeklyResourcePlan();
+		
 		projectAllocationDTO = new ProjectAllocationDTO();
-
+		
 		WeeklyResourcePlanResponse response = getDummyWeeklyResourcePlan();
 		orgWeeklyResourcePlanList = response.getWeeklyResourcePlanList();
 		grid.getStore().replaceAll(response.getWeeklyResourcePlanList());
@@ -214,6 +249,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 				config.setHtml(SafeHtmlUtils.fromString(fmt.format(wrapper.asDate())));
 				wrapper = wrapper.addDays(1);
 		}
+		this.startDate = startDate;
+//		refreshWeeklyResourcePlan();
 	}
 	
 	public void reload() {
