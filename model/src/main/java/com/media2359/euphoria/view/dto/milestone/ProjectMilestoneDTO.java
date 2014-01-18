@@ -88,6 +88,21 @@ public class ProjectMilestoneDTO implements Serializable {
 	public void setLastUpdTstamp(Date lastUpdTstamp) {
 		this.lastUpdTstamp = lastUpdTstamp;
 	}
+	
+	public ProjectMilestoneDTO createMilestoneDTO(){
+		ProjectMilestoneDTO projectMilestoneDTO = new ProjectMilestoneDTO();
+		
+		projectMilestoneDTO.setCreatedById(getCreatedById());
+		projectMilestoneDTO.setCreateTstamp(getCreateTstamp());
+		projectMilestoneDTO.setLastUpdById(getLastUpdById());
+		projectMilestoneDTO.setLastUpdTstamp(getLastUpdTstamp());
+		projectMilestoneDTO.setMilestoneDate(getMilestoneDate());
+		projectMilestoneDTO.setMilestoneDesc(getMilestoneDesc());
+		projectMilestoneDTO.setMilestoneKey(getMilestoneKey());
+		projectMilestoneDTO.setProject(getProject());
+		return projectMilestoneDTO;
+
+	}
 	@Override
 	public String toString() {
 		return "ProjectMilestoneDTO [milestoneKey=" + milestoneKey

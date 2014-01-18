@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerAllocation;
 import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.milestone.ProjectMilestone;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 @Entity 
@@ -58,7 +60,16 @@ public class Project implements java.io.Serializable{
 		this.manDaysLeft=dto.getManDaysLeft();
 		this.milestoneCount=dto.getMilestoneCount();
 		this.completedMilestoneCount=dto.getMilestoneCount();
-		this.projectMilestone =dto.getProjectMilestone();
+		Set<ProjectMilestone> projectMilestoneSet = new HashSet<ProjectMilestone>();
+		
+		if(dto.getProjectMilestone()!=null){
+			for(ProjectMilestoneDTO projectMilestoneDTO : dto.getProjectMilestone()){
+				projectMilestoneSet.add(new ProjectMilestone(projectMilestoneDTO));
+			}
+		}
+		
+			
+		this.projectMilestone =projectMilestoneSet;
 	}
 
 	/**
@@ -157,7 +168,16 @@ public class Project implements java.io.Serializable{
 		projectDTO.setManDaysLeft(getManDaysLeft());
 		projectDTO.setMilestoneCount(getMilestoneCount());
 		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
-		projectDTO.setProjectMilestone(getProjectMilestone());
+		
+		Set<ProjectMilestoneDTO> projectMilestoneDTOSet = new HashSet<ProjectMilestoneDTO>();
+		
+		if(getProjectMilestone()!=null){
+			for(ProjectMilestone projectMilestone: getProjectMilestone() ){
+				projectMilestoneDTOSet.add(projectMilestone.createProjectMilestoneDTO());
+			}
+		}
+		
+		projectDTO.setProjectMilestone(projectMilestoneDTOSet);
 		
 		return projectDTO;
 	}

@@ -12,7 +12,7 @@ package com.media2359.euphoria.view.dto.project;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.media2359.euphoria.model.milestone.ProjectMilestone;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 
 public class ProjectDTO implements Serializable {
         private Integer id;
@@ -22,7 +22,7 @@ public class ProjectDTO implements Serializable {
         private Integer manDaysLeft;
         private Integer milestoneCount;
         private Integer completedMilestoneCount;
-        private Set<ProjectMilestone> projectMilestone;
+        private Set<ProjectMilestoneDTO> projectMilestone;
 
         public ProjectDTO() {
 
@@ -86,29 +86,14 @@ public class ProjectDTO implements Serializable {
                 this.completedMilestoneCount = completedMilestoneCount;
         }
 
-        public Set<ProjectMilestone> getProjectMilestone() {
-                return projectMilestone;
-        }
+		public Set<ProjectMilestoneDTO> getProjectMilestone() {
+			return projectMilestone;
+		}
 
-        public void setProjectMilestone(Set<ProjectMilestone> projectMilestone) {
-                this.projectMilestone = projectMilestone;
-        }
+		public void setProjectMilestone(Set<ProjectMilestoneDTO> projectMilestone) {
+			this.projectMilestone = projectMilestone;
+		}
+
         
-        
-        /*
-         * Prepares the Project froom the projectDTO
-         */
-        
-//        public Project prepareProject(){
-//                Project project = new Project();
-//                project.setId(id);
-//                project.setManDaysLeft(manDaysLeft);
-//                project.setMilestoneCount(completedMilestoneCount);
-//                project.setName(name);
-//                project.setProjectManager(projectManager);
-//                project.setDescription(description);
-//                project.setCompletedMilestoneCount(completedMilestoneCount);
-//                return project;
-//        }
         
 }
