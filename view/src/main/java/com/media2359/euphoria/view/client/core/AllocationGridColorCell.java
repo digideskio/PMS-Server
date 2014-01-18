@@ -15,7 +15,11 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
+import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.util.AllocationStatus;
+import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
 
 
 
@@ -36,11 +40,12 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
   
     private ImageResource image;
     private static Templates templates = GWT.create(Templates.class);
-    
+    private ManpowerAllocationProjectPanel manpowerAllocationProjectPanel;
     public static boolean CLICK_ENABLED=true; 
     
-    public AllocationGridColorCell(){
+    public AllocationGridColorCell(ManpowerAllocationProjectPanel manpowerAllocationProjectPanel){
     	super(BrowserEvents.MOUSEOVER,BrowserEvents.CLICK);
+    	this.manpowerAllocationProjectPanel = manpowerAllocationProjectPanel;
     }
     @Override
     public void render(Context context, AllocationStatus value, SafeHtmlBuilder sb) {
@@ -78,6 +83,7 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     public void onBrowserEvent(Context context, Element parent, AllocationStatus value,
             NativeEvent event, ValueUpdater<AllocationStatus> valueUpdater) {
     	super.onBrowserEvent(context, parent, value, event, valueUpdater);
+    	
     	if(CLICK_ENABLED)
 	    	if(!event.getType().equals(BrowserEvents.CLICK))
 	    		setCursor(parent, value);
@@ -98,13 +104,16 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     }
     
     private AllocationStatus getNewAllocationStatus(AllocationStatus previousStatus){
-		   switch(previousStatus){
-			   	case FREE: return AllocationStatus.SELECTED;
-			   	case SELECTED: return AllocationStatus.FREE;
-			   	case EXCEEDED: return AllocationStatus.SELECTED_EXCEEDED;
-			   	case SELECTED_EXCEEDED: return AllocationStatus.EXCEEDED;
+    	AllocationStatus status;   
+    	switch(previousStatus){
+			   	case FREE: {status= AllocationStatus.SELECTED; manpowerAllocationProjectPanel.selectAManDay();break;}
+			   	case SELECTED: {status= AllocationStatus.FREE;manpowerAllocationProjectPanel.unSelectAManDay();break;}
+			   	case EXCEEDED: {status= AllocationStatus.SELECTED_EXCEEDED;manpowerAllocationProjectPanel.selectAManDay();break;}
+			   	case SELECTED_EXCEEDED: {status = AllocationStatus.EXCEEDED;manpowerAllocationProjectPanel.unSelectAManDay();break;}
 			   	default:   return previousStatus;
 		   }
+    	
+    	return status;
 		   
 	   }
  

@@ -370,7 +370,24 @@ public class WeeklyResourcePlan implements Serializable{
 		this.day7PmEnm = day7PmEnm;
 	}
 
-
+	@Override
+	public String toString() {
+		return "WeeklyResourcePlan [id=" + id + ", platform=" + platform
+				+ ", developer=" + developer + ", day1Am=" + day1Am
+				+ ", day2Am=" + day2Am + ", day3Am=" + day3Am + ", day4Am="
+				+ day4Am + ", day5Am=" + day5Am + ", day6Am=" + day6Am
+				+ ", day7Am=" + day7Am + ", day1Pm=" + day1Pm + ", day2Pm="
+				+ day2Pm + ", day3Pm=" + day3Pm + ", day4Pm=" + day4Pm
+				+ ", day5Pm=" + day5Pm + ", day6Pm=" + day6Pm + ", day7Pm="
+				+ day7Pm + ", day1AmEnm=" + day1AmEnm + ", day2AmEnm="
+				+ day2AmEnm + ", day3AmEnm=" + day3AmEnm + ", day4AmEnm="
+				+ day4AmEnm + ", day5AmEnm=" + day5AmEnm + ", day6AmEnm="
+				+ day6AmEnm + ", day7AmEnm=" + day7AmEnm + ", day1PmEnm="
+				+ day1PmEnm + ", day2PmEnm=" + day2PmEnm + ", day3PmEnm="
+				+ day3PmEnm + ", day4PmEnm=" + day4PmEnm + ", day5PmEnm="
+				+ day5PmEnm + ", day6PmEnm=" + day6PmEnm + ", day7PmEnm="
+				+ day7PmEnm + "]";
+	}
 
 	
 }

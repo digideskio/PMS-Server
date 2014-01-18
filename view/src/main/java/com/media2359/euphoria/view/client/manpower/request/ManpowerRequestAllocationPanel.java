@@ -85,8 +85,8 @@ public class ManpowerRequestAllocationPanel implements IsWidget {
 		
 		//Now set the new project
 		projectPane.setHeadingText(project.getName());
-		allocationPanel.setWeekStartDate(weekStartDate);
 		allocationPanel.setProject(project);
+		allocationPanel.setWeekStartDate(weekStartDate);		
 		addButton.setEnabled(true);
 		resetButton.setEnabled(true);
 		allocationPanel.reload();

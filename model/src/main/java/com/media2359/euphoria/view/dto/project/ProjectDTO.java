@@ -94,6 +94,16 @@ public class ProjectDTO implements Serializable {
 			this.projectMilestone = projectMilestone;
 		}
 
+		@Override
+		public String toString() {
+			return "ProjectDTO [id=" + id + ", name=" + name + ", description="
+					+ description + ", projectManager=" + projectManager
+					+ ", manDaysLeft=" + manDaysLeft + ", milestoneCount="
+					+ milestoneCount + ", completedMilestoneCount="
+					+ completedMilestoneCount + ", projectMilestone="
+					+ projectMilestone + "]";
+		}
+
         
         
 }

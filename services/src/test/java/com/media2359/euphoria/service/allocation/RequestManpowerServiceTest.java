@@ -91,7 +91,7 @@ public class RequestManpowerServiceTest {
 		
 		weeklyResourcePlanList.add(weeklyResourcePlan);
 		
-		projectAllocationDTO.setWeeklyResourcePlan(weeklyResourcePlanList);
+		projectAllocationDTO.setWeeklyResourcePlanList(weeklyResourcePlanList);
 	
 		
 	}

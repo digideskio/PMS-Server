@@ -11,7 +11,7 @@ public class ProjectAllocationDTO implements Serializable{
 	ProjectDTO projectDTO;
 	
 	Date startOfWeek;
-	List<WeeklyResourcePlan> weeklyResourcePlan;
+	List<WeeklyResourcePlan> weeklyResourcePlanList;
 	
 	
 	
@@ -27,11 +27,17 @@ public class ProjectAllocationDTO implements Serializable{
 	public void setStartOfWeek(Date startOfWeek) {
 		this.startOfWeek = startOfWeek;
 	}
-	public List<WeeklyResourcePlan> getWeeklyResourcePlan() {
-		return weeklyResourcePlan;
+	public List<WeeklyResourcePlan> getWeeklyResourcePlanList() {
+		return weeklyResourcePlanList;
 	}
-	public void setWeeklyResourcePlan(List<WeeklyResourcePlan> weeklyResourcePlan) {
-		this.weeklyResourcePlan = weeklyResourcePlan;
+	public void setWeeklyResourcePlanList(List<WeeklyResourcePlan> weeklyResourcePlan) {
+		this.weeklyResourcePlanList = weeklyResourcePlan;
+	}
+	@Override
+	public String toString() {
+		return "ProjectAllocationDTO [projectDTO=" + projectDTO
+				+ ", startOfWeek=" + startOfWeek + ", weeklyResourcePlan="
+				+ weeklyResourcePlanList + "]";
 	}
 
 	

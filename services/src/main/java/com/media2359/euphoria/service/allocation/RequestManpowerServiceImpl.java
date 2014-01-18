@@ -163,7 +163,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 				}
 				
 				
-				projectAllocationDTO.setWeeklyResourcePlan(weeklyResourcePlanList);
+				projectAllocationDTO.setWeeklyResourcePlanList(weeklyResourcePlanList);
 				
 			}
 			
@@ -257,7 +257,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			// Persists Weekly manpower request
 			weeklyManpowerRequestDao.addWeeklyManpowerRequest(weeklyManpowerRequest);
 			
-			List<WeeklyResourcePlan> weeklyResourcePlans = projectAllocationDto.getWeeklyResourcePlan();
+			List<WeeklyResourcePlan> weeklyResourcePlans = projectAllocationDto.getWeeklyResourcePlanList();
 			//platformRequestList = new ArrayList<PlatformRequest>();
 			
 			for(WeeklyResourcePlan weeklyResourcePlan : weeklyResourcePlans){
