@@ -14,8 +14,11 @@ public class ProjectRpcHelper {
 	 *
 	 * @returns void
 	 */
+	
+	
+	protected static final ProjectServiceAsync projectService = GWT.create(ProjectService.class);
+	
 	public static void getAllProjects(AsyncCallback<ProjectListResponse> callback) {
-		ProjectServiceAsync projectService = GWT.create(ProjectService.class);
 		projectService.getAllProjects(new ProjectListRequest(), callback);
 	}
 }
