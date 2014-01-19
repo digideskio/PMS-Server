@@ -1,4 +1,5 @@
-package com.media2359.euphoria.view.client.core;
+package com.media2359.euphoria.view.client.manpower.common;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
@@ -15,6 +16,8 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.media2359.euphoria.view.client.core.Alert;
+import com.media2359.euphoria.view.client.core.AllocationGridColorCellImages;
 import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
 import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
@@ -88,6 +91,10 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
 	    	if(!event.getType().equals(BrowserEvents.CLICK))
 	    		setCursor(parent, value);
 	    	else{
+	    		if(!manpowerAllocationProjectPanel.isAllPlatformEmployeeSelected()){
+	    			new Alert("Warning!", "Please assign platform and employee to all requests before continuing!");
+	    			return;
+	    		}
 	    		AllocationStatus newValue = getNewAllocationStatus(value);
 				valueUpdater.update(newValue);
 				setCursor(parent, newValue);
@@ -106,10 +113,22 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     private AllocationStatus getNewAllocationStatus(AllocationStatus previousStatus){
     	AllocationStatus status;   
     	switch(previousStatus){
-			   	case FREE: {status= AllocationStatus.SELECTED; manpowerAllocationProjectPanel.selectAManDay();break;}
-			   	case SELECTED: {status= AllocationStatus.FREE;manpowerAllocationProjectPanel.unSelectAManDay();break;}
-			   	case EXCEEDED: {status= AllocationStatus.SELECTED_EXCEEDED;manpowerAllocationProjectPanel.selectAManDay();break;}
-			   	case SELECTED_EXCEEDED: {status = AllocationStatus.EXCEEDED;manpowerAllocationProjectPanel.unSelectAManDay();break;}
+				case FREE: 	   if(!manpowerAllocationProjectPanel.selectAManDay())
+				   				 status= AllocationStatus.SELECTED;
+				   				else
+				   				 status= AllocationStatus.SELECTED_EXCEEDED;
+				   			   break;
+			   	case SELECTED:  manpowerAllocationProjectPanel.unSelectAManDay();
+				   			   status= AllocationStatus.FREE;
+				   			   break;
+			   	case EXCEEDED: manpowerAllocationProjectPanel.selectAManDay();
+				   			   status= AllocationStatus.SELECTED_EXCEEDED;
+				   			   break;
+			   	case SELECTED_EXCEEDED:if(!manpowerAllocationProjectPanel.unSelectAManDay())
+						   				 status= AllocationStatus.EXCEEDED;
+						   				else
+						   				 status= AllocationStatus.FREE;
+						   			   break;
 			   	default:   return previousStatus;
 		   }
     	

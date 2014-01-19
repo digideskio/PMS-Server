@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -27,8 +28,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import com.media2359.euphoria.view.client.core.AllocationGridColorCell;
-import com.media2359.euphoria.view.client.employee.EmployeeDetailsWindow;
+import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
@@ -47,9 +47,7 @@ import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
-import com.sencha.gxt.widget.core.client.event.CellClickEvent;
 import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
-import com.sencha.gxt.widget.core.client.event.CellClickEvent.CellClickHandler;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -99,7 +97,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
     
     private ProjectAllocationDTO projectAllocationDTO;
     private ProjectDTO projectDTO;
-    private double manDaysLeftForAllocation;
+    private Double manDaysLeftForAllocation;
+    private Double previousManDaysLeftForAllocation;
     private Date startDate = new Date();
     
 	private final RequestManpowerServiceAsync requestManpowerService = GWT.create(RequestManpowerService.class);
@@ -164,7 +163,6 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    grid.setBorders(true);
 	    grid.getView().setStripeRows(true);
 	    grid.getView().setColumnLines(true);
-//	    grid.addCellClickHandler(new GridCellClickHandler());
 	    return grid;
 	}
 
@@ -179,25 +177,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		pmColumn.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 	}
-	private WeeklyResourcePlanResponse getDummyWeeklyResourcePlan() {
-		WeeklyResourcePlanResponse response = new WeeklyResourcePlanResponse();
-		response.setWeekStartDate(new Date());
-		
-		List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
-		employeeListStore.replaceAll(EmployeePresenter.getEmployees());
-		WeeklyResourcePlan resourcePlan = new WeeklyResourcePlan();
-		resourcePlan.setId("1");
-		resourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
-		resourcePlan.setDay1PmEnm(AllocationStatus.LEAVE);
-		resourcePlan.setDay2AmEnm(AllocationStatus.EXCEEDED);
-		resourcePlan.setDay2PmEnm(AllocationStatus.HOLIDAY);
-		resourcePlan.setDay3AmEnm(AllocationStatus.SELECTED_EXCEEDED);
-		weeklyResourcePlanList.add(resourcePlan);
-				
-		response.setWeeklyResourcePlanList(weeklyResourcePlanList);
-		
-		return response;
-	}
+
 	
 	
 	private void refreshWeeklyResourcePlan(){
@@ -224,6 +204,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 					addRequest();
 				}
 				
+				orgWeeklyResourcePlanList = projectAllocationDTO.getWeeklyResourcePlanList();
 				
 				employeeListStore.replaceAll(EmployeePresenter.getEmployees());
 				
@@ -239,11 +220,16 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	public void setProject(ProjectDTO project) {
 		//TODO: Add logic to fetch allocation data from server as List<projectAllocationDTO> for projectDTO and startDate
 		projectDTO = project;
-		manDaysLeftForAllocation = projectDTO.getManDaysLeft(); // to be  changed to getManDaysLeftForAllocation
+		manDaysLeftForAllocation = new Double(projectDTO.getManDaysLeft()); // to be  changed to getManDaysLeftForAllocation
+		previousManDaysLeftForAllocation = manDaysLeftForAllocation.doubleValue();
 		log.info("!#!#!#!#!! Mandays Left: "+manDaysLeftForAllocation);
 	}
 	
 	public void addRequest(){
+		if(!isAllPlatformEmployeeSelected()){
+			new Alert("Warning!", "Please assign atleast platform and employee to all existing requests before adding new request!");
+			return;
+		}
 		WeeklyResourcePlan weeklyPlan = new WeeklyResourcePlan();
 		grid.getStore().add(weeklyPlan);
 	}
@@ -271,15 +257,13 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	
 	public void resetAllocation() {
 		grid.getStore().clear();
-		grid.getStore().replaceAll(orgWeeklyResourcePlanList);
-		manDaysLeftForAllocation = projectDTO.getManDaysLeft();
+		if(orgWeeklyResourcePlanList != null)
+			grid.getStore().replaceAll(orgWeeklyResourcePlanList);
+		else
+			addRequest();
+		manDaysLeftForAllocation = new Double(projectDTO.getManDaysLeft());
+		previousManDaysLeftForAllocation = manDaysLeftForAllocation.doubleValue();
 		log.info("!#!#!#!#!! Mandays Left: "+manDaysLeftForAllocation);
-	}
-	
-
-	public void setAllocationData(ProjectAllocationDTO allocationData) {
-		orgWeeklyResourcePlanList = allocationData.getWeeklyResourcePlanList();
-		grid.getStore().replaceAll(allocationData.getWeeklyResourcePlanList());
 	}
 	
 
@@ -287,7 +271,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		grid.getStore().commitChanges();
 		projectAllocationDTO.setWeeklyResourcePlanList(grid.getStore().getAll());
 		log.info("!#!#!#!# Returnning Project Allocation Data: "+projectAllocationDTO.toString());
-		projectDTO.setManDaysLeft((int)manDaysLeftForAllocation); // to be  changed to setManDaysLeftForAllocation
+		projectDTO.setManDaysLeft(manDaysLeftForAllocation.intValue()); // to be  changed to setManDaysLeftForAllocation
 		return projectAllocationDTO;
 	}
 	
@@ -308,45 +292,63 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		AllocationGridColorCell.CLICK_ENABLED = clickEnabled;
 	}
 	
-	public void selectAManDay(){
+	public boolean selectAManDay(){
 		manDaysLeftForAllocation -= 0.5;
-		log.info("Mandays left For Allocation "+manDaysLeftForAllocation);
-		validateAndRepaint();
+		return validateAndRepaint();
 	}
-	public void unSelectAManDay(){
+	public boolean unSelectAManDay(){
 		manDaysLeftForAllocation += 0.5;
-		validateAndRepaint();
+		return validateAndRepaint();
 	}
 	
-	private void validateAndRepaint(){
-		log.info("Mandays left For Allocation "+manDaysLeftForAllocation);
-		if(manDaysLeftForAllocation != 0. || manDaysLeftForAllocation !=0.5)
-			return;
+	private boolean validateAndRepaint(){
 		
+		if(!((manDaysLeftForAllocation.equals(0.5) && previousManDaysLeftForAllocation.equals(0.0)) || (manDaysLeftForAllocation.equals(0.0)&&previousManDaysLeftForAllocation.equals(0.5)))){
+			previousManDaysLeftForAllocation = manDaysLeftForAllocation;
+			log.info("Mandays left For Allocation "+manDaysLeftForAllocation +". Hence Returning");
+			return false;
+		}
 		
-		log.info("Validate And Repaiint called!");
+		previousManDaysLeftForAllocation = manDaysLeftForAllocation;
+		log.info("Mandays left For Allocation "+manDaysLeftForAllocation +". Hence Returning");
+		
 		grid.getStore().commitChanges();
 		List<WeeklyResourcePlan> weeklyResourcePlans= grid.getStore().getAll();
-		
-		if(manDaysLeftForAllocation == 0.){
+	
+		if(manDaysLeftForAllocation.equals(0.0)){
 			for(WeeklyResourcePlan weeklyResourcePlan: weeklyResourcePlans){
 				if(weeklyResourcePlan.getDay1AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay1AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay1AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay1AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay2AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay2AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay2AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay2AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay3AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay3AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay3AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay3AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay4AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay4AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay4AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay4AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay5AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay5AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay5AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay5AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay6AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay6AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay6AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay6AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay7AmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay7AmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay7AmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay7AmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				
 				if(weeklyResourcePlan.getDay1PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay1PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay1PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay1PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay2PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay2PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay2PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay2PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay3PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay3PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay3PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay3PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay4PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay4PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay4PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay4PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay5PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay5PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay5PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay5PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay6PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay6PmEnm(AllocationStatus.EXCEEDED);
+				else if(weeklyResourcePlan.getDay6PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay6PmEnm(AllocationStatus.SELECTED_EXCEEDED);
 				if(weeklyResourcePlan.getDay7PmEnm().equals(AllocationStatus.FREE))weeklyResourcePlan.setDay7PmEnm(AllocationStatus.EXCEEDED);
-				}
-			}else if(manDaysLeftForAllocation == 0.5){
+				else if(weeklyResourcePlan.getDay7PmEnm().equals(AllocationStatus.SELECTED))weeklyResourcePlan.setDay7PmEnm(AllocationStatus.SELECTED_EXCEEDED);
+				
+			  }
+			}else if(manDaysLeftForAllocation.equals(0.5)){
 				for(WeeklyResourcePlan weeklyResourcePlan: weeklyResourcePlans){
 					if(weeklyResourcePlan.getDay1AmEnm().equals(AllocationStatus.EXCEEDED))weeklyResourcePlan.setDay1AmEnm(AllocationStatus.FREE);
 					else if(weeklyResourcePlan.getDay1AmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
@@ -364,7 +366,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 					else if(weeklyResourcePlan.getDay7AmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay7AmEnm(AllocationStatus.SELECTED);
 					
 					if(weeklyResourcePlan.getDay1PmEnm().equals(AllocationStatus.EXCEEDED))weeklyResourcePlan.setDay1PmEnm(AllocationStatus.FREE);
-					else if(weeklyResourcePlan.getDay1PmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
+					else if(weeklyResourcePlan.getDay1PmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay1PmEnm(AllocationStatus.SELECTED);
 					if(weeklyResourcePlan.getDay2PmEnm().equals(AllocationStatus.EXCEEDED))weeklyResourcePlan.setDay2PmEnm(AllocationStatus.FREE);
 					else if(weeklyResourcePlan.getDay2PmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay2PmEnm(AllocationStatus.SELECTED);
 					if(weeklyResourcePlan.getDay3PmEnm().equals(AllocationStatus.EXCEEDED))weeklyResourcePlan.setDay3PmEnm(AllocationStatus.FREE);
@@ -378,12 +380,24 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 					if(weeklyResourcePlan.getDay7PmEnm().equals(AllocationStatus.EXCEEDED))weeklyResourcePlan.setDay7PmEnm(AllocationStatus.FREE);
 					else if(weeklyResourcePlan.getDay7PmEnm().equals(AllocationStatus.SELECTED_EXCEEDED))weeklyResourcePlan.setDay7PmEnm(AllocationStatus.SELECTED);
 				}
+			
 			}
-	
-		grid.getStore().replaceAll(weeklyResourcePlans);
 		
+			grid.getView().refresh(false);
+			return true;
 	}
 
+	public boolean isAllPlatformEmployeeSelected(){
+		List<WeeklyResourcePlan> weeklyResourcePlans= grid.getStore().getAll();
+		for(WeeklyResourcePlan weeklyResourcePlan:weeklyResourcePlans){
+			if(weeklyResourcePlan.getPlatform() == null || weeklyResourcePlan.getDeveloper() == null){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	private void createDeveloperCombo(){
 		
 		employeeListStore = new ListStore<EmployeeDTO>(employeeProps.employeeKey());
@@ -454,29 +468,3 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		messageBox.show();
 	}
 }
-
-//	class GridCellClickHandler implements CellClickHandler{
-//		
-//
-//		/* (non-Javadoc)
-//		 * @see com.sencha.gxt.widget.core.client.event.CellClickEvent.CellClickHandler#onCellClick(com.sencha.gxt.widget.core.client.event.CellClickEvent)
-//		 */
-//		private Grid<WeeklyResourcePlan> grid;
-//		
-//		public GridCellClickHandler(Grid<WeeklyResourcePlan> grid){
-//			
-//			super();
-//			this.grid = grid;
-//			
-//		}
-//		@Override
-//		public void onCellClick(CellClickEvent event) {
-//
-//			 if(event.getCellIndex()<2)
-//		    	 super.
-//			 WeeklyResourcePlan p = grid.getStore().get(event.getRowIndex());
-//			 if(p.get)
-//		}
-//		
-//	}
-//}
