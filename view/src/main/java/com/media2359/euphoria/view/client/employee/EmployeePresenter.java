@@ -69,6 +69,8 @@ import com.sencha.gxt.widget.core.client.info.Info;
 				"Progress", "Loading data. Please wait...");
 		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>() {
 	  
+			
+			
 			public void onFailure(Throwable caught) {
 				messageBox.hide();
 				AlertMessageBox alert = new AlertMessageBox("Error",
