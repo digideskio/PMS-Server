@@ -14,6 +14,9 @@ import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.NumberField;
+import com.sencha.gxt.widget.core.client.form.TextArea;
+import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class ProjectPresenter {
 	
@@ -81,10 +84,46 @@ public class ProjectPresenter {
 	    
 		sourceWindow.getWindow().hide();
 		
+		saveNewProject(createProjectDTO(sourceWindow));
 	}
 	public void cancelButtonClicked(AddProjectWindow sourceWindow) {
 			sourceWindow.getWindow().hide();
 		
 	}
+	
+	
+	private ProjectDTO createProjectDTO(AddProjectWindow sourceWindow){
+		
+		ProjectDTO projectDTO = new ProjectDTO();
+		
+		projectDTO.setName(((TextField)sourceWindow.getProjectName()).getText());
+		projectDTO.setDescription(((TextArea)sourceWindow.getDescription()).getText());
+		projectDTO.setManDaysLeft(Integer.parseInt(((NumberField)sourceWindow.getMandaysRequired()).getText()));
+		return projectDTO;
+	}
 
+	private void saveNewProject(ProjectDTO projectDTO){
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Saving data. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	  
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				loadProjectsFromDB(false);
+			}
+
+		};
+			
+		ProjectRpcHelper.projectService.addProject(projectDTO, callback);
+		messageBox.auto();
+		messageBox.show();
+		
+	}
 }
