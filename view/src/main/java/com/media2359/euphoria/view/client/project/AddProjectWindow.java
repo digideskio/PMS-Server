@@ -10,6 +10,7 @@ import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.StringLabelProvider;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.FramedPanel;
+import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
@@ -37,6 +38,7 @@ public class AddProjectWindow {
 	private   static final String SAVE_BUTTON_TEXT = "Submit",CANCEL_BUTTON_TEXT = "Cancel";
 	private Window window;
 	private FormPanel formPanel;
+	private ListView lv;
 
 
 	public AddProjectWindow(ProjectPresenter projectPresenter){
@@ -172,6 +174,10 @@ public class AddProjectWindow {
 		  return field;
 		
 	}
+	
+//	public Component createMileStones(){
+//		
+//	}
 
 
 	
