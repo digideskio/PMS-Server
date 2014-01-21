@@ -98,7 +98,7 @@ public class ProjectPresenter {
 		
 		projectDTO.setName(((TextField)sourceWindow.getProjectName()).getText());
 		projectDTO.setDescription(((TextArea)sourceWindow.getDescription()).getText());
-		projectDTO.setManDaysLeft(Integer.parseInt(((NumberField)sourceWindow.getMandaysRequired()).getText()));
+		projectDTO.setManDaysLeft(Double.parseDouble(((NumberField)sourceWindow.getMandaysRequired()).getText()));
 		return projectDTO;
 	}
 

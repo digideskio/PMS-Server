@@ -50,7 +50,7 @@ public class ProjectServiceTest {
 		project.setName("SGMalls");
 		project.setDescription("PM System for SG Malls");
 		project.setProjectManager("May Thei");
-		project.setManDaysLeft(20);
+		project.setManDaysLeft(Double.valueOf(20.01));
 		
 	}
 	

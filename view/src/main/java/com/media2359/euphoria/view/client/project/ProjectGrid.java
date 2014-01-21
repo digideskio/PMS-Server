@@ -44,7 +44,7 @@ public class ProjectGrid extends Composite {
 		@Path("id")
 		ModelKeyProvider<ProjectDTO> key();		
 		ValueProvider<ProjectDTO, String> name();
-		ValueProvider<ProjectDTO, Integer> manDaysLeft();		
+		ValueProvider<ProjectDTO, Double> manDaysLeft();		
 		ValueProvider<ProjectDTO, Integer> milestoneCount();		
 		ValueProvider<ProjectDTO, Integer> completedMilestoneCount();
 		
@@ -59,7 +59,7 @@ public class ProjectGrid extends Composite {
 
 		ColumnConfig<ProjectDTO, String> nameCol = new ColumnConfig<ProjectDTO, String>(
 				gridProperties.name(), 150, "Name");
-		ColumnConfig<ProjectDTO, Integer> manDaysCol = new ColumnConfig<ProjectDTO, Integer>(
+		ColumnConfig<ProjectDTO, Double> manDaysCol = new ColumnConfig<ProjectDTO, Double>(
 				gridProperties.manDaysLeft(), 150, "ManDays Left");
 		ColumnConfig<ProjectDTO, Integer> mileStoneCol = new ColumnConfig<ProjectDTO, Integer>(
 				gridProperties.milestoneCount(), 150, "Total No Of Milestones");

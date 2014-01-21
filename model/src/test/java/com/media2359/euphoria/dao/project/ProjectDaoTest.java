@@ -65,7 +65,7 @@ public class ProjectDaoTest {
 		project1.setId(Integer.valueOf(0));
 		project1.setName("TEST123");
 		project1.setDescription("Project Unit Test for save a project");
-		project1.setManDaysLeft(100);
+		project1.setManDaysLeft(Double.valueOf(50.35));
 		project1.setProjectManager("Mgr123");
 		
 		projectDao.addProject(project1);

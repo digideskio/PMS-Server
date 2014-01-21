@@ -19,7 +19,7 @@ public class ProjectDTO implements Serializable {
         private String name;
         private String description;
         private String projectManager;
-        private Integer manDaysLeft;
+        private Double manDaysLeft;
         private Integer milestoneCount;
         private Integer completedMilestoneCount;
         private Set<ProjectMilestoneDTO> projectMilestone;
@@ -61,16 +61,15 @@ public class ProjectDTO implements Serializable {
                 this.projectManager = projectManager;
         }
 
+        public Double getManDaysLeft() {
+			return manDaysLeft;
+		}
 
-        public Integer getManDaysLeft() {
-                return manDaysLeft;
-        }
+		public void setManDaysLeft(Double manDaysLeft) {
+			this.manDaysLeft = manDaysLeft;
+		}
 
-        public void setManDaysLeft(Integer manDaysLeft) {
-                this.manDaysLeft = manDaysLeft;
-        }
-
-        public Integer getMilestoneCount() {
+		public Integer getMilestoneCount() {
                 return milestoneCount;
         }
 
