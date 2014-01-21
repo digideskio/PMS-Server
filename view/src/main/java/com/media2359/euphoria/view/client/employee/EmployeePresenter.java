@@ -107,6 +107,8 @@ import com.sencha.gxt.widget.core.client.info.Info;
 	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p,this).show();
   }
   
+  
+  
   protected void deleteEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
 	  
       Context c = event.getContext();
