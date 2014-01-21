@@ -29,7 +29,7 @@ public class ViewCell extends TextButtonCell{
     @Override
     public void render(com.google.gwt.cell.client.Cell.Context context, 
             String value, SafeHtmlBuilder sb) {
-        SafeHtml html = SafeHtmlUtils.fromTrustedString(new Image("/static/images/arrow.png").toString());
+        SafeHtml html = SafeHtmlUtils.fromTrustedString(new Image("/static/images/view.png").toString());
         sb.append(html);
     }
 }

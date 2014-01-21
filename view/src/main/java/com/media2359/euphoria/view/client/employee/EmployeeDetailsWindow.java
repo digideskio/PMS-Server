@@ -13,32 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
-import com.media2359.euphoria.view.message.employee.EmployeeListRequest;
-import com.media2359.euphoria.view.message.employee.EmployeeListResponse;
-import com.media2359.euphoria.view.server.employee.EmployeeService;
-import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
-import com.sencha.gxt.widget.core.client.form.NumberField;
-import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
-import com.sencha.gxt.widget.core.client.form.TextField;
-import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FormPanel;
 
 /**
@@ -75,8 +64,11 @@ public class EmployeeDetailsWindow {
 	  
 	  private EmployeeDTO employeeDTO;
 	  private EmployeePresenter empPresenter;
-	  	  
-	  public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO, EmployeePresenter empPresenter){
+	  
+	  private List<PlatformDTO> allPlatformDTOs;
+
+
+	public EmployeeDetailsWindow(int createType, EmployeeDTO employeeDTO, EmployeePresenter empPresenter){
 		  this.employeeDTO=employeeDTO;
 		  this.empPresenter = empPresenter;
 		  switch (createType){
@@ -119,16 +111,17 @@ public class EmployeeDetailsWindow {
 				public void onSuccess(List<PlatformDTO> result) {
 					messageBox.hide();
 					
-					platformChecks = new CheckBox[result.size()];
+					allPlatformDTOs = result;
+					platformChecks = new CheckBox[allPlatformDTOs.size()];
 					
-					for(int i=0; i<result.size();i++){
+					for(int i=0; i<allPlatformDTOs.size();i++){
 						platformChecks[i]= new CheckBox();
-						platformChecks[i].setBoxLabel(result.get(i).getPlatformId());
+						platformChecks[i].setBoxLabel(allPlatformDTOs.get(i).getPlatformId());
 						if(createType == VIEW){
-							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(allPlatformDTOs.get(i).getPlatformId()));
 							platformChecks[i].setReadOnly(true);
 						}else if (createType == EDIT){
-							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(result.get(i).getPlatformId()));
+							platformChecks[i].setValue(employeeDTO.getPlatforms().contains(allPlatformDTOs.get(i).getPlatformId()));
 						}
 					}
 					
@@ -259,7 +252,6 @@ public class EmployeeDetailsWindow {
 		  
 		  
 		  window = new Window();
-		  log.info("Widget Count = "+p.getWidgetCount());
 		  window.setPixelSize(500, p.getWidgetCount()*50);
 		  window.setModal(true);
 		  window.setBlinkModal(true);
@@ -390,7 +382,14 @@ public class EmployeeDetailsWindow {
 			return status;
 		}
 
+	  	  
+	    public List<PlatformDTO> getAllPlatformDTOs() {
+			return allPlatformDTOs;
+		}
 		
+		public void setAllPlatformDTOs(List<PlatformDTO> allPlatformDTOs) {
+			this.allPlatformDTOs = allPlatformDTOs;
+		}
     
 
 }

@@ -1,6 +1,8 @@
 package com.media2359.euphoria.view.dto.manpower;
 
-public class DailyResourcePlanDTO {
+import java.io.Serializable;
+
+public class DailyResourcePlanDTO implements Serializable{
 	
 	Integer day;
 	String half ;

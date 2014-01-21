@@ -134,4 +134,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return platformDTOList;
 		
 	}
+
+	@Override
+	public List<EmployeeDTO> getEmployeesByPlatform(PlatformDTO platformDTO) {
+		List<EmployeeDTO> employeeDtoList = new ArrayList<EmployeeDTO>();
+		
+		List<Employee> employeeList = employeeDao.getEmployeesByPlatform(new 
+				Platform(platformDTO));
+		for(Employee employee : employeeList){
+			employeeDtoList.add(employee.createEmployeeDTO());
+		}
+		return employeeDtoList;
+	}
 }

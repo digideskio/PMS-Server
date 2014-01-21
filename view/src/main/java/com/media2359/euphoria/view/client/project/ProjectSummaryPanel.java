@@ -9,22 +9,18 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.client.project;
 
-import java.util.List;
 import java.util.logging.Logger;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.media2359.euphoria.view.dto.project.ProjectDTO;
-import com.media2359.euphoria.view.message.project.ProjectListResponse;
 import com.media2359.euphoria.view.server.project.ProjectService;
 import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
-import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
-public class ProjectSummaryPanel extends Composite implements AsyncCallback<ProjectListResponse>{
+public class ProjectSummaryPanel extends Composite{
 	interface ProjectSummaryUiBinder extends
 			UiBinder<VerticalLayoutContainer, ProjectSummaryPanel> {
 	}
@@ -36,40 +32,24 @@ public class ProjectSummaryPanel extends Composite implements AsyncCallback<Proj
 	@UiField
 	ProjectGrid projectGrid;
 	private Logger log = Logger.getLogger("EuphoriaLogger");
+	private ProjectPresenter projectPresenter;
 
 	/**
 	 * This is the entry point method.
 	 */
 	public ProjectSummaryPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
-
+		projectPresenter = new ProjectPresenter(this,projectGrid);
 		/**
 		 * Fetch the data when this panel is shown
 		 */
-		loadData();
+		projectPresenter.loadProjectsFromDB(false);
 	}
 
-	private void loadData() {
-		ProjectRpcHelper.getAllProjects(this);
-	}
+		
+	@UiHandler({"addButton"})
+	  public void onButtonClick(SelectEvent event) {
 
-	@Override
-	public void onFailure(Throwable caught) {
-		AlertMessageBox alert = new AlertMessageBox("Error",
-				caught.getMessage());
-		alert.show();		
-	}
-
-	@Override
-	public void onSuccess(ProjectListResponse result) {
-		List<ProjectDTO> projects = result.getProjects();
-
-		if ((projects != null) && (!projects.isEmpty())) {
-			// Now populate GXT Grid
-			projectGrid.populateData(projects);
-		} else {
-			// Remove all items
-			projectGrid.clear();
-		}
-	}
+		projectPresenter.addButtonClicked(event);
+	  }
 }

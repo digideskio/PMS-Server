@@ -47,4 +47,6 @@ public interface EmployeeServiceAsync {
 	// Gets all the list of the platform 
 	public void  findAllPlatforms(AsyncCallback<List<PlatformDTO>> callback);
 	
+	public void getEmployeesByPlatform(PlatformDTO platformDTO,AsyncCallback<List<EmployeeDTO>> callback);
+	
 }

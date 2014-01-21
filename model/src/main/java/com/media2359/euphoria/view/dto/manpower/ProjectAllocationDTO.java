@@ -1,19 +1,25 @@
 package com.media2359.euphoria.view.dto.manpower;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class ProjectAllocationDTO {
-	Integer projectId;
+import com.media2359.euphoria.view.dto.project.ProjectDTO;
+
+
+public class ProjectAllocationDTO implements Serializable{
+	ProjectDTO projectDTO;
+	
 	Date startOfWeek;
-	List<WeeklyResourcePlan> weeklyResourcePlan;
+	List<WeeklyResourcePlan> weeklyResourcePlanList;
 	
 	
-	public Integer getProjectId() {
-		return projectId;
+	
+	public ProjectDTO getProjectDTO() {
+		return projectDTO;
 	}
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
+	public void setProjectDTO(ProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
 	}
 	public Date getStartOfWeek() {
 		return startOfWeek;
@@ -21,11 +27,17 @@ public class ProjectAllocationDTO {
 	public void setStartOfWeek(Date startOfWeek) {
 		this.startOfWeek = startOfWeek;
 	}
-	public List<WeeklyResourcePlan> getWeeklyResourcePlan() {
-		return weeklyResourcePlan;
+	public List<WeeklyResourcePlan> getWeeklyResourcePlanList() {
+		return weeklyResourcePlanList;
 	}
-	public void setWeeklyResourcePlan(List<WeeklyResourcePlan> weeklyResourcePlan) {
-		this.weeklyResourcePlan = weeklyResourcePlan;
+	public void setWeeklyResourcePlanList(List<WeeklyResourcePlan> weeklyResourcePlan) {
+		this.weeklyResourcePlanList = weeklyResourcePlan;
+	}
+	@Override
+	public String toString() {
+		return "ProjectAllocationDTO [projectDTO=" + projectDTO
+				+ ", startOfWeek=" + startOfWeek + ", weeklyResourcePlan="
+				+ weeklyResourcePlanList + "]";
 	}
 
 	

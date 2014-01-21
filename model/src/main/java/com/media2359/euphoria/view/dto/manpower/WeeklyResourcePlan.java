@@ -9,12 +9,16 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.dto.manpower;
 
+
+import java.io.Serializable;
+
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
+import com.media2359.euphoria.view.dto.util.AllocationStatus;
 
 
 
-public class WeeklyResourcePlan {
+public class WeeklyResourcePlan implements Serializable{
 	String id;
 	
 	private PlatformDTO platform ;
@@ -36,6 +40,22 @@ public class WeeklyResourcePlan {
 	private Boolean day6Pm = false;
 	private Boolean day7Pm = false;
 	
+	private AllocationStatus day1AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day2AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day3AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day4AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day5AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day6AmEnm = AllocationStatus.FREE;
+	private AllocationStatus day7AmEnm = AllocationStatus.FREE;
+
+	private AllocationStatus day1PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day2PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day3PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day4PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day5PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day6PmEnm = AllocationStatus.FREE;
+	private AllocationStatus day7PmEnm = AllocationStatus.FREE;
+
 	
 	
 	public EmployeeDTO getDeveloper() {
@@ -108,11 +128,6 @@ public class WeeklyResourcePlan {
 		return day7Pm;
 	}
 	
-	public void setDeveloper(EmployeeDTO developer) {
-		this.developer = developer;
-	}
-	
-	
 
 	public void setDay1Am(Boolean day1Am) {
 		this.day1Am = day1Am;
@@ -172,6 +187,11 @@ public class WeeklyResourcePlan {
 
 
 
+	public void setDeveloper(EmployeeDTO developer) {
+		this.developer = developer;
+	}
+	
+
 	public PlatformDTO getPlatform() {
 		return platform;
 	}
@@ -182,5 +202,192 @@ public class WeeklyResourcePlan {
 		this.platform = platform;
 	}
 	
+	
+
+	public AllocationStatus getDay1AmEnm() {
+		return day1AmEnm;
+	}
+
+
+
+	public void setDay1AmEnm(AllocationStatus day1AmEnm) {
+		this.day1AmEnm = day1AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay2AmEnm() {
+		return day2AmEnm;
+	}
+
+
+
+	public void setDay2AmEnm(AllocationStatus day2AmEnm) {
+		this.day2AmEnm = day2AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay3AmEnm() {
+		return day3AmEnm;
+	}
+
+
+
+	public void setDay3AmEnm(AllocationStatus day3AmEnm) {
+		this.day3AmEnm = day3AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay4AmEnm() {
+		return day4AmEnm;
+	}
+
+
+
+	public void setDay4AmEnm(AllocationStatus day4AmEnm) {
+		this.day4AmEnm = day4AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay5AmEnm() {
+		return day5AmEnm;
+	}
+
+
+
+	public void setDay5AmEnm(AllocationStatus day5AmEnm) {
+		this.day5AmEnm = day5AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay6AmEnm() {
+		return day6AmEnm;
+	}
+
+
+
+	public void setDay6AmEnm(AllocationStatus day6AmEnm) {
+		this.day6AmEnm = day6AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay7AmEnm() {
+		return day7AmEnm;
+	}
+
+
+
+	public void setDay7AmEnm(AllocationStatus day7AmEnm) {
+		this.day7AmEnm = day7AmEnm;
+	}
+
+
+
+	public AllocationStatus getDay1PmEnm() {
+		return day1PmEnm;
+	}
+
+
+
+	public void setDay1PmEnm(AllocationStatus day1PmEnm) {
+		this.day1PmEnm = day1PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay2PmEnm() {
+		return day2PmEnm;
+	}
+
+
+
+	public void setDay2PmEnm(AllocationStatus day2PmEnm) {
+		this.day2PmEnm = day2PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay3PmEnm() {
+		return day3PmEnm;
+	}
+
+
+
+	public void setDay3PmEnm(AllocationStatus day3PmEnm) {
+		this.day3PmEnm = day3PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay4PmEnm() {
+		return day4PmEnm;
+	}
+
+
+
+	public void setDay4PmEnm(AllocationStatus day4PmEnm) {
+		this.day4PmEnm = day4PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay5PmEnm() {
+		return day5PmEnm;
+	}
+
+
+
+	public void setDay5PmEnm(AllocationStatus day5PmEnm) {
+		this.day5PmEnm = day5PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay6PmEnm() {
+		return day6PmEnm;
+	}
+
+
+
+	public void setDay6PmEnm(AllocationStatus day6PmEnm) {
+		this.day6PmEnm = day6PmEnm;
+	}
+
+
+
+	public AllocationStatus getDay7PmEnm() {
+		return day7PmEnm;
+	}
+
+
+
+	public void setDay7PmEnm(AllocationStatus day7PmEnm) {
+		this.day7PmEnm = day7PmEnm;
+	}
+
+	@Override
+	public String toString() {
+		return "WeeklyResourcePlan [id=" + id + ", platform=" + platform
+				+ ", developer=" + developer + ", day1Am=" + day1Am
+				+ ", day2Am=" + day2Am + ", day3Am=" + day3Am + ", day4Am="
+				+ day4Am + ", day5Am=" + day5Am + ", day6Am=" + day6Am
+				+ ", day7Am=" + day7Am + ", day1Pm=" + day1Pm + ", day2Pm="
+				+ day2Pm + ", day3Pm=" + day3Pm + ", day4Pm=" + day4Pm
+				+ ", day5Pm=" + day5Pm + ", day6Pm=" + day6Pm + ", day7Pm="
+				+ day7Pm + ", day1AmEnm=" + day1AmEnm + ", day2AmEnm="
+				+ day2AmEnm + ", day3AmEnm=" + day3AmEnm + ", day4AmEnm="
+				+ day4AmEnm + ", day5AmEnm=" + day5AmEnm + ", day6AmEnm="
+				+ day6AmEnm + ", day7AmEnm=" + day7AmEnm + ", day1PmEnm="
+				+ day1PmEnm + ", day2PmEnm=" + day2PmEnm + ", day3PmEnm="
+				+ day3PmEnm + ", day4PmEnm=" + day4PmEnm + ", day5PmEnm="
+				+ day5PmEnm + ", day6PmEnm=" + day6PmEnm + ", day7PmEnm="
+				+ day7PmEnm + "]";
+	}
+
 	
 }

@@ -10,6 +10,7 @@
 package com.media2359.euphoria.dao.project;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -22,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.media2359.euphoria.dao.project.ProjectDAO;
+import com.media2359.euphoria.model.milestone.ProjectMilestone;
 import com.media2359.euphoria.model.project.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,14 +35,14 @@ public class ProjectDaoTest {
 	private ProjectDAO projectDao;
 	private Logger log = Logger.getLogger(ProjectDaoTest.class);
 	
-	@Test
+	/*@Test
 	public void test1GetAllProjects() {
 		log.info("ProjectDaoTest->test1");
 		List<Project> projects = projectDao.getAllProjects();
 		Assert.assertNotNull(projects);
 		log.info("Number of projects returned:"+projects.size());
 		
-	}
+	}*/
 	
 	@Test
 	public void test2GetProject() {
@@ -48,6 +50,11 @@ public class ProjectDaoTest {
 		Project project = projectDao.getProject(Integer.valueOf(2));
 		Assert.assertNotNull(project);
 		log.info("Project Name:" + project.getName());
+		
+		Set<ProjectMilestone> projectMilestones = project.getProjectMilestone();
+		log.info("####Number of milestone:" + projectMilestones.size() + 
+				" for Project Name:" + project.getName());
+		Assert.assertNotNull(projectMilestones);
 	}
 	
 	@Test

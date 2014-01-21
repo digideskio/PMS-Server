@@ -170,10 +170,10 @@ public class Employee implements java.io.Serializable{
 		this.employmentType = employmentType;
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
 	@JoinTable(name="employee_platform_xref", 
-	joinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key")},
-	inverseJoinColumns = {@JoinColumn(name="platform_key", referencedColumnName="platform_key")})
+	joinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key", updatable=false)},
+	inverseJoinColumns = {@JoinColumn(name="platform_key", referencedColumnName="platform_key", updatable=false)})
 	public Set<Platform> getPlatForms() {
 		return platForms;
 	}

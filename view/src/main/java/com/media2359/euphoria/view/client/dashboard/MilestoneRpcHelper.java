@@ -32,12 +32,12 @@ public class MilestoneRpcHelper {
 		milestone.setDueDate(new Date());
 		milestones.add(milestone);
 		
-		milestone = new MilestoneDTO();
-		milestone.setProjectName("BlackBuck");
-		milestone.setMilestoneName("Payment 1");
-		milestone.setDueDate(new Date());
-		milestones.add(milestone);
-		response.setMilestones(milestones);
+//		milestone = new MilestoneDTO();
+//		milestone.setProjectName("BlackBuck");
+//		milestone.setMilestoneName("Payment 1");
+//		milestone.setDueDate(new Date());
+//		milestones.add(milestone);
+//		response.setMilestones(milestones);
 		return response;
 	}
 }

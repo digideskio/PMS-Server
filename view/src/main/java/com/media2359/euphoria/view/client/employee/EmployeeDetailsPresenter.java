@@ -131,9 +131,9 @@ public class EmployeeDetailsPresenter {
 			}
 
 		};
-		log.info("#!#!#!#!#!#! Saving Employee #!#!#!#!");
 		
-	
+		
+		log.info("#!#!#!#!Saving Employee: "+employeeDTO.toString());
 		if(createType == EmployeeDetailsWindow.ADD)
 			empPresenter.getEmployeeService().addEmployee(employeeDTO, callback);
 		else if(createType == EmployeeDetailsWindow.EDIT)
@@ -158,18 +158,19 @@ public class EmployeeDetailsPresenter {
 		employeeDTO.setStartDate(((DateField)sourceWindow.getStartDate()).getValue());
 		employeeDTO.setEndDate(((DateField)sourceWindow.getEndDate()).getValue());
 		employeeDTO.setStatus(((SimpleComboBox)sourceWindow.getStatus()).getText());
-		
+		employeeDTO.setCreatedById("whatIsThis?");
 		/*StringBuffer platform = new StringBuffer();*/
 		Set<PlatformDTO> platFormDtos = new HashSet(0);
 		for(CheckBox checkBox : sourceWindow.getPlatformChecks())
 		{
 			if(checkBox.getValue()){
-				//platform.append(checkBox.getBoxLabel()).append(",");
-				PlatformDTO platformDto = new PlatformDTO();
-				platformDto.setPlatformId(checkBox.getBoxLabel());
-				platformDto.setPlatformKey(Integer.valueOf(0));//<==ToDo
 				
-				platFormDtos.add(platformDto);
+				String platFormID = checkBox.getBoxLabel();
+				
+				for(PlatformDTO platformDTO  : sourceWindow.getAllPlatformDTOs()){
+					if(platformDTO.getPlatformId().equals(platFormID))
+						platFormDtos.add(platformDTO);
+				}
 			}	
 			
 		}

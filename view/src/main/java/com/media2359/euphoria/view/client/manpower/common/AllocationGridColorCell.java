@@ -1,4 +1,5 @@
-package com.media2359.euphoria.view.client.core;
+package com.media2359.euphoria.view.client.manpower.common;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
@@ -15,6 +16,13 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.media2359.euphoria.view.client.core.Alert;
+import com.media2359.euphoria.view.client.core.AllocationGridColorCellImages;
+import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
+import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
+import com.media2359.euphoria.view.dto.util.AllocationStatus;
+import com.sencha.gxt.widget.core.client.event.CellSelectionEvent;
 
 
 
@@ -35,11 +43,12 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
   
     private ImageResource image;
     private static Templates templates = GWT.create(Templates.class);
-    
+    private ManpowerAllocationProjectPanel manpowerAllocationProjectPanel;
     public static boolean CLICK_ENABLED=true; 
     
-    public AllocationGridColorCell(){
+    public AllocationGridColorCell(ManpowerAllocationProjectPanel manpowerAllocationProjectPanel){
     	super(BrowserEvents.MOUSEOVER,BrowserEvents.CLICK);
+    	this.manpowerAllocationProjectPanel = manpowerAllocationProjectPanel;
     }
     @Override
     public void render(Context context, AllocationStatus value, SafeHtmlBuilder sb) {
@@ -77,10 +86,15 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     public void onBrowserEvent(Context context, Element parent, AllocationStatus value,
             NativeEvent event, ValueUpdater<AllocationStatus> valueUpdater) {
     	super.onBrowserEvent(context, parent, value, event, valueUpdater);
+    	
     	if(CLICK_ENABLED)
 	    	if(!event.getType().equals(BrowserEvents.CLICK))
 	    		setCursor(parent, value);
 	    	else{
+	    		if(!manpowerAllocationProjectPanel.isAllPlatformEmployeeSelected()){
+	    			new Alert("Warning!", "Please assign platform and employee to all requests before continuing!");
+	    			return;
+	    		}
 	    		AllocationStatus newValue = getNewAllocationStatus(value);
 				valueUpdater.update(newValue);
 				setCursor(parent, newValue);
@@ -97,13 +111,28 @@ public class AllocationGridColorCell extends AbstractCell<AllocationStatus> {
     }
     
     private AllocationStatus getNewAllocationStatus(AllocationStatus previousStatus){
-		   switch(previousStatus){
-			   	case FREE: return AllocationStatus.SELECTED;
-			   	case SELECTED: return AllocationStatus.FREE;
-			   	case EXCEEDED: return AllocationStatus.SELECTED_EXCEEDED;
-			   	case SELECTED_EXCEEDED: return AllocationStatus.EXCEEDED;
+    	AllocationStatus status;   
+    	switch(previousStatus){
+				case FREE: 	   if(!manpowerAllocationProjectPanel.selectAManDay())
+				   				 status= AllocationStatus.SELECTED;
+				   				else
+				   				 status= AllocationStatus.SELECTED_EXCEEDED;
+				   			   break;
+			   	case SELECTED:  manpowerAllocationProjectPanel.unSelectAManDay();
+				   			   status= AllocationStatus.FREE;
+				   			   break;
+			   	case EXCEEDED: manpowerAllocationProjectPanel.selectAManDay();
+				   			   status= AllocationStatus.SELECTED_EXCEEDED;
+				   			   break;
+			   	case SELECTED_EXCEEDED:if(!manpowerAllocationProjectPanel.unSelectAManDay())
+						   				 status= AllocationStatus.EXCEEDED;
+						   				else
+						   				 status= AllocationStatus.FREE;
+						   			   break;
 			   	default:   return previousStatus;
 		   }
+    	
+    	return status;
 		   
 	   }
  

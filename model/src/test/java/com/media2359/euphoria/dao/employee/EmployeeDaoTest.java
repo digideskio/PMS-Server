@@ -19,7 +19,10 @@ package com.media2359.euphoria.dao.employee;
  **/
 
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -44,6 +47,9 @@ import com.media2359.euphoria.model.project.Project;
 public class EmployeeDaoTest {
 	@Autowired
 	private EmployeeDAO employeeDao;
+	
+	@Autowired
+	private PlatformDAO platformDao;
 	
 	/*@Autowired
 	private PlatformDAO platformDao;*/
@@ -72,4 +78,37 @@ public class EmployeeDaoTest {
 		log.info("####test2getEmployeesByPlatform end...");
 		
 	}
+	
+	@Test
+	public void test3AddEmployee() {
+		log.info("####test3AddEmployee start...");
+		/*Platform platform = new Platform();
+		platform.setPlatformKey(Integer.valueOf(8));*/
+		//platform.setPlatformKey(Integer.valueOf(1));
+		
+		List<Platform> platforms = platformDao.findAllPlatforms();
+		Platform platform = platforms.get(0);
+		
+		/*List<Employee> employees = employeeDao.getEmployeesByPlatform(platform);
+		Assert.assertNotNull(employees);*/
+		Integer maxKey1 = employeeDao.getMaxKey();
+		Employee employee = new Employee();
+		employee.setName("Tianyang");
+		employee.setCompany_id("Media2359");
+		employee.setPersonalEmail("tianyang.hu@gmail.com");
+		employee.setCompanyEmail("tianyang.hu@media2359.com");
+		employee.setCreatedById("TY");
+		employee.setCreateTstamp(new Date());
+		employee.setPlatForms(new HashSet<Platform>());
+		employee.getPlatForms().add(platform);
+		
+		
+		employeeDao.addEmployee(employee);
+		Integer maxKey2 = employeeDao.getMaxKey();
+		Assert.assertEquals(maxKey1.intValue()+1, maxKey2.intValue());
+		
+		log.info("####test3AddEmployee end...");
+		
+	}
+	
 }

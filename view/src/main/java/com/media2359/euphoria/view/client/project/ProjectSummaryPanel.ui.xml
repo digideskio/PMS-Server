@@ -15,10 +15,13 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData"
 		field="outerPane">
-		<ui:attributes width="600" height="600" margins="{centerMargins}" />
+		<ui:attributes width="1.0" height="400" margins="{centerMargins}" />
 	</ui:with>
 	
 	<row:VerticalLayoutContainer>
+		<row:child layoutData="{outerPane}">
+				<button:TextButton text="Add New" ui:field="addButton" />
+		</row:child>
 		<row:child layoutData="{outerPane}">
 			<gxt:ContentPanel borders="true" headingText="Projects">
 				<project:ProjectGrid ui:field="projectGrid"></project:ProjectGrid>
