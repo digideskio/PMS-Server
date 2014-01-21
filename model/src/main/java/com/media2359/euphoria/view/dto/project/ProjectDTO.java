@@ -10,6 +10,7 @@
 package com.media2359.euphoria.view.dto.project;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
@@ -22,6 +23,13 @@ public class ProjectDTO implements Serializable {
         private Double manDaysLeft;
         private Integer milestoneCount;
         private Integer completedMilestoneCount;
+        private String company;
+    	private String billingAddr;
+    	private String contactPerson;
+    	private Date startDate;
+    	private Date endDate;
+    	private String status;
+    	
         private Set<ProjectMilestoneDTO> projectMilestone;
 
         public ProjectDTO() {
@@ -93,16 +101,67 @@ public class ProjectDTO implements Serializable {
 			this.projectMilestone = projectMilestone;
 		}
 
+		
+		
+		public String getCompany() {
+			return company;
+		}
+
+		public void setCompany(String company) {
+			this.company = company;
+		}
+
+		public String getBillingAddr() {
+			return billingAddr;
+		}
+
+		public void setBillingAddr(String billingAddr) {
+			this.billingAddr = billingAddr;
+		}
+
+		public String getContactPerson() {
+			return contactPerson;
+		}
+
+		public void setContactPerson(String contactPerson) {
+			this.contactPerson = contactPerson;
+		}
+
+		public Date getStartDate() {
+			return startDate;
+		}
+
+		public void setStartDate(Date startDate) {
+			this.startDate = startDate;
+		}
+
+		public Date getEndDate() {
+			return endDate;
+		}
+
+		public void setEndDate(Date endDate) {
+			this.endDate = endDate;
+		}
+
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
 		@Override
 		public String toString() {
 			return "ProjectDTO [id=" + id + ", name=" + name + ", description="
 					+ description + ", projectManager=" + projectManager
 					+ ", manDaysLeft=" + manDaysLeft + ", milestoneCount="
 					+ milestoneCount + ", completedMilestoneCount="
-					+ completedMilestoneCount + ", projectMilestone="
+					+ completedMilestoneCount + ", company=" + company
+					+ ", billingAddr=" + billingAddr + ", contactPerson="
+					+ contactPerson + ", startDate=" + startDate + ", endDate="
+					+ endDate + ", status=" + status + ", projectMilestone="
 					+ projectMilestone + "]";
 		}
-
-        
         
 }

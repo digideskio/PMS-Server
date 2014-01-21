@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.model.project;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +40,14 @@ public class Project implements java.io.Serializable{
 	private Double manDaysLeft;
 	private Integer milestoneCount;
 	private Integer completedMilestoneCount;
+	
+	private String company;
+	private String billingAddr;
+	private String contactPerson;
+	private Date startDate;
+	private Date endDate;
+	private String status;
+	
 	private ProjectPlan projectPlan;
 	private Set<WeeklyManpowerRequest> weeklyManpowerRequests;
 	private Set<WeeklyManpowerAllocation> weeklyManpowerAllocations;
@@ -46,6 +55,7 @@ public class Project implements java.io.Serializable{
 	private ProjectTeam projectTeam;
 	private Set<PlatformProjection> platformProjections;
 	private Set<ProjectDocument> projectDocuments;
+	
 	private Set<ProjectMilestone> projectMilestone;
 
 	public Project() {
@@ -60,6 +70,12 @@ public class Project implements java.io.Serializable{
 		this.manDaysLeft=dto.getManDaysLeft();
 		this.milestoneCount=dto.getMilestoneCount();
 		this.completedMilestoneCount=dto.getMilestoneCount();
+		this.setCompany(dto.getCompany());
+		this.setBillingAddr(dto.getBillingAddr());
+		this.setContactPerson(dto.getContactPerson());
+		this.setStartDate(dto.getStartDate());
+		this.setEndDate(dto.getEndDate());
+		this.setStatus(dto.getStatus());
 		Set<ProjectMilestone> projectMilestoneSet = new HashSet<ProjectMilestone>();
 		
 		if(dto.getProjectMilestone()!=null){
@@ -158,6 +174,62 @@ public class Project implements java.io.Serializable{
 	public void setProjectMilestone(Set<ProjectMilestone> projectMilestone) {
 		this.projectMilestone = projectMilestone;
 	}
+	
+	
+	
+	@Column(name = "company")
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	@Column(name = "billing_addr")
+	public String getBillingAddr() {
+		return billingAddr;
+	}
+
+	public void setBillingAddr(String billingAddr) {
+		this.billingAddr = billingAddr;
+	}
+	
+	@Column(name = "contact_person")
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	@Column(name = "start_date")
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@Column(name = "end_date")
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	@Column(name = "status")
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public ProjectDTO createProjectDTO() {
 		ProjectDTO projectDTO = new ProjectDTO();
@@ -168,6 +240,12 @@ public class Project implements java.io.Serializable{
 		projectDTO.setManDaysLeft(getManDaysLeft());
 		projectDTO.setMilestoneCount(getMilestoneCount());
 		projectDTO.setCompletedMilestoneCount(getCompletedMilestoneCount());
+		projectDTO.setCompany(this.getCompany());
+		projectDTO.setBillingAddr(this.getBillingAddr());
+		projectDTO.setContactPerson(this.getContactPerson());
+		projectDTO.setStartDate(this.getStartDate());
+		projectDTO.setEndDate(this.getEndDate());
+		projectDTO.setStatus(this.getStatus());
 		
 		Set<ProjectMilestoneDTO> projectMilestoneDTOSet = new HashSet<ProjectMilestoneDTO>();
 		
@@ -188,12 +266,18 @@ public class Project implements java.io.Serializable{
 				+ description + ", projectManager=" + projectManager
 				+ ", manDaysLeft=" + manDaysLeft + ", milestoneCount="
 				+ milestoneCount + ", completedMilestoneCount="
-				+ completedMilestoneCount + ", projectPlan=" + projectPlan
-				+ ", weeklyManpowerRequests=" + weeklyManpowerRequests
-				+ ", weeklyManpowerAllocations=" + weeklyManpowerAllocations
-				+ ", projectTasks=" + projectTasks + ", projectTeam="
-				+ projectTeam + ", platformProjections=" + platformProjections
-				+ ", projectDocuments=" + projectDocuments
-				+ ", projectMilestone=" + projectMilestone + "]";
+				+ completedMilestoneCount + ", company=" + company
+				+ ", billingAddr=" + billingAddr + ", contactPerson="
+				+ contactPerson + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", status=" + status + ", projectPlan="
+				+ projectPlan + ", weeklyManpowerRequests="
+				+ weeklyManpowerRequests + ", weeklyManpowerAllocations="
+				+ weeklyManpowerAllocations + ", projectTasks=" + projectTasks
+				+ ", projectTeam=" + projectTeam + ", platformProjections="
+				+ platformProjections + ", projectDocuments="
+				+ projectDocuments + ", projectMilestone=" + projectMilestone
+				+ "]";
 	}
+
+
 }
