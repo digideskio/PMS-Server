@@ -271,7 +271,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 		grid.getStore().commitChanges();
 		projectAllocationDTO.setWeeklyResourcePlanList(grid.getStore().getAll());
 		log.info("!#!#!#!# Returnning Project Allocation Data: "+projectAllocationDTO.toString());
-		projectDTO.setManDaysLeft(manDaysLeftForAllocation.intValue()); // to be  changed to setManDaysLeftForAllocation
+		projectDTO.setManDaysLeft(manDaysLeftForAllocation); // to be  changed to setManDaysLeftForAllocation
 		return projectAllocationDTO;
 	}
 	
