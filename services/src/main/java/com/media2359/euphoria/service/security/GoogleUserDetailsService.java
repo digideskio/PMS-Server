@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -22,6 +23,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
+
+import com.media2359.euphoria.dao.user.UserDAO;
 
 /**
  * 
@@ -35,11 +38,14 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
  */
 public class GoogleUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
 	private Logger log = Logger.getLogger(GoogleUserDetailsService.class);
+	@Autowired
+	UserDAO userDao ;
 
 	public UserDetails loadUserDetails(OpenIDAuthenticationToken token)
 			throws UsernameNotFoundException, DataAccessException {
 		log.info("Fetching user details ...");
 		UserDetails userDetail = null;
+		String roleOfUser = "ROLE_USER";
 		if(token != null) {
 			List<OpenIDAttribute> attributes = token.getAttributes();
 			if(attributes != null) {
@@ -51,6 +57,17 @@ public class GoogleUserDetailsService implements AuthenticationUserDetailsServic
 							
 							//TODO: Verify this user in database and fetch role details
 							//Currently we hardcode these values and return
+							
+							//com.media2359.euphoria.model.user.User userFrmDB =
+								//	userDao.getUserById(email);
+							
+							// TODO : Uncomment later when the roles in User is made string
+							/*
+							if(userFrmDB==null)
+								throw new UsernameNotFoundException("Invalid user details");
+							*/
+							
+							
 							List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 							grantedAuthorities.add(new GrantedAuthorityImpl("ROLE_USER"));
 							userDetail = new User(email, "", true, true, true, true, grantedAuthorities);

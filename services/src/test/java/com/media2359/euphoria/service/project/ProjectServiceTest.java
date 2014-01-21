@@ -79,11 +79,14 @@ public class ProjectServiceTest {
 	
 	@Test
 	public void test4ModifyProject(){
-		project.setProjectManager("SHIV");
-		String result = projectService.modifyProject(project);
-		Assert.assertEquals("SUCCESS", result);
+		
 		ProjectDTO projDto = projectService.getProjectDetails(projectService.getMaxKey());
-		//Assert.assertEquals("SHIV",projDto.getProjectManager() );
+		
+		projDto.setProjectManager("SHIV");
+		String result = projectService.modifyProject(projDto);
+		Assert.assertEquals("SUCCESS", result);
+		//ProjectDTO projectDto2 = projectService.getProjectDetails(projectService.getMaxKey());
+		//Assert.assertEquals("SHIV",projectDto2.getProjectManager() );
 	}
 	
 	public void test5DeleteProject(){

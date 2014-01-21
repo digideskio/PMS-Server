@@ -63,7 +63,7 @@ public class Project implements java.io.Serializable{
 	}
 	
 	public Project(ProjectDTO dto) {
-		this.id = Integer.valueOf(dto.getId());
+		this.id = dto.getId();
 		this.name = dto.getName();
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();

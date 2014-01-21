@@ -70,16 +70,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public String addProject(ProjectDTO projectDto) {
 		try{
 			
-			Project project = new Project();
-			project.setId(projectDto.getId());
-			project.setManDaysLeft(projectDto.getManDaysLeft());
-			project.setMilestoneCount(projectDto.getCompletedMilestoneCount());
-			project.setName(projectDto.getName());
-			project.setProjectManager(projectDto.getProjectManager());
-			project.setDescription(projectDto.getDescription());
-			project.setCompletedMilestoneCount(projectDto.getCompletedMilestoneCount());
+			Project project = new Project(projectDto);
 			projectDao.addProject(project);
 		}catch(Exception exp){
+			exp.printStackTrace();
 			return "FAILED";
 		}
 		return "SUCCESS";
@@ -88,15 +82,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public String modifyProject(ProjectDTO projectDto) {
 		try{
-			Project project = new Project();
-			project.setId(projectDto.getId());
-			project.setManDaysLeft(projectDto.getManDaysLeft());
-			project.setMilestoneCount(projectDto.getCompletedMilestoneCount());
-			project.setName(projectDto.getName());
-			project.setProjectManager(projectDto.getProjectManager());
-			project.setDescription(projectDto.getDescription());
-			project.setCompletedMilestoneCount(projectDto.getCompletedMilestoneCount());
-			projectDao.updateProject(project);
+			
+			projectDao.updateProject(new Project(projectDto));
 		}catch(Exception exp){
 			return "FAILED";
 		}
