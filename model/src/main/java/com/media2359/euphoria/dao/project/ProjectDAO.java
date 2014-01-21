@@ -20,4 +20,5 @@ public interface ProjectDAO {
 	Integer getMaxKey();
 	void deleteProject(Integer id);
 	void updateProject(Project project);
+	Double getTotalApprovedMandays(Project project);
 }

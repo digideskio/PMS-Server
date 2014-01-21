@@ -38,4 +38,6 @@ public interface WeeklyManpowerRequestDAO {
 	void addWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
 	void deleteWeeklyManpowerRequest(Integer wklyManpowerRqstKey);
 	void updateWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
+	void approveWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
+	void rejectWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
 }

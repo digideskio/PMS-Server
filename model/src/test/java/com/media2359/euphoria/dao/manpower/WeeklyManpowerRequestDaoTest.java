@@ -70,5 +70,28 @@ public class WeeklyManpowerRequestDaoTest {
 		}
 	}
 	
+	@Test
+	public void test2approveWeeklyManpowerRequest() throws Exception{
+		log.info("####test2approveWeeklyManpowerRequest start...");
+		try{
+		WeeklyManpowerRequest weeklyManpowerRequest1 = new WeeklyManpowerRequest();
+		weeklyManpowerRequest1.setWeeklyManpowerRequestKey(Integer.valueOf(2));
+		weeklyManpowerRequest1.setApprovalStatus("A");
+		
+		weeklyManpowerRequestDAO.approveWeeklyManpowerRequest(weeklyManpowerRequest1);
+		
+		
+		WeeklyManpowerRequest weeklyManpowerRequest2 = 
+				weeklyManpowerRequestDAO.getManpowerRequest(Integer.valueOf(2));
+		
+		
+		Assert.assertEquals("A", weeklyManpowerRequest2.getApprovalStatus());
+		
+		}catch(Exception e){
+			throw e;
+		}
+		log.info("####test2approveWeeklyManpowerRequest end...");
+	}
+	
 }
 

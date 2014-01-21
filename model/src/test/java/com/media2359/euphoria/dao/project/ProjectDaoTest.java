@@ -114,6 +114,19 @@ public class ProjectDaoTest {
 		Assert.assertTrue(s1.equalsIgnoreCase(project2.getName()));
 		
 	}
+	
+	@Test
+	public void test5getTotalApprovedMandays() {
+		log.info("####test5getTotalApprovedMandays start...");
+		Project project1 = new Project();
+		project1.setId(Integer.valueOf(2));
+		
+		Double totalMandays = projectDao.getTotalApprovedMandays(project1);
+		
+		Assert.assertNotEquals(totalMandays.doubleValue(), -1);
+		log.info("####test5getTotalApprovedMandays end...");
+		
+	}
 		
 }
 
