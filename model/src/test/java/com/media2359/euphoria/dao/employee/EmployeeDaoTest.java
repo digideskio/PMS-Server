@@ -116,7 +116,7 @@ public class EmployeeDaoTest {
 		log.info("####test4getEmployeeByUserId start...");
 		
 		Employee employee = null;
-		employee = employeeDao.getEmployeeByUserId("Alfred@media2359.com");
+		employee = employeeDao.getEmployeeByUserId("alfred.jayaprakash@gmail.com");
 		
 		Assert.assertNotNull(employee);
 		
