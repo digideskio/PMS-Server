@@ -17,18 +17,23 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.common.NotificationBox;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
+import com.media2359.euphoria.view.client.manpower.common.ProjectReceiver;
+import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
+import com.media2359.euphoria.view.server.allocation.RequestManpowerServiceAsync;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-public class ManpowerRequestPanel  implements IsWidget {
+public class ManpowerRequestPanel  implements IsWidget, ProjectReceiver,  AsyncCallback<String>  {
 	interface ManpowerUiBinder extends UiBinder<VerticalLayoutContainer, ManpowerRequestPanel> {
 	}
 
@@ -56,11 +61,13 @@ public class ManpowerRequestPanel  implements IsWidget {
     
     private static final String HEADER_TEMPLATE = "Allocate resource for the week starting ";
 
+    RequestManpowerServiceAsync manpowerService = GWT.create(RequestManpowerService.class);
+    
 	@Override
 	public Widget asWidget() {
 		if(vp == null) {
 			vp = uiBinder.createAndBindUi(this);
-			selector.setParent(this);
+			selector.setReceiver(this);
 		}
 		DateWrapper wrapper = new DateWrapper();
 		wrapper = wrapper.addDays(-1 * (wrapper.getDayInWeek()-1));
@@ -72,10 +79,6 @@ public class ManpowerRequestPanel  implements IsWidget {
 		
 		header.setText(HEADER_TEMPLATE + dateStr);
 		return vp;
-	}
-
-	public void setProject(ProjectDTO project) {
-		allocator.setProject(project, currentWeekStartDate);
 	}
 	
 	@UiHandler("nextWeek")
@@ -104,7 +107,22 @@ public class ManpowerRequestPanel  implements IsWidget {
 	
 	@UiHandler("saveAllocation")
 	public void saveAllocation(SelectEvent event) {
-		allocator.getAllocationData();
-		NotificationBox.success("Success", "The allocation was saved successfully.");
+		ProjectAllocationDTO data = allocator.getAllocationData();
+		manpowerService.submitManpowerRequest(data, this);
+	}
+
+	@Override
+	public void selectedProject(ProjectDTO project) {
+		allocator.setProject(project, currentWeekStartDate);
+	}
+
+	@Override
+	public void onFailure(Throwable caught) {
+		NotificationBox.success("Error", caught.getMessage());
+	}
+
+	@Override
+	public void onSuccess(String result) {
+		NotificationBox.success("Success", "The allocation was saved successfully:"+result);
 	}
 }
