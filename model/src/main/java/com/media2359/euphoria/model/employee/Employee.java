@@ -38,6 +38,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 /**
  * Employee
@@ -171,7 +173,8 @@ public class Employee implements java.io.Serializable{
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
-	@JoinTable(name="employee_platform_xref", 
+	@Fetch(FetchMode.JOIN)
+	@JoinTable(name="employee_platform_xref",
 	joinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key", updatable=false)},
 	inverseJoinColumns = {@JoinColumn(name="platform_key", referencedColumnName="platform_key", updatable=false)})
 	public Set<Platform> getPlatForms() {

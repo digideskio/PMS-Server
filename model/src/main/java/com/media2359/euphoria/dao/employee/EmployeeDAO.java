@@ -28,6 +28,7 @@ import com.media2359.euphoria.model.project.Platform;
 public interface EmployeeDAO {
 	List<Employee> getAllEmployees();
 	Employee getEmployee(Integer employeeKey);
+	Employee getEmployeeByUserId(String userId);
 	void addEmployee(Employee employee);
 	Integer getMaxKey();
 	void deleteEmployee(Integer employeeKey);
