@@ -13,7 +13,7 @@
 		<intercept-url pattern="/jsp/common/*" access="permitAll"/>
 		<intercept-url pattern="/static/**" access="permitAll"/>
 		<intercept-url pattern="/euphoria/**" access="permitAll" />
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/**" access="hasRole('USER')" />
 		<openid-login
 			    login-page="/jsp/login/login.jsp"
 			    authentication-failure-url="/jsp/common/access_denied.jsp"

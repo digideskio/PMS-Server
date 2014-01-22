@@ -24,7 +24,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 
-import com.media2359.euphoria.dao.user.UserDAO;
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.model.employee.Employee;
 
 /**
  * 
@@ -38,14 +39,14 @@ import com.media2359.euphoria.dao.user.UserDAO;
  */
 public class GoogleUserDetailsService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
 	private Logger log = Logger.getLogger(GoogleUserDetailsService.class);
+	
 	@Autowired
-	UserDAO userDao ;
+	EmployeeDAO employeeDao;
 
 	public UserDetails loadUserDetails(OpenIDAuthenticationToken token)
 			throws UsernameNotFoundException, DataAccessException {
 		log.info("Fetching user details ...");
 		UserDetails userDetail = null;
-		String roleOfUser = "ROLE_USER";
 		if(token != null) {
 			List<OpenIDAttribute> attributes = token.getAttributes();
 			if(attributes != null) {
@@ -55,23 +56,17 @@ public class GoogleUserDetailsService implements AuthenticationUserDetailsServic
 							String email = attribute.getValues().get(0);
 							log.info("Retrieved Email of the user: "+email);
 							
-							//TODO: Verify this user in database and fetch role details
-							//Currently we hardcode these values and return
+							//Verify this user in database and fetch role details
+							Employee employee = employeeDao.getEmployeeByUserId(email);
 							
-							//com.media2359.euphoria.model.user.User userFrmDB =
-								//	userDao.getUserById(email);
-							
-							// TODO : Uncomment later when the roles in User is made string
-							/*
-							if(userFrmDB==null)
-								throw new UsernameNotFoundException("Invalid user details");
-							*/
-							
-							
-							List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-							grantedAuthorities.add(new GrantedAuthorityImpl("ROLE_USER"));
-							userDetail = new User(email, "", true, true, true, true, grantedAuthorities);
-							return userDetail;
+							if(employee != null) {
+								log.info("Employee Designation is "+employee.getDesignation());
+								List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+								grantedAuthorities.add(new GrantedAuthorityImpl(com.media2359.euphoria.dao.user.Role.USER.getCode()));
+								grantedAuthorities.add(new GrantedAuthorityImpl((employee.getDesignation())));	
+								userDetail = new User(email, "", true, true, true, true, grantedAuthorities);
+								return userDetail;
+							}
 						} else {
 							log.error("Received empty email attribute");
 						}

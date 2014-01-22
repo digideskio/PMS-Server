@@ -22,6 +22,10 @@
     	function getLoginUsername() {
     		return document.forms[0].userid.value;
     	}
+    	
+    	function getUserRole() {
+    		return document.forms[0].role.value;
+    	}
     </script>    
   </head>
 
@@ -34,6 +38,14 @@
 		<security:authorize access="! isAuthenticated()">
 		    <input type="hidden" name="userid" value='Not logged in' />
 		</security:authorize> 	
+		
+		<security:authorize access="hasRole('VP')">
+			 <input type="hidden" name="role" value='VP' />		
+		</security:authorize>
+		
+		<security:authorize access="hasRole('PM')">
+			 <input type="hidden" name="role" value='PM' />		
+		</security:authorize>
   	</form>
   	
     <!-- OPTIONAL: include this if you want history support -->
