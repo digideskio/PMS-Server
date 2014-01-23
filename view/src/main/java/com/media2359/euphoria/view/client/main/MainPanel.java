@@ -10,15 +10,24 @@
 package com.media2359.euphoria.view.client.main;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.common.NotificationBox;
 import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
+import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.HideEvent;
+import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
+import com.sencha.gxt.widget.core.client.menu.Item;
 
 public class MainPanel extends Composite {
 	private static final String PROJECT_MANAGER = "PM";
@@ -77,9 +86,8 @@ public class MainPanel extends Composite {
 		return $wnd.getUserRole();
 	}-*/;
 	
-	/*
 	@UiHandler("logoutButton")
-	public void handleLogout(ClickEvent clickEvent) {
+	public void handleLogout(SelectionEvent<Item> event) {
 		final ConfirmMessageBox confirm = new ConfirmMessageBox("Confirmation","Are you sure you want to logout?");
 		confirm.addHideHandler(new HideHandler() {
 		      public void onHide(HideEvent event) {
@@ -92,5 +100,10 @@ public class MainPanel extends Composite {
 		        }
 		      });
 		confirm.show();
-	}*/
+	}
+	
+	@UiHandler("settingsButton")
+	public void handleSettings(SelectionEvent<Item> event) {
+		NotificationBox.success("Success", "Settings have been updated successfully");
+	}
 }

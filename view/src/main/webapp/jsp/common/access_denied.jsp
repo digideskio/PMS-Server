@@ -21,7 +21,7 @@
 				<td>
 					<div>
 						<span
-							style="font-family: arial, helvetica, sans-serif; font-size: 13px;">You
+							style="font-family: arial, helvetica, sans-serif; font-size: 14px;">You
 							are denied access to this application. You may not be registered
 							or the server is unable to verify your identity. Please contact
 							the technical support.</span>
