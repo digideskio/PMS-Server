@@ -206,7 +206,11 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 				
 				orgWeeklyResourcePlanList = projectAllocationDTO.getWeeklyResourcePlanList();
 				
+				log.info("Allocation Plan List received is "+orgWeeklyResourcePlanList.toString());
+				
 				employeeListStore.replaceAll(EmployeePresenter.getEmployees());
+				
+				
 				
 			}
 

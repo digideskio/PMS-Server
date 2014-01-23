@@ -119,6 +119,10 @@ public class ManpowerRequestPanel  implements IsWidget, ProjectReceiver,  AsyncC
 	@Override
 	public void onFailure(Throwable caught) {
 		GWT.log("Error saving data in to server", caught);
+		caught.printStackTrace();
+		StackTraceElement[] stackErrors = caught.getStackTrace();
+		for(StackTraceElement stackElement:stackErrors)
+				log.info(stackElement.toString());	
 		NotificationBox.success("Error", caught.getMessage());
 	}
 
