@@ -328,16 +328,26 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setEmploymentType(getEmploymentType());
 		employeeDTO.setMobile(getMobile());
 		employeeDTO.setDesignation(getDesignation());
+		
+		employeeDTO.setStartDate(getStartDate());
+		employeeDTO.setEndDate(getEndDate());
+		employeeDTO.setAssignedOffice(getAssignedOffice());
+		employeeDTO.setMandayRate(getMandayRate());
+		employeeDTO.setStatus(getStatus());
+		
 		employeeDTO.setCreatedById(getCreatedById());
 		employeeDTO.setCreateTstamp(getCreateTstamp());
 		employeeDTO.setLastUpdById(getLastUpdById());
 		employeeDTO.setLastUpdTstamp(getLastUpdTstamp());
 		
 		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
-		for (Platform platform: platForms){
-			PlatformDTO platformDto = platform.createPlatformDTO();
-			employeeDTO.getPlatFormDtos().add(platformDto);
+		if(platForms !=null){
+			for (Platform platform: platForms){
+				PlatformDTO platformDto = platform.createPlatformDTO();
+				employeeDTO.getPlatFormDtos().add(platformDto);
+			}
 		}
+		
 		
 		return employeeDTO;
 	}

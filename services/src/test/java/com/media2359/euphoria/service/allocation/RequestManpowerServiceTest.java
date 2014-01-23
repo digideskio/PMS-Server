@@ -50,7 +50,8 @@ public class RequestManpowerServiceTest {
 	@Before
 	public void setUp(){
 		projectAllocationDTO = new ProjectAllocationDTO();
-		Integer projectId = projectService.getMaxKey();
+		//Integer projectId = projectService.getMaxKey();
+		Integer projectId =1;
 		projectDTO = projectService.getProjectDetails(projectId);
 		
 		projectAllocationDTO.setProjectDTO(projectDTO);
@@ -59,7 +60,7 @@ public class RequestManpowerServiceTest {
 		
 		try{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyy");
-			startOfWeek = simpleDateFormat.parse("19-01-2014");
+			startOfWeek = simpleDateFormat.parse("27-01-2014");
 			
 			System.out.println("+++START DATE++++ "+startOfWeek);
 			projectAllocationDTO.setStartOfWeek(startOfWeek);
@@ -67,7 +68,7 @@ public class RequestManpowerServiceTest {
 		}catch(Exception exp){
 			
 		}
-		
+		/*
 		List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 		
 		WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
@@ -92,7 +93,7 @@ public class RequestManpowerServiceTest {
 		weeklyResourcePlanList.add(weeklyResourcePlan);
 		
 		projectAllocationDTO.setWeeklyResourcePlanList(weeklyResourcePlanList);
-	
+	*/
 		
 	}
 	
@@ -101,7 +102,7 @@ public class RequestManpowerServiceTest {
 	@Test
 	public void test1SubmitManpowerRequest(){
 		
-		requestManpowerService.submitManpowerRequest(projectAllocationDTO);
+		//requestManpowerService.submitManpowerRequest(projectAllocationDTO);
 		
 		
 		/*
@@ -117,6 +118,7 @@ public class RequestManpowerServiceTest {
 		
 		ProjectAllocationDTO projectAllDto =requestManpowerService.
 				requestManpower(projectDTO,startOfWeek);
+		System.out.println("Printing inside Test");
 		Assert.notNull(projectAllDto);
 		
 	
