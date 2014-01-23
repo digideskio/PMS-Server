@@ -18,7 +18,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import com.media2359.euphoria.view.client.manpower.request.ManpowerRequestPanel;
 import com.media2359.euphoria.view.client.project.ProjectProperties;
 import com.media2359.euphoria.view.client.project.ProjectRpcHelper;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
@@ -39,7 +38,7 @@ public class MyProjectsPanel implements IsWidget, AsyncCallback<ProjectListRespo
 
 	Grid<ProjectDTO> grid;
 
-	private ManpowerRequestPanel parent;
+	private ProjectReceiver receiver;
 	
 	@Override
 	public Widget asWidget() {
@@ -67,8 +66,7 @@ public class MyProjectsPanel implements IsWidget, AsyncCallback<ProjectListRespo
 			@Override
 			public void onSelection(SelectionEvent<ProjectDTO> event) {
 				ProjectDTO selectedProject = event.getSelectedItem();
-				getParent().setProject(selectedProject);
-				//getParent().setAllocationPanelTitle(selectedProject.getName());
+				receiver.selectedProject(selectedProject);
 			}			
 		});
 		grid.setSelectionModel(sm);
@@ -82,14 +80,6 @@ public class MyProjectsPanel implements IsWidget, AsyncCallback<ProjectListRespo
 	public void clear() {
 		store.clear();
 	}
-	
-	public void setParent(ManpowerRequestPanel parent) {
-		this.parent = parent;
-	}
-	
-	private ManpowerRequestPanel getParent() {
-		return this.parent;
-	}
 
 	@Override
 	public void onFailure(Throwable caught) {
@@ -101,5 +91,9 @@ public class MyProjectsPanel implements IsWidget, AsyncCallback<ProjectListRespo
 		if ((response != null) && (response.getProjects() != null)) {
 			store.addAll(response.getProjects());
 		}		
+	}
+
+	public void setReceiver(ProjectReceiver receiver) {
+		this.receiver = receiver;
 	}
 }

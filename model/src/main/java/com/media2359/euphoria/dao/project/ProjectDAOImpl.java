@@ -26,6 +26,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 
 
@@ -160,6 +162,30 @@ public class ProjectDAOImpl extends HibernateDaoSupport implements ProjectDAO {
 		}finally{session.close();}
 		//session.close();
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Double getTotalApprovedMandays(Project project){
+		Session session = this.getSession(); 
+		List<Double> totalMandaysList = null;
+		Double totalMandays = new Double(-1);
+		try{
+			Transaction tx1 = session.beginTransaction();
+			
+			totalMandaysList = this.getHibernateTemplate().find("select sum(date(a.endDate)- date(a.startDate)) from PlatformRequest a where a.weeklyManpowerRequest.project = ? "
+					+ "and a.weeklyManpowerRequest.approvalStatus = 'A'", 
+					new Object[]{project});
+			
+			for (Double tmpTotalMandays: totalMandaysList){
+				totalMandays = tmpTotalMandays;
+			}
+			
+			System.out.println("total mandays from  database is "+totalMandays);
+			tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		 return totalMandays;
 	}
 	
 }

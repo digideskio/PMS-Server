@@ -34,6 +34,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.manpower.PlatformRequest;
+import com.media2359.euphoria.model.manpower.WeeklyManpowerRequest;
 import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.user.User;
@@ -173,4 +175,28 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		}finally{session.close();}
 		 return employees;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Employee getEmployeeByUserId(String userId){
+		Session session = this.getSession();
+		List<Employee> employees = null;
+		Employee employee = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			employees =  this.getHibernateTemplate().find("from Employee a where a.companyEmail = ? "
+					+ "order by a.employeeKey", new Object[]{userId});
+			for (Employee tmpEmployee: employees){
+				employee = tmpEmployee;
+			}
+			tx1.commit();
+		}catch(Exception e){
+			log.info(e);
+		}finally{
+			session.close();
+		}
+			 
+		return employee;
+	}
+	
+	
 }

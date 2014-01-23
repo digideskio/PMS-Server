@@ -65,7 +65,7 @@ public class ProjectDaoTest {
 		project1.setId(Integer.valueOf(0));
 		project1.setName("TEST123");
 		project1.setDescription("Project Unit Test for save a project");
-		project1.setManDaysLeft(100);
+		project1.setManDaysLeft(Double.valueOf(50.35));
 		project1.setProjectManager("Mgr123");
 		
 		projectDao.addProject(project1);
@@ -112,6 +112,19 @@ public class ProjectDaoTest {
 		String s1 = "TEST_UPD" + maxKey.toString();
 		
 		Assert.assertTrue(s1.equalsIgnoreCase(project2.getName()));
+		
+	}
+	
+	@Test
+	public void test5getTotalApprovedMandays() {
+		log.info("####test5getTotalApprovedMandays start...");
+		Project project1 = new Project();
+		project1.setId(Integer.valueOf(2));
+		
+		Double totalMandays = projectDao.getTotalApprovedMandays(project1);
+		
+		Assert.assertNotEquals(totalMandays.doubleValue(), -1);
+		log.info("####test5getTotalApprovedMandays end...");
 		
 	}
 		

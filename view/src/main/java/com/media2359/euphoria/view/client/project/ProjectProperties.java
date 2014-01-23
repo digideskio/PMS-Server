@@ -12,7 +12,7 @@ public interface ProjectProperties extends PropertyAccess<ProjectDTO> {
 
 	ValueProvider<ProjectDTO, String> name();
 
-	ValueProvider<ProjectDTO, Integer> manDaysLeft();
+	ValueProvider<ProjectDTO, Double> manDaysLeft();
 
 	ValueProvider<ProjectDTO, Integer> milestoneCount();
 

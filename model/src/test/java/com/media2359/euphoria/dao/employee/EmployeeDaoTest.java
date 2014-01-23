@@ -111,4 +111,18 @@ public class EmployeeDaoTest {
 		
 	}
 	
+	@Test
+	public void test4getEmployeeByUserId() {
+		log.info("####test4getEmployeeByUserId start...");
+		
+		Employee employee = null;
+		employee = employeeDao.getEmployeeByUserId("alfred.jayaprakash@gmail.com");
+		
+		Assert.assertNotNull(employee);
+		
+		log.info("#### getEmployeeByUserId return: " + employee);
+		log.info("####test4getEmployeeByUserId end...");
+		
+	}
+	
 }

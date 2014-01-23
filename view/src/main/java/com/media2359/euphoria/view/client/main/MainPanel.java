@@ -15,11 +15,15 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
+import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 
 public class MainPanel extends Composite {
+	private static final String PROJECT_MANAGER = "PM";
+	private static final String VP = "VP";
+
 	interface MyUiBinder extends UiBinder<Widget, MainPanel> {
 
 	}
@@ -27,6 +31,8 @@ public class MainPanel extends Composite {
 	@UiField TextButton welcomelabel;
 	@UiField BorderLayoutContainer con;
 	@UiField TabPanel maintab;
+	
+	public String userRole = null;
 	
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
@@ -42,6 +48,20 @@ public class MainPanel extends Composite {
 		maintab.addStyleName("myTabStyle");
 		
 		populateUsername();
+		
+		userRole = getUserRole();
+		
+		
+		if((userRole == null) || ("".equals(userRole))) {
+			userRole = PROJECT_MANAGER;
+		}
+		
+		if(!VP.equals(userRole)) {
+			Widget child = maintab.getWidget(2);//Assuming second tab is Approval Tab
+			TabItemConfig config = maintab.getConfig(child);
+			config.setEnabled(false); //Disable the tab
+			config.setClosable(true);
+		}
 	}
 	
 	private void populateUsername() {
@@ -52,6 +72,11 @@ public class MainPanel extends Composite {
 	public static native String getUsername()/*-{
     	return $wnd.getLoginUsername();
 	}-*/; 
+	
+	public static native String getUserRole()/*-{
+		return $wnd.getUserRole();
+	}-*/;
+	
 	/*
 	@UiHandler("logoutButton")
 	public void handleLogout(ClickEvent clickEvent) {

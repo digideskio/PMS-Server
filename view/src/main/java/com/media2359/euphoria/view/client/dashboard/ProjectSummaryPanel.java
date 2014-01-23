@@ -35,7 +35,7 @@ public class ProjectSummaryPanel implements IsWidget, AsyncCallback<ProjectListR
 
 		ColumnConfig<ProjectDTO, String> nameCol = new ColumnConfig<ProjectDTO, String>(
 				ProjectProperties.name(), 150, "Name");
-		ColumnConfig<ProjectDTO, Integer> manDaysCol = new ColumnConfig<ProjectDTO, Integer>(
+		ColumnConfig<ProjectDTO, Double> manDaysCol = new ColumnConfig<ProjectDTO, Double>(
 				ProjectProperties.manDaysLeft(), 150,
 				"Actual Cost/Project Estimate");
 		ColumnConfig<ProjectDTO, Integer> mileStoneCol = new ColumnConfig<ProjectDTO, Integer>(

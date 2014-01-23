@@ -27,6 +27,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.WhereJoinTable;
 
@@ -48,6 +50,7 @@ public class WeeklyManpowerRequest {
 	Integer weeklyManpowerRequestKey;
 	
 	@OneToOne
+	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name="project_key", updatable=false)
 	Project project;
 	

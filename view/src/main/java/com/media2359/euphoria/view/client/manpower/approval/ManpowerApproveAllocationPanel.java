@@ -7,21 +7,17 @@
  * is strictly forbidden unless prior written permission is obtained
  * from 2359 Media Pvt Ltd
  ***************************************************************************/
-package com.media2359.euphoria.view.client.manpower.request;
+package com.media2359.euphoria.view.client.manpower.approval;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
-import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
-import com.media2359.euphoria.view.server.allocation.RequestManpowerServiceAsync;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -38,7 +34,7 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
  */ 
 
 
-public class ManpowerRequestAllocationPanel implements IsWidget {
+public class ManpowerApproveAllocationPanel implements IsWidget {
 	ManpowerAllocationProjectPanel allocationPanel = null;
 	ArrayList<ProjectDTO> activeProjects = new ArrayList<ProjectDTO>();
 	private TextButton addButton,resetButton;
