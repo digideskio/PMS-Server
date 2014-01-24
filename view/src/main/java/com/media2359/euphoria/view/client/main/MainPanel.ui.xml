@@ -79,7 +79,7 @@
 
 	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
 		field="approvalConfig">
-		<ui:attributes text="Manpower Approvals    " icon="{resources.approve}" />
+		<ui:attributes text="Manpower Approvals    " icon="{resources.approval}" />
 	</ui:with>
 
 	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
@@ -170,14 +170,14 @@
 						<container:child layoutData="{bannerRight}">
 							<container:HorizontalLayoutContainer>
 								<container:child>
-									<button:TextButton text="" ui:field="welcomelabel"
-										styleName="{style.header-right}" icon="{resources.gear}">
+									<button:TextButton text="" ui:field="welcomeButton"
+										styleName="{style.header-right}" icon="{resources.gear}"> <!--  
 										<button:menu>
 											<menu:Menu ui:field="buttonMenu">
 												<menu:MenuItem text="Settings" ui:field="settingsButton"/>
 												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
 											</menu:Menu>
-										</button:menu>
+										</button:menu>-->
 									</button:TextButton>
 								</container:child>
 								<!-- <container:child> <g:Hyperlink text="Logout" ui:field="logoutButton" 

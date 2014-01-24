@@ -11,12 +11,13 @@ package com.media2359.euphoria.view.client.main;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.common.NotificationBox;
+import com.media2359.euphoria.view.client.common.Resources;
 import com.sencha.gxt.core.client.Style.LayoutRegion;
 import com.sencha.gxt.widget.core.client.Composite;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
@@ -28,6 +29,8 @@ import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.menu.Item;
+import com.sencha.gxt.widget.core.client.menu.Menu;
+import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
 public class MainPanel extends Composite {
 	private static final String PROJECT_MANAGER = "PM";
@@ -37,7 +40,7 @@ public class MainPanel extends Composite {
 
 	}
 
-	@UiField TextButton welcomelabel;
+	@UiField TextButton welcomeButton;
 	@UiField BorderLayoutContainer con;
 	@UiField TabPanel maintab;
 	
@@ -65,17 +68,43 @@ public class MainPanel extends Composite {
 			userRole = PROJECT_MANAGER;
 		}
 		
-		if(!VP.equals(userRole)) {
+		if(!VP.equals(userRole)) {//If Role is not VP, then disable Approval Tab
 			Widget child = maintab.getWidget(2);//Assuming second tab is Approval Tab
 			TabItemConfig config = maintab.getConfig(child);
 			config.setEnabled(false); //Disable the tab
-			config.setClosable(true);
+			
+			Resources resources = GWT.create(Resources.class);
+			config.setIcon(resources.disabled());//Set the icon to disabled
 		}
 	}
 	
 	private void populateUsername() {
 		String username = getUsername();
-		welcomelabel.setText(username);
+		welcomeButton.setText(username);
+		Menu menu = new Menu();
+		MenuItem item1 = new MenuItem("Logout");
+		item1.addSelectionHandler(new SelectionHandler<Item>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Item> event) {
+				handleLogout(event);
+			}
+			
+		});
+		
+		MenuItem item2 = new MenuItem("Settings");
+		item2.addSelectionHandler(new SelectionHandler<Item>() {
+
+			@Override
+			public void onSelection(SelectionEvent<Item> event) {
+				handleSettings(event);
+			}
+			
+		});
+		
+		menu.add(item1);
+		menu.add(item2);
+		welcomeButton.setMenu(menu);
 	}
 	
 	public static native String getUsername()/*-{
@@ -86,8 +115,8 @@ public class MainPanel extends Composite {
 		return $wnd.getUserRole();
 	}-*/;
 	
-	@UiHandler("logoutButton")
-	public void handleLogout(SelectionEvent<Item> event) {
+	//@UiHandler("logoutButton")
+	public final void handleLogout(SelectionEvent<Item> event) {
 		final ConfirmMessageBox confirm = new ConfirmMessageBox("Confirmation","Are you sure you want to logout?");
 		confirm.addHideHandler(new HideHandler() {
 		      public void onHide(HideEvent event) {
@@ -102,7 +131,7 @@ public class MainPanel extends Composite {
 		confirm.show();
 	}
 	
-	@UiHandler("settingsButton")
+	//@UiHandler("settingsButton")
 	public void handleSettings(SelectionEvent<Item> event) {
 		NotificationBox.success("Success", "Settings have been updated successfully");
 	}

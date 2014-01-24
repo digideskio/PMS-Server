@@ -58,7 +58,10 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-    <div id="loading" style="font-family: Arial;font-size: 11pt">Loading. Please wait...</div> 
+    <div id="loading" style='display:block'>
+		<h3>Loading page...</h3>
+		<img src="/static/images/loader.gif" alt="loader" />
+	</div>
 	<div id="bodypanel">
 	</div>
   </body>

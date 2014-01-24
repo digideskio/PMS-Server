@@ -5,9 +5,8 @@
 <title>Logout Success</title>
 </head>
 <body>
-  <div style="border-width:1px;border-style:solid;border-color:green;width:60%;">
-	<table border="0"
-		style="background-color:#CCE0CC;" cellpadding="5" cellspacing="5">
+  <div style="border-width:1px;border-style:solid;border-color:green;width:50%;background-color:#CCE0CC;">
+	<table border="0" cellpadding="5" cellspacing="5">
 		<tbody>
 			<tr>
 				<td><img
