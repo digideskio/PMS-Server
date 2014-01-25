@@ -59,23 +59,23 @@ public class MainPanel extends Composite {
 		
 		populateUsername();
 		
-		userRole = getUserRole();
-		
-		
-		if((userRole == null) || ("".equals(userRole))) {
-			userRole = PROJECT_MANAGER;
-		}
-		
-		if(!VP.equals(userRole)) {//If Role is not VP, then disable Approval Tab
-			Widget child = maintab.getWidget(2);//Assuming second tab is Approval Tab
-			TabItemConfig config = maintab.getConfig(child);
-			config.setEnabled(false); //Disable the tab
-			
-			Resources resources = GWT.create(Resources.class);
-			config.setIcon(resources.disabled());//Set the icon to disabled
-			
-			maintab.update(child, config);
-		}
+//		userRole = getUserRole();
+//		
+//		
+//		if((userRole == null) || ("".equals(userRole))) {
+//			userRole = PROJECT_MANAGER;
+//		}
+//		
+//		if(!VP.equals(userRole)) {//If Role is not VP, then disable Approval Tab
+//			Widget child = maintab.getWidget(2);//Assuming second tab is Approval Tab
+//			TabItemConfig config = maintab.getConfig(child);
+//			config.setEnabled(false); //Disable the tab
+//			
+//			Resources resources = GWT.create(Resources.class);
+//			config.setIcon(resources.disabled());//Set the icon to disabled
+//			
+//			maintab.update(child, config);
+//		}
 	}
 	
 	private void populateUsername() {
