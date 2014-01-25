@@ -34,7 +34,6 @@
 		}
 		
 		.header-center {
-			padding-top: 20px;
 		}
 		
 		.header-right {
@@ -130,7 +129,8 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
 		field="westData">
-		<ui:attributes size="0.1" margins="{westMargins}" hidden="true"/>
+		<ui:attributes size="0.2" margins="{westMargins}"
+			hidden="true" />
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
@@ -140,7 +140,8 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
 		field="eastData">
-		<ui:attributes size="0.1" margins="{eastMargins}" hidden="true" />
+		<ui:attributes size="0.1" margins="{eastMargins}"
+			hidden="true" />
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData"
@@ -150,12 +151,12 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerLeft">
-		<ui:attributes width="0.10" height="1.0" margins="{topMargins}" />
+		<ui:attributes width="0.15" height="1.0" margins="{topMargins}" />
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerCenter">
-		<ui:attributes width="0.60" height="1.0" margins="{topMargins}" />
+		<ui:attributes width="0.55" height="1.0" margins="{topMargins}" />
 	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
@@ -176,18 +177,32 @@
 						</container:child>
 						<container:child layoutData="{bannerCenter}">
 							<container:SimpleContainer styleName="{style.header-center}">
-								<g:HTML><span style="font-family:arial,helvetica,sans-serif;font-size:25px;color:white">e<span style="color:#ff0000;font-size:30px;font-weight:bold">U</span>phoria</span></g:HTML>
+								<g:HTML>
+									<table valign="top"><tr><td>
+									<span
+										style="font-family:arial,helvetica,sans-serif;font-size:25px;color:white">
+										e
+										<span style="color:#ff0000;font-size:30px;font-weight:bold">U</span>
+										phoria
+									</span>
+									</td>
+									<td>
+										<img src="/static/images/euphoria.png" alt="euphoria" />
+									</td>
+									</tr></table>
+								</g:HTML>
 							</container:SimpleContainer>
-						</container:child>						
+						</container:child>
 						<container:child layoutData="{bannerRight}">
-							<container:HorizontalLayoutContainer 
-										styleName="{style.header-right}" >
+							<container:HorizontalLayoutContainer
+								styleName="{style.header-right}">
 								<container:child>
-									<button:SplitButton text="" ui:field="welcomeButton" icon="{resources.gear}"> 
+									<button:SplitButton text="" ui:field="welcomeButton"
+										icon="{resources.gear}">
 										<button:menu>
 											<menu:Menu ui:field="buttonMenu">
-												<menu:MenuItem text="Settings" ui:field="settingsButton"/>
-												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
+												<menu:MenuItem text="Settings" ui:field="settingsButton" />
+												<menu:MenuItem text="Logout" ui:field="logoutButton" />
 											</menu:Menu>
 										</button:menu>
 									</button:SplitButton>

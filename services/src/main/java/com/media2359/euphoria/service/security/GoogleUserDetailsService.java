@@ -57,16 +57,16 @@ public class GoogleUserDetailsService implements AuthenticationUserDetailsServic
 							log.info("Retrieved Email of the user: "+email);
 							
 							//Verify this user in database and fetch role details
-							Employee employee = employeeDao.getEmployeeByUserId(email);
+							//Employee employee = employeeDao.getEmployeeByUserId(email);
 							
-							if(employee != null) {
-								log.info("Employee Designation is "+employee.getDesignation());
+							//if(employee != null) {
+								//log.info("Employee Designation is "+employee.getDesignation());
 								List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 								grantedAuthorities.add(new GrantedAuthorityImpl(com.media2359.euphoria.dao.user.Role.USER.getCode()));
-								grantedAuthorities.add(new GrantedAuthorityImpl((employee.getDesignation())));	
+								//grantedAuthorities.add(new GrantedAuthorityImpl((employee.getDesignation())));	
 								userDetail = new User(email, "", true, true, true, true, grantedAuthorities);
 								return userDetail;
-							}
+							//}
 						} else {
 							log.error("Received empty email attribute");
 						}

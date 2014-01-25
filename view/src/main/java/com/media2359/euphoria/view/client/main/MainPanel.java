@@ -73,6 +73,8 @@ public class MainPanel extends Composite {
 			
 			Resources resources = GWT.create(Resources.class);
 			config.setIcon(resources.disabled());//Set the icon to disabled
+			
+			maintab.update(child, config);
 		}
 	}
 	
