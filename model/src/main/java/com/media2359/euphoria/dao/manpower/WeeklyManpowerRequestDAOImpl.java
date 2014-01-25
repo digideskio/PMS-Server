@@ -128,11 +128,13 @@ public class WeeklyManpowerRequestDAOImpl extends HibernateDaoSupport implements
 		try{
 		Transaction tx1 = session.beginTransaction();
 		
-		Query q = session.createQuery("delete WeeklyManpowerRequest where wklyManpowerRqstKey=?");
+		/*Query q = session.createQuery("delete WeeklyManpowerRequest where wklyManpowerRqstKey=?");
 		q.setInteger(0, wklyManpowerRqstKey);
 		
 		log.info("deleteWeeklyManpowerRequest()->sQuery::" + q.toString());
-		q.executeUpdate();
+		q.executeUpdate();*/
+		
+		this.getHibernateTemplate().delete(wklyManpowerRqstKey);
 		tx1.commit();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -187,6 +189,21 @@ public class WeeklyManpowerRequestDAOImpl extends HibernateDaoSupport implements
 		
 		log.info("rejectWeeklyManpowerRequest()->sQuery::" + q.toString());
 		q.executeUpdate();
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteWeeklyManpowerRequest(Project project, Date startDate, Date endDate){
+		Session session = this.getSession();
+		try{
+		Transaction tx1 = session.beginTransaction();
+		List<WeeklyManpowerRequest> weeklyManpowerRequests = this.findAllWklyMpowerRqstByProjectWeek(startDate, endDate, project);
+		this.getHibernateTemplate().deleteAll(weeklyManpowerRequests);
+		
 		tx1.commit();
 		}catch(Exception e){
 			e.printStackTrace();

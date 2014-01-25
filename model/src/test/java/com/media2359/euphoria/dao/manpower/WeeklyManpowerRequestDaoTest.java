@@ -93,5 +93,79 @@ public class WeeklyManpowerRequestDaoTest {
 		log.info("####test2approveWeeklyManpowerRequest end...");
 	}
 	
+	@Test
+	 public void test3addWeeklyManpowerRequest() throws Exception{
+	  log.info("####test3addWeeklyManpowerRequest start...");
+	  try{
+	   PlatformRequest platformRequest = new PlatformRequest();
+	   WeeklyManpowerRequest weeklyManpowerRequest = new WeeklyManpowerRequest();
+	   Employee employee = new Employee();
+	   Project project = new Project();
+	   project.setId(Integer.valueOf(2));
+	   Platform platform = new Platform();
+	   
+	   Date platformStartDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-28");
+	   Date platformEndDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-29");
+	   Date mPowerRqstStartDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-27");
+	   Date mPowerRqstEndDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-31");
+	   
+	   platformRequest.setCreateById("TY");
+	   platformRequest.setCreateTstamp(new Date());
+	   employee.setEmployeeKey(Integer.valueOf(3));
+	   platformRequest.setEmployee(employee);
+	   platformRequest.setDuration(Float.valueOf(1));
+	   platformRequest.setStartDate(platformStartDate);
+	   platformRequest.setEndDate(platformEndDate);
+	   platform.setPlatformKey(Integer.valueOf(1));
+	   platformRequest.setPlatform(platform);
+	   
+	   weeklyManpowerRequest.setCreatedBy("TY");
+	   weeklyManpowerRequest.setCreatedTstmp(new Date());
+	   weeklyManpowerRequest.getPlatformRequests().add(platformRequest);
+	   weeklyManpowerRequest.setProject(project);
+	   weeklyManpowerRequest.setStartDate(mPowerRqstStartDate);
+	   weeklyManpowerRequest.setEndDate(mPowerRqstEndDate);
+	   weeklyManpowerRequest.setApprovalStatus("P");
+	   
+	   platformRequest.setWeeklyManpowerRequest(weeklyManpowerRequest);
+	   
+	   weeklyManpowerRequestDAO.addWeeklyManpowerRequest(weeklyManpowerRequest);
+	   Integer maxSkey = weeklyManpowerRequestDAO.getMaxKey();
+	  
+	   WeeklyManpowerRequest weeklyManpowerRequest2 = weeklyManpowerRequestDAO.getManpowerRequest(maxSkey);
+	   log.info("####weeklyManpowerRequest2:: " + weeklyManpowerRequest2);
+	   
+	   Assert.assertNotNull(weeklyManpowerRequest2);
+	  
+	  }catch(Exception e){
+	   throw e;
+	  }
+	  log.info("####test3addWeeklyManpowerRequest end...");
+	 }
+	
+	
+	@Test
+	 public void test4deleteWeeklyManpowerRequest() throws Exception{
+	  log.info("####test4deleteWeeklyManpowerRequest start...");
+	  try{
+	   Project project = new Project();
+	   project.setId(Integer.valueOf(2));
+	   
+	   List<WeeklyManpowerRequest> weeklyManpowerRequests = null;
+	   Date mPowerRqstStartDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-27");
+	   Date mPowerRqstEndDate = (new SimpleDateFormat("yyyy-MM-dd")).parse("2014-01-31");
+	   
+	  
+	   weeklyManpowerRequestDAO.deleteWeeklyManpowerRequest(project, mPowerRqstStartDate, mPowerRqstEndDate);
+	   weeklyManpowerRequests = weeklyManpowerRequestDAO.findAllWklyMpowerRqstByProjectWeek(mPowerRqstStartDate, mPowerRqstEndDate, project);
+	   
+	   Assert.assertEquals(0, weeklyManpowerRequests.size());
+	  
+	  }catch(Exception e){
+	   throw e;
+	  }
+	  log.info("####test4deleteWeeklyManpowerRequest end...");
+	 }
+	
 }
 
