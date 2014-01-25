@@ -49,6 +49,8 @@ public class ProjectSummaryPanel extends Composite{
 		/**
 		 * Fetch the data when this panel is shown
 		 */
+		
+		projectGrid.setProjectPresenter(projectPresenter);
 		projectPresenter.loadProjectsFromDB(false);
 		
 		Resources resources = GWT.create(Resources.class);

@@ -55,7 +55,7 @@ public class EmployeeGrid extends Composite {
 	private Grid<EmployeeDTO> grid;
 	private ListStore<EmployeeDTO> listStore;
 	private EmployeePresenter employeePresenter;
-	
+
 	Logger log = Logger.getLogger("EuphoriaLogger");
 	
 	// Property access definitions for the values in the Project object
@@ -77,8 +77,6 @@ public class EmployeeGrid extends Composite {
 			.create(GridProperties.class);
 
 	public EmployeeGrid() {
-		
-		employeePresenter = new EmployeePresenter(this);
 		
 		listStore = new ListStore<EmployeeDTO>(gridProperties.employeeKey());
 
@@ -180,6 +178,17 @@ public class EmployeeGrid extends Composite {
 			addFilters();
 
 	}
+	
+	
+	public EmployeePresenter getEmployeePresenter() {
+		return employeePresenter;
+	}
+
+
+	public void setEmployeePresenter(EmployeePresenter employeePresenter) {
+		this.employeePresenter = employeePresenter;
+	}
+
 	
 	public void clear() {
 		listStore.clear();

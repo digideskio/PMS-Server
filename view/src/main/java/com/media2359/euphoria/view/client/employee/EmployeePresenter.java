@@ -47,14 +47,19 @@ import com.sencha.gxt.widget.core.client.info.Info;
   private static List<EmployeeDTO> employees;
   private final EmployeeServiceAsync employeeService = GWT.create(EmployeeService.class);
   private EmployeeDTO employeeDTOInEdit = null;
- 
-public EmployeePresenter(EmployeeGrid employeeGrid){
-	  this.employeeGrid = employeeGrid;
-	  
+  
+  public EmployeePresenter(EmployeeGrid employeeGrid){
+		  this.employeeGrid = employeeGrid;
+		  
   }
   
   
-  public void loadData() {
+  public EmployeePresenter() {
+	// for JUnitTest
+}
+
+
+public void loadData() {
 	  
 
 	  	employees = null;
