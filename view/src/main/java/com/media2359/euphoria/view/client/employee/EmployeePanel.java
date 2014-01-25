@@ -61,6 +61,7 @@ public class EmployeePanel extends Composite {
 		addButton.setIconAlign(IconAlign.LEFT);
 		
 		employeePresenter = new EmployeePresenter(employeeGrid);
+		employeeGrid.setEmployeePresenter(employeePresenter);
 		/**
 		 * Fetch the data when this panel is shown
 		 */

@@ -126,4 +126,30 @@ public class ProjectPresenter {
 		messageBox.show();
 		
 	}
+	
+	public void deleteProjectButtonClicked(ProjectDTO p) {
+		
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Deleting Project. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	  
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				loadProjectsFromDB(false);
+			}
+
+		};
+			
+		ProjectRpcHelper.projectService.deleteProject(p, callback);
+		messageBox.auto();
+		messageBox.show();
+		
+	}
 }
