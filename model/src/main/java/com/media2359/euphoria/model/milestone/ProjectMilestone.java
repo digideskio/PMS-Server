@@ -71,7 +71,7 @@ public class ProjectMilestone implements java.io.Serializable{
 	public ProjectMilestone(ProjectMilestoneDTO projectMilestoneDTO) {
 		
 		this.setMilestoneKey(projectMilestoneDTO.getMilestoneKey());
-		this.setProject(new Project(projectMilestoneDTO.getProject()));
+		//this.setProject(new Project(projectMilestoneDTO.getProject()));
 		this.setMilestoneDate(projectMilestoneDTO.getMilestoneDate());
 		this.setMilestoneDesc(projectMilestoneDTO.getMilestoneDesc());
 		this.setCreatedById(projectMilestoneDTO.getCreatedById());

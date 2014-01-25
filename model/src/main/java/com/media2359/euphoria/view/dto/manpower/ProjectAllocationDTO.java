@@ -1,6 +1,7 @@
 package com.media2359.euphoria.view.dto.manpower;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +31,12 @@ public class ProjectAllocationDTO implements Serializable{
 	public List<WeeklyResourcePlan> getWeeklyResourcePlanList() {
 		return weeklyResourcePlanList;
 	}
-	public void setWeeklyResourcePlanList(List<WeeklyResourcePlan> weeklyResourcePlan) {
-		this.weeklyResourcePlanList = weeklyResourcePlan;
+	public void setWeeklyResourcePlanList(List<WeeklyResourcePlan> weeklyResourcePlanList) {
+		List<WeeklyResourcePlan> newList = new ArrayList<WeeklyResourcePlan>();
+		for(WeeklyResourcePlan weeklyResourcePlan2 : weeklyResourcePlanList)
+			newList.add(weeklyResourcePlan2);
+		
+		this.weeklyResourcePlanList = newList;
 	}
 	@Override
 	public String toString() {

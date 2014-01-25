@@ -81,10 +81,11 @@ public class Project implements java.io.Serializable{
 		if(dto.getProjectMilestone()!=null){
 			for(ProjectMilestoneDTO projectMilestoneDTO : dto.getProjectMilestone()){
 				if(isMilestoneValid(projectMilestoneDTO)){
-					ProjectDTO projectForMilestone = new ProjectDTO();
-					projectForMilestone.setId(dto.getId());
-					projectMilestoneDTO.setProject(projectForMilestone);
-					projectMilestoneSet.add(new ProjectMilestone(projectMilestoneDTO));
+					ProjectMilestone projectMilestone =new ProjectMilestone(projectMilestoneDTO);
+					projectMilestone.setProject(this);
+					projectMilestone.setCreatedById("SYSTEM");
+					projectMilestone.setCreateTstamp(new Date());
+					projectMilestoneSet.add(projectMilestone);
 				}
 				
 			}
@@ -288,11 +289,13 @@ public class Project implements java.io.Serializable{
 	private Boolean isMilestoneValid(ProjectMilestoneDTO projectMilestoneDTO){
 		Boolean isMilestoneValid= true;
 		
-		if((projectMilestoneDTO.getMilestoneDate()==null) && 
+		if((projectMilestoneDTO.getMilestoneDate()==null) &&
 				(projectMilestoneDTO.getMilestoneDesc()==null || 
 				"".equals(projectMilestoneDTO.getMilestoneDesc()))){
 			isMilestoneValid= false;
 		}
+		
+		System.out.println("isMilestoneValid is "+isMilestoneValid);
 		return isMilestoneValid;
 	}
 
