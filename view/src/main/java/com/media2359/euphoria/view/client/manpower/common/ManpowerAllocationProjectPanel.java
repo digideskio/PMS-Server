@@ -197,9 +197,9 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 			public void onSuccess(ProjectAllocationDTO result) {
 				messageBox.hide();
 				projectAllocationDTO = result;
+				log.info("X!X!X!X!X!X!X!X! ProJectAllocationDTO received is "+projectAllocationDTO);
 				if(projectAllocationDTO.getWeeklyResourcePlanList() != null ){
-					grid.getStore().replaceAll(projectAllocationDTO.getWeeklyResourcePlanList());
-					log.info("Allocation Plan List received is "+projectAllocationDTO.getWeeklyResourcePlanList());
+					grid.getStore().replaceAll(projectAllocationDTO.getWeeklyResourcePlanList());					
 				}
 				else{
 					log.info("Received null weekly resource plan. hence creating new row.");
@@ -274,6 +274,8 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 
 	public ProjectAllocationDTO getAllocationData() {
 		grid.getStore().commitChanges();
+		projectAllocationDTO.setProjectDTO(projectDTO);
+		projectAllocationDTO.setStartOfWeek(startDate);
 		projectAllocationDTO.setWeeklyResourcePlanList(grid.getStore().getAll());
 		log.info("!#!#!#!# Returning Project Allocation Data: "+projectAllocationDTO.toString());
 		projectDTO.setManDaysLeft(manDaysLeftForAllocation); // to be  changed to setManDaysLeftForAllocation

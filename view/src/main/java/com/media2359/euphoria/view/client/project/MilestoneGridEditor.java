@@ -77,7 +77,6 @@ import com.sencha.gxt.widget.core.client.info.Info;
 	
       GridEditing<ProjectMilestoneDTO> editing = new GridInlineEditing<ProjectMilestoneDTO>(grid);
       TextField textField = new TextField();
-      textField.setEmptyText("Double-Click to Add Description");
       editing.addEditor(colDescription,textField );
       
       DateField dateField = new DateField(new DateTimePropertyEditor(
@@ -90,7 +89,20 @@ import com.sencha.gxt.widget.core.client.info.Info;
       grid.getView().setAutoExpandColumn(colDescription);
     }
 	
-    @Override
+    public MilestoneGridEditor(Set<ProjectMilestoneDTO> projectMilestone) {
+		this();
+		if(projectMilestone == null || projectMilestone.size()<1){
+			addEmptyRow();
+			return;
+		}
+		List<ProjectMilestoneDTO> milestones = new ArrayList<ProjectMilestoneDTO>();
+		milestones.addAll(projectMilestone);
+		
+		listStore.replaceAll(milestones);
+		
+	}
+
+	@Override
     public Editor<List<ProjectMilestoneDTO>> asEditor() {
       return new ListStoreEditor<ProjectMilestoneDTO>(listStore);
     }

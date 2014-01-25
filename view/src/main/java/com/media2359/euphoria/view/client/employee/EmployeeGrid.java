@@ -129,7 +129,6 @@ public class EmployeeGrid extends Composite {
 		editCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
 		editCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
 		EditCell image = new EditCell();
-
 		image.addSelectHandler(new SelectHandler() {
 			
 			public void onSelect(SelectEvent event) {

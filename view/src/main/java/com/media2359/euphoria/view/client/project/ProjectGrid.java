@@ -112,7 +112,9 @@ public class ProjectGrid extends Composite {
 		        Context c = event.getContext();
 		        int row = c.getIndex();
 		        ProjectDTO p = listStore.get(row);
+		        new ProjectDetailsWindow(projectPresenter,p).show();
 		        Info.display("Event", "The project " + p.getName() + " was clicked.");
+		        
 				
 			}
 		});

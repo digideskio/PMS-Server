@@ -34,5 +34,6 @@ public class EditCell extends TextButtonCell{
             String value, SafeHtmlBuilder sb) {
         SafeHtml html = SafeHtmlUtils.fromTrustedString(new Image("/static/images/edit.png").toString());
         sb.append(html);
+//        sb.appendHtmlConstant("<button type=\"button\" class=\"gwt-Button\" tabindex=\"-1\">");
     }
 }

@@ -73,7 +73,7 @@ public class AddProjectWindow {
 		p.add(new FieldLabel(contactPerson, "Contact Person"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(startDate, "Start Date"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(endDate, "End Date"), new VerticalLayoutData(1, 35));
-		p.add(new FieldLabel(mandaysRequired, "Project Man-days"), new VerticalLayoutData(1, 35));
+		p.add(new FieldLabel(mandaysRequired, "Projected Mandays"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(status, "Project Status"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(mileStones, "Milestones"), new VerticalLayoutData(1, 100));
 		formPanel = new FormPanel();

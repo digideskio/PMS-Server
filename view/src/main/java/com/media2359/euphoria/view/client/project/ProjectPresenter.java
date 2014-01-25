@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
@@ -54,7 +55,7 @@ public class ProjectPresenter {
 			public void onSuccess(ProjectListResponse result) {
 				messageBox.hide();
 				 allProjects = result.getProjects();
-
+				 log.info("$!$!$!$!$!$!$!$!$! Projects loaded from DB are" + allProjects);
 				if(!test)
 					populateProjectSummaryGrid();
 			}
@@ -86,12 +87,15 @@ public class ProjectPresenter {
 	    
 		sourceWindow.getWindow().hide();
 		
-		saveNewProject(createProjectDTO(sourceWindow));
+		saveProject(createProjectDTO(sourceWindow));
 	}
 	
+	public void hideWindow(com.sencha.gxt.widget.core.client.Window window){
+		window.hide();
+	}
 	public void cancelButtonClicked(AddProjectWindow sourceWindow) {
 		log.info("Cancel Button Clicked");
-			sourceWindow.getWindow().hide();
+		hideWindow(sourceWindow.getWindow());
 		
 	}
 	
@@ -113,7 +117,7 @@ public class ProjectPresenter {
 		return projectDTO;
 	}
 
-	private void saveNewProject(ProjectDTO projectDTO){
+	public void saveProject(ProjectDTO projectDTO){
 		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 				"Progress", "Saving data. Please wait...");
 		final AsyncCallback<String> callback = new AsyncCallback<String>() {
@@ -134,6 +138,31 @@ public class ProjectPresenter {
 		};
 		log.info("#!#!#!#!#!#!Saving Project:" + projectDTO.toString());	
 		ProjectRpcHelper.projectService.addProject(projectDTO, callback);
+		messageBox.auto();
+		messageBox.show();
+		
+	}
+	
+	public void modifyProject(ProjectDTO projectDTO){
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Saving data. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	  
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				new Alert("Success", "Project Details Modified Successfully");
+			}
+
+		};
+		log.info("#!#!#!#!#!#!Modifying Project:" + projectDTO.toString());	
+		ProjectRpcHelper.projectService.modifyProject(projectDTO, callback);
 		messageBox.auto();
 		messageBox.show();
 		
