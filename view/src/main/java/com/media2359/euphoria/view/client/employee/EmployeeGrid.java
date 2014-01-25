@@ -118,7 +118,7 @@ public class EmployeeGrid extends Composite {
 		
 		grid.addCellClickHandler(new GridCellClickHandler());
 		initWidget(grid);
-		
+		addFilters();
 	}
 	
 	
@@ -165,6 +165,7 @@ public class EmployeeGrid extends Composite {
 		StringFilter<EmployeeDTO> platformFilter = new StringFilter<EmployeeDTO>(gridProperties.platforms());
 		StringFilter<EmployeeDTO> designationFilter = new StringFilter<EmployeeDTO>(gridProperties.designation());
 		GridFilters<EmployeeDTO> filters = new GridFilters<EmployeeDTO>();
+		filters.removeAll();
 		filters.initPlugin(grid);
 		filters.setLocal(true);
 		filters.addFilter(nameFilter);
@@ -175,7 +176,7 @@ public class EmployeeGrid extends Composite {
 	public void populateData(List<EmployeeDTO> employees) {
 		
 			listStore.replaceAll(employees);
-			addFilters();
+			
 
 	}
 	

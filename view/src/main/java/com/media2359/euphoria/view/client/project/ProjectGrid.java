@@ -95,6 +95,8 @@ public class ProjectGrid extends Composite {
 		grid = new Grid<ProjectDTO>(listStore, columnModel, gridView);
 		//grid.setSize("600", "500");
 		initWidget(grid);
+		
+		addFilters();
 	}
 	
 	private void populateViewButton(ColumnConfig viewDetailsCol){
@@ -140,14 +142,15 @@ public class ProjectGrid extends Composite {
 	private void addFilters(){
 		StringFilter<ProjectDTO> nameFilter = new StringFilter<ProjectDTO>(gridProperties.name());
 		GridFilters<ProjectDTO> filters = new GridFilters<ProjectDTO>();
+		filters.removeAll();
 		filters.initPlugin(grid);
-		filters.setLocal(true);
+		filters.setLocal(true);		
 		filters.addFilter(nameFilter);
 	}
 
 	public void populateData(List<ProjectDTO> projects) {
 		listStore.replaceAll(projects);
-		addFilters();
+		
 	}
 	
 	public void clear() {

@@ -48,5 +48,5 @@ public interface EmployeeServiceAsync {
 	public void  findAllPlatforms(AsyncCallback<List<PlatformDTO>> callback);
 	
 	public void getEmployeesByPlatform(PlatformDTO platformDTO,AsyncCallback<List<EmployeeDTO>> callback);
-	
+	public void getEmployeesByRole(String role,AsyncCallback<List<EmployeeDTO>> callback);
 }

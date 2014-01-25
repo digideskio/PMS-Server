@@ -23,7 +23,7 @@ import java.util.List;
  **/
 
 public enum Designations{
-	  DESIGNATION1("Project Manager"), DESIGNATION2("Software Engineer"), DESIGNATION3("QA"), DESIGNATION4("Admin"), DESIGNATION5("Designer"), DESIGNATION6("UX"),DESIGNATION7("Sales");
+	  DESIGNATION1("Project Manager"), DESIGNATION2("Software Engineer"), DESIGNATION3("QA"), DESIGNATION4("VP"), DESIGNATION5("Designer");
 	  
 	  	private  static List<Designations> designationList;
 	  	private String text;
@@ -39,10 +39,6 @@ public enum Designations{
 				return Designations.DESIGNATION4;
 			} else if (Designations.DESIGNATION5.toString().equals(object)) {
 				return Designations.DESIGNATION5;
-			} else if (Designations.DESIGNATION6.toString().equals(object)) {
-				return Designations.DESIGNATION6;
-			} else if (Designations.DESIGNATION7.toString().equals(object)) {
-				return Designations.DESIGNATION7;
 			} else {
 				return Designations.DESIGNATION1;
 			} 
@@ -68,7 +64,6 @@ public enum Designations{
 			designationList.add(DESIGNATION3);
 			designationList.add(DESIGNATION4);
 			designationList.add(DESIGNATION5);
-			designationList.add(DESIGNATION6);
 			return designationList;
 		}
 };

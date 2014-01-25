@@ -10,11 +10,13 @@
 package com.media2359.euphoria.view.client.employee;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -174,6 +176,12 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		 return label;
 	}
 
+	private String formatDate(Date date){
+		if(date==null)
+			return null;
+		return DateTimeFormat.getFormat("yyyy-MM-dd").format(date);
+		
+	}
 	private Object getDTOValue(int valueID){
 
 		if(employeeDTO == null)
@@ -190,8 +198,8 @@ public class ViewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 			case EMPLOYMENT:return (employeeDTO.getEmploymentType()!=null?employeeDTO.getEmploymentType():"");
 			case MANDAY:return (employeeDTO.getMandayRate()!=null?employeeDTO.getMandayRate():"");
 			case OFFICE:return (employeeDTO.getAssignedOffice()!=null?employeeDTO.getAssignedOffice():"");
-			case S_DATE:return employeeDTO.getStartDate();
-			case E_DATE:return employeeDTO.getEndDate();
+			case S_DATE:return formatDate(employeeDTO.getStartDate());
+			case E_DATE:return formatDate(employeeDTO.getEndDate());
 			case STATUS:return (employeeDTO.getStatus()!=null?employeeDTO.getStatus():"");
 			default: return "";
 		}
