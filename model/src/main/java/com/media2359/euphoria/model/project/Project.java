@@ -80,7 +80,13 @@ public class Project implements java.io.Serializable{
 		
 		if(dto.getProjectMilestone()!=null){
 			for(ProjectMilestoneDTO projectMilestoneDTO : dto.getProjectMilestone()){
-				projectMilestoneSet.add(new ProjectMilestone(projectMilestoneDTO));
+				if(isMilestoneValid(projectMilestoneDTO)){
+					ProjectDTO projectForMilestone = new ProjectDTO();
+					projectForMilestone.setId(dto.getId());
+					projectMilestoneDTO.setProject(projectForMilestone);
+					projectMilestoneSet.add(new ProjectMilestone(projectMilestoneDTO));
+				}
+				
 			}
 		}
 		
@@ -277,6 +283,17 @@ public class Project implements java.io.Serializable{
 				+ platformProjections + ", projectDocuments="
 				+ projectDocuments + ", projectMilestone=" + projectMilestone
 				+ "]";
+	}
+	
+	private Boolean isMilestoneValid(ProjectMilestoneDTO projectMilestoneDTO){
+		Boolean isMilestoneValid= true;
+		
+		if((projectMilestoneDTO.getMilestoneDate()==null) && 
+				(projectMilestoneDTO.getMilestoneDesc()==null || 
+				"".equals(projectMilestoneDTO.getMilestoneDesc()))){
+			isMilestoneValid= false;
+		}
+		return isMilestoneValid;
 	}
 
 

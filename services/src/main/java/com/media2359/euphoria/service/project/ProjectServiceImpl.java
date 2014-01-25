@@ -55,7 +55,18 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public ProjectDTO getProjectDetails(Integer projectId) {
-		return projectDao.getProject(projectId).createProjectDTO();
+		ProjectDTO projectDTO= projectDao.getProject(projectId).createProjectDTO();
+		if(projectDTO!=null){
+			Project project = new Project(projectDTO);
+			Double totalApprovedMandays = projectDao.getTotalApprovedMandays(project);
+			if(totalApprovedMandays!=null && projectDTO.getManDaysLeft()!=null){
+				System.out.println("Projected Mandays "+projectDTO.getManDaysLeft()+""
+						+ " : Total Approved Mandays "+totalApprovedMandays);
+				projectDTO.setNoOfMandaysLeftForSelection(totalApprovedMandays-
+						projectDTO.getManDaysLeft());
+			}
+		}
+		return projectDTO;
 	}
 
 	

@@ -30,6 +30,9 @@ public class ProjectDTO implements Serializable {
     	private Date endDate;
     	private String status;
     	
+    	// Number of Mandays left or selection
+    	private Double noOfMandaysLeftForSelection;
+    	
         private Set<ProjectMilestoneDTO> projectMilestone;
 
         public ProjectDTO() {
@@ -150,6 +153,14 @@ public class ProjectDTO implements Serializable {
 		public void setStatus(String status) {
 			this.status = status;
 		}
+		
+		public Double getNoOfMandaysLeftForSelection() {
+			return noOfMandaysLeftForSelection;
+		}
+
+		public void setNoOfMandaysLeftForSelection(Double noOfMandaysLeftForSelection) {
+			this.noOfMandaysLeftForSelection = noOfMandaysLeftForSelection;
+		}
 
 		@Override
 		public String toString() {
@@ -161,7 +172,9 @@ public class ProjectDTO implements Serializable {
 					+ ", billingAddr=" + billingAddr + ", contactPerson="
 					+ contactPerson + ", startDate=" + startDate + ", endDate="
 					+ endDate + ", status=" + status + ", projectMilestone="
-					+ projectMilestone + "]";
+					+ projectMilestone + "noOfMandaysLeftForSelection"+noOfMandaysLeftForSelection+"]";
 		}
+
+		
         
 }

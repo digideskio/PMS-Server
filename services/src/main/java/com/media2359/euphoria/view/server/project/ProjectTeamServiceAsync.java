@@ -10,7 +10,11 @@
 package com.media2359.euphoria.view.server.project;
 
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 /**
@@ -29,5 +33,9 @@ public interface ProjectTeamServiceAsync {
 	
 	// Adds the project team member 
 	public void submitProjectTeam(ProjectTeamDTO projectTeamDTO,AsyncCallback<String> callback);
+	
+	
+	public void getProjectTeamMember(ProjectDTO projectDTO, PlatformDTO 
+			platformDTO,AsyncCallback<List<EmployeeDTO>> callback);
 
 }
