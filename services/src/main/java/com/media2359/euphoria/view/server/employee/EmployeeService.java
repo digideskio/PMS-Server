@@ -52,4 +52,6 @@ public interface EmployeeService extends RemoteService {
 	public List<PlatformDTO> findAllPlatforms();
 	
 	public List<EmployeeDTO> getEmployeesByPlatform(PlatformDTO platformDTO);
+	
+	public List<EmployeeDTO> getEmployeesByRole(String role);
 }

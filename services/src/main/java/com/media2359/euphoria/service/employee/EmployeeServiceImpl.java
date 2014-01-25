@@ -146,4 +146,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return employeeDtoList;
 	}
+	
+	@Override
+	public List<EmployeeDTO> getEmployeesByRole(String role) {
+		List<EmployeeDTO> employeeDtoList = new ArrayList<EmployeeDTO>();
+		
+		List<Employee> employeeList = employeeDao.getEmployeesByRole(role);
+		for(Employee employee : employeeList){
+			employeeDtoList.add(employee.createEmployeeDTO());
+		}
+		return employeeDtoList;
+	}
 }
