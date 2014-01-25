@@ -93,6 +93,9 @@ public class Employee implements java.io.Serializable{
 		this.startDate = employeeDTO.getStartDate();
 		this.endDate = employeeDTO.getEndDate();
 		this.status = employeeDTO.getStatus();
+		this.company_id=employeeDTO.getCompany_id();
+		this.createdById=employeeDTO.getCreatedById();
+		this.createTstamp = employeeDTO.getCreateTstamp();
 		this.lastUpdById = employeeDTO.getLastUpdById();
 		this.lastUpdTstamp = employeeDTO.getLastUpdTstamp();
 
@@ -334,6 +337,7 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setAssignedOffice(getAssignedOffice());
 		employeeDTO.setMandayRate(getMandayRate());
 		employeeDTO.setStatus(getStatus());
+		employeeDTO.setCompany_id(getCompany_id());
 		
 		employeeDTO.setCreatedById(getCreatedById());
 		employeeDTO.setCreateTstamp(getCreateTstamp());
