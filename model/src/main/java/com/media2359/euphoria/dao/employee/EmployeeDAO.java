@@ -34,4 +34,5 @@ public interface EmployeeDAO {
 	void deleteEmployee(Integer employeeKey);
 	void updateEmployee(Employee employee);
 	List<Employee> getEmployeesByPlatform(Platform platform);
+	List<Employee> getEmployeesByRole(String role);
 }
