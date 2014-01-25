@@ -1,11 +1,15 @@
 package com.media2359.euphoria.view.client.project;
 
 import java.text.ParseException;
+import java.util.List;
+import java.util.Set;
 
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.client.core.ProjectStatus;
 import com.media2359.euphoria.view.client.employee.ButtonSelectHandler;
 import com.media2359.euphoria.view.client.employee.EmployeeDetailsWindow;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.data.shared.StringLabelProvider;
 import com.sencha.gxt.widget.core.client.Component;
@@ -34,6 +38,7 @@ import com.sencha.gxt.widget.core.client.form.validator.MinLengthValidator;
 public class AddProjectWindow {
 	
 	private Component projectName,description,company,billingAddress,contactPerson,startDate,endDate,mandaysRequired,status;
+	MilestoneGridEditor mileStones;
 	private  ProjectPresenter projectPresenter;
 	private   static final String SAVE_BUTTON_TEXT = "Submit",CANCEL_BUTTON_TEXT = "Cancel";
 	private Window window;
@@ -58,7 +63,7 @@ public class AddProjectWindow {
 		endDate = createEndDate();
 		mandaysRequired=createManDays();
 		status=createStatus();
-		
+		mileStones = new MilestoneGridEditor();
 			
 		VerticalLayoutContainer p = new VerticalLayoutContainer();
 		p.add(new FieldLabel(projectName, "Project Name"), new VerticalLayoutData(1, 35));
@@ -70,7 +75,7 @@ public class AddProjectWindow {
 		p.add(new FieldLabel(endDate, "End Date"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(mandaysRequired, "Project Man-days"), new VerticalLayoutData(1, 35));
 		p.add(new FieldLabel(status, "Project Status"), new VerticalLayoutData(1, 35));
-		
+		p.add(new FieldLabel(mileStones, "Milestones"), new VerticalLayoutData(1, 100));
 		formPanel = new FormPanel();
 		formPanel.add(p);
 		
@@ -96,10 +101,13 @@ public class AddProjectWindow {
 		window.setFocusWidget(cancelButton);
 		
 		saveButton.addSelectHandler(new ButtonSelectHandler(this));
+		cancelButton.addSelectHandler(new ButtonSelectHandler(this));
+		mileStones.addEmptyRow();
 	}
 	
 	
 	protected void show(){		  
+	
 	  window.show();
 	}
 	
@@ -298,11 +306,16 @@ public class AddProjectWindow {
 	public void setFormPanel(FormPanel formPanel) {
 		this.formPanel = formPanel;
 	}
+	
+	public Set<ProjectMilestoneDTO> getMilestoneDTOs(){
+		return mileStones.getMileStoneDTOs();
+	}
+	
+	
 
 	class ButtonSelectHandler implements SelectHandler{
 
 		private AddProjectWindow sourceWindow;
-		
 		public ButtonSelectHandler(AddProjectWindow addProjectWindow){
 			this.sourceWindow=addProjectWindow;
 		}
@@ -315,8 +328,17 @@ public class AddProjectWindow {
 	  	  TextButton btn = (TextButton)event.getSource();
 	  	  if(btn.getText().equals(AddProjectWindow.CANCEL_BUTTON_TEXT))
 	  		sourceWindow.getProjectPresenter().cancelButtonClicked(sourceWindow);
-	  	  else if(btn.getText().equals(AddProjectWindow.SAVE_BUTTON_TEXT))
-	  		sourceWindow.getProjectPresenter().saveButtonClicked(sourceWindow);			
+	  	  else if(btn.getText().equals(AddProjectWindow.SAVE_BUTTON_TEXT)){
+		        for(ProjectMilestoneDTO milestone:sourceWindow.getMilestoneDTOs())
+		        {
+		        	if(  milestone.getMilestoneDate()==null)
+		        	{
+		        		new Alert("Warning!", "Please Ensure you have added date for all existing milestones before saving!");
+			        	return;
+		        	}
+		        }
+	  		  sourceWindow.getProjectPresenter().saveButtonClicked(sourceWindow);
+	  	  }
 		}
 
 	}

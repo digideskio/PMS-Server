@@ -14,7 +14,9 @@ import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.NumberField;
+import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.form.TextArea;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
@@ -86,7 +88,9 @@ public class ProjectPresenter {
 		
 		saveNewProject(createProjectDTO(sourceWindow));
 	}
+	
 	public void cancelButtonClicked(AddProjectWindow sourceWindow) {
+		log.info("Cancel Button Clicked");
 			sourceWindow.getWindow().hide();
 		
 	}
@@ -99,6 +103,13 @@ public class ProjectPresenter {
 		projectDTO.setName(((TextField)sourceWindow.getProjectName()).getText());
 		projectDTO.setDescription(((TextArea)sourceWindow.getDescription()).getText());
 		projectDTO.setManDaysLeft(Double.parseDouble(((NumberField)sourceWindow.getMandaysRequired()).getText()));
+		projectDTO.setCompany(((TextField)sourceWindow.getCompany()).getText());
+		projectDTO.setBillingAddr(((TextArea)sourceWindow.getBillingAddress()).getText());
+		projectDTO.setContactPerson(((TextField)sourceWindow.getContactPerson()).getText());
+		projectDTO.setStartDate(((DateField)sourceWindow.getStartDate()).getValue());
+		projectDTO.setEndDate(((DateField)sourceWindow.getEndDate()).getValue());
+		projectDTO.setStatus(((SimpleComboBox)sourceWindow.getStatus()).getText());
+		projectDTO.setProjectMilestone(sourceWindow.getMilestoneDTOs());
 		return projectDTO;
 	}
 
@@ -116,11 +127,12 @@ public class ProjectPresenter {
 
 			public void onSuccess(String result) {
 				messageBox.hide();
+				log.info("#!#!#!#!#!Project Save Return Success., ReLoading all projects");
 				loadProjectsFromDB(false);
 			}
 
 		};
-			
+		log.info("#!#!#!#!#!#!Saving Project:" + projectDTO.toString());	
 		ProjectRpcHelper.projectService.addProject(projectDTO, callback);
 		messageBox.auto();
 		messageBox.show();

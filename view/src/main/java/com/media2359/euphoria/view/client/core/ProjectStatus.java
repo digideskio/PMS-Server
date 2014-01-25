@@ -22,7 +22,7 @@ import java.util.List;
  **/
 
 public enum ProjectStatus{
-	  ACTIVE("Active"), COMPLETE("Commplete");
+	  ACTIVE("Active"), COMPLETE("Complete");
 	  
 	  private static List<ProjectStatus> statusList;
 	  private String text;

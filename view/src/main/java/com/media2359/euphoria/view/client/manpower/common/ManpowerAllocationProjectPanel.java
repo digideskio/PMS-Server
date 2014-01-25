@@ -163,6 +163,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    grid.setBorders(true);
 	    grid.getView().setStripeRows(true);
 	    grid.getView().setColumnLines(true);
+//	    grid.setHeight(600);
 	    return grid;
 	}
 
@@ -274,7 +275,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	public ProjectAllocationDTO getAllocationData() {
 		grid.getStore().commitChanges();
 		projectAllocationDTO.setWeeklyResourcePlanList(grid.getStore().getAll());
-		log.info("!#!#!#!# Returnning Project Allocation Data: "+projectAllocationDTO.toString());
+		log.info("!#!#!#!# Returning Project Allocation Data: "+projectAllocationDTO.toString());
 		projectDTO.setManDaysLeft(manDaysLeftForAllocation); // to be  changed to setManDaysLeftForAllocation
 		return projectAllocationDTO;
 	}

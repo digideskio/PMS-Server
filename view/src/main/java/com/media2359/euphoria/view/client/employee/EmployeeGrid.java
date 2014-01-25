@@ -115,7 +115,9 @@ public class EmployeeGrid extends Composite {
 		gridView.setAutoFill(true);
 
 		grid = new Grid<EmployeeDTO>(listStore, columnModel, gridView);
-		
+		grid.setWidth("100%");
+		grid.getView().setStripeRows(true);
+//		grid.setHeight(600);
 		grid.addCellClickHandler(new GridCellClickHandler());
 		initWidget(grid);
 		addFilters();
