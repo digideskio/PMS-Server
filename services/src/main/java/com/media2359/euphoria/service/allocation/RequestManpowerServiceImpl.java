@@ -705,12 +705,16 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		String email = auth.getName(); // get email of logged in user
 
 		if ((employees != null) && (!employees.isEmpty())) {
-			List<String> emailList = new ArrayList<String>();
+			//List<String> emailList = new ArrayList<String>();
+			String[] emailArray = new String[employees.size()+1];
+			int i =0;
 			for (Employee employee : employees) {
-				emailList.add(employee.getCompanyEmail());
+				//emailList.add(employee.getCompanyEmail());
+				emailArray[i++]=employee.getCompanyEmail();
 			}
 			if(email != null) { //Add email of originator also
-				emailList.add(email);
+				//emailList.add(email);
+				emailArray[i]=email;
 			}
 			StringBuffer bodyBuffer = new StringBuffer();
 			bodyBuffer.append("A new project allocation " + project.getName()
@@ -719,8 +723,12 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					.append("Please login to http://euphoria.herokuapp.com to review the allocation.\r\n");
 			bodyBuffer.append("\r\n\r\nRegards,");
 			bodyBuffer.append("Euphoria Project Administrator");
-
+			
+			
+			/*
 			emailService.sendEmail((String [])emailList.toArray(), "New allocation request for "
+					+ project.getName(), bodyBuffer.toString());*/
+			emailService.sendEmail(emailArray, "New allocation request for "
 					+ project.getName(), bodyBuffer.toString());
 		}
 	}
