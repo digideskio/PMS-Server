@@ -105,6 +105,7 @@ public class EmployeeDetailsPresenter {
 	
 	protected void editButtonClicked(EmployeeDetailsWindow sourceWindow) {
 		sourceWindow.getWindow().hide();
+		empPresenter.setEmployeeKeyInEdit(sourceWindow.getEmployeeDTO());
 		new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,sourceWindow.getEmployeeDTO(),empPresenter).show();
 		
 	}
@@ -147,6 +148,12 @@ public class EmployeeDetailsPresenter {
 	
 	private EmployeeDTO createEmployeeDTO(EmployeeDetailsWindow sourceWindow){
 		EmployeeDTO employeeDTO = new EmployeeDTO();
+		if(empPresenter.getEmployeeDTOInEdit()!=  null){
+			employeeDTO.setEmployeeKey(empPresenter.getEmployeeDTOInEdit().getEmployeeKey());
+			employeeDTO.setCreatedById(empPresenter.getEmployeeDTOInEdit().getCreatedById());
+			employeeDTO.setCreateTstamp(empPresenter.getEmployeeDTOInEdit().getCreateTstamp());
+		}else
+			employeeDTO.setCreatedById("whatIsThis?");		
 		employeeDTO.setName(((TextField)sourceWindow.getName()).getText());
 		employeeDTO.setMobile(((NumberField)sourceWindow.getMobile()).getText());
 		employeeDTO.setPersonalEmail(((TextField)sourceWindow.getPersonalEmail()).getText());
@@ -158,7 +165,7 @@ public class EmployeeDetailsPresenter {
 		employeeDTO.setStartDate(((DateField)sourceWindow.getStartDate()).getValue());
 		employeeDTO.setEndDate(((DateField)sourceWindow.getEndDate()).getValue());
 		employeeDTO.setStatus(((SimpleComboBox)sourceWindow.getStatus()).getText());
-		employeeDTO.setCreatedById("whatIsThis?");
+		
 		/*StringBuffer platform = new StringBuffer();*/
 		Set<PlatformDTO> platFormDtos = new HashSet(0);
 		for(CheckBox checkBox : sourceWindow.getPlatformChecks())
@@ -176,7 +183,7 @@ public class EmployeeDetailsPresenter {
 		}
 	
 		employeeDTO.setPlatFormDtos(platFormDtos);
-//		log.info(employeeDTO.toString());
+	
 		return employeeDTO;
 	}
 

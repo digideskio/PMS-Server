@@ -155,5 +155,42 @@ public class WeeklyManpowerRequestDAOImpl extends HibernateDaoSupport implements
 		
 	}
 	
-
+	
+	@SuppressWarnings("unchecked")
+	public void approveWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst){
+		Session session = this.getSession();
+		try{
+		Transaction tx1 = session.beginTransaction();
+		
+		Query q = session.createQuery("update WeeklyManpowerRequest a set a.approvalStatus=? where a.weeklyManpowerRequestKey=?");
+		q.setString(0, wklyManpowerRqst.getApprovalStatus());
+		q.setInteger(1, wklyManpowerRqst.getWeeklyManpowerRequestKey());
+		
+		log.info("approveWeeklyManpowerRequest()->sQuery::" + q.toString());
+		q.executeUpdate();
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void rejectWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst){
+		Session session = this.getSession();
+		try{
+		Transaction tx1 = session.beginTransaction();
+		
+		Query q = session.createQuery("update WeeklyManpowerRequest a set a.approvalStatus=? where a.weeklyManpowerRequestKey=?");
+		q.setString(0, wklyManpowerRqst.getApprovalStatus());
+		q.setInteger(1, wklyManpowerRqst.getWeeklyManpowerRequestKey());
+		
+		log.info("rejectWeeklyManpowerRequest()->sQuery::" + q.toString());
+		q.executeUpdate();
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		
+	}
 }

@@ -7,7 +7,7 @@
 	xmlns:grid="urn:import:com.sencha.gxt.widget.core.client.grid"
 	xmlns:dashboard="urn:import:com.media2359.euphoria.view.client.dashboard"
 	xmlns:manpowerrqst="urn:import:com.media2359.euphoria.view.client.manpower.request"
-	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.request"
+	xmlns:manpowerappr="urn:import:com.media2359.euphoria.view.client.manpower.approval"
 	xmlns:employee="urn:import:com.media2359.euphoria.view.client.employee"
 	xmlns:project="urn:import:com.media2359.euphoria.view.client.project">
 
@@ -79,7 +79,7 @@
 
 	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
 		field="approvalConfig">
-		<ui:attributes text="Manpower Approvals    " icon="{resources.approve}" />
+		<ui:attributes text="Manpower Approvals    " icon="{resources.approval}" />
 	</ui:with>
 
 	<ui:with type="com.sencha.gxt.widget.core.client.TabItemConfig"
@@ -170,14 +170,14 @@
 						<container:child layoutData="{bannerRight}">
 							<container:HorizontalLayoutContainer>
 								<container:child>
-									<button:TextButton text="" ui:field="welcomelabel"
-										styleName="{style.header-right}" icon="{resources.gear}">
+									<button:TextButton text="" ui:field="welcomeButton"
+										styleName="{style.header-right}" icon="{resources.gear}"> <!--  
 										<button:menu>
 											<menu:Menu ui:field="buttonMenu">
 												<menu:MenuItem text="Settings" ui:field="settingsButton"/>
 												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
 											</menu:Menu>
-										</button:menu>
+										</button:menu>-->
 									</button:TextButton>
 								</container:child>
 								<!-- <container:child> <g:Hyperlink text="Logout" ui:field="logoutButton" 
@@ -199,7 +199,7 @@
 								<manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
 							</gxt:child>
 							<gxt:child config="{approvalConfig}">
-								<manpowerrqst:ManpowerRequestPanel></manpowerrqst:ManpowerRequestPanel>
+								<manpowerappr:ManpowerApprovePanel></manpowerappr:ManpowerApprovePanel>
 							</gxt:child>
 							<gxt:child config="{projectConfig}">
 								<project:ProjectSummaryPanel />

@@ -16,12 +16,36 @@ public interface Resources extends ClientBundle {
 	@Source("request.png")
 	ImageResource request();
 
-	@Source("approve.png")
-	ImageResource approve();
+	@Source("approval.png")
+	ImageResource approval();
 
 	@Source("project.png")
 	ImageResource project();
 
 	@Source("gear.png")
 	ImageResource gear();
+	
+	@Source("approvereq.png")
+	ImageResource approve();
+	
+	@Source("reject.png")
+	ImageResource reject();
+	
+	@Source("add_user.png")
+	ImageResource adduser();
+	
+	@Source("add_project.png")
+	ImageResource addproject();
+	
+	@Source("save.png")
+	ImageResource save();
+	
+	@Source("addrow.png")
+	ImageResource addrow();
+	
+	@Source("reset.png")
+	ImageResource reset();
+	
+	@Source("approval_disabled.png")
+	ImageResource disabled();
 }

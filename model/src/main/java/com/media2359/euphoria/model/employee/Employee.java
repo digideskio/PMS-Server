@@ -38,6 +38,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 /**
  * Employee
@@ -91,6 +93,9 @@ public class Employee implements java.io.Serializable{
 		this.startDate = employeeDTO.getStartDate();
 		this.endDate = employeeDTO.getEndDate();
 		this.status = employeeDTO.getStatus();
+		this.company_id=employeeDTO.getCompany_id();
+		this.createdById=employeeDTO.getCreatedById();
+		this.createTstamp = employeeDTO.getCreateTstamp();
 		this.lastUpdById = employeeDTO.getLastUpdById();
 		this.lastUpdTstamp = employeeDTO.getLastUpdTstamp();
 
@@ -171,7 +176,8 @@ public class Employee implements java.io.Serializable{
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.REFRESH)
-	@JoinTable(name="employee_platform_xref", 
+	@Fetch(FetchMode.JOIN)
+	@JoinTable(name="employee_platform_xref",
 	joinColumns = {@JoinColumn(name="employee_key", referencedColumnName="employee_key", updatable=false)},
 	inverseJoinColumns = {@JoinColumn(name="platform_key", referencedColumnName="platform_key", updatable=false)})
 	public Set<Platform> getPlatForms() {
@@ -325,16 +331,27 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setEmploymentType(getEmploymentType());
 		employeeDTO.setMobile(getMobile());
 		employeeDTO.setDesignation(getDesignation());
+		
+		employeeDTO.setStartDate(getStartDate());
+		employeeDTO.setEndDate(getEndDate());
+		employeeDTO.setAssignedOffice(getAssignedOffice());
+		employeeDTO.setMandayRate(getMandayRate());
+		employeeDTO.setStatus(getStatus());
+		employeeDTO.setCompany_id(getCompany_id());
+		
 		employeeDTO.setCreatedById(getCreatedById());
 		employeeDTO.setCreateTstamp(getCreateTstamp());
 		employeeDTO.setLastUpdById(getLastUpdById());
 		employeeDTO.setLastUpdTstamp(getLastUpdTstamp());
 		
 		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
-		for (Platform platform: platForms){
-			PlatformDTO platformDto = platform.createPlatformDTO();
-			employeeDTO.getPlatFormDtos().add(platformDto);
+		if(platForms !=null){
+			for (Platform platform: platForms){
+				PlatformDTO platformDto = platform.createPlatformDTO();
+				employeeDTO.getPlatFormDtos().add(platformDto);
+			}
 		}
+		
 		
 		return employeeDTO;
 	}

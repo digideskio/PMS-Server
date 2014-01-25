@@ -46,8 +46,9 @@ import com.sencha.gxt.widget.core.client.info.Info;
   private Logger log = Logger.getLogger("EuphoriaLogger");
   private static List<EmployeeDTO> employees;
   private final EmployeeServiceAsync employeeService = GWT.create(EmployeeService.class);
-  
-  public EmployeePresenter(EmployeeGrid employeeGrid){
+  private EmployeeDTO employeeDTOInEdit = null;
+ 
+public EmployeePresenter(EmployeeGrid employeeGrid){
 	  this.employeeGrid = employeeGrid;
 	  
   }
@@ -81,7 +82,9 @@ import com.sencha.gxt.widget.core.client.info.Info;
 			public void onSuccess(EmployeeListResponse result) {
 				messageBox.hide();
 				employees = result.getEmployees();
-
+				log.info("Employees Received Are: ");
+				for(EmployeeDTO employee:employees)
+					log.info(employee.toString());
 				if(!test)
 					populateEmployeeGrid();
 			}
@@ -94,7 +97,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
   }
   protected void addButtonClicked(SelectEvent event){
 	    Info.display("Click", ((TextButton) event.getSource()).getText() + " clicked");
-	    
+	    employeeDTOInEdit=null;
 	    new EmployeeDetailsWindow(EmployeeDetailsWindow.ADD,null,this).show();
   }
   
@@ -104,11 +107,14 @@ import com.sencha.gxt.widget.core.client.info.Info;
       Context c = event.getContext();
       int row = c.getIndex();
       EmployeeDTO p = listStore.get(row);
+      employeeDTOInEdit= p;
 	  new EmployeeDetailsWindow(EmployeeDetailsWindow.EDIT,p,this).show();
   }
   
+  
+  
   protected void deleteEmployeeDetailsButtonClicked(SelectEvent event, ListStore<EmployeeDTO> listStore){
-	  
+	  employeeDTOInEdit=null;
       Context c = event.getContext();
       int row = c.getIndex();
       final EmployeeDTO p = listStore.get(row);
@@ -164,10 +170,11 @@ import com.sencha.gxt.widget.core.client.info.Info;
   }
   
   protected void gridCellClicked(CellClickEvent event, ListStore<EmployeeDTO> listStore){
-	  
-     if(event.getCellIndex()>4)
+	  if(event.getCellIndex()>4)
     	 return;
+	  employeeDTOInEdit=null;
      EmployeeDTO p = listStore.get(event.getRowIndex());
+     log.info("Viewing Employee: "+p.toString());
 	 new EmployeeDetailsWindow(EmployeeDetailsWindow.VIEW,p, this).show();
   }
   
@@ -175,5 +182,16 @@ import com.sencha.gxt.widget.core.client.info.Info;
   public static List<EmployeeDTO> getEmployees(){
 	  return employees;
   }
-  
+ 
+  public EmployeeDTO getEmployeeDTOInEdit() {
+		return employeeDTOInEdit;
+	}
+
+
+	public void setEmployeeKeyInEdit(EmployeeDTO employeeDTOInEdit) {
+		this.employeeDTOInEdit = employeeDTOInEdit;
+	}
+
+
+	
 }

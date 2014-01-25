@@ -39,6 +39,7 @@ public class EmployeeDTO implements Serializable {
 	private Date startDate;
 	private Date endDate;
 	private String status;
+	private String company_id="Media2359";
 	private String createdById;
 	private Date createTstamp; 
 	private String lastUpdById;
@@ -200,22 +201,26 @@ public class EmployeeDTO implements Serializable {
 	public void setLastUpdTstamp(Date lastUpdTstamp) {
 		this.lastUpdTstamp = lastUpdTstamp;
 	}
+	
+	
+	public String getCompany_id() {
+		return company_id;
+	}
+	public void setCompany_id(String company_id) {
+		this.company_id = company_id;
+	}
 	@Override
 	public String toString() {
-		String str =  "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
+		return "EmployeeDTO [employeeKey=" + employeeKey + ", name=" + name
 				+ ", mobile=" + mobile + ", personalEmail=" + personalEmail
 				+ ", companyEmail=" + companyEmail + ", designation="
-				+ designation + ", employmentType=" + employmentType + ", mandayRate="
+				+ designation + ", platFormDtos=" + platFormDtos
+				+ ", employmentType=" + employmentType + ", mandayRate="
 				+ mandayRate + ", assignedOffice=" + assignedOffice
 				+ ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", status=" + status + ", createdById=" + createdById
-				+ ", createTstamp=" + createTstamp + ", lastUpdById="
-				+ lastUpdById + ", lastUpdTstamp=" + lastUpdTstamp + "]";
-		
-		for(PlatformDTO platformDTO: platFormDtos)
-			str = str+ "\n PlatfromDTO: "+ platformDTO.toString();
-		
-		return str;
+				+ ", status=" + status + ", company_id=" + company_id
+				+ ", createdById=" + createdById + ", createTstamp="
+				+ createTstamp + ", lastUpdById=" + lastUpdById
+				+ ", lastUpdTstamp=" + lastUpdTstamp + "]";
 	}
-	
 }
