@@ -93,9 +93,9 @@ public class ProjectGrid extends Composite {
 		gridView.setStripeRows(true);
 
 		grid = new Grid<ProjectDTO>(listStore, columnModel, gridView);
-		grid.setWidth("100%");
+//		grid.setWidth("100%");
 		grid.getView().setStripeRows(true);
-//		grid.setHeight(600);
+		grid.setHeight(600);
 		initWidget(grid);
 		
 		addFilters();
