@@ -58,7 +58,7 @@ public class Employee implements java.io.Serializable{
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private Set<Platform> platForms;
+	private Set<Platform> platForms = new HashSet<Platform> (0);
 	private String employmentType;
 	private String mandayRate;
 	private String assignedOffice;

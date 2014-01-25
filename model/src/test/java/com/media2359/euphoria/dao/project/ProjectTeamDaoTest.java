@@ -29,6 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.dao.employee.EmployeeDAO;
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
 import com.media2359.euphoria.model.project.ProjectTeamEmployeeXref;
@@ -211,6 +212,23 @@ public class ProjectTeamDaoTest {
 		Assert.assertTrue("TEST_UPD123".equalsIgnoreCase(projectTeam2.getProjectTeamName()));
 		log.info("####test4UpdateProjectTeam end...");
 	}
+	
+	@Test
+	public void test5getProjectTeamMemberByPlatform() {
+		log.info("####test5getProjectTeamMemberByPlatform start...");
+		Project project = new Project();
+		project.setId(Integer.valueOf(1));
 		
+		Platform platform = new Platform();
+		platform.setPlatformId("Andriod");
+		
+		
+		List<Employee> employees = projectTeamDao.getProjectTeamMemberByPlatform(project, platform);
+		
+		log.info("####Number of Employees: "+employees.size());
+		log.info("####Employees (test5getProjectTeamMemberByPlatform): " + employees);
+	
+		log.info("####test5getProjectTeamMemberByPlatform end...");
+	}
 }
 

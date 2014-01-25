@@ -11,6 +11,7 @@ package com.media2359.euphoria.view.dto.employee;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class EmployeeDTO implements Serializable {
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private Set<PlatformDTO> platFormDtos;
+	private Set<PlatformDTO> platFormDtos = new HashSet<PlatformDTO>(0);
 	private String employmentType;
 	private String mandayRate;
 	private String assignedOffice;

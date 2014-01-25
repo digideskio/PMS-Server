@@ -9,9 +9,12 @@
  ***************************************************************************/
 package com.media2359.euphoria.dao.project;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -23,14 +26,20 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.media2359.euphoria.dao.employee.EmployeeDAO;
+import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.model.project.ProjectTeamEmployeeXref;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 
 @Repository
 //@Transactional(readOnly = true)
 public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTeamDAO {
 	private final Logger log = Logger.getLogger(ProjectTeamDAOImpl.class);
+	@Autowired
+	private EmployeeDAO employeeDao;
 	
 	@Autowired
 	public ProjectTeamDAOImpl(SessionFactory sessionFactory) {
@@ -158,4 +167,51 @@ public class ProjectTeamDAOImpl extends HibernateDaoSupport implements ProjectTe
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Employee> getProjectTeamMemberByPlatform(Project project, Platform platform){
+		Session session = this.getSession();
+		List<ProjectTeam> projectTeams = null;
+		ProjectTeam projectTeam = null;
+		List<Employee> employees = new LinkedList<Employee>();
+		
+		try{
+		Transaction tx1 = session.beginTransaction();
+
+
+		/*projectTeams = this.getHibernateTemplate().find("from ProjectTeam a where a.project = ?", new Object[]{project});
+		
+		projectTeam = projectTeams.size()>0?projectTeams.get(0):null;*/
+		
+		projectTeam = this.getProjectTeam(project);
+		
+		if (projectTeam !=null){
+			
+			Set<ProjectTeamEmployeeXref> projectTeamEmployeeXrefs = new HashSet<ProjectTeamEmployeeXref>(0);
+			if(projectTeam.getProjectManagers() != null){
+				projectTeamEmployeeXrefs.addAll(projectTeam.getProjectManagers());
+			}
+			
+			if(projectTeam.getTeamMembers() !=null){
+				projectTeamEmployeeXrefs.addAll(projectTeam.getTeamMembers());
+			}
+			log.info("####projectTeamEmployeeXrefs.size(): " + projectTeamEmployeeXrefs.size());
+			
+			for (ProjectTeamEmployeeXref projectTeamEmployeeXref: projectTeamEmployeeXrefs){
+				log.info("####projectTeamEmployeeXref: " + projectTeamEmployeeXref.getEmployee());
+				Employee employee = projectTeamEmployeeXref.getEmployee();
+				for (Platform platform1 : employee.getPlatForms()){
+					if (platform.getPlatformId() != null && platform1.getPlatformId() != null){
+						if (platform.getPlatformId().equalsIgnoreCase(platform1.getPlatformId())){
+							employees.add(employee);
+						}
+					}
+				}
+			}
+		}
+		tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		return employees;
+	}
 }
