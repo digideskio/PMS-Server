@@ -29,14 +29,17 @@
 		
 		.header-left {
 			background: url(/static/images/2359medialogo.png) no-repeat;
-			display: inline-block;
 			padding-left: 10px;
-			width: 80%
+			width: 50%
+		}
+		
+		.header-center {
+			padding-top: 20px;
 		}
 		
 		.header-right {
 			font-size: 13px;
-			padding: 10%;
+			padding-top: 30px;
 			cursor: pointer;
 			z-index: 500;
 		}
@@ -147,13 +150,17 @@
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerLeft">
-		<ui:attributes width="0.70" height="1.0" margins="{topMargins}" />
+		<ui:attributes width="0.10" height="1.0" margins="{topMargins}" />
 	</ui:with>
-
+	<ui:with
+		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
+		field="bannerCenter">
+		<ui:attributes width="0.60" height="1.0" margins="{topMargins}" />
+	</ui:with>
 	<ui:with
 		type="com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData"
 		field="bannerRight">
-		<ui:attributes width="0.30" height="1.0" margins="{centerMargins}" />
+		<ui:attributes width="0.30" height="1.0" margins="{topMargins}" />
 	</ui:with>
 
 	<container:Viewport>
@@ -167,18 +174,23 @@
 							<container:SimpleContainer styleName="{style.header-left}">
 							</container:SimpleContainer>
 						</container:child>
+						<container:child layoutData="{bannerCenter}">
+							<container:SimpleContainer styleName="{style.header-center}">
+								<g:HTML><span style="font-family:arial,helvetica,sans-serif;font-size:25px;color:white">e<span style="color:#ff0000;font-size:30px;font-weight:bold">U</span>phoria</span></g:HTML>
+							</container:SimpleContainer>
+						</container:child>						
 						<container:child layoutData="{bannerRight}">
-							<container:HorizontalLayoutContainer>
+							<container:HorizontalLayoutContainer 
+										styleName="{style.header-right}" >
 								<container:child>
-									<button:TextButton text="" ui:field="welcomeButton"
-										styleName="{style.header-right}" icon="{resources.gear}"> <!--  
+									<button:SplitButton text="" ui:field="welcomeButton" icon="{resources.gear}"> 
 										<button:menu>
 											<menu:Menu ui:field="buttonMenu">
 												<menu:MenuItem text="Settings" ui:field="settingsButton"/>
 												<menu:MenuItem text="Logout" ui:field="logoutButton"/>
 											</menu:Menu>
-										</button:menu>-->
-									</button:TextButton>
+										</button:menu>
+									</button:SplitButton>
 								</container:child>
 								<!-- <container:child> <g:Hyperlink text="Logout" ui:field="logoutButton" 
 									styleName="{style.logout}"></g:Hyperlink> </container:child> -->
