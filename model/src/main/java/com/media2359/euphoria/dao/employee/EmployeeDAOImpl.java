@@ -168,7 +168,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 					new Object[]{platform});
 			
 			
-			System.out.println("employees by platform received from the database is "+employees);
+			System.out.println("employees.size() received from the database is "+employees.size());
 			tx1.commit();
 		}catch(Exception e){
 			e.printStackTrace();
