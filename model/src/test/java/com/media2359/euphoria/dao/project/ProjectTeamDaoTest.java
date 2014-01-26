@@ -47,6 +47,9 @@ public class ProjectTeamDaoTest {
 	@Autowired
 	private EmployeeDAO employeeDao;
 	
+	@Autowired
+	private PlatformDAO platformDao;
+	
 	private Logger log = Logger.getLogger(ProjectTeamDaoTest.class);
 	
 	@Test
@@ -107,6 +110,9 @@ public class ProjectTeamDaoTest {
 		Project project = new Project();
 		project.setId(Integer.valueOf(2));
 		ProjectTeam projectTeam = projectTeamDao.getProjectTeam(project);
+		log.info("####Team Member: " + projectTeam.getTeamMembers());
+		log.info("####Project Manager: " + projectTeam.getProjectManagers());
+		
 		Assert.assertNotNull(projectTeam);
 		log.info("####test3GetProjectTeam end...");
 	}
@@ -153,44 +159,66 @@ public class ProjectTeamDaoTest {
 		Assert.assertNull(project2);
 		
 	}*/
-	/*@Test
-	public void test3AddProjectTeam() {
+	@Test
+	public void test6AddProjectTeam() {
 		ProjectTeam projectTeam1 = new ProjectTeam();
 		ProjectTeam projectTeam2;
 		Project project = new Project();
 		Employee employee = new Employee();
 		Employee manager = new Employee();
-		Set<Employee> employees = new HashSet<Employee>();
-		Set<Employee> managers = new HashSet<Employee>();
+		Set<ProjectTeamEmployeeXref> employees = new HashSet<ProjectTeamEmployeeXref>(0);
+		Set<ProjectTeamEmployeeXref> managers = new HashSet<ProjectTeamEmployeeXref>(0);
+		ProjectTeamEmployeeXref projectTeamEmployeeXrefEmployee = new ProjectTeamEmployeeXref();
+		ProjectTeamEmployeeXref projectTeamEmployeeXrefPManager = new ProjectTeamEmployeeXref();
+		Platform platform1 = null;
+		Platform platform2 = null;
 		
-		log.info("####test3AddProjectTeam Starts...");
+		
+		log.info("####test6AddProjectTeam Starts...");
 		
 		project = projectDao.getProject(Integer.valueOf(2));
 		employee = employeeDao.getEmployee(Integer.valueOf(1));
 		manager = employeeDao.getEmployee(Integer.valueOf(2));
+		platform1 = platformDao.getPlatform(Integer.valueOf(2));
+		platform2 = platformDao.getPlatform(Integer.valueOf(3));
 		
-		employees.add(employee);
-		managers.add(manager);
+		//Set for project team member
+		projectTeamEmployeeXrefEmployee.setEmployee(employee);
+		projectTeamEmployeeXrefEmployee.setProjectMgrFlg("N");
+		projectTeamEmployeeXrefEmployee.setPlatform(platform1);
 		
-		projectTeam1.setProjectTeamName("Test Add Project Team");
+		projectTeamEmployeeXrefPManager.setEmployee(manager);
+		projectTeamEmployeeXrefPManager.setProjectMgrFlg("Y");
+		projectTeamEmployeeXrefPManager.setPlatform(platform2);
+		
+		employees.add(projectTeamEmployeeXrefEmployee);
+		managers.add(projectTeamEmployeeXrefPManager);
+		
+		
+		projectTeam1.setProjectTeamName("Test Add Project Team2");
 		projectTeam1.setProjectManagers(managers);
 		projectTeam1.setTeamMembers(employees);
 		projectTeam1.setCreatedBy("TY");
 		projectTeam1.setCreatedTstmp(new Date());
 		projectTeam1.setProject(project);
 		
+		projectTeamEmployeeXrefEmployee.setProjectTeam(projectTeam1);
+		projectTeamEmployeeXrefPManager.setProjectTeam(projectTeam1);
+		
 		Integer maxKey1 = projectTeamDao.getMaxKey();
-		log.info("####test3AddProjectTeam->MaxKey1::" + maxKey1.toString());
+		log.info("####test6AddProjectTeam->MaxKey1::" + maxKey1.toString());
 		
 		projectTeamDao.addProjectTeam(projectTeam1);
 		
 		Integer maxKey2 = projectTeamDao.getMaxKey();
-		log.info("####test3AddProjectTeam->MaxKey2::" + maxKey1.toString());
+		log.info("####test6AddProjectTeam->MaxKey2::" + maxKey1.toString());
 		
-	
 		Assert.assertTrue((maxKey1.intValue()+1)==(maxKey2.intValue()));
 		
-	}*/
+		//projectTeamDao.deleteProjectTeam(maxKey2);
+		log.info("####test6AddProjectTeam End...");
+		
+	}
 	
 	@Test
 	public void test4UpdateProjectTeam() {

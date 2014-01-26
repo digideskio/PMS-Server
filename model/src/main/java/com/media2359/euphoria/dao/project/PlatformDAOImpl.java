@@ -86,4 +86,24 @@ public class PlatformDAOImpl extends HibernateDaoSupport implements PlatformDAO 
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Platform getPlatform(Integer platformKey) {
+		Session session = this.getSession();
+		List<Platform> platforms = null;
+		Platform platform = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			platforms= this.getHibernateTemplate().find("from Platform a where a.platformKey = ? "
+					, new Object[]{platformKey});
+			tx1.commit();
+			
+			for (Platform tmpPlatform: platforms){
+				platform = tmpPlatform;
+			}
+		}catch(Exception e){
+			
+		}finally{session.close();}
+		return platform;
+	}
+	
 }

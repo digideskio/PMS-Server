@@ -55,6 +55,10 @@ public class ProjectTeamEmployeeXref implements java.io.Serializable {
 	@Column(name = "project_mgr_flg")
 	private String projectMgrFlg;
 	
+	@OneToOne
+	@JoinColumn (name="platform_key", updatable = false)
+	private Platform platform;
+	
 	public ProjectTeamEmployeeXref() {
 		// TODO Auto-generated constructor stub
 	}
@@ -77,6 +81,20 @@ public class ProjectTeamEmployeeXref implements java.io.Serializable {
 		this.projectMgrFlg = projectMgrFlg;
 	}
 	
+	
+	
+	public Platform getPlatform() {
+		return platform;
+	}
+
+
+
+	public void setPlatform(Platform platform) {
+		this.platform = platform;
+	}
+
+
+
 	@Transient
 	public ProjectTeam getProjectTeam(){
 		return getPk().getProjectTeam();
@@ -95,7 +113,6 @@ public class ProjectTeamEmployeeXref implements java.io.Serializable {
 		getPk().setEmployee(employee);
 	}
 
-
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -111,5 +128,14 @@ public class ProjectTeamEmployeeXref implements java.io.Serializable {
 		return (getPk() != null ? getPk().hashCode() : 0);
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "ProjectTeamEmployeeXref [pk=" + pk + ", projectMgrFlg="
+				+ projectMgrFlg + ", platform=" + platform + "]";
+	}
+
+	
 	
 }
