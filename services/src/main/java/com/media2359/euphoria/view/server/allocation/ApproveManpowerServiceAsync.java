@@ -29,7 +29,7 @@ public interface ApproveManpowerServiceAsync {
 		// Function to approve the manpower request
 	
 		public void approveWeeklyRequest(ProjectAllocationDTO projectAllocationDTO, 
-				String weekStart,AsyncCallback<String> callback);
+				AsyncCallback<String> callback);
 		
 
 }
