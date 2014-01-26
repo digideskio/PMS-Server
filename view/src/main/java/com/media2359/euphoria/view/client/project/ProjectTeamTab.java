@@ -20,6 +20,7 @@ import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.media2359.euphoria.view.client.common.NotificationBox;
 import com.media2359.euphoria.view.client.core.AddCell;
 import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.client.core.DeleteCell;
@@ -34,6 +35,8 @@ import com.media2359.euphoria.view.dto.manpower.WeeklyResourcePlan;
 import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefIdDTO;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -171,7 +174,7 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
   	  	
   	  	projectTeamPanel = new VerticalLayoutContainer();	  
   	  	projectTeamPanel.add(grid);
-  	  	addEmptyRow();
+  	  	populateInitialData();
   	  
 //        GridEditing<ProjectMilestoneDTO> editing = new GridInlineEditing<ProjectMilestoneDTO>(grid);
 //        TextField textField = new TextField();
@@ -343,7 +346,7 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
 		        public void onSelection(SelectionEvent<ProjectTeamRole> event) {
 		          CellSelectionEvent<ProjectTeamRole> sel = (CellSelectionEvent<ProjectTeamRole>) event;
 		          ProjectTeamItem p = teamListStore.get(sel.getContext().getIndex());
-		          p.setRole(event.getSelectedItem());
+		          p.setStringRole(event.getSelectedItem().getProjectTeamRoles().toString());
 		        }
 		      });
 		 roleCombo.setTriggerAction(TriggerAction.ALL);
@@ -406,24 +409,7 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
 
 	   final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 				"Progress", "Loading data. Please wait...");
-		final AsyncCallback<List<EmployeeDTO>> callback = new AsyncCallback<List<EmployeeDTO>>() {
-
-			public void onFailure(Throwable caught) {
-				messageBox.hide();
-				AlertMessageBox alert = new AlertMessageBox("Error",
-						caught.getMessage());
-			
-				caught.printStackTrace();
-				alert.show();
-			}
-
-			public void onSuccess(List<EmployeeDTO> result) {
-				messageBox.hide();
-				teamMemberCombo.getStore().replaceAll(result);
-				log.info("#!#!#!#!#!# EmployeeListReturned is "+result);
-			}
-		};
-//		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>>() {
+//		final AsyncCallback<List<EmployeeDTO>> callback = new AsyncCallback<List<EmployeeDTO>>() {
 //
 //			public void onFailure(Throwable caught) {
 //				messageBox.hide();
@@ -434,25 +420,13 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
 //				alert.show();
 //			}
 //
-//			public void onSuccess(EmployeeListResponse result) {
+//			public void onSuccess(List<EmployeeDTO> result) {
 //				messageBox.hide();
-//				teamMemberCombo.getStore().replaceAll(result.getEmployees());
-//				log.info("#!#!#!#!#!# EmployeeListReturned is "+result.getEmployees());
+//				teamMemberCombo.getStore().replaceAll(result);
+//				log.info("#!#!#!#!#!# EmployeeListReturned is "+result);
 //			}
 //		};
-		log.info("#!#!#!#!#!# Requesting Employees with: "+platformDTO);
-	    employeeService.getEmployeesByPlatform(platformDTO, callback);
-//		employeeService.getAllEmployees(new EmployeeListRequest(), callback);
-	    messageBox.auto();
-		messageBox.show();
-
-   }
-   
-   private void populateInitialData(){
-	  
-	   final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
-				"Progress", "Loading data. Please wait...");
-		final AsyncCallback<List<ProjectTeamDTO>> callback = new AsyncCallback<List<ProjectTeamDTO>>() {
+		final AsyncCallback<EmployeeListResponse> callback = new AsyncCallback<EmployeeListResponse>() {
 
 			public void onFailure(Throwable caught) {
 				messageBox.hide();
@@ -463,19 +437,110 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
 				alert.show();
 			}
 
-			public void onSuccess(List<ProjectTeamDTO> result) {
+			public void onSuccess(EmployeeListResponse result) {
 				messageBox.hide();
-				if(result==null || result.size()<1){
+				teamMemberCombo.getStore().replaceAll(result.getEmployees());
+				log.info("#!#!#!#!#!# EmployeeListReturned is "+result.getEmployees());
+			}
+		};
+		log.info("#!#!#!#!#!# Requesting Employees with: "+platformDTO);
+//	    employeeService.getEmployeesByPlatform(platformDTO, callback);
+		employeeService.getAllEmployees(new EmployeeListRequest(), callback);
+	    messageBox.auto();
+		messageBox.show();
+
+   }
+   
+   public void saveData(){
+	   final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Saving data. Please wait...");
+	  
+	   final AsyncCallback<String> callback = new AsyncCallback<String>() {
+
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+			
+				caught.printStackTrace();
+				NotificationBox.info("Error", caught.getMessage());
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				new Alert("Success", "ProjectTeam saved successfully");
+			}
+		};
+		
+		
+		teamListStore.commitChanges();
+		Set<ProjectTeamEmployeeXrefDTO> teamEmployees = new HashSet<ProjectTeamEmployeeXrefDTO>();
+		for(ProjectTeamItem teamItem : teamListStore.getAll() ){
+			if(teamItem.getPlatformDto() == null || teamItem.getRole() == null || teamItem.getProjectTeamMember() == null){
+				new Alert("Error", "Please Fill in all fields");
+				return;
+			}
+			ProjectTeamEmployeeXrefDTO teamEmployee = new ProjectTeamEmployeeXrefDTO();
+			teamEmployee.setProjectRole(teamItem.getRole().getProjectTeamRoles().toString());
+			teamEmployee.setPlatformDto(teamItem.getPlatformDto());
+			ProjectTeamEmployeeXrefIdDTO dtoItem = new ProjectTeamEmployeeXrefIdDTO();
+			dtoItem.setEmployeeDto(teamItem.getProjectTeamMember());
+			teamEmployee.setPk(dtoItem);
+			
+			teamEmployees.add(teamEmployee);
+		}
+		ProjectTeamDTO projectTeamDTO = new ProjectTeamDTO();
+		projectTeamDTO.setProjectDto(projectDTO);
+		projectTeamDTO.setTeamMembers(teamEmployees);
+		projectTeamService.submitProjectTeam(projectTeamDTO, callback);
+		
+		messageBox.auto();
+		messageBox.show();
+   }
+   
+   private void populateInitialData(){
+	   final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Loading data. Please wait...");
+		final AsyncCallback<ProjectTeamDTO> callback = new AsyncCallback<ProjectTeamDTO>() {
+
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+
+				addEmptyRow();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+			
+				caught.printStackTrace();
+				alert.show();
+				
+			}
+
+			public void onSuccess(ProjectTeamDTO result) {
+				messageBox.hide();
+				if(result==null ||result.getTeamMembers()==null||result.getTeamMembers().size()<1){
 					log.info("Empty Project Team Received. Hence adding empty row");
 					addEmptyRow();
 					return;
 				}
-//				for()
-				log.info("#!#!#!#!#!# EmployeeListReturned is "+result);
+				Set<ProjectTeamEmployeeXrefDTO> teamEmployees =  result.getTeamMembers();
+				List<ProjectTeamItem> projectTeamItems = new ArrayList<ProjectTeamItem>();
+				for(ProjectTeamEmployeeXrefDTO teamEmployee:teamEmployees){
+					
+					ProjectTeamItem projectTeamItem = new ProjectTeamItem();
+					projectTeamItem.setPlatformDto(teamEmployee.getPlatformDto());
+					projectTeamItem.setProjectTeamKey(teamEmployee.getPk().getEmployeeDto().getEmployeeKey());
+					projectTeamItem.setStringRole(teamEmployee.getProjectRole());
+					projectTeamItem.setProjectTeamMember(teamEmployee.getPk().getEmployeeDto());
+					projectTeamItems.add(projectTeamItem);
+				}
+				teamListStore.replaceAll(projectTeamItems);
+				log.info("#!#!#!#!#!# EmployeeListReturned is "+projectTeamItems);
 			}
 		};
 		
-//		projectTeamService.getProjectTeam(projectDTO, callback);
+		log.info("#!#!#!#! Loading Project Teeam for" +projectDTO );
+		projectTeamService.getProjectTeam(projectDTO, callback);
+		
+		messageBox.auto();
+		messageBox.show();   
    }
    public VerticalLayoutContainer getProjectTeamPanel() {
 		return projectTeamPanel;

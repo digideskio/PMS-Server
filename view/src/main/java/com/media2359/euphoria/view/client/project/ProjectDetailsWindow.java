@@ -163,7 +163,8 @@ public class ProjectDetailsWindow {
 	  	  else if(btn.getText().equals(ProjectDetailsWindow.SAVE_BUTTON_TEXT)){
 		      if(sourceWindow.getTabbedPanel().getActiveWidget().equals(projectDetailsTab.getFormPanel())){
 		    	  sourceWindow.getProjectPresenter().modifyProject(projectDetailsTab.getProjectDTO());
-		      }
+		      }else
+		    	  sourceWindow.projectTeamTab.saveData();
 	  	  }
 		}
 
