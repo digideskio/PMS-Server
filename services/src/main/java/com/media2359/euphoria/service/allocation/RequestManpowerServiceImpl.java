@@ -1,6 +1,7 @@
 package com.media2359.euphoria.service.allocation;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -252,7 +253,9 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		WeeklyManpowerRequest weeklyManpowerRequest = null;
 
 		try {
+			
 			weeklyManpowerRequest = new WeeklyManpowerRequest();
+			Date startofWeek = projectAllocationDto.getStartOfWeek();
 
 			Project project = new Project(projectAllocationDto.getProjectDTO());
 			weeklyManpowerRequest.setProject(project);
@@ -260,7 +263,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					.getStartOfWeek());
 
 			// Adding 7 days to the start date to form the end date
-			Date startofWeek = projectAllocationDto.getStartOfWeek();
+			
 			GregorianCalendar calendar = new GregorianCalendar();
 			calendar.setTime(startofWeek);
 			calendar.add(Calendar.DATE, 6);
@@ -699,6 +702,11 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 	private Boolean isExceeded(ProjectDTO project) {
 		return false;
 	}
+	
+	
+	/**
+	 * 
+	 */
 
 	/**
 	 * Method to support email notification

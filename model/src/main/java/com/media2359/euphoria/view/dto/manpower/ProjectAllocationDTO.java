@@ -1,6 +1,7 @@
 package com.media2359.euphoria.view.dto.manpower;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,19 @@ public class ProjectAllocationDTO implements Serializable{
 		this.projectDTO = projectDTO;
 	}
 	public Date getStartOfWeek() {
-		return startOfWeek;
+		
+		Date formattedStartOfWeek=startOfWeek;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String strStartDate = simpleDateFormat.format(startOfWeek);
+		System.out.println("Date is "+strStartDate);
+		try{
+			formattedStartOfWeek = simpleDateFormat.parse(strStartDate);
+			System.out.println("New date is "+formattedStartOfWeek);
+		}catch(Exception exp){
+			
+		}
+		return formattedStartOfWeek;
+		
 	}
 	public void setStartOfWeek(Date startOfWeek) {
 		this.startOfWeek = startOfWeek;

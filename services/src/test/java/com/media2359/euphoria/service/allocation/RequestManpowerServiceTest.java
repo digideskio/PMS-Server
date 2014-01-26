@@ -49,9 +49,10 @@ public class RequestManpowerServiceTest {
 	
 	@Before
 	public void setUp(){
+		
 		projectAllocationDTO = new ProjectAllocationDTO();
 		//Integer projectId = projectService.getMaxKey();
-		Integer projectId =1;
+		Integer projectId =2;
 		projectDTO = projectService.getProjectDetails(projectId);
 		
 		projectAllocationDTO.setProjectDTO(projectDTO);
@@ -60,7 +61,7 @@ public class RequestManpowerServiceTest {
 		
 		try{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyy");
-			startOfWeek = simpleDateFormat.parse("27-01-2014");
+			startOfWeek = simpleDateFormat.parse("03-02-2014");
 			
 			System.out.println("+++START DATE++++ "+startOfWeek);
 			projectAllocationDTO.setStartOfWeek(startOfWeek);
@@ -149,6 +150,25 @@ public class RequestManpowerServiceTest {
 		Assert.notNull(projectAllDto);
 		
 	
+	}
+	
+	@Test
+	public void test3TestDate(){
+		
+		Date startDate = new Date();
+		System.out.println("Date is "+startDate);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String strStartDate = simpleDateFormat.format(startDate);
+		System.out.println("Date is "+strStartDate);
+		try{
+			Date newDate = simpleDateFormat.parse(strStartDate);
+			System.out.println("New date is "+newDate);
+		}catch(Exception exp){
+			
+		}
+		
+	
+		
 	}
 
 }
