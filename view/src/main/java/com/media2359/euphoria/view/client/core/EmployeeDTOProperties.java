@@ -1,4 +1,4 @@
-package com.media2359.euphoria.view.client.manpower.common;
+package com.media2359.euphoria.view.client.core;
 
 import com.google.gwt.editor.client.Editor.Path;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;

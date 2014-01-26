@@ -49,6 +49,7 @@ public class ProjectDetailsWindow {
     private ProjectDTO projectDTO;
     private TabPanel tabbedPanel;
     private ProjectDetailsTab projectDetailsTab;
+    private ProjectTeamTab projectTeamTab;
     
 	public ProjectDetailsWindow(ProjectPresenter projectPresenter,ProjectDTO projectDTO){
 		this.projectDTO=projectDTO;
@@ -65,11 +66,11 @@ public class ProjectDetailsWindow {
 		tabbedPanel.setTabScroll(true);
 		tabbedPanel.setCloseContextMenu(true);
 	      
-		VerticalLayoutContainer p1 = new VerticalLayoutContainer();
-		VerticalLayoutContainer p2 = new VerticalLayoutContainer();
+		
 		projectDetailsTab = new ProjectDetailsTab(projectDTO);
 		tabbedPanel.add(projectDetailsTab.getFormPanel(),"Project Details");
-		tabbedPanel.add(p1,"Project Team");
+		projectTeamTab = new ProjectTeamTab(projectDTO,projectPresenter);
+		tabbedPanel.add(projectTeamTab.getProjectTeamPanel(),"Project Team");
 		
 		FramedPanel fPanel = new FramedPanel();
 		fPanel.setWidth(450);

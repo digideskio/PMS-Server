@@ -29,6 +29,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.core.Alert;
+import com.media2359.euphoria.view.client.core.EmployeeDTOProperties;
+import com.media2359.euphoria.view.client.core.PlatformDTOProperties;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
@@ -217,6 +219,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 
 		};
 		log.info("#!#!#!#! Requesting allocation for Project :"+projectDTO );	
+		log.info("#!#!#!#!#!#!#! Start Date: " + startDate);
 		requestManpowerService.requestManpower(projectDTO, startDate, callback);
 		messageBox.auto();
 		messageBox.show();

@@ -31,6 +31,7 @@ public class ProjectDetailsTab {
 	private FormPanel formPanel;
 	private MilestoneGridEditor mileStones;
 	private ProjectDTO projectDTO;
+
 	
 	public ProjectDetailsTab(ProjectDTO projectDTO){
 		this.projectDTO = projectDTO;

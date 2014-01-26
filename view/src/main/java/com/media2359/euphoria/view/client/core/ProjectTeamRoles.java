@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JobStatus
+ * 
  *
  * TODO Write something about this class
  * 
@@ -24,7 +24,8 @@ import java.util.List;
 public enum ProjectTeamRoles{
 	  PM("Project Manager"), TEAM_MEMBER("Team Member");
 	  
-	  private static List<ProjectTeamRoles> statusList;
+	  private static List<ProjectTeamRoles> rolesList;
+	  private static List<ProjectTeamRole> roleList;
 	  private String text;
 	  
 	  public static ProjectTeamRoles parseString(String object) {
@@ -47,13 +48,30 @@ public enum ProjectTeamRoles{
 		}
 		
 		public static List<ProjectTeamRoles> getAllRoles(){
-			if(statusList  != null)
-				return statusList;
+			if(rolesList  != null)
+				return rolesList;
 			
-			statusList = new ArrayList<ProjectTeamRoles>();
-			statusList.add(PM);
-			statusList.add(TEAM_MEMBER);
-			return statusList;
+			rolesList = new ArrayList<ProjectTeamRoles>();
+			rolesList.add(PM);
+			rolesList.add(TEAM_MEMBER);
+			return rolesList;
+		}
+		
+		
+		public static List<ProjectTeamRole> getAllRole(){
+			
+			if(roleList  != null)
+				return roleList;
+			 roleList = new ArrayList<ProjectTeamRole>();
+			
+			for(ProjectTeamRoles roles:getAllRoles())
+			{
+				ProjectTeamRole role = new ProjectTeamRole();
+				role.setId(1);
+				role.setProjectTeamRoles(roles);
+				roleList.add(role);
+			}
+			return roleList;
 		}
 };
 
