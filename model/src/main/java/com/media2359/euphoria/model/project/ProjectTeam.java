@@ -177,28 +177,24 @@ public class ProjectTeam implements java.io.Serializable {
 		projectTeamDto.setProjectTeamName(getProjectTeamName());
 		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
 		
-		/*Set<EmployeeDTO> teamMemberSet = new HashSet<EmployeeDTO>();
-		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
-			teamMemberSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
-		}
-		projectTeamDto.setTeamMembers(teamMemberSet);
-		
-		Set<EmployeeDTO> projectManagerSet = new HashSet<EmployeeDTO>();
-		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
-			projectManagerSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
-		}
-		projectTeamDto.setProjectManagers(projectManagerSet);*/
 		
 		Set<ProjectTeamEmployeeXrefDTO> teamMemberSet = new HashSet<ProjectTeamEmployeeXrefDTO>();
-		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
-			teamMemberSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+		if(getTeamMembers()!=null){
+			for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
+				teamMemberSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+			}
 		}
+		
 		projectTeamDto.setTeamMembers(teamMemberSet);
 		
 		Set<ProjectTeamEmployeeXrefDTO> projectManagerSet = new HashSet<ProjectTeamEmployeeXrefDTO>();
-		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
-			projectManagerSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+		
+		if(getProjectManagers()!=null){
+			for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
+				projectManagerSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+			}
 		}
+		
 		projectTeamDto.setProjectManagers(projectManagerSet);
 		
 		

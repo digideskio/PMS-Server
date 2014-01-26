@@ -19,6 +19,7 @@ import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefDTO;
 import com.media2359.euphoria.view.server.project.ProjectTeamService;
 
 
@@ -69,47 +70,28 @@ public class ProjectTeamServiceImpl implements ProjectTeamService {
 	
 	private void prepareProjectTeam(ProjectTeamDTO projectTeamDto, ProjectTeam projectTeam) {
 		
-		ProjectTeamEmployeeXref projectTeamEmployeeXref=null;
-		
-		Project project = new Project();
-		project.setId(projectTeamDto.getProjectDto().getId());
-		project.setManDaysLeft(projectTeamDto.getProjectDto().getManDaysLeft());
-		project.setMilestoneCount(projectTeamDto.getProjectDto().getCompletedMilestoneCount());
-		project.setName(projectTeamDto.getProjectDto().getName());
-		project.setProjectManager(projectTeamDto.getProjectDto().getProjectManager());
-		project.setDescription(projectTeamDto.getProjectDto().getDescription());
-		project.setCompletedMilestoneCount(projectTeamDto.getProjectDto().getCompletedMilestoneCount());
-		projectTeam.setProject(project);
-		
-		
-		for(EmployeeDTO employeeDto : projectTeamDto.getProjectManagers()){
-		
-			Employee employee = new Employee(employeeDto);
-			 
-			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
-			projectTeamEmployeeXref.setEmployee(employee);
-			projectTeamEmployeeXref.setProjectTeam(projectTeam);
-			projectTeamEmployeeXref.setProjectMgrFlg("Y");
-			
-			projectTeam.getProjectManagers().add(projectTeamEmployeeXref);
-		}
-		
+		projectTeam.setProject(new Project(projectTeamDto.getProjectDto()));
 		projectTeam.setProjectTeamKey(projectTeamDto.getProjectTeamKey());
 		projectTeam.setProjectTeamName(projectTeamDto.getProjectTeamName());
 		
-		
-		for(EmployeeDTO employeeDto: projectTeamDto.getTeamMembers()){
-			Employee employee = new Employee(employeeDto);
-			
-			projectTeamEmployeeXref = new ProjectTeamEmployeeXref();
-			projectTeamEmployeeXref.setEmployee(employee);
-			projectTeamEmployeeXref.setProjectTeam(projectTeam);
-			projectTeamEmployeeXref.setProjectMgrFlg("N");
-			
-			projectTeam.getTeamMembers().add(projectTeamEmployeeXref);
-			
+		Set<ProjectTeamEmployeeXref> projectManagerSet = new HashSet<ProjectTeamEmployeeXref>(); 
+	 	
+		if(projectTeamDto.getProjectManagers()!=null){
+			for(ProjectTeamEmployeeXrefDTO employeeXrefDTO : projectTeamDto.getProjectManagers()){
+				projectManagerSet.add(new ProjectTeamEmployeeXref(employeeXrefDTO));
+			}
 		}
-		projectTeam.setCreatedBy(projectTeamDto.getCreatedBy());
+		projectTeam.setProjectManagers(projectManagerSet);
+		
+		Set<ProjectTeamEmployeeXref> teamMemberSet = new HashSet<ProjectTeamEmployeeXref>();
+		if(projectTeamDto.getTeamMembers()!=null){
+			for(ProjectTeamEmployeeXrefDTO teamMemberEmpXrefDTO : projectTeamDto.getTeamMembers()){
+				projectManagerSet.add(new ProjectTeamEmployeeXref(teamMemberEmpXrefDTO));
+			}
+		}
+		
+		projectTeam.setTeamMembers(teamMemberSet);
+		projectTeam.setCreatedBy("SYSTEM");
 		projectTeam.setCreatedTstmp(new Date());
 		
 	}
