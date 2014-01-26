@@ -32,6 +32,7 @@ import org.hibernate.annotations.WhereJoinTable;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefDTO;
 
 /**
  * ProjectTeam
@@ -176,7 +177,7 @@ public class ProjectTeam implements java.io.Serializable {
 		projectTeamDto.setProjectTeamName(getProjectTeamName());
 		projectTeamDto.setProjectTeamKey(getProjectTeamKey());
 		
-		Set<EmployeeDTO> teamMemberSet = new HashSet<EmployeeDTO>();
+		/*Set<EmployeeDTO> teamMemberSet = new HashSet<EmployeeDTO>();
 		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
 			teamMemberSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
 		}
@@ -186,7 +187,21 @@ public class ProjectTeam implements java.io.Serializable {
 		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
 			projectManagerSet.add(projectTeamEmployeeXref.getPk().getEmployee().createEmployeeDTO());
 		}
+		projectTeamDto.setProjectManagers(projectManagerSet);*/
+		
+		Set<ProjectTeamEmployeeXrefDTO> teamMemberSet = new HashSet<ProjectTeamEmployeeXrefDTO>();
+		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getTeamMembers()){
+			teamMemberSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+		}
+		projectTeamDto.setTeamMembers(teamMemberSet);
+		
+		Set<ProjectTeamEmployeeXrefDTO> projectManagerSet = new HashSet<ProjectTeamEmployeeXrefDTO>();
+		for(ProjectTeamEmployeeXref projectTeamEmployeeXref: getProjectManagers()){
+			projectManagerSet.add(projectTeamEmployeeXref.prepareProjectTeamEmployeeXrefDTO());
+		}
 		projectTeamDto.setProjectManagers(projectManagerSet);
+		
+		
 		projectTeamDto.setCreatedBy(getCreatedBy());
 		projectTeamDto.setCreatedTstmp(getCreatedTstmp());
 		return projectTeamDto;

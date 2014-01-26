@@ -25,9 +25,9 @@ import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 public class ProjectTeamEmployeeXrefDTO implements Serializable {
 	private ProjectTeamEmployeeXrefIdDTO pk = new ProjectTeamEmployeeXrefIdDTO();
 	private String projectMgrFlg;
-	private Platform platformDto;
+	private PlatformDTO platformDto;
 	private String status;
-	private Role role;
+	private String projectRole;
 	private String mandayRate; 
 
 	public ProjectTeamEmployeeXrefDTO() {
@@ -50,11 +50,11 @@ public class ProjectTeamEmployeeXrefDTO implements Serializable {
 		this.projectMgrFlg = projectMgrFlg;
 	}
 
-	public Platform getPlatformDto() {
+	public PlatformDTO getPlatformDto() {
 		return platformDto;
 	}
 
-	public void setPlatformDto(Platform platformDto) {
+	public void setPlatformDto(PlatformDTO platformDto) {
 		this.platformDto = platformDto;
 	}
 
@@ -66,12 +66,14 @@ public class ProjectTeamEmployeeXrefDTO implements Serializable {
 		this.status = status;
 	}
 
-	public Role getRole() {
-		return role;
+	
+
+	public String getProjectRole() {
+		return projectRole;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setProjectRole(String projectRole) {
+		this.projectRole = projectRole;
 	}
 
 	public String getMandayRate() {
@@ -86,8 +88,7 @@ public class ProjectTeamEmployeeXrefDTO implements Serializable {
 	public String toString() {
 		return "ProjectTeamEmployeeXrefDTO [pk=" + pk + ", projectMgrFlg="
 				+ projectMgrFlg + ", platformDto=" + platformDto + ", status="
-				+ status + ", role=" + role + ", mandayRate=" + mandayRate
-				+ "]";
+				+ status + ", projectRole=" + projectRole + ", mandayRate="
+				+ mandayRate + "]";
 	}
-
 }

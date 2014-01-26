@@ -186,10 +186,16 @@ public class ProjectTeamDaoTest {
 		projectTeamEmployeeXrefEmployee.setEmployee(employee);
 		projectTeamEmployeeXrefEmployee.setProjectMgrFlg("N");
 		projectTeamEmployeeXrefEmployee.setPlatform(platform1);
+		projectTeamEmployeeXrefEmployee.setMandayRate("205.2");
+		projectTeamEmployeeXrefEmployee.setProjectRole("Developer");
+		projectTeamEmployeeXrefEmployee.setStatus("Active");
 		
 		projectTeamEmployeeXrefPManager.setEmployee(manager);
 		projectTeamEmployeeXrefPManager.setProjectMgrFlg("Y");
 		projectTeamEmployeeXrefPManager.setPlatform(platform2);
+		projectTeamEmployeeXrefPManager.setMandayRate("888.88");
+		projectTeamEmployeeXrefPManager.setProjectRole("Manager");
+		projectTeamEmployeeXrefPManager.setStatus("Active");
 		
 		employees.add(projectTeamEmployeeXrefEmployee);
 		managers.add(projectTeamEmployeeXrefPManager);
