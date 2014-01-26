@@ -43,8 +43,8 @@ public class ProjectSummaryPanel implements IsWidget, AsyncCallback<ProjectListR
 		ColumnConfig<ProjectDTO, Integer> mileStoneCompCol = new ColumnConfig<ProjectDTO, Integer>(
 				ProjectProperties.completedMilestoneCount(), 150,
 				"Completed Milestones");
-		ColumnConfig<ProjectDTO, String> controlsCol = new ColumnConfig<ProjectDTO, String>(
-				ProjectProperties.name(), 90, "Controls");
+//		ColumnConfig<ProjectDTO, String> controlsCol = new ColumnConfig<ProjectDTO, String>(
+//				ProjectProperties.name(), 90, "Controls");
 		
 		
 		List<ColumnConfig<ProjectDTO, ?>> columns = new ArrayList<ColumnConfig<ProjectDTO, ?>>();
@@ -52,7 +52,7 @@ public class ProjectSummaryPanel implements IsWidget, AsyncCallback<ProjectListR
 		columns.add(manDaysCol);
 		columns.add(mileStoneCol);
 		columns.add(mileStoneCompCol);
-		columns.add(controlsCol);
+		//columns.add(controlsCol);
 		cm = new ColumnModel<ProjectDTO>(columns);
 
 		grid = new Grid<ProjectDTO>(store, cm);
