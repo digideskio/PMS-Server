@@ -68,15 +68,17 @@ public class RequestManpowerServiceTest {
 		}catch(Exception exp){
 			
 		}
-		/*
+		
 		List<WeeklyResourcePlan> weeklyResourcePlanList = new ArrayList<WeeklyResourcePlan>();
 		
 		WeeklyResourcePlan weeklyResourcePlan = new WeeklyResourcePlan();
-		weeklyResourcePlan.setDay1AmEnm(AllocationStatus.SELECTED);
-		weeklyResourcePlan.setDay1PmEnm(AllocationStatus.SELECTED);
 		
 		weeklyResourcePlan.setDay2AmEnm(AllocationStatus.SELECTED);
 		weeklyResourcePlan.setDay2PmEnm(AllocationStatus.SELECTED);
+
+		weeklyResourcePlan.setDay3AmEnm(AllocationStatus.SELECTED);
+		weeklyResourcePlan.setDay3PmEnm(AllocationStatus.SELECTED);
+	
 		
 		weeklyResourcePlan.setDay5AmEnm(AllocationStatus.SELECTED);
 		weeklyResourcePlan.setDay5PmEnm(AllocationStatus.SELECTED);
@@ -91,9 +93,34 @@ public class RequestManpowerServiceTest {
 		weeklyResourcePlan.setPlatform(platformDTO);
 		
 		weeklyResourcePlanList.add(weeklyResourcePlan);
+		// Adding the 2nd weeklyplan
+		
+		WeeklyResourcePlan weeklyPlan1 = new WeeklyResourcePlan();
+		
+		
+		weeklyPlan1.setDay2AmEnm(AllocationStatus.SELECTED);
+		weeklyPlan1.setDay2PmEnm(AllocationStatus.SELECTED);
+
+		weeklyPlan1.setDay3AmEnm(AllocationStatus.SELECTED);
+		weeklyPlan1.setDay3PmEnm(AllocationStatus.SELECTED);
+	
+		
+		weeklyPlan1.setDay5AmEnm(AllocationStatus.SELECTED);
+		weeklyPlan1.setDay5PmEnm(AllocationStatus.SELECTED);
+		
+		EmployeeDTO employeeDto1 = new EmployeeDTO();
+		employeeDto1.setEmployeeKey(2);
+		Set<PlatformDTO> platformDtoSet1 = new HashSet<PlatformDTO>();
+		PlatformDTO platformDTO1 = new PlatformDTO();
+		platformDTO1.setPlatformKey(1);
+		employeeDto1.setPlatFormDtos(platformDtoSet1);
+		weeklyPlan1.setDeveloper(employeeDto1);
+		weeklyPlan1.setPlatform(platformDTO1);
+		weeklyResourcePlanList.add(weeklyPlan1);
+		
 		
 		projectAllocationDTO.setWeeklyResourcePlanList(weeklyResourcePlanList);
-	*/
+	
 		
 	}
 	
@@ -102,7 +129,7 @@ public class RequestManpowerServiceTest {
 	@Test
 	public void test1SubmitManpowerRequest(){
 		
-		//requestManpowerService.submitManpowerRequest(projectAllocationDTO);
+		requestManpowerService.submitManpowerRequest(projectAllocationDTO);
 		
 		
 		/*
@@ -118,7 +145,7 @@ public class RequestManpowerServiceTest {
 		
 		ProjectAllocationDTO projectAllDto =requestManpowerService.
 				requestManpower(projectDTO,startOfWeek);
-		System.out.println("Printing inside Test");
+		System.out.println("Project Allocation DTO Printing "+projectAllDto);
 		Assert.notNull(projectAllDto);
 		
 	

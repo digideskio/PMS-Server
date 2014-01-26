@@ -113,6 +113,9 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 						Integer startDayOfTheWeek;
 						Integer endDayOfTheWeek;
 
+						System.out.println("Platform Request Start Date is ["+platformReq.getStartDate()+"]"
+								+ ": End Date is ["+platformReq.getEndDate()+"] ");
+						
 						Calendar calendar = Calendar.getInstance();
 						calendar.setTime(platformReq.getStartDate());
 						startDayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -270,6 +273,8 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 
 			weeklyManpowerRequest.setApprovalStatus("U");
 
+			// Delete the weekly manpower request
+			weeklyManpowerRequestDao.deleteWeeklyManpowerRequest(project, startofWeek, endOfWeek);
 			// Persists Weekly manpower request
 			weeklyManpowerRequestDao
 					.addWeeklyManpowerRequest(weeklyManpowerRequest);
@@ -282,9 +287,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 
 				List<DailyResourcePlanDTO> startDaysList = findStartDays(weeklyResourcePlan);
 
-				if (startDaysList != null)
-					System.out.println("SIZE OF THE STARTLIST "
-							+ startDaysList.size());
+				System.out.println("Start Day List is "+startDaysList);
 
 				for (DailyResourcePlanDTO dailyResourcePlanDTO : startDaysList) {
 
@@ -531,7 +534,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setTime(startofWeek);
-		calendar.add(Calendar.DATE, dailyResourcePlanDTO.getDay() - 1);
+		calendar.add(Calendar.DATE, dailyResourcePlanDTO.getDay() - 2);
 
 		Date platformStartDate = new Date();
 		platformStartDate.setTime(calendar.getTime().getTime());
@@ -593,7 +596,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.setTime(startofWeek);
-		calendar.add(Calendar.DATE, day - 1);
+		calendar.add(Calendar.DATE, day - 2);
 		Date endOfWeek = new Date();
 		endOfWeek.setTime(calendar.getTime().getTime());
 

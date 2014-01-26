@@ -62,13 +62,13 @@ public class ProjectServiceTest {
 		project.setCompany("Media 2359");
 		project.setBillingAddr("Singapore");
 		project.setStartDate(new Date());
+		
 		ProjectMilestoneDTO projectMilestoneDTO = new ProjectMilestoneDTO();
 		projectMilestoneDTO.setMilestoneDate(new Date());
 		projectMilestoneDTO.setMilestoneDesc("Project Kick Off");
 		Set<ProjectMilestoneDTO> projectMilestoneDTOs = new HashSet<ProjectMilestoneDTO>();
 		projectMilestoneDTOs.add(projectMilestoneDTO);
 		project.setProjectMilestone(projectMilestoneDTOs);
-		
 		
 	}
 	

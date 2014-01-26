@@ -68,7 +68,7 @@ public class Project implements java.io.Serializable{
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();
 		this.manDaysLeft=dto.getManDaysLeft();
-		this.milestoneCount=dto.getMilestoneCount();
+		//this.milestoneCount=dto.getMilestoneCount();
 		this.completedMilestoneCount=dto.getMilestoneCount();
 		this.setCompany(dto.getCompany());
 		this.setBillingAddr(dto.getBillingAddr());
@@ -91,7 +91,7 @@ public class Project implements java.io.Serializable{
 			}
 		}
 		
-			
+		this.milestoneCount=projectMilestoneSet.size();	
 		this.projectMilestone =projectMilestoneSet;
 	}
 
