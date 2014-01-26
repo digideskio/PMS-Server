@@ -75,6 +75,15 @@ public class ProjectTeamEmployeeXref implements java.io.Serializable {
 	public ProjectTeamEmployeeXref() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ProjectTeamEmployeeXref(ProjectTeamEmployeeXrefDTO projectTeamEmpXrefDTO){
+		this.pk=new ProjectTeamEmployeeXrefId(projectTeamEmpXrefDTO.getPk());
+		this.mandayRate=projectTeamEmpXrefDTO.getMandayRate();
+		this.projectMgrFlg=projectTeamEmpXrefDTO.getProjectMgrFlg();
+		this.projectRole=projectTeamEmpXrefDTO.getProjectRole();
+		this.status=projectTeamEmpXrefDTO.getStatus();
+		
+	}
 
 	
 	
