@@ -24,7 +24,11 @@
     	}
     	
     	function getUserRole() {
-    		return document.forms[0].role.value;
+    		if(document.forms[0].role) {
+    			return document.forms[0].role.value;
+    		} else {
+    			return "PM";
+    		}
     	}
     </script>    
   </head>

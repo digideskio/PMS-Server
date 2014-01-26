@@ -19,7 +19,7 @@ public class EmailServiceTest {
 		service.setSenderEmail(VALID_EMAIL);
 	}
 
-	@Test
+	
 	public void testSendValidEmail() {
 		service.sendEmail(new String[]{"alfredisfun@gmail.com"}, "Test subject",
 					"This is a test message");

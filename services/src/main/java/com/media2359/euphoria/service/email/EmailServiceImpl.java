@@ -50,7 +50,7 @@ public class EmailServiceImpl implements EmailService {
 			return;
 		}
 		
-		log.info("Sending email ...");
+		log.info("Sending email to "+recipients+" ...");
 		
 		PostmarkMailSender mailSender = new PostmarkMailSender(postMarkApiKey);
 

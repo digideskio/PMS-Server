@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,6 +55,8 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 
 	@Autowired
 	EmailService emailService;
+	
+	private final Logger log = Logger.getLogger(RequestManpowerServiceImpl.class);
 
 	@Override
 	public ProjectAllocationDTO requestManpower(ProjectDTO projectDto,
@@ -324,8 +328,11 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 				}
 
 			}
-
-			sendAllocationNotification(project);
+			try {
+				sendAllocationNotification(project);
+			} catch(Throwable t) {
+				log.warn("Failed to send email. Skipping email notification", t);
+			}
 
 		} catch (Exception exp) {
 			exp.printStackTrace();
@@ -733,6 +740,8 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					+ project.getName(), bodyBuffer.toString());*/
 			emailService.sendEmail(emailArray, "New allocation request for "
 					+ project.getName(), bodyBuffer.toString());
+		} else {
+			Log.info("There were no recipients to send email to ");
 		}
 	}
 
