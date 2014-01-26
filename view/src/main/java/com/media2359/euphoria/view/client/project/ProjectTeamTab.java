@@ -167,52 +167,17 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
         grid.setHeight(600);
         grid.getView().setAutoExpandColumn(colRole);
 
-  	  	
-//  	  	GridEditing<ProjectTeamItem> editing = new GridInlineEditing<ProjectTeamItem>(grid);
-//  	  	NumberField field= new NumberField<Long>(new LongPropertyEditor());
-//  	  	editing.addEditor(colManDayRate,field );
+;
   	  	
   	  	projectTeamPanel = new VerticalLayoutContainer();	  
   	  	projectTeamPanel.add(grid);
-  	  	populateInitialData();
-  	  
-//        GridEditing<ProjectMilestoneDTO> editing = new GridInlineEditing<ProjectMilestoneDTO>(grid);
-//        TextField textField = new TextField();
-//        editing.addEditor(colDescription,textField );
-//        
-//        DateField dateField = new DateField(new DateTimePropertyEditor(
-//      	        DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)));
-//        dateField.setClearValueOnParseError(false);
-//        editing.addEditor(colDate, dateField);
-  //	
-//        initWidget(grid);
+//  	  	populateInitialData();
+  	  addEmptyRow();
+
   	    
 
     }
-//	
-//    public ProjectTeamTab(Set<ProjectMilestoneDTO> projectMilestone) {
-//		this();
-//		if(projectMilestone == null || projectMilestone.size()<1){
-//			addEmptyRow();
-//			return;
-//		}
-//		List<ProjectMilestoneDTO> milestones = new ArrayList<ProjectMilestoneDTO>();
-//		milestones.addAll(projectMilestone);
-//		
-//		listStore.replaceAll(milestones);
-//		
-//	}
-//
-//	@Override
-//    public Editor<List<ProjectMilestoneDTO>> asEditor() {
-//      return new ListStoreEditor<ProjectMilestoneDTO>(listStore);
-//    }
-//    
-//    public void addMilestone(ProjectMilestoneDTO milestone){
-//    	listStore.add(milestone);
-//    }
-//    
-    
+
 
 	public void removeProjectTeamItem(ProjectTeamItem p){
     	teamListStore.remove(p);
@@ -222,12 +187,6 @@ import com.media2359.euphoria.view.server.project.ProjectTeamServiceAsync;
     	 ProjectTeamItem p = new ProjectTeamItem();
 	     teamListStore.add(p);
     }
-    
-//    public Set<ProjectMilestoneDTO> getMileStoneDTOs(){
-//    	listStore.commitChanges();
-//    	return new HashSet<ProjectMilestoneDTO>(listStore.getAll());
-//    }
-
 
 	private void populateAddButton(ColumnConfig addCol){		
 
