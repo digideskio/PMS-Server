@@ -64,6 +64,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		ProjectAllocationDTO projectAllocationDTO = null;
 
 		try {
+			startDate = formatDate(startDate);
 			projectAllocationDTO = new ProjectAllocationDTO();
 			Project project = new Project();
 			project.setId(projectDto.getId());
@@ -255,12 +256,13 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 		try {
 			
 			weeklyManpowerRequest = new WeeklyManpowerRequest();
-			Date startofWeek = projectAllocationDto.getStartOfWeek();
+			Date startofWeek = formatDate(projectAllocationDto.getStartOfWeek());
 
 			Project project = new Project(projectAllocationDto.getProjectDTO());
 			weeklyManpowerRequest.setProject(project);
-			weeklyManpowerRequest.setStartDate(projectAllocationDto
-					.getStartOfWeek());
+			//weeklyManpowerRequest.setStartDate(projectAllocationDto
+			//		.getStartOfWeek());
+			weeklyManpowerRequest.setStartDate(startofWeek);
 
 			// Adding 7 days to the start date to form the end date
 			
@@ -317,7 +319,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 					// Set the end date of the platform request
 					Date endDate = getEndDate(weeklyResourcePlan,
 							dailyResourcePlanDTO,
-							projectAllocationDto.getStartOfWeek());
+							startofWeek);
 
 					System.out.println("End  Date is " + endDate);
 					platformRequest.setEndDate(endDate);
@@ -707,6 +709,20 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 	/**
 	 * 
 	 */
+	
+	private Date formatDate(Date startOfWeek){
+		Date formattedStartOfWeek=startOfWeek;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String strStartDate = simpleDateFormat.format(startOfWeek);
+		System.out.println("Date is "+strStartDate);
+		try{
+			formattedStartOfWeek = simpleDateFormat.parse(strStartDate);
+			System.out.println("New date is "+formattedStartOfWeek);
+		}catch(Exception exp){
+			
+		}
+		return formattedStartOfWeek;
+	}
 
 	/**
 	 * Method to support email notification
