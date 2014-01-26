@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -741,7 +740,7 @@ public class RequestManpowerServiceImpl implements RequestManpowerService {
 			emailService.sendEmail(emailArray, "New allocation request for "
 					+ project.getName(), bodyBuffer.toString());
 		} else {
-			Log.info("There were no recipients to send email to ");
+			log.info("There were no recipients to send email to ");
 		}
 	}
 
