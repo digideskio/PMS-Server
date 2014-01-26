@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JobStatus
+ * 
  *
  * TODO Write something about this class
  * 
@@ -22,9 +22,10 @@ import java.util.List;
  **/
 
 public enum ProjectStatus{
-	  ACTIVE("Active"), COMPLETE("Commplete");
+	  ACTIVE("Active"), COMPLETE("Complete");
 	  
 	  private static List<ProjectStatus> statusList;
+	  private static List<ProjStatus> statList;
 	  private String text;
 	  
 	  public static ProjectStatus parseString(String object) {
@@ -54,6 +55,22 @@ public enum ProjectStatus{
 			statusList.add(ACTIVE);
 			statusList.add(COMPLETE);
 			return statusList;
+		}
+		
+		public static List<ProjStatus> getAllStat(){
+			
+			if(statList  != null)
+				return statList;
+			statList = new ArrayList<ProjStatus>();
+			
+			for(ProjectStatus status:getAllStatus())
+			{
+				ProjStatus stat= new ProjStatus();
+				stat.setId(1);
+				stat.setStatus(status);
+				statList.add(stat);
+			}
+			return statList;
 		}
 };
 

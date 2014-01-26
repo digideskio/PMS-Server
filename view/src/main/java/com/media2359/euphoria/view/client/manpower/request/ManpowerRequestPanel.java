@@ -21,14 +21,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.common.NotificationBox;
+import com.media2359.euphoria.view.client.common.Resources;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
 import com.media2359.euphoria.view.client.manpower.common.ProjectReceiver;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.server.allocation.RequestManpowerService;
 import com.media2359.euphoria.view.server.allocation.RequestManpowerServiceAsync;
+import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.Header;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -63,12 +66,19 @@ public class ManpowerRequestPanel  implements IsWidget, ProjectReceiver,  AsyncC
 
     RequestManpowerServiceAsync manpowerService = GWT.create(RequestManpowerService.class);
     
+    @UiField
+    TextButton saveAllocation;
+    
 	@Override
 	public Widget asWidget() {
 		if(vp == null) {
 			vp = uiBinder.createAndBindUi(this);
 			selector.setReceiver(this);
 		}
+		Resources resources = GWT.create(Resources.class);
+		saveAllocation.setIcon(resources.save());
+		saveAllocation.setIconAlign(IconAlign.LEFT);
+		
 		DateWrapper wrapper = new DateWrapper();
 		wrapper = wrapper.addDays(-1 * (wrapper.getDayInWeek()-1));
 		currentWeekStartDate = wrapper.asDate();
@@ -118,6 +128,11 @@ public class ManpowerRequestPanel  implements IsWidget, ProjectReceiver,  AsyncC
 
 	@Override
 	public void onFailure(Throwable caught) {
+		GWT.log("Error saving data in to server", caught);
+		caught.printStackTrace();
+		StackTraceElement[] stackErrors = caught.getStackTrace();
+		for(StackTraceElement stackElement:stackErrors)
+				log.info(stackElement.toString());	
 		NotificationBox.success("Error", caught.getMessage());
 	}
 

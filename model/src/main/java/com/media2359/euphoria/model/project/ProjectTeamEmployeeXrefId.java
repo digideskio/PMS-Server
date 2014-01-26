@@ -10,6 +10,7 @@
 package com.media2359.euphoria.model.project;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,7 +31,10 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.WhereJoinTable;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefDTO;
+import com.media2359.euphoria.view.dto.project.ProjectTeamEmployeeXrefIdDTO;
 
 /**
  * ProjectTeam
@@ -52,6 +56,11 @@ public class ProjectTeamEmployeeXrefId implements java.io.Serializable {
 	public ProjectTeamEmployeeXrefId() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ProjectTeamEmployeeXrefId(ProjectTeamEmployeeXrefIdDTO projectTeamEmployeeXrefIdDto) {
+		this.setEmployee(new Employee(projectTeamEmployeeXrefIdDto.getEmployeeDto()));
+		//this.setProjectTeam(new ProjectTeam(projectTeamEmployeeXrefIdDto.getProjectTeamDto()));
+	}
 
 	public ProjectTeam getProjectTeam() {
 		return projectTeam;
@@ -67,6 +76,14 @@ public class ProjectTeamEmployeeXrefId implements java.io.Serializable {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	
+	public ProjectTeamEmployeeXrefIdDTO prepareProjectTeamEmployeeXrefIdDTO(){
+		ProjectTeamEmployeeXrefIdDTO projectTeamEmployeeXrefIdDto = new ProjectTeamEmployeeXrefIdDTO();
+		projectTeamEmployeeXrefIdDto.setEmployeeDto(this.getEmployee().createEmployeeDTO());
+		projectTeamEmployeeXrefIdDto.setProjectTeamDto(this.getProjectTeam().prepareProjectTeamDTO());
+
+		return projectTeamEmployeeXrefIdDto;
 	}
 	
 	public boolean equals(Object o) {

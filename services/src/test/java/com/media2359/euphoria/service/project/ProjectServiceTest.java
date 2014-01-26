@@ -18,6 +18,12 @@ package com.media2359.euphoria.service.project;
  * @version 1.0 2013
  **/
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.media2359.euphoria.view.dto.milestone.MilestoneDTO;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
@@ -47,10 +55,20 @@ public class ProjectServiceTest {
 	@Before
 	public void setUp(){
 		project = new ProjectDTO();
-		project.setName("SGMalls");
+		project.setName("MyProject");
 		project.setDescription("PM System for SG Malls");
-		project.setProjectManager("May Thei");
+		project.setProjectManager("Shiv Kole");
 		project.setManDaysLeft(Double.valueOf(20.01));
+		project.setCompany("Media 2359");
+		project.setBillingAddr("Singapore");
+		project.setStartDate(new Date());
+		
+		ProjectMilestoneDTO projectMilestoneDTO = new ProjectMilestoneDTO();
+		projectMilestoneDTO.setMilestoneDate(new Date());
+		projectMilestoneDTO.setMilestoneDesc("Project Kick Off");
+		Set<ProjectMilestoneDTO> projectMilestoneDTOs = new HashSet<ProjectMilestoneDTO>();
+		projectMilestoneDTOs.add(projectMilestoneDTO);
+		project.setProjectMilestone(projectMilestoneDTOs);
 		
 	}
 	
@@ -73,6 +91,7 @@ public class ProjectServiceTest {
 	public void test3ProjectDetails(){
 		ProjectDTO projDto = projectService.getProjectDetails(projectService.getMaxKey());
 		Assert.assertNotNull(projDto);
+		System.out.println("Project is "+projDto.toString());
 		Assert.assertEquals(project.getName(), projDto.getName());
 		
 	}

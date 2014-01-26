@@ -125,4 +125,18 @@ public class EmployeeDaoTest {
 		
 	}
 	
+	@Test
+	public void test5getEmployeeByRole() {
+		log.info("####test5getEmployeeByRole start...");
+		
+		List<Employee> employees = null;
+		employees = employeeDao.getEmployeesByRole("VP");
+		
+		Assert.assertNotNull(employees);
+		
+		log.info("#### getEmployeeByRole return: " + employees);
+		log.info("####test5getEmployeeByRole end...");
+		
+	}
+	
 }

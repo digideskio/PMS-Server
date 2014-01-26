@@ -20,11 +20,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.common.NotificationBox;
+import com.media2359.euphoria.view.client.common.Resources;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
 import com.media2359.euphoria.view.client.manpower.common.ProjectReceiver;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.Header;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -48,6 +51,12 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
 	
 	VerticalLayoutContainer vp;
 	
+	@UiField
+	TextButton approveAllocation;
+	
+	@UiField
+	TextButton rejectAllocation;
+	
 	private Logger log = Logger.getLogger("EuphoriaLogger");
 	
 	 // A custom date format
@@ -70,6 +79,12 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
 		String dateStr = fmt.format(currentWeekStartDate);
 		weekStarting.setText(dateStr);
 		weekStarting.setSize("80", "50");
+		
+		Resources resources = GWT.create(Resources.class);
+		approveAllocation.setIcon(resources.approve());
+		approveAllocation.setIconAlign(IconAlign.LEFT);
+		rejectAllocation.setIcon(resources.reject());
+		rejectAllocation.setIconAlign(IconAlign.LEFT);
 		
 		header.setText(HEADER_TEMPLATE + dateStr);
 		return vp;

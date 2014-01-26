@@ -10,14 +10,18 @@
 package com.media2359.euphoria.view.dto.manpower;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.manpower.PlatformRequest;
 import com.media2359.euphoria.model.project.Project;
+
 import java.io.Serializable;
 
 /**
@@ -45,10 +49,11 @@ public class ManpowerRequestDTO {
 	private String approvalStatus;
 	private String approvedId;
 	private String comments;
-	private List<PlatformRequestDTO> platformRequestDtoList;
+	private Set<PlatformRequestDTO> platformRequestDtos = new HashSet<PlatformRequestDTO>(0);;
 	private String createdBy;
 	private Date createdTstmp;
 	private Project project;
+	
 	
 	public Integer getWeeklyManpowerRequestKey() {
 		return weeklyManpowerRequestKey;
@@ -92,12 +97,12 @@ public class ManpowerRequestDTO {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public List<PlatformRequestDTO> getPlatformRequestDtoList() {
-		return platformRequestDtoList;
+
+	public Set<PlatformRequestDTO> getPlatformRequestDtos() {
+		return platformRequestDtos;
 	}
-	public void setPlatformRequestDtoList(
-			List<PlatformRequestDTO> platformRequestDtoList) {
-		this.platformRequestDtoList = platformRequestDtoList;
+	public void setPlatformRequestDtos(Set<PlatformRequestDTO> platformRequestDtos) {
+		this.platformRequestDtos = platformRequestDtos;
 	}
 	public String getCreatedBy() {
 		return createdBy;
@@ -117,11 +122,15 @@ public class ManpowerRequestDTO {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
-	
-	
-	
-	
-	
-
+	@Override
+	public String toString() {
+		return "ManpowerRequestDTO [weeklyManpowerRequestKey="
+				+ weeklyManpowerRequestKey + ", projectKey=" + projectKey
+				+ ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", approvalStatus=" + approvalStatus + ", approvedId="
+				+ approvedId + ", comments=" + comments
+				+ ", platformRequestDtos=" + platformRequestDtos
+				+ ", createdBy=" + createdBy + ", createdTstmp=" + createdTstmp
+				+ ", project=" + project + "]";
+	}
 }

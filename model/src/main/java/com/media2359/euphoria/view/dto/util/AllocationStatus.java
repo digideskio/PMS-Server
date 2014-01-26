@@ -9,6 +9,7 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.dto.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
  **/
 
 
-public enum AllocationStatus {
+public enum AllocationStatus implements Serializable {
 
 
     	HOLIDAY("Holiday"," You can't select on holiday!", "Holiday"), 

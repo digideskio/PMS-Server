@@ -55,7 +55,7 @@ public class EmployeeGrid extends Composite {
 	private Grid<EmployeeDTO> grid;
 	private ListStore<EmployeeDTO> listStore;
 	private EmployeePresenter employeePresenter;
-	
+
 	Logger log = Logger.getLogger("EuphoriaLogger");
 	
 	// Property access definitions for the values in the Project object
@@ -77,8 +77,6 @@ public class EmployeeGrid extends Composite {
 			.create(GridProperties.class);
 
 	public EmployeeGrid() {
-		
-		employeePresenter = new EmployeePresenter(this);
 		
 		listStore = new ListStore<EmployeeDTO>(gridProperties.employeeKey());
 
@@ -117,10 +115,12 @@ public class EmployeeGrid extends Composite {
 		gridView.setAutoFill(true);
 
 		grid = new Grid<EmployeeDTO>(listStore, columnModel, gridView);
-		
+//		grid.setWidth("100%");
+		grid.getView().setStripeRows(true);
+		grid.setHeight(600);
 		grid.addCellClickHandler(new GridCellClickHandler());
 		initWidget(grid);
-		
+		addFilters();
 	}
 	
 	
@@ -129,7 +129,6 @@ public class EmployeeGrid extends Composite {
 		editCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
 		editCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
 		EditCell image = new EditCell();
-
 		image.addSelectHandler(new SelectHandler() {
 			
 			public void onSelect(SelectEvent event) {
@@ -167,6 +166,7 @@ public class EmployeeGrid extends Composite {
 		StringFilter<EmployeeDTO> platformFilter = new StringFilter<EmployeeDTO>(gridProperties.platforms());
 		StringFilter<EmployeeDTO> designationFilter = new StringFilter<EmployeeDTO>(gridProperties.designation());
 		GridFilters<EmployeeDTO> filters = new GridFilters<EmployeeDTO>();
+		filters.removeAll();
 		filters.initPlugin(grid);
 		filters.setLocal(true);
 		filters.addFilter(nameFilter);
@@ -177,9 +177,20 @@ public class EmployeeGrid extends Composite {
 	public void populateData(List<EmployeeDTO> employees) {
 		
 			listStore.replaceAll(employees);
-			addFilters();
+			
 
 	}
+	
+	
+	public EmployeePresenter getEmployeePresenter() {
+		return employeePresenter;
+	}
+
+
+	public void setEmployeePresenter(EmployeePresenter employeePresenter) {
+		this.employeePresenter = employeePresenter;
+	}
+
 	
 	public void clear() {
 		listStore.clear();

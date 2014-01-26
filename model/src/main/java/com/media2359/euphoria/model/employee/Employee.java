@@ -58,7 +58,7 @@ public class Employee implements java.io.Serializable{
 	private String personalEmail;
 	private String companyEmail;
 	private String designation;
-	private Set<Platform> platForms;
+	private Set<Platform> platForms = new HashSet<Platform> (0);
 	private String employmentType;
 	private String mandayRate;
 	private String assignedOffice;
@@ -93,6 +93,9 @@ public class Employee implements java.io.Serializable{
 		this.startDate = employeeDTO.getStartDate();
 		this.endDate = employeeDTO.getEndDate();
 		this.status = employeeDTO.getStatus();
+		this.company_id=employeeDTO.getCompany_id();
+		this.createdById=employeeDTO.getCreatedById();
+		this.createTstamp = employeeDTO.getCreateTstamp();
 		this.lastUpdById = employeeDTO.getLastUpdById();
 		this.lastUpdTstamp = employeeDTO.getLastUpdTstamp();
 
@@ -328,16 +331,27 @@ public class Employee implements java.io.Serializable{
 		employeeDTO.setEmploymentType(getEmploymentType());
 		employeeDTO.setMobile(getMobile());
 		employeeDTO.setDesignation(getDesignation());
+		
+		employeeDTO.setStartDate(getStartDate());
+		employeeDTO.setEndDate(getEndDate());
+		employeeDTO.setAssignedOffice(getAssignedOffice());
+		employeeDTO.setMandayRate(getMandayRate());
+		employeeDTO.setStatus(getStatus());
+		employeeDTO.setCompany_id(getCompany_id());
+		
 		employeeDTO.setCreatedById(getCreatedById());
 		employeeDTO.setCreateTstamp(getCreateTstamp());
 		employeeDTO.setLastUpdById(getLastUpdById());
 		employeeDTO.setLastUpdTstamp(getLastUpdTstamp());
 		
 		employeeDTO.setPlatFormDtos(new HashSet<PlatformDTO>(0));
-		for (Platform platform: platForms){
-			PlatformDTO platformDto = platform.createPlatformDTO();
-			employeeDTO.getPlatFormDtos().add(platformDto);
+		if(platForms !=null){
+			for (Platform platform: platForms){
+				PlatformDTO platformDto = platform.createPlatformDTO();
+				employeeDTO.getPlatFormDtos().add(platformDto);
+			}
 		}
+		
 		
 		return employeeDTO;
 	}

@@ -9,11 +9,15 @@
  ***************************************************************************/
 package com.media2359.euphoria.view.server.project;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
+import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
+import com.media2359.euphoria.view.dto.project.PlatformDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.dto.project.ProjectTeamDTO;
 
@@ -35,6 +39,9 @@ public interface ProjectTeamService extends RemoteService{
 	
 	// Adds the project team member 
 	public String submitProjectTeam(ProjectTeamDTO projectTeamDTO);
+	
+	// Get the List of employees per project per platform
+	public List<EmployeeDTO> getProjectTeamMember(ProjectDTO projectDTO, PlatformDTO platformDTO);
 	
 	
 

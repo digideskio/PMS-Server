@@ -245,9 +245,9 @@ public class NewEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	public TextButton[] createAndAddButtons() {
 		  	  
 		  TextButton submitButton = new TextButton(EmployeeDetailsWindow.SUBMIT_BUTTON_TEXT);
-		  TextButton createAccountButton = new TextButton(EmployeeDetailsWindow.CREATE_ACC_BUTTON_TEXT);
+//		  TextButton createAccountButton = new TextButton(EmployeeDetailsWindow.CREATE_ACC_BUTTON_TEXT);
 		  TextButton cancelButton = new TextButton(EmployeeDetailsWindow.CANCEL_BUTTON_TEXT);
-		  return new TextButton[]{submitButton,createAccountButton,cancelButton};
+		  return new TextButton[]{submitButton/*,createAccountButton*/,cancelButton};
 		  
 		
 	}

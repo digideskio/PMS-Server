@@ -24,7 +24,11 @@
     	}
     	
     	function getUserRole() {
-    		return document.forms[0].role.value;
+    		if(document.forms[0].role) {
+    			return document.forms[0].role.value;
+    		} else {
+    			return "PM";
+    		}
     	}
     </script>    
   </head>
@@ -58,7 +62,11 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-    <div id="loading" style="font-family: Arial;font-size: 11pt">Loading. Please wait...</div> 
+    <div id="loading">
+    	<div style='padding-left=100px;padding-top:50px;'>
+    	<table style="width:100%"><tr align="center"><td><table><tr><td><img src="/static/images/loader.gif" alt="loader" /></td><td><h3>Loading page...</h3></td></tr></table></td></tr></table>
+		</div>
+	</div>
 	<div id="bodypanel">
 	</div>
   </body>

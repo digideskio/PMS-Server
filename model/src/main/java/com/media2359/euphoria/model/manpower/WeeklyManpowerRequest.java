@@ -10,12 +10,17 @@
 package com.media2359.euphoria.model.manpower;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.media2359.euphoria.model.employee.Employee;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.view.dto.manpower.ManpowerRequestDTO;
+import com.media2359.euphoria.view.dto.manpower.PlatformRequestDTO;
 
-import javax.persistence.CascadeType;
+
+
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +32,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
@@ -68,7 +75,11 @@ public class WeeklyManpowerRequest {
 	String createdBy;
 	@Column(name = "create_tstamp")
 	Date createdTstmp;	
-
+	
+	@OneToMany (mappedBy = "weeklyManpowerRequest")
+	@Cascade (value = {CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN, CascadeType.ALL})  
+	Set<PlatformRequest> platformRequests = new HashSet<PlatformRequest>(0);
+	
 	public WeeklyManpowerRequest() {
 		// TODO Auto-generated constructor stub
 	}
@@ -154,6 +165,17 @@ public class WeeklyManpowerRequest {
 		this.createdTstmp = createdTstmp;
 	}
 
+	
+	public Set<PlatformRequest> getPlatformRequests() {
+		return platformRequests;
+	}
+
+
+	public void setPlatformRequests(Set<PlatformRequest> platformRequests) {
+		this.platformRequests = platformRequests;
+	}
+
+
 	public ManpowerRequestDTO createManpowerRequestDTO() {
 		ManpowerRequestDTO manpowerRequestDTO = new ManpowerRequestDTO();
 		manpowerRequestDTO.setWeeklyManpowerRequestKey(weeklyManpowerRequestKey);
@@ -166,6 +188,12 @@ public class WeeklyManpowerRequest {
 		manpowerRequestDTO.setComments(comments);
 		manpowerRequestDTO.setCreatedBy(createdBy);
 		manpowerRequestDTO.setCreatedTstmp(createdTstmp);	
+		
+		manpowerRequestDTO.setPlatformRequestDtos(new HashSet<PlatformRequestDTO>(0));
+		for (PlatformRequest platformRequest: this.getPlatformRequests()){
+			manpowerRequestDTO.getPlatformRequestDtos().add(platformRequest.createPlatformRequestDTO());
+		}
+		
 		return manpowerRequestDTO;
 	}
 

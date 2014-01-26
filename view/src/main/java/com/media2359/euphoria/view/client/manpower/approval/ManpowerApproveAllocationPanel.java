@@ -13,11 +13,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.media2359.euphoria.view.client.common.Resources;
 import com.media2359.euphoria.view.client.manpower.common.ManpowerAllocationProjectPanel;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -62,7 +65,9 @@ public class ManpowerApproveAllocationPanel implements IsWidget {
             }
 
           });
-		
+		Resources resources = GWT.create(Resources.class);
+		addButton.setIcon(resources.addrow());
+		addButton.setIconAlign(IconAlign.LEFT);
 		
 		
 		resetButton = new TextButton("Reset", new SelectHandler() {       	 
@@ -71,6 +76,8 @@ public class ManpowerApproveAllocationPanel implements IsWidget {
             	allocationPanel.resetAllocation();
             }
           });
+		resetButton.setIcon(resources.reset());
+		resetButton.setIconAlign(IconAlign.LEFT);
 		
 		projectPane.addButton(addButton);         
 		projectPane.addButton(resetButton);

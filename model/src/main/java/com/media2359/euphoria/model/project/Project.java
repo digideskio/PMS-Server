@@ -68,7 +68,7 @@ public class Project implements java.io.Serializable{
 		this.description = dto.getDescription();
 		this.projectManager = dto.getProjectManager();
 		this.manDaysLeft=dto.getManDaysLeft();
-		this.milestoneCount=dto.getMilestoneCount();
+		//this.milestoneCount=dto.getMilestoneCount();
 		this.completedMilestoneCount=dto.getMilestoneCount();
 		this.setCompany(dto.getCompany());
 		this.setBillingAddr(dto.getBillingAddr());
@@ -80,11 +80,18 @@ public class Project implements java.io.Serializable{
 		
 		if(dto.getProjectMilestone()!=null){
 			for(ProjectMilestoneDTO projectMilestoneDTO : dto.getProjectMilestone()){
-				projectMilestoneSet.add(new ProjectMilestone(projectMilestoneDTO));
+				if(isMilestoneValid(projectMilestoneDTO)){
+					ProjectMilestone projectMilestone =new ProjectMilestone(projectMilestoneDTO);
+					projectMilestone.setProject(this);
+					projectMilestone.setCreatedById("SYSTEM");
+					projectMilestone.setCreateTstamp(new Date());
+					projectMilestoneSet.add(projectMilestone);
+				}
+				
 			}
 		}
 		
-			
+		this.milestoneCount=projectMilestoneSet.size();	
 		this.projectMilestone =projectMilestoneSet;
 	}
 
@@ -277,6 +284,19 @@ public class Project implements java.io.Serializable{
 				+ platformProjections + ", projectDocuments="
 				+ projectDocuments + ", projectMilestone=" + projectMilestone
 				+ "]";
+	}
+	
+	private Boolean isMilestoneValid(ProjectMilestoneDTO projectMilestoneDTO){
+		Boolean isMilestoneValid= true;
+		
+		if((projectMilestoneDTO.getMilestoneDate()==null) &&
+				(projectMilestoneDTO.getMilestoneDesc()==null || 
+				"".equals(projectMilestoneDTO.getMilestoneDesc()))){
+			isMilestoneValid= false;
+		}
+		
+		System.out.println("isMilestoneValid is "+isMilestoneValid);
+		return isMilestoneValid;
 	}
 
 

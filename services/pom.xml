@@ -12,6 +12,13 @@
 	<artifactId>euphoria-services</artifactId>
 	<packaging>jar</packaging>
 	<name>Euphoria Services</name>
+
+	<repositories>
+		<repository>
+			<id>Github Imaginatio</id>
+			<url>https://github.com/Imaginatio/Maven-repository/raw/master</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.media2359</groupId>
@@ -43,6 +50,31 @@
 			<artifactId>spring-security-openid</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.postmark</groupId>
+			<artifactId>postmark-client</artifactId>
+			<version>0.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>         		
 	</dependencies>
 
 	<build>

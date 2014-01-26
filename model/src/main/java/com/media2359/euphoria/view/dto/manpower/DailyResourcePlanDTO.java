@@ -19,6 +19,10 @@ public class DailyResourcePlanDTO implements Serializable{
 		this.half = half;
 	}
 	
+	public String toString(){
+		return "DailyResourcePlan : Day is ["+day+ "] : Half is ["+half+"]"; 
+	}
+	
 	
 	
 

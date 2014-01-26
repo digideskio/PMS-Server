@@ -17,6 +17,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.media2359.euphoria.view.client.core.DeleteCell;
 import com.media2359.euphoria.view.client.core.ViewCell;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -38,6 +40,8 @@ public class ProjectGrid extends Composite {
 	private GridView<ProjectDTO> gridView;
 	private Grid<ProjectDTO> grid;
 	private ListStore<ProjectDTO> listStore;
+	private ProjectPresenter projectPresenter;
+
 
 	// Property access definitions for the values in the Project object
 	public interface GridProperties extends PropertyAccess<ProjectDTO> {
@@ -67,9 +71,13 @@ public class ProjectGrid extends Composite {
 				gridProperties.completedMilestoneCount(), 150, "Completed Milestones");
 		ColumnConfig viewDetailsCol = new ColumnConfig<ProjectDTO, String>(
 				gridProperties.name(), 90, "View Project");
+		ColumnConfig deleteCol = new ColumnConfig<ProjectDTO, String>(
+				gridProperties.name(), 90, "Delete Project");
 
-		
+		viewDetailsCol.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		deleteCol.setAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		populateViewButton(viewDetailsCol);
+		populateDeleteButton(deleteCol);
 		
 		List<ColumnConfig<ProjectDTO, ?>> columns = new ArrayList<ColumnConfig<ProjectDTO, ?>>();
 		columns.add(nameCol);
@@ -77,6 +85,7 @@ public class ProjectGrid extends Composite {
 		columns.add(mileStoneCol);
 		columns.add(mileStoneCompCol);
 		columns.add(viewDetailsCol);
+		columns.add(deleteCol);
 		ColumnModel<ProjectDTO> columnModel = new ColumnModel<ProjectDTO>(columns);
 		
 		gridView = new GridView<ProjectDTO>();
@@ -84,8 +93,12 @@ public class ProjectGrid extends Composite {
 		gridView.setStripeRows(true);
 
 		grid = new Grid<ProjectDTO>(listStore, columnModel, gridView);
-		//grid.setSize("600", "500");
+//		grid.setWidth("100%");
+		grid.getView().setStripeRows(true);
+		grid.setHeight(600);
 		initWidget(grid);
+		
+		addFilters();
 	}
 	
 	private void populateViewButton(ColumnConfig viewDetailsCol){
@@ -99,27 +112,61 @@ public class ProjectGrid extends Composite {
 		        Context c = event.getContext();
 		        int row = c.getIndex();
 		        ProjectDTO p = listStore.get(row);
+		        new ProjectDetailsWindow(projectPresenter,p).show();
 		        Info.display("Event", "The project " + p.getName() + " was clicked.");
+		        
 				
 			}
 		});
 		viewDetailsCol.setCell(image);
 	}
 	
+
+	private void populateDeleteButton(ColumnConfig delCol){		
+
+		delCol.setColumnTextClassName(CommonStyles.get().inlineBlock());
+		delCol.setColumnTextStyle(SafeStylesUtils.fromTrustedString("padding: 1px 3px;"));
+		DeleteCell image = new DeleteCell();
+
+		image.addSelectHandler(new SelectHandler() {
+			
+			public void onSelect(SelectEvent event) {
+				Context c = event.getContext();
+		        int row = c.getIndex();
+				ProjectDTO p = listStore.get(row);
+				projectPresenter.deleteProjectButtonClicked(p);
+			}
+		});
+		delCol.setCell(image);
+		
+	}
+
+
+	
 	private void addFilters(){
 		StringFilter<ProjectDTO> nameFilter = new StringFilter<ProjectDTO>(gridProperties.name());
 		GridFilters<ProjectDTO> filters = new GridFilters<ProjectDTO>();
+		filters.removeAll();
 		filters.initPlugin(grid);
-		filters.setLocal(true);
+		filters.setLocal(true);		
 		filters.addFilter(nameFilter);
 	}
 
 	public void populateData(List<ProjectDTO> projects) {
 		listStore.replaceAll(projects);
-		addFilters();
+		
 	}
 	
 	public void clear() {
 		listStore.clear();
+	}
+	
+
+	public ProjectPresenter getProjectPresenter() {
+		return projectPresenter;
+	}
+
+	public void setProjectPresenter(ProjectPresenter projectPresenter) {
+		this.projectPresenter = projectPresenter;
 	}
 }

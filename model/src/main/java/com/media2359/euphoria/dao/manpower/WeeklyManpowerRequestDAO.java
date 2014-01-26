@@ -40,4 +40,5 @@ public interface WeeklyManpowerRequestDAO {
 	void updateWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
 	void approveWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
 	void rejectWeeklyManpowerRequest(WeeklyManpowerRequest wklyManpowerRqst);
+	void deleteWeeklyManpowerRequest(Project project, Date startDate, Date endDate);
 }

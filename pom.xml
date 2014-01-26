@@ -49,7 +49,12 @@ Main POM File
 			<id>spring-maven-milestone</id>
 			<name>Spring Maven Milestone Repository</name>
 			<url>http://maven.springframework.org/milestone</url>
-		</repository>		
+		</repository>	
+		<repository>
+	    	<id>Github Imaginatio</id>
+	    	<name>Imaginatio Postmark Repository</name>
+	    	<url>https://github.com/Imaginatio/Maven-repository/raw/master</url>
+		</repository>			
 	</repositories>
 
 	<!-- All the dependencies are configured here -->

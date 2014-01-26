@@ -74,7 +74,7 @@
 							<form:TextField ui:field="weekStarting" text="dd/mm/yyyy" enabled="false"></form:TextField>
 						</row:child>
 						<row:child layoutData="{smallButtonLayout}">
-							<button:TextButton text="&gt;" ui:field="nextWeek" pixelSize="10,50"></button:TextButton>
+							<button:TextButton text="&gt;" ui:field="nextWeek" pixelSize="10,50" ></button:TextButton>
 						</row:child>	
 						<row:child layoutData="{buttonLayout}">
 							<button:TextButton text="Approve" ui:field="approveAllocation" pixelSize="100,50"></button:TextButton>

@@ -17,4 +17,5 @@ public interface PlatformDAO {
 	List<Platform> findAllPlatforms();
 	Integer getMaxKey();
 	void addPlatform(Platform platform);
+	Platform getPlatform(Integer platformKey);
 }

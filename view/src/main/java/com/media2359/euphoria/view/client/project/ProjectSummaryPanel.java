@@ -10,13 +10,17 @@
 package com.media2359.euphoria.view.client.project;
 
 import java.util.logging.Logger;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.media2359.euphoria.view.client.common.Resources;
 import com.media2359.euphoria.view.server.project.ProjectService;
 import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
+import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
@@ -33,6 +37,8 @@ public class ProjectSummaryPanel extends Composite{
 	ProjectGrid projectGrid;
 	private Logger log = Logger.getLogger("EuphoriaLogger");
 	private ProjectPresenter projectPresenter;
+	
+	@UiField TextButton addButton;
 
 	/**
 	 * This is the entry point method.
@@ -43,7 +49,13 @@ public class ProjectSummaryPanel extends Composite{
 		/**
 		 * Fetch the data when this panel is shown
 		 */
+		
+		projectGrid.setProjectPresenter(projectPresenter);
 		projectPresenter.loadProjectsFromDB(false);
+		
+		Resources resources = GWT.create(Resources.class);
+		addButton.setIcon(resources.addproject());
+		addButton.setIconAlign(IconAlign.LEFT);
 	}
 
 		

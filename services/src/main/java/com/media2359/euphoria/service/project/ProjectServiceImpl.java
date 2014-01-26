@@ -10,6 +10,7 @@
 package com.media2359.euphoria.service.project;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.media2359.euphoria.dao.project.ProjectDAO;
 import com.media2359.euphoria.model.project.Project;
+import com.media2359.euphoria.view.dto.milestone.ProjectMilestoneDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
 import com.media2359.euphoria.view.message.project.ProjectListRequest;
 import com.media2359.euphoria.view.message.project.ProjectListResponse;
@@ -45,6 +47,31 @@ public class ProjectServiceImpl implements ProjectService {
 				= new ArrayList<ProjectDTO> ();
 			for(Project project:projects) {
 				ProjectDTO respProject = project.createProjectDTO();
+				if(respProject != null){
+					// Calculate the number of mandays left for selection
+					Double totalApprovedMandays = projectDao.getTotalApprovedMandays(project);
+					if(totalApprovedMandays!=null && respProject.getManDaysLeft()!=null){
+						System.out.println("Projected Mandays "+respProject.getManDaysLeft()+""
+								+ " : Total Approved Mandays "+totalApprovedMandays);
+						respProject.setNoOfMandaysLeftForSelection(totalApprovedMandays-
+								respProject.getManDaysLeft());
+					}
+					
+					// Calculate the number of completed milestones for the project
+					// Calculation is based on the date completed for the milestones 
+					
+					Integer noOfCompletedMilestones = 0;
+					if(respProject.getProjectMilestone() !=null){
+						Date todayDate = new Date();
+						for(ProjectMilestoneDTO projectMilestoneDto: respProject.getProjectMilestone()){
+							if(projectMilestoneDto.getMilestoneDate().compareTo(todayDate)<=0)
+								noOfCompletedMilestones++;
+						}
+						
+					}
+					
+					respProject.setCompletedMilestoneCount(noOfCompletedMilestones);
+				}
 				respProjects.add(respProject);
 				
 			}
@@ -55,7 +82,38 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public ProjectDTO getProjectDetails(Integer projectId) {
-		return projectDao.getProject(projectId).createProjectDTO();
+		ProjectDTO projectDTO= projectDao.getProject(projectId).createProjectDTO();
+		if(projectDTO!=null){
+			
+			// Calculate the number of mandays left for selection
+			Project project = new Project(projectDTO);
+			Double totalApprovedMandays = projectDao.getTotalApprovedMandays(project);
+			if(totalApprovedMandays!=null && projectDTO.getManDaysLeft()!=null){
+				System.out.println("Projected Mandays "+projectDTO.getManDaysLeft()+""
+						+ " : Total Approved Mandays "+totalApprovedMandays);
+				projectDTO.setNoOfMandaysLeftForSelection(totalApprovedMandays-
+						projectDTO.getManDaysLeft());
+			}
+			
+			// Calculate the number of completed milestones for the project
+			// Calculation is based on the date completed for the milestones 
+			
+			Integer noOfCompletedMilestones = 0;
+			if(projectDTO.getProjectMilestone() !=null){
+				Date todayDate = new Date();
+				for(ProjectMilestoneDTO projectMilestoneDto: projectDTO.getProjectMilestone()){
+					if(projectMilestoneDto.getMilestoneDate().compareTo(todayDate)<=0)
+						noOfCompletedMilestones++;
+				}
+				
+			}
+			
+			projectDTO.setCompletedMilestoneCount(noOfCompletedMilestones);
+			
+			
+		
+		}
+		return projectDTO;
 	}
 
 	
@@ -106,4 +164,6 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 }

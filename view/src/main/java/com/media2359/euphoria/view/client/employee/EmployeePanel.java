@@ -26,12 +26,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.media2359.euphoria.view.server.employee.EmployeeService;
-import com.media2359.euphoria.view.server.employee.EmployeeServiceAsync;
+import com.media2359.euphoria.view.client.common.Resources;
+import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class EmployeePanel extends Composite {
 	interface EmployeePanelUiBinder extends
@@ -46,6 +45,10 @@ public class EmployeePanel extends Composite {
 	
 	@UiField
 	EmployeeGrid employeeGrid;
+	
+	@UiField
+	TextButton addButton;
+	
 	private Logger log = Logger.getLogger("EuphoriaLogger");
 
 	/**
@@ -53,7 +56,12 @@ public class EmployeePanel extends Composite {
 	 */
 	public EmployeePanel() {
 		initWidget(uiBinder.createAndBindUi(this));
+		Resources resources = GWT.create(Resources.class);
+		addButton.setIcon(resources.adduser());
+		addButton.setIconAlign(IconAlign.LEFT);
+		
 		employeePresenter = new EmployeePresenter(employeeGrid);
+		employeeGrid.setEmployeePresenter(employeePresenter);
 		/**
 		 * Fetch the data when this panel is shown
 		 */

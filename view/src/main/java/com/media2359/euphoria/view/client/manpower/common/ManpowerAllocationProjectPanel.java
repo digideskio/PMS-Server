@@ -29,6 +29,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.core.Alert;
+import com.media2359.euphoria.view.client.core.EmployeeDTOProperties;
+import com.media2359.euphoria.view.client.core.PlatformDTOProperties;
 import com.media2359.euphoria.view.client.employee.EmployeePresenter;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
 import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
@@ -132,28 +134,28 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    cm.addHeaderGroup(0, 0, new HeaderGroupConfig("Platform/Developer", 1, 2));
 	      
 	    
-	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1AmEnm(), 100, "AM");
-		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day1PmEnm(), 100, "PM");
+	    ColumnConfig<WeeklyResourcePlan, AllocationStatus> amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2AmEnm(), 100, "AM");
+		ColumnConfig<WeeklyResourcePlan, AllocationStatus> pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 2, new HeaderGroupConfig("", 1, 2));
 		
-	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2AmEnm(), 100, "AM");
-		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day2PmEnm(), 100, "PM");
-		prepareGrid(amColumn, pmColumn);
-		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
-
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3AmEnm(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day3PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
-		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
-		
+		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("", 1, 2));
+
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4AmEnm(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day4PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
-		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
+		cm.addHeaderGroup(0, 6, new HeaderGroupConfig("", 1, 2));
 		
 	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5AmEnm(), 100, "AM");
 		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day5PmEnm(), 100, "PM");
+		prepareGrid(amColumn, pmColumn);
+		cm.addHeaderGroup(0, 8, new HeaderGroupConfig("", 1, 2));
+		
+	    amColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day6AmEnm(), 100, "AM");
+		pmColumn = new ColumnConfig<WeeklyResourcePlan, AllocationStatus>(props.day6PmEnm(), 100, "PM");
 		prepareGrid(amColumn, pmColumn);
 		cm.addHeaderGroup(0, 10, new HeaderGroupConfig("", 1, 2));
 		
@@ -163,6 +165,7 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 	    grid.setBorders(true);
 	    grid.getView().setStripeRows(true);
 	    grid.getView().setColumnLines(true);
+//	    grid.setHeight(600);
 	    return grid;
 	}
 
@@ -196,8 +199,10 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 			public void onSuccess(ProjectAllocationDTO result) {
 				messageBox.hide();
 				projectAllocationDTO = result;
-				if(projectAllocationDTO.getWeeklyResourcePlanList() != null )
-					grid.getStore().replaceAll(projectAllocationDTO.getWeeklyResourcePlanList());
+				log.info("X!X!X!X!X!X!X!X! ProJectAllocationDTO received is "+projectAllocationDTO);
+				if(projectAllocationDTO.getWeeklyResourcePlanList() != null ){
+					grid.getStore().replaceAll(projectAllocationDTO.getWeeklyResourcePlanList());					
+				}
 				else{
 					log.info("Received null weekly resource plan. hence creating new row.");
 					grid.getStore().clear();
@@ -205,13 +210,16 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 				}
 				
 				orgWeeklyResourcePlanList = projectAllocationDTO.getWeeklyResourcePlanList();
-				
+								
 				employeeListStore.replaceAll(EmployeePresenter.getEmployees());
+				
+				
 				
 			}
 
 		};
 		log.info("#!#!#!#! Requesting allocation for Project :"+projectDTO );	
+		log.info("#!#!#!#!#!#!#! Start Date: " + startDate);
 		requestManpowerService.requestManpower(projectDTO, startDate, callback);
 		messageBox.auto();
 		messageBox.show();
@@ -269,8 +277,10 @@ public class ManpowerAllocationProjectPanel implements IsWidget {
 
 	public ProjectAllocationDTO getAllocationData() {
 		grid.getStore().commitChanges();
+		projectAllocationDTO.setProjectDTO(projectDTO);
+		projectAllocationDTO.setStartOfWeek(startDate);
 		projectAllocationDTO.setWeeklyResourcePlanList(grid.getStore().getAll());
-		log.info("!#!#!#!# Returnning Project Allocation Data: "+projectAllocationDTO.toString());
+		log.info("!#!#!#!# Returning Project Allocation Data: "+projectAllocationDTO.toString());
 		projectDTO.setManDaysLeft(manDaysLeftForAllocation); // to be  changed to setManDaysLeftForAllocation
 		return projectAllocationDTO;
 	}

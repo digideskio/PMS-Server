@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.media2359.euphoria.view.client.core.EmailValidator;
 import com.media2359.euphoria.view.client.core.Platforms;
 import com.media2359.euphoria.view.dto.employee.EmployeeDTO;
@@ -98,8 +99,9 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		  field.setAllowBlank(false);
 		  if(getDTOValue(S_DATE) == null)
 			  return field;
-		  if(!(getDTOValue(S_DATE) == null && ((String)getDTOValue(S_DATE)).isEmpty()))
-			  field.setOriginalValue((Date) getDTOValue(S_DATE));
+		  if(!(getDTOValue(S_DATE) == null && ((String)getDTOValue(S_DATE)).isEmpty())){
+			  field.setValue((Date) getDTOValue(S_DATE));
+		  }
 		  return field;
 	}
 
@@ -112,7 +114,6 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 		  if(getDTOValue(E_DATE) == null)
 			  return field;
 		  if(getDTOValue(E_DATE) != null && !getDTOValue(E_DATE).toString().contains("null")){
-			  field.setOriginalValue((Date) getDTOValue(E_DATE));
 			  field.setValue((Date) getDTOValue(E_DATE));
 		  }
 		  return field;
@@ -259,9 +260,9 @@ public class EditEmployeeDetailsCreator implements EmployeeDetailsCreator{
 	public TextButton[] createAndAddButtons() {
 
 		  TextButton submitButton = new TextButton(EmployeeDetailsWindow.SUBMIT_BUTTON_TEXT);
-		  TextButton createAccountButton = new TextButton(EmployeeDetailsWindow.CREATE_ACC_BUTTON_TEXT);
+//		  TextButton createAccountButton = new TextButton(EmployeeDetailsWindow.CREATE_ACC_BUTTON_TEXT);
 		  TextButton cancelButton = new TextButton(EmployeeDetailsWindow.CANCEL_BUTTON_TEXT);
-		  return new TextButton[]{submitButton,createAccountButton,cancelButton};
+		  return new TextButton[]{submitButton/*,createAccountButton*/,cancelButton};
 		
 	}
 	

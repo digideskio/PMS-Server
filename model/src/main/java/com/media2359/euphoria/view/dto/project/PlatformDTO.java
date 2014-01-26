@@ -37,8 +37,9 @@ public class PlatformDTO implements Serializable {
 	}
 
 	@Override
-	public String toString(){
-		return platformId;
+	public String toString() {
+		return "PlatformDTO [platformKey=" + platformKey + ", platformId="
+				+ platformId + "]";
 	}
 
 	

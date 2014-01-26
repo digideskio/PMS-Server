@@ -11,6 +11,8 @@ package com.media2359.euphoria.dao.project;
 
 import java.util.List;
 
+import com.media2359.euphoria.model.employee.Employee;
+import com.media2359.euphoria.model.project.Platform;
 import com.media2359.euphoria.model.project.Project;
 import com.media2359.euphoria.model.project.ProjectTeam;
 
@@ -21,4 +23,5 @@ public interface ProjectTeamDAO {
 	void addProjectTeam(ProjectTeam projectTeam);
 	void deleteProjectTeam(Integer projectTeamKey);
 	void updateProjectTeam(ProjectTeam projectTeam);
+	List<Employee> getProjectTeamMemberByPlatform(Project project, Platform platform);
 }

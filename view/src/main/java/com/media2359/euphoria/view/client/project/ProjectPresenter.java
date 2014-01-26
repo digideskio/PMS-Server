@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.media2359.euphoria.view.client.core.Alert;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
@@ -14,7 +15,9 @@ import com.media2359.euphoria.view.server.project.ProjectServiceAsync;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.AutoProgressMessageBox;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.NumberField;
+import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.form.TextArea;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
@@ -52,7 +55,7 @@ public class ProjectPresenter {
 			public void onSuccess(ProjectListResponse result) {
 				messageBox.hide();
 				 allProjects = result.getProjects();
-
+				 log.info("$!$!$!$!$!$!$!$!$! Projects loaded from DB are" + allProjects);
 				if(!test)
 					populateProjectSummaryGrid();
 			}
@@ -84,10 +87,15 @@ public class ProjectPresenter {
 	    
 		sourceWindow.getWindow().hide();
 		
-		saveNewProject(createProjectDTO(sourceWindow));
+		saveProject(createProjectDTO(sourceWindow));
+	}
+	
+	public void hideWindow(com.sencha.gxt.widget.core.client.Window window){
+		window.hide();
 	}
 	public void cancelButtonClicked(AddProjectWindow sourceWindow) {
-			sourceWindow.getWindow().hide();
+		log.info("Cancel Button Clicked");
+		hideWindow(sourceWindow.getWindow());
 		
 	}
 	
@@ -99,12 +107,71 @@ public class ProjectPresenter {
 		projectDTO.setName(((TextField)sourceWindow.getProjectName()).getText());
 		projectDTO.setDescription(((TextArea)sourceWindow.getDescription()).getText());
 		projectDTO.setManDaysLeft(Double.parseDouble(((NumberField)sourceWindow.getMandaysRequired()).getText()));
+		projectDTO.setCompany(((TextField)sourceWindow.getCompany()).getText());
+		projectDTO.setBillingAddr(((TextArea)sourceWindow.getBillingAddress()).getText());
+		projectDTO.setContactPerson(((TextField)sourceWindow.getContactPerson()).getText());
+		projectDTO.setStartDate(((DateField)sourceWindow.getStartDate()).getValue());
+		projectDTO.setEndDate(((DateField)sourceWindow.getEndDate()).getValue());
+		projectDTO.setStatus(((SimpleComboBox)sourceWindow.getStatus()).getText());
+		projectDTO.setProjectMilestone(sourceWindow.getMilestoneDTOs());
 		return projectDTO;
 	}
 
-	private void saveNewProject(ProjectDTO projectDTO){
+	public void saveProject(ProjectDTO projectDTO){
 		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
 				"Progress", "Saving data. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	  
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				log.info("#!#!#!#!#!Project Save Return Success., ReLoading all projects");
+				loadProjectsFromDB(false);
+			}
+
+		};
+		log.info("#!#!#!#!#!#!Saving Project:" + projectDTO.toString());	
+		ProjectRpcHelper.projectService.addProject(projectDTO, callback);
+		messageBox.auto();
+		messageBox.show();
+		
+	}
+	
+	public void modifyProject(ProjectDTO projectDTO){
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Saving data. Please wait...");
+		final AsyncCallback<String> callback = new AsyncCallback<String>() {
+	  
+			public void onFailure(Throwable caught) {
+				messageBox.hide();
+				AlertMessageBox alert = new AlertMessageBox("Error",
+						caught.getMessage());
+				alert.show();
+			}
+
+			public void onSuccess(String result) {
+				messageBox.hide();
+				new Alert("Success", "Project Details Modified Successfully");
+			}
+
+		};
+		log.info("#!#!#!#!#!#!Modifying Project:" + projectDTO.toString());	
+		ProjectRpcHelper.projectService.modifyProject(projectDTO, callback);
+		messageBox.auto();
+		messageBox.show();
+		
+	}
+	
+	public void deleteProjectButtonClicked(ProjectDTO p) {
+		
+		final AutoProgressMessageBox messageBox = new AutoProgressMessageBox(
+				"Progress", "Deleting Project. Please wait...");
 		final AsyncCallback<String> callback = new AsyncCallback<String>() {
 	  
 			public void onFailure(Throwable caught) {
@@ -121,7 +188,7 @@ public class ProjectPresenter {
 
 		};
 			
-		ProjectRpcHelper.projectService.addProject(projectDTO, callback);
+		ProjectRpcHelper.projectService.deleteProject(p, callback);
 		messageBox.auto();
 		messageBox.show();
 		

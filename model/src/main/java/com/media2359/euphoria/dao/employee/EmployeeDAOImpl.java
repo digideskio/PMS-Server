@@ -168,7 +168,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 					new Object[]{platform});
 			
 			
-			System.out.println("employees by platform received from the database is "+employees);
+			System.out.println("employees.size() received from the database is "+employees.size());
 			tx1.commit();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -198,5 +198,23 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		return employee;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Employee> getEmployeesByRole(String role){
+		Session session = this.getSession(); 
+		List<Employee> employees = null;
+		try{
+			Transaction tx1 = session.beginTransaction();
+			
+			employees = this.getHibernateTemplate().find("from Employee a where a.designation = ?", 
+					new Object[]{role});
+			
+			
+			System.out.println("employees by role received from the database is "+employees);
+			tx1.commit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{session.close();}
+		 return employees;
+	}
 	
 }
