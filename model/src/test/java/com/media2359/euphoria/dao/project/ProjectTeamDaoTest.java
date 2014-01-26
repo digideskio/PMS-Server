@@ -264,5 +264,15 @@ public class ProjectTeamDaoTest {
 	
 		log.info("####test5getProjectTeamMemberByPlatform end...");
 	}
+	
+	/*@Test
+	public void test7deleteProjectTeam() {
+		log.info("####test7deleteProjectTeam start...");
+		Integer maxKey = projectTeamDao.getMaxKey();
+		projectTeamDao.deleteProjectTeam(maxKey);
+	
+		ProjectTeam projectTeam = projectTeamDao.getProjectTeam(project)
+		log.info("####test7deleteProjectTeam end...");
+	}*/
 }
 
