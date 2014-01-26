@@ -20,8 +20,8 @@ public class ProjectTeamDTO implements Serializable {
 	private String projectTeamName;
 	private ProjectDTO projectDto;
 	
-	Set<EmployeeDTO> projectManagers;
-	Set<EmployeeDTO> teamMembers;
+	Set<ProjectTeamEmployeeXrefDTO> projectManagers;
+	Set<ProjectTeamEmployeeXrefDTO> teamMembers;
 	
 	private String createdBy;
 	private Date createdTstmp;
@@ -46,10 +46,6 @@ public class ProjectTeamDTO implements Serializable {
 		this.projectTeamName = projectTeamName;
 	}
 
-	
-	
-	
-
 	public ProjectDTO getProjectDto() {
 		return projectDto;
 	}
@@ -58,19 +54,21 @@ public class ProjectTeamDTO implements Serializable {
 		this.projectDto = projectDto;
 	}
 
-	public Set<EmployeeDTO> getProjectManagers() {
+	
+
+	public Set<ProjectTeamEmployeeXrefDTO> getProjectManagers() {
 		return projectManagers;
 	}
 
-	public void setProjectManagers(Set<EmployeeDTO> projectManagers) {
+	public void setProjectManagers(Set<ProjectTeamEmployeeXrefDTO> projectManagers) {
 		this.projectManagers = projectManagers;
 	}
 
-	public Set<EmployeeDTO> getTeamMembers() {
+	public Set<ProjectTeamEmployeeXrefDTO> getTeamMembers() {
 		return teamMembers;
 	}
 
-	public void setTeamMembers(Set<EmployeeDTO> teamMembers) {
+	public void setTeamMembers(Set<ProjectTeamEmployeeXrefDTO> teamMembers) {
 		this.teamMembers = teamMembers;
 	}
 
@@ -89,18 +87,13 @@ public class ProjectTeamDTO implements Serializable {
 	public void setCreatedTstmp(Date createdTstmp) {
 		this.createdTstmp = createdTstmp;
 	}
-/*
-	public ProjectTeam prepareProjectTeam(){
-		ProjectTeam projectTeam = new ProjectTeam();
-		projectTeam.setProject(getProject());
-		projectTeam.setProjectManagers(getProjectManagers());
-		projectTeam.setProjectTeamKey(getProjectTeamKey());
-		projectTeam.setProjectTeamName(getProjectTeamName());
-		projectTeam.setTeamMembers(getTeamMembers());
-		projectTeam.setCreatedBy(getCreatedBy());
-		return projectTeam;
+
+	@Override
+	public String toString() {
+		return "ProjectTeamDTO [projectTeamKey=" + projectTeamKey
+				+ ", projectTeamName=" + projectTeamName + ", projectDto="
+				+ projectDto + ", projectManagers=" + projectManagers
+				+ ", teamMembers=" + teamMembers + ", createdBy=" + createdBy
+				+ ", createdTstmp=" + createdTstmp + "]";
 	}
-*/
-	
-	
 }
