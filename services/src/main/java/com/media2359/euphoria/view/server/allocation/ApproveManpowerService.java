@@ -30,8 +30,7 @@ public interface ApproveManpowerService extends RemoteService{
 	
 	// Function to approve the manpower request
 	
-	public String approveWeeklyRequest(ProjectAllocationDTO projectAllocationDTO, 
-			Date weekStartDate);
+	public String approveWeeklyRequest(ProjectAllocationDTO projectAllocationDTO);
 	
 	
 	

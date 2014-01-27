@@ -22,6 +22,9 @@ public class ProjectTeamItem {
 	private PlatformDTO platformDto;
 	private EmployeeDTO projectTeamMember;
 	private ProjectTeamRole role;
+	public void setRole(ProjectTeamRole role) {
+		this.role = role;
+	}
 	private Integer manDayRate;
 	private ProjectStatus status;
 	
@@ -46,8 +49,11 @@ public class ProjectTeamItem {
 	public ProjectTeamRole getRole() {
 		return role;
 	}
-	public void setRole(ProjectTeamRole role) {
-		this.role = role;
+	public void setStringRole(String role) {
+		ProjectTeamRole projectRole = new ProjectTeamRole();
+		projectRole.setId(1);
+		projectRole.setProjectTeamRoles(ProjectTeamRoles.parseString(role));
+		this.role = projectRole;
 	}
 	public Integer getManDayRate() {
 		return manDayRate;

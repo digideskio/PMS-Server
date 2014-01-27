@@ -17,13 +17,17 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.media2359.euphoria.view.client.common.NotificationBox;
 import com.media2359.euphoria.view.client.common.Resources;
 import com.media2359.euphoria.view.client.manpower.common.MyProjectsPanel;
 import com.media2359.euphoria.view.client.manpower.common.ProjectReceiver;
+import com.media2359.euphoria.view.dto.manpower.ProjectAllocationDTO;
 import com.media2359.euphoria.view.dto.project.ProjectDTO;
+import com.media2359.euphoria.view.server.allocation.ApproveManpowerService;
+import com.media2359.euphoria.view.server.allocation.ApproveManpowerServiceAsync;
 import com.sencha.gxt.cell.core.client.ButtonCell.IconAlign;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.Header;
@@ -32,7 +36,7 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
+public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver ,  AsyncCallback<String>{
 	interface ManpowerUiBinder extends UiBinder<VerticalLayoutContainer, ManpowerApprovePanel> {
 	}
 
@@ -65,6 +69,8 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
     private Date currentWeekStartDate = null;
     
     private static final String HEADER_TEMPLATE = "Allocate resource for the week starting ";
+    
+    ApproveManpowerServiceAsync approveManpowerService = GWT.create(ApproveManpowerService.class); 
 
 	@Override
 	public Widget asWidget() {
@@ -116,8 +122,9 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
 	
 	@UiHandler("approveAllocation")
 	public void approveAllocation(SelectEvent event) {
-		allocator.getAllocationData();
-		NotificationBox.success("Success", "The allocation was saved successfully.");
+		ProjectAllocationDTO data = allocator.getAllocationData();
+		approveManpowerService.approveWeeklyRequest(data, this);
+		//NotificationBox.success("Success", "The allocation was saved successfully.");
 	}
 	
 	@UiHandler("rejectAllocation")
@@ -129,5 +136,17 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver {
 	@Override
 	public void selectedProject(ProjectDTO project) {
 		allocator.setProject(project, currentWeekStartDate);
+	}
+
+	@Override
+	public void onFailure(Throwable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSuccess(String arg0) {
+		NotificationBox.success("Success", "The allocation was Approved successfully:");
+		
 	}
 }
