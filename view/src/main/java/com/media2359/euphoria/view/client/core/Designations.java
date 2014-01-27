@@ -23,7 +23,7 @@ import java.util.List;
  **/
 
 public enum Designations{
-	  DESIGNATION1("Project Manager"), DESIGNATION2("Software Engineer"), DESIGNATION3("QA"), DESIGNATION4("VP"), DESIGNATION5("Designer");
+	  DESIGNATION1("PM"), DESIGNATION2("Software Engineer"), DESIGNATION3("QA"), DESIGNATION4("VP"), DESIGNATION5("Designer");
 	  
 	  	private  static List<Designations> designationList;
 	  	private String text;
