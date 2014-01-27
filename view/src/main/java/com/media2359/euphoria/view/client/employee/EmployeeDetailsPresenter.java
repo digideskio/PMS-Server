@@ -57,19 +57,19 @@ public class EmployeeDetailsPresenter {
 	    	new Alert("Save", "Please correct highlighted errors before you can save!");
 	    	return;
 	    }
-    	
-	    boolean atleastOnePlatformSelected = false;
-    	for(int i=0; i<=sourceWindow.getPlatformChecks().length; i++){
-    		if(!sourceWindow.getPlatformChecks()[i].getValue())
-    			continue;
-    		atleastOnePlatformSelected = true;
-    		break;
-    	}
-    	if(atleastOnePlatformSelected){		    	
+//    	
+//	    boolean atleastOnePlatformSelected = false;
+//    	for(int i=0; i<=sourceWindow.getPlatformChecks().length; i++){
+//    		if(!sourceWindow.getPlatformChecks()[i].getValue())
+//    			continue;
+//    		atleastOnePlatformSelected = true;
+//    		break;
+//    	}
+//    	if(atleastOnePlatformSelected){		    	
 	    	saveEmployee(createEmployeeDTO(sourceWindow),sourceWindow);
-    	}else{
-    		new Alert("Save", "Please select atleast one platform before you can save!");
-    	}
+//    	}else{
+//    		new Alert("Save", "Please select atleast one platform before you can save!");
+//    	}
 	    
 	}
 
