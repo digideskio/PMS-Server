@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,11 @@ public class ApproveManpowerServiceImpl implements ApproveManpowerService{
 	public String approveWeeklyRequest(
 			ProjectAllocationDTO projectAllocationDTO) {
 		
-		WeeklyManpowerRequest weeklyManpowerRequest = new WeeklyManpowerRequest();
-		weeklyManpowerRequest.setProject(new Project(projectAllocationDTO.getProjectDTO()));
-		weeklyManpowerRequest.setComments("APPROVED");
+		WeeklyManpowerRequest weeklyManpowerRequest = null;
+		
+		Project project = new Project(projectAllocationDTO.getProjectDTO());
 		
 		Date startOfWeek = formatDate(projectAllocationDTO.getStartOfWeek());
-		weeklyManpowerRequest.setStartDate(startOfWeek);
 		
 		
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -38,10 +38,35 @@ public class ApproveManpowerServiceImpl implements ApproveManpowerService{
 		Date endOfWeek = new Date();
 		endOfWeek.setTime(calendar.getTime().getTime());
 		
+		List<WeeklyManpowerRequest> weeklyManpowerReqList=weeklyManpowerRequestDao.findAllWklyMpowerRqstByProjectWeek(startOfWeek, endOfWeek, 
+				project);
+		
+		if(weeklyManpowerReqList!=null){
+			weeklyManpowerRequest = weeklyManpowerReqList.get(0);
+			weeklyManpowerRequest.setApprovalStatus("A");
+			weeklyManpowerRequest.setApprovedId("VP");
+			weeklyManpowerRequestDao.approveWeeklyManpowerRequest(weeklyManpowerRequest);
+		}else{
+			return "FAILED";
+		}
+		
+		
+		/*
+		WeeklyManpowerRequest weeklyManpowerRequest = new WeeklyManpowerRequest();
+		weeklyManpowerRequest.setProject(new Project(projectAllocationDTO.getProjectDTO()));
+		
+		
+		weeklyManpowerRequest.setComments("APPROVED");
+		
+		
+		
 		weeklyManpowerRequest.setEndDate(endOfWeek);
+		
+		
 		weeklyManpowerRequest.setApprovalStatus("APPROVER");
 		
 		weeklyManpowerRequest.setApprovalStatus("A");
+		*/
 		weeklyManpowerRequestDao.approveWeeklyManpowerRequest(weeklyManpowerRequest);
 		
 		return "SUCCESS";
