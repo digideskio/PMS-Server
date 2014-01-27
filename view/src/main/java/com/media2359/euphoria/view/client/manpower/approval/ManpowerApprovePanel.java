@@ -130,7 +130,7 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver ,  Async
 	@UiHandler("rejectAllocation")
 	public void rejectAllocation(SelectEvent event) {
 		allocator.getAllocationData();
-		NotificationBox.success("Success", "The allocation was saved successfully.");
+		NotificationBox.success("Success", "The allocation was rejected successfully.");
 	}
 
 	@Override
@@ -146,7 +146,8 @@ public class ManpowerApprovePanel  implements IsWidget, ProjectReceiver ,  Async
 
 	@Override
 	public void onSuccess(String arg0) {
-		NotificationBox.success("Success", "The allocation was Approved successfully:");
+		NotificationBox.success("Success", "The allocation was Approved successfully:");		
+		allocator.setWeekStartDate(currentWeekStartDate);
 		
 	}
 }
